@@ -13,9 +13,9 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-charcoal border-t border-beige/20 py-6 sm:py-8">
+    <footer className="bg-charcoal border-t border-beige/20 py-4 sm:py-6">
       <div className="max-w-7xl mx-auto mobile-safe-padding px-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 items-start">
           {/* Logo and description */}
           <motion.div
             className="sm:col-span-2 lg:col-span-2"
@@ -24,7 +24,7 @@ const Footer = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <div className="flex items-center space-x-2 mb-4">
+            <div className="flex items-center space-x-2 mb-3">
               <div className="w-7 h-7 sm:w-8 sm:h-8 bg-beige rounded-lg flex items-center justify-center">
                 <span className="text-black font-bold text-xs sm:text-sm">
                   S
@@ -34,7 +34,7 @@ const Footer = () => {
                 Shopify Dev Studio
               </span>
             </div>
-            <p className="text-gray-400 font-light max-w-md text-sm sm:text-base leading-relaxed">
+            <p className="text-gray-400 font-light max-w-md text-sm leading-relaxed">
               Premium Shopify theme development agency creating exceptional
               e-commerce experiences that drive results and exceed expectations.
             </p>
@@ -47,9 +47,9 @@ const Footer = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.15 }}
             viewport={{ once: true }}
-            className="pb-2"
+            className="pb-1"
           >
-            <h3 className="text-white font-semibold mb-4 text-sm sm:text-base">
+            <h3 className="text-white font-semibold mb-3 text-sm">
               Resources
             </h3>
             <ul className="space-y-2">
@@ -81,10 +81,10 @@ const Footer = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <h4 className="text-white font-semibold mb-4 sm:mb-6 text-sm sm:text-base">
+            <h4 className="text-white font-semibold mb-3 text-sm">
               Get in Touch
             </h4>
-            <ul className="space-y-2 sm:space-y-2.5 mb-4 sm:mb-6">
+            <ul className="space-y-2 mb-3">
               <li>
                 <a
                   href="mailto:contact@shopifydevstudio.tech"
@@ -173,7 +173,7 @@ const Footer = () => {
 
         {/* Bottom section */}
         <motion.div
-          className="border-t border-beige/20 mt-4 sm:mt-6 pt-4 sm:pt-6 flex flex-col sm:flex-row justify-between items-center gap-4"
+          className="border-t border-beige/20 mt-2 sm:mt-4 pt-3 sm:pt-4 flex flex-col sm:flex-row justify-between items-center gap-2"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
