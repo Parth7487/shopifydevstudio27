@@ -15,7 +15,7 @@ const Footer = () => {
   return (
     <footer className="bg-charcoal border-t border-beige/20 py-3 sm:py-4">
       <div className="max-w-7xl mx-auto mobile-safe-padding px-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-2 items-start">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-2 items-start">
           {/* Logo and description */}
           <motion.div
             className="order-1 sm:col-span-2 lg:col-span-1 p-2 sm:p-3"
@@ -38,17 +38,6 @@ const Footer = () => {
               Premium Shopify theme development agency creating exceptional
               e-commerce experiences that drive results and exceed expectations.
             </p>
-            <div className="bg-gradient-to-r from-beige/20 to-clay/20 border border-beige/30 rounded-lg p-2.5 sm:p-3 mt-3 sm:mt-4 w-fit">
-              <div className="flex items-center gap-2 mb-1.5">
-                <span className="text-beige text-base sm:text-lg">🔥</span>
-                <span className="text-beige text-xs sm:text-sm font-semibold">
-                  Urgent Project?
-                </span>
-              </div>
-              <p className="text-gray-300 text-xs leading-4">
-                2 emergency spaces available
-              </p>
-            </div>
           </motion.div>
 
           {/* Resources */}
@@ -201,10 +190,23 @@ const Footer = () => {
                   Discord — Join Our Server
                 </a>
               </li>
+            </ul>
+          </motion.div>
+          {/* Status (5th column) */}
+          <motion.div className="order-5 p-2 sm:p-3" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }} viewport={{ once: true }}>
+            <h4 className="text-white font-semibold mb-2 text-sm">Status</h4>
+            <ul className="space-y-2 mb-3">
               <li className="text-gray-400 text-sm">Remote, Worldwide</li>
               <li className="text-gray-400 text-sm">24h Response Time</li>
               <li className="text-gray-400 text-sm">Available 7 days/week</li>
             </ul>
+            <div className="bg-gradient-to-r from-beige/20 to-clay/20 border border-beige/30 rounded-lg p-2.5 sm:p-3 w-fit">
+              <div className="flex items-center gap-2 mb-1.5">
+                <span className="text-beige text-base sm:text-lg">🔥</span>
+                <span className="text-beige text-xs sm:text-sm font-semibold">Urgent Project?</span>
+              </div>
+              <p className="text-gray-300 text-xs leading-4">2 emergency spaces available</p>
+            </div>
           </motion.div>
         </div>
 
