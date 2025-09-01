@@ -13,9 +13,9 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-charcoal border-t border-beige/20 py-8 sm:py-12">
-      <div className="max-w-7xl mx-auto mobile-safe-padding">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+    <footer className="bg-charcoal border-t border-beige/20 py-6 sm:py-8">
+      <div className="max-w-7xl mx-auto mobile-safe-padding px-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {/* Logo and description */}
           <motion.div
             className="sm:col-span-2 lg:col-span-2"
@@ -47,7 +47,7 @@ const Footer = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.15 }}
             viewport={{ once: true }}
-            className="pb-5 -mb-px"
+            className="pb-2"
           >
             <h3 className="text-white font-semibold mb-4 text-sm sm:text-base">
               Resources
@@ -84,7 +84,7 @@ const Footer = () => {
             <h4 className="text-white font-semibold mb-4 sm:mb-6 text-sm sm:text-base">
               Get in Touch
             </h4>
-            <ul className="space-y-2 sm:space-y-3 mb-6 sm:mb-8">
+            <ul className="space-y-2 sm:space-y-2.5 mb-4 sm:mb-6">
               <li>
                 <a
                   href="mailto:contact@shopifydevstudio.tech"
@@ -173,7 +173,7 @@ const Footer = () => {
 
         {/* Bottom section */}
         <motion.div
-          className="border-t border-mint/20 mt-6 sm:mt-8 pt-6 sm:pt-8 flex flex-col sm:flex-row justify-between items-center gap-4"
+          className="border-t border-beige/20 mt-4 sm:mt-6 pt-4 sm:pt-6 flex flex-col sm:flex-row justify-between items-center gap-4"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
