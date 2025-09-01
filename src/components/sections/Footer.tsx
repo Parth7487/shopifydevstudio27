@@ -38,6 +38,13 @@ const Footer = () => {
               Premium Shopify theme development agency creating exceptional
               e-commerce experiences that drive results and exceed expectations.
             </p>
+            <div className="bg-gradient-to-r from-beige/20 to-clay/20 border border-beige/30 rounded-lg p-2.5 sm:p-3 mt-3 sm:mt-4 w-fit">
+              <div className="flex items-center gap-2 mb-1.5">
+                <span className="text-beige text-base sm:text-lg">🔥</span>
+                <span className="text-beige text-xs sm:text-sm font-semibold">Urgent Project?</span>
+              </div>
+              <p className="text-gray-300 text-xs leading-4">2 emergency spaces available</p>
+            </div>
           </motion.div>
 
 
@@ -113,18 +120,6 @@ const Footer = () => {
                   </li>
                 </ul>
 
-                {/* Urgent Project Box */}
-                <div className="bg-gradient-to-r from-beige/20 to-clay/20 border border-beige/30 rounded-lg p-2.5 sm:p-3">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-beige text-base sm:text-lg">🔥</span>
-                    <span className="text-beige text-xs sm:text-sm font-semibold">
-                      Urgent Project?
-                    </span>
-                  </div>
-                  <p className="text-gray-300 text-xs leading-4">
-                    2 emergency spaces available
-                  </p>
-                </div>
               </div>
 
               <div className="min-w-0 lg:hidden">
