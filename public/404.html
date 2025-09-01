@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Page Not Found • Shopify Dev Studio</title>
+    <meta name="robots" content="noindex, follow" />
+    <link rel="icon" href="/favicon.svg" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CERY7F6NSC"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);} gtag('js', new Date());
+      gtag('config', 'G-CERY7F6NSC');
+      gtag('event','page_view',{page_title:'404',page_location:location.href});
+    </script>
+    <style>
+      :root{color-scheme:dark light}
+      body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;background:#0a0a0a;color:#e6e6e6;display:flex;min-height:100vh;align-items:center;justify-content:center}
+      .wrap{max-width:720px;padding:32px}
+      h1{font-size:clamp(28px,4vw,40px);margin:0 0 12px}
+      p{opacity:.9;line-height:1.6}
+      .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:20px 0 8px}
+      a.button{display:block;text-decoration:none;padding:12px 14px;border:1px solid #333;border-radius:10px;background:#111;color:#f6f6f6}
+      form{display:flex;gap:8px;margin:16px 0}
+      input[type="search"]{flex:1;padding:12px 14px;border-radius:10px;border:1px solid #333;background:#0f0f0f;color:#fff}
+      button[type="submit"]{padding:12px 16px;border-radius:10px;border:1px solid #333;background:#1a1a1a;color:#fff;cursor:pointer}
+      .muted{opacity:.7;font-size:14px}
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <h1>We couldn’t find that page</h1>
+      <p>The link may be broken or the page may have moved. Try the links below or search our site.</p>
+
+      <form action="/" method="GET" role="search" aria-label="Site search">
+        <input type="search" name="q" placeholder="Search our site" />
+        <button type="submit">Search</button>
+      </form>
+
+      <div class="grid" role="navigation" aria-label="Popular links">
+        <a class="button" href="/">Home</a>
+        <a class="button" href="/work">Our Work</a>
+        <a class="button" href="/services">Services</a>
+        <a class="button" href="/process">Process</a>
+        <a class="button" href="/about">About</a>
+        <a class="button" href="/support">Support</a>
+        <a class="button" href="/faq">FAQ</a>
+        <a class="button" href="/blog">Blog</a>
+      </div>
+
+      <p>
+        Still stuck? View our <a href="/sitemap.xml">sitemap</a> or
+        <a href="mailto:hello@shopifystudio.tech">contact us</a>.
+      </p>
+      <p class="muted">Error code: 404</p>
+    </main>
+    <script>
+      try{gtag('event','exception',{description:'404 Not Found',fatal:false});}catch(e){}
+    </script>
+  </body>
+</html>
