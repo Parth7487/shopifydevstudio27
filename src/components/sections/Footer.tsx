@@ -18,7 +18,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-2 items-start">
           {/* Logo and description */}
           <motion.div
-            className="sm:col-span-2 lg:col-span-1"
+            className="order-1 sm:col-span-2 lg:col-span-1 p-2 sm:p-3"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -57,7 +57,7 @@ const Footer = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.15 }}
             viewport={{ once: true }}
-            className="pb-0"
+            className="order-4 p-2 sm:p-3"
           >
             <h3 className="text-white font-semibold mb-2 text-sm">Resources</h3>
             <ul className="space-y-1.5">
@@ -84,6 +84,7 @@ const Footer = () => {
 
           {/* Contact info */}
           <motion.div
+            className="order-3 p-2 sm:p-3"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -199,7 +200,7 @@ const Footer = () => {
 
           {/* Quick Connect (4th column on lg+) */}
           <motion.div
-            className="hidden lg:block"
+            className="order-2 block p-2 sm:p-3"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.25 }}
