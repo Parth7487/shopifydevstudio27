@@ -488,7 +488,6 @@ const Partners = memo(() => {
                 </p>
               </div>
             </AnimatedCard>
-
           </div>
         </section>
 
@@ -512,7 +511,6 @@ const Partners = memo(() => {
             </SlidingCarousel>
           </div>
         </section>
-
 
         {/* Shopify Experts - Enhanced with Social Links */}
         <section className="px-4 mb-20">
@@ -674,7 +672,6 @@ const Partners = memo(() => {
           </div>
         </section>
 
-
         {/* Call to Action */}
         <section className="px-4">
           <div className="max-w-4xl mx-auto text-center">
@@ -689,10 +686,24 @@ const Partners = memo(() => {
                   these experts.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <button onClick={() => { const url = (import.meta as any).env?.VITE_CALENDLY_URL as string | undefined; if (url) { setCalendlyOpen(true); } else { window.location.hash = "#contact"; } }} className="bg-gradient-to-r from-beige to-clay text-black font-semibold px-10 py-4 rounded-full hover:scale-105 transition-transform duration-300 text-lg">
-                      Start Your Project Today
-                    </button>
-                  <Link to="/work" className="border border-beige/40 text-beige font-semibold px-10 py-4 rounded-full hover:bg-beige/10 transition-colors duration-300 text-lg">
+                  <button
+                    onClick={() => {
+                      const url = (import.meta as any).env
+                        ?.VITE_CALENDLY_URL as string | undefined;
+                      if (url) {
+                        setCalendlyOpen(true);
+                      } else {
+                        window.location.hash = "#contact";
+                      }
+                    }}
+                    className="bg-gradient-to-r from-beige to-clay text-black font-semibold px-10 py-4 rounded-full hover:scale-105 transition-transform duration-300 text-lg"
+                  >
+                    Start Your Project Today
+                  </button>
+                  <Link
+                    to="/work"
+                    className="border border-beige/40 text-beige font-semibold px-10 py-4 rounded-full hover:bg-beige/10 transition-colors duration-300 text-lg"
+                  >
                     View Our Portfolio
                   </Link>
                 </div>
@@ -703,7 +714,12 @@ const Partners = memo(() => {
       </main>
 
       <Footer />
-      <CalendlyModal open={calendlyOpen && Boolean((import.meta as any).env?.VITE_CALENDLY_URL)} onClose={() => setCalendlyOpen(false)} />
+      <CalendlyModal
+        open={
+          calendlyOpen && Boolean((import.meta as any).env?.VITE_CALENDLY_URL)
+        }
+        onClose={() => setCalendlyOpen(false)}
+      />
     </div>
   );
 });

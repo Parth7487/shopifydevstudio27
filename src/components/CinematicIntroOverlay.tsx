@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-interface Props { onFinish: () => void }
+interface Props {
+  onFinish: () => void;
+}
 
 const CinematicIntroOverlay = ({ onFinish }: Props) => {
   const [visible, setVisible] = useState(true);
