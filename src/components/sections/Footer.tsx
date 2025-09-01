@@ -13,9 +13,9 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-charcoal border-t border-beige/20 py-4 sm:py-6">
+    <footer className="bg-charcoal border-t border-beige/20 py-3 sm:py-4">
       <div className="max-w-7xl mx-auto mobile-safe-padding px-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 items-start">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 items-start">
           {/* Logo and description */}
           <motion.div
             className="sm:col-span-2 lg:col-span-2 pr-[6px] -mr-[5px]"
@@ -47,12 +47,12 @@ const Footer = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.15 }}
             viewport={{ once: true }}
-            className="pb-1"
+            className="pb-0"
           >
-            <h3 className="text-white font-semibold mb-3 text-sm">
+            <h3 className="text-white font-semibold mb-2 text-sm">
               Resources
             </h3>
-            <ul className="space-y-2">
+            <ul className="space-y-1.5">
               <li
                 onClick={() => navigate("/documentation")}
                 className="text-gray-400 hover:text-beige transition-colors duration-150 cursor-pointer"
@@ -81,12 +81,12 @@ const Footer = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <h4 className="text-white font-semibold mb-3 text-sm">
+            <h4 className="text-white font-semibold mb-2 text-sm">
               Get in Touch
             </h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-start">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 items-start">
               <div className="min-w-0">
-                <ul className="space-y-2 mb-3">
+                <ul className="space-y-2 mb-2">
                   <li>
                     <a
                       href="mailto:contact@shopifydevstudio.tech"
@@ -114,7 +114,7 @@ const Footer = () => {
                 </ul>
 
                 {/* Urgent Project Box */}
-                <div className="bg-gradient-to-r from-beige/20 to-clay/20 border border-beige/30 rounded-lg p-3 sm:p-4">
+                <div className="bg-gradient-to-r from-beige/20 to-clay/20 border border-beige/30 rounded-lg p-2.5 sm:p-3">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-beige text-base sm:text-lg">🔥</span>
                     <span className="text-beige text-xs sm:text-sm font-semibold">
@@ -128,7 +128,7 @@ const Footer = () => {
               </div>
 
               <div className="min-w-0">
-                <ul className="space-y-2 mb-3 break-words">
+                <ul className="space-y-2 mb-2 break-words">
                   <li>
                     <a
                       href="https://wa.me/917487080421?text=Hello%20Shopify%20Dev%20Studio%20%E2%80%93%20I%20would%20like%20to%20connect"
@@ -174,7 +174,7 @@ const Footer = () => {
 
         {/* Bottom section */}
         <motion.div
-          className="border-t border-beige/20 mt-2 sm:mt-4 pt-3 sm:pt-4 flex flex-col sm:flex-row justify-between items-center gap-2"
+          className="border-t border-beige/20 mt-2 sm:mt-3 pt-2.5 sm:pt-3 flex flex-col sm:flex-row justify-between items-center gap-2"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
