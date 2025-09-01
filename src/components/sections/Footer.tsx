@@ -41,12 +41,15 @@ const Footer = () => {
             <div className="bg-gradient-to-r from-beige/20 to-clay/20 border border-beige/30 rounded-lg p-2.5 sm:p-3 mt-3 sm:mt-4 w-fit">
               <div className="flex items-center gap-2 mb-1.5">
                 <span className="text-beige text-base sm:text-lg">🔥</span>
-                <span className="text-beige text-xs sm:text-sm font-semibold">Urgent Project?</span>
+                <span className="text-beige text-xs sm:text-sm font-semibold">
+                  Urgent Project?
+                </span>
               </div>
-              <p className="text-gray-300 text-xs leading-4">2 emergency spaces available</p>
+              <p className="text-gray-300 text-xs leading-4">
+                2 emergency spaces available
+              </p>
             </div>
           </motion.div>
-
 
           {/* Resources */}
           <motion.div
@@ -56,9 +59,7 @@ const Footer = () => {
             viewport={{ once: true }}
             className="pb-0"
           >
-            <h3 className="text-white font-semibold mb-2 text-sm">
-              Resources
-            </h3>
+            <h3 className="text-white font-semibold mb-2 text-sm">Resources</h3>
             <ul className="space-y-1.5">
               <li
                 onClick={() => navigate("/documentation")}
@@ -119,7 +120,6 @@ const Footer = () => {
                     </a>
                   </li>
                 </ul>
-
               </div>
 
               <div className="min-w-0 lg:hidden">
@@ -132,7 +132,16 @@ const Footer = () => {
                       className="text-gray-400 hover:text-beige transition-colors duration-200 text-sm inline-flex items-center gap-2 whitespace-nowrap"
                       aria-label="Chat on WhatsApp"
                     >
-                      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="currentColor" className="text-beige/80"><path d="M17.5 6.5A7.5 7.5 0 0 0 6.2 17.2L5 21l3.9-1.1A7.5 7.5 0 1 0 17.5 6.5Zm-5.9 2.7c.2-.5.3-.5.6-.5h.5c.2 0 .4 0 .6.4.2.4.8 1.4.9 1.5.1.2.1.3 0 .5-.1.2-.2.3-.4.6-.2.2-.4.4-.2.7.2.2.8 1.4 1.9 2 .9.6 1.1.5 1.4.4.3-.1.7-.6.9-.8.2-.2.4-.2.6-.1.2.1 1.4.7 1.6.8.2.1.4.2.4.4 0 .2.1 1.1-.5 1.7-.5.6-1.1.7-1.6.7-.4 0-1 0-2-.4-1.1-.4-2-.9-2.8-1.7-.7-.7-1.3-1.5-1.9-2.5-.6-1-.9-1.8-1-2.1-.1-.3 0-.8.3-1.1.2-.3.6-.8.8-1.1Z"/></svg>
+                      <svg
+                        viewBox="0 0 24 24"
+                        width="16"
+                        height="16"
+                        aria-hidden="true"
+                        fill="currentColor"
+                        className="text-beige/80"
+                      >
+                        <path d="M17.5 6.5A7.5 7.5 0 0 0 6.2 17.2L5 21l3.9-1.1A7.5 7.5 0 1 0 17.5 6.5Zm-5.9 2.7c.2-.5.3-.5.6-.5h.5c.2 0 .4 0 .6.4.2.4.8 1.4.9 1.5.1.2.1.3 0 .5-.1.2-.2.3-.4.6-.2.2-.4.4-.2.7.2.2.8 1.4 1.9 2 .9.6 1.1.5 1.4.4.3-.1.7-.6.9-.8.2-.2.4-.2.6-.1.2.1 1.4.7 1.6.8.2.1.4.2.4.4 0 .2.1 1.1-.5 1.7-.5.6-1.1.7-1.6.7-.4 0-1 0-2-.4-1.1-.4-2-.9-2.8-1.7-.7-.7-1.3-1.5-1.9-2.5-.6-1-.9-1.8-1-2.1-.1-.3 0-.8.3-1.1.2-.3.6-.8.8-1.1Z" />
+                      </svg>
                       WhatsApp — Quick Connect
                     </a>
                   </li>
@@ -144,7 +153,16 @@ const Footer = () => {
                       className="text-gray-400 hover:text-beige transition-colors duration-200 text-sm inline-flex items-center gap-2 whitespace-nowrap"
                       aria-label="Chat on Telegram"
                     >
-                      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="currentColor" className="text-beige/80"><path d="M9.7 14.6 9.5 18c.4 0 .6-.2.8-.4l2-1.9 4.1 3c.8.4 1.3.2 1.5-.7L21.6 5c.2-.9-.4-1.3-1.2-1L3.3 10.2c-.8.3-.8.8-.1 1l4.3 1.3 10-6.3-7.8 8.4Z"/></svg>
+                      <svg
+                        viewBox="0 0 24 24"
+                        width="16"
+                        height="16"
+                        aria-hidden="true"
+                        fill="currentColor"
+                        className="text-beige/80"
+                      >
+                        <path d="M9.7 14.6 9.5 18c.4 0 .6-.2.8-.4l2-1.9 4.1 3c.8.4 1.3.2 1.5-.7L21.6 5c.2-.9-.4-1.3-1.2-1L3.3 10.2c-.8.3-.8.8-.1 1l4.3 1.3 10-6.3-7.8 8.4Z" />
+                      </svg>
                       Telegram — Quick Connect
                     </a>
                   </li>
@@ -156,13 +174,24 @@ const Footer = () => {
                       className="text-gray-400 hover:text-beige transition-colors duration-200 text-sm inline-flex items-center gap-2 whitespace-nowrap"
                       aria-label="Join our Discord"
                     >
-                      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="currentColor" className="text-beige/80"><path d="M20 5.3c-1-.5-2.1-.8-3.3-1 0 0-.2.4-.3.5 1 .3 2 .8 2.8 1.5-1-.5-2.2-.9-3.5-1.1-.8-.2-1.6-.3-2.4-.3s-1.6.1-2.4.3C9.7 5 8.5 5.4 7.5 6c.8-.7 1.8-1.2 2.8-1.5-.1-.1-.3-.5-.3-.5-1.2.2-2.3.5-3.3 1C5.3 7 4.7 9 4.7 11.1c0 0 1 1.7 3.7 1.8 0 0 .4-.6.7-1.1-1.4-.4-1.9-1.2-1.9-1.2s.1.1.4.2c0 0 0 0 0 0 .1 0 .2.1.3.1.8.3 1.6.5 2.3.6.6.1 1.2.1 1.8.1s1.2 0 1.8-.1c.8-.1 1.5-.3 2.3-.6.1 0 .2-.1.3-.1 0 0 0 0 0 0 .2-.1.3-.1.4-.2 0 0-.5.8-1.9 1.2.3.5.7 1.1.7 1.1 2.7-.1 3.7-1.8 3.7-1.8 0-2.1-.6-4.1-1.9-5.8Z"/></svg>
+                      <svg
+                        viewBox="0 0 24 24"
+                        width="16"
+                        height="16"
+                        aria-hidden="true"
+                        fill="currentColor"
+                        className="text-beige/80"
+                      >
+                        <path d="M20 5.3c-1-.5-2.1-.8-3.3-1 0 0-.2.4-.3.5 1 .3 2 .8 2.8 1.5-1-.5-2.2-.9-3.5-1.1-.8-.2-1.6-.3-2.4-.3s-1.6.1-2.4.3C9.7 5 8.5 5.4 7.5 6c.8-.7 1.8-1.2 2.8-1.5-.1-.1-.3-.5-.3-.5-1.2.2-2.3.5-3.3 1C5.3 7 4.7 9 4.7 11.1c0 0 1 1.7 3.7 1.8 0 0 .4-.6.7-1.1-1.4-.4-1.9-1.2-1.9-1.2s.1.1.4.2c0 0 0 0 0 0 .1 0 .2.1.3.1.8.3 1.6.5 2.3.6.6.1 1.2.1 1.8.1s1.2 0 1.8-.1c.8-.1 1.5-.3 2.3-.6.1 0 .2-.1.3-.1 0 0 0 0 0 0 .2-.1.3-.1.4-.2 0 0-.5.8-1.9 1.2.3.5.7 1.1.7 1.1 2.7-.1 3.7-1.8 3.7-1.8 0-2.1-.6-4.1-1.9-5.8Z" />
+                      </svg>
                       Discord — Join Our Server
                     </a>
                   </li>
                   <li className="text-gray-400 text-sm">Remote, Worldwide</li>
                   <li className="text-gray-400 text-sm">24h Response Time</li>
-                  <li className="text-gray-400 text-sm">Available 7 days/week</li>
+                  <li className="text-gray-400 text-sm">
+                    Available 7 days/week
+                  </li>
                 </ul>
               </div>
             </div>
@@ -176,7 +205,9 @@ const Footer = () => {
             transition={{ duration: 0.6, delay: 0.25 }}
             viewport={{ once: true }}
           >
-            <h4 className="text-white font-semibold mb-2 text-sm">Quick Connect</h4>
+            <h4 className="text-white font-semibold mb-2 text-sm">
+              Quick Connect
+            </h4>
             <ul className="space-y-2 mb-2">
               <li>
                 <a
@@ -186,7 +217,16 @@ const Footer = () => {
                   className="text-gray-400 hover:text-beige transition-colors duration-200 text-sm inline-flex items-center gap-2 whitespace-nowrap"
                   aria-label="Chat on WhatsApp"
                 >
-                  <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="currentColor" className="text-beige/80"><path d="M17.5 6.5A7.5 7.5 0 0 0 6.2 17.2L5 21l3.9-1.1A7.5 7.5 0 1 0 17.5 6.5Zm-5.9 2.7c.2-.5.3-.5.6-.5h.5c.2 0 .4 0 .6.4.2.4.8 1.4.9 1.5.1.2.1.3 0 .5-.1.2-.2.3-.4.6-.2.2-.4.4-.2.7.2.2.8 1.4 1.9 2 .9.6 1.1.5 1.4.4.3-.1.7-.6.9-.8.2-.2.4-.2.6-.1.2.1 1.4.7 1.6.8.2.1.4.2.4.4 0 .2.1 1.1-.5 1.7-.5.6-1.1.7-1.6.7-.4 0-1 0-2-.4-1.1-.4-2-.9-2.8-1.7-.7-.7-1.3-1.5-1.9-2.5-.6-1-.9-1.8-1-2.1-.1-.3 0-.8.3-1.1.2-.3.6-.8.8-1.1Z"/></svg>
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="16"
+                    height="16"
+                    aria-hidden="true"
+                    fill="currentColor"
+                    className="text-beige/80"
+                  >
+                    <path d="M17.5 6.5A7.5 7.5 0 0 0 6.2 17.2L5 21l3.9-1.1A7.5 7.5 0 1 0 17.5 6.5Zm-5.9 2.7c.2-.5.3-.5.6-.5h.5c.2 0 .4 0 .6.4.2.4.8 1.4.9 1.5.1.2.1.3 0 .5-.1.2-.2.3-.4.6-.2.2-.4.4-.2.7.2.2.8 1.4 1.9 2 .9.6 1.1.5 1.4.4.3-.1.7-.6.9-.8.2-.2.4-.2.6-.1.2.1 1.4.7 1.6.8.2.1.4.2.4.4 0 .2.1 1.1-.5 1.7-.5.6-1.1.7-1.6.7-.4 0-1 0-2-.4-1.1-.4-2-.9-2.8-1.7-.7-.7-1.3-1.5-1.9-2.5-.6-1-.9-1.8-1-2.1-.1-.3 0-.8.3-1.1.2-.3.6-.8.8-1.1Z" />
+                  </svg>
                   WhatsApp — Quick Connect
                 </a>
               </li>
@@ -198,7 +238,16 @@ const Footer = () => {
                   className="text-gray-400 hover:text-beige transition-colors duration-200 text-sm inline-flex items-center gap-2 whitespace-nowrap"
                   aria-label="Chat on Telegram"
                 >
-                  <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="currentColor" className="text-beige/80"><path d="M9.7 14.6 9.5 18c.4 0 .6-.2.8-.4l2-1.9 4.1 3c.8.4 1.3.2 1.5-.7L21.6 5c.2-.9-.4-1.3-1.2-1L3.3 10.2c-.8.3-.8.8-.1 1l4.3 1.3 10-6.3-7.8 8.4Z"/></svg>
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="16"
+                    height="16"
+                    aria-hidden="true"
+                    fill="currentColor"
+                    className="text-beige/80"
+                  >
+                    <path d="M9.7 14.6 9.5 18c.4 0 .6-.2.8-.4l2-1.9 4.1 3c.8.4 1.3.2 1.5-.7L21.6 5c.2-.9-.4-1.3-1.2-1L3.3 10.2c-.8.3-.8.8-.1 1l4.3 1.3 10-6.3-7.8 8.4Z" />
+                  </svg>
                   Telegram — Quick Connect
                 </a>
               </li>
@@ -210,7 +259,16 @@ const Footer = () => {
                   className="text-gray-400 hover:text-beige transition-colors duration-200 text-sm inline-flex items-center gap-2 whitespace-nowrap"
                   aria-label="Join our Discord"
                 >
-                  <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="currentColor" className="text-beige/80"><path d="M20 5.3c-1-.5-2.1-.8-3.3-1 0 0-.2.4-.3.5 1 .3 2 .8 2.8 1.5-1-.5-2.2-.9-3.5-1.1-.8-.2-1.6-.3-2.4-.3s-1.6.1-2.4.3C9.7 5 8.5 5.4 7.5 6c.8-.7 1.8-1.2 2.8-1.5-.1-.1-.3-.5-.3-.5-1.2.2-2.3.5-3.3 1C5.3 7 4.7 9 4.7 11.1c0 0 1 1.7 3.7 1.8 0 0 .4-.6.7-1.1-1.4-.4-1.9-1.2-1.9-1.2s.1.1.4.2c0 0 0 0 0 0 .1 0 .2.1.3.1.8.3 1.6.5 2.3.6.6.1 1.2.1 1.8.1s1.2 0 1.8-.1c.8-.1 1.5-.3 2.3-.6.1 0 .2-.1.3-.1 0 0 0 0 0 0 .2-.1.3-.1.4-.2 0 0-.5.8-1.9 1.2.3.5.7 1.1.7 1.1 2.7-.1 3.7-1.8 3.7-1.8 0-2.1-.6-4.1-1.9-5.8Z"/></svg>
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="16"
+                    height="16"
+                    aria-hidden="true"
+                    fill="currentColor"
+                    className="text-beige/80"
+                  >
+                    <path d="M20 5.3c-1-.5-2.1-.8-3.3-1 0 0-.2.4-.3.5 1 .3 2 .8 2.8 1.5-1-.5-2.2-.9-3.5-1.1-.8-.2-1.6-.3-2.4-.3s-1.6.1-2.4.3C9.7 5 8.5 5.4 7.5 6c.8-.7 1.8-1.2 2.8-1.5-.1-.1-.3-.5-.3-.5-1.2.2-2.3.5-3.3 1C5.3 7 4.7 9 4.7 11.1c0 0 1 1.7 3.7 1.8 0 0 .4-.6.7-1.1-1.4-.4-1.9-1.2-1.9-1.2s.1.1.4.2c0 0 0 0 0 0 .1 0 .2.1.3.1.8.3 1.6.5 2.3.6.6.1 1.2.1 1.8.1s1.2 0 1.8-.1c.8-.1 1.5-.3 2.3-.6.1 0 .2-.1.3-.1 0 0 0 0 0 0 .2-.1.3-.1.4-.2 0 0-.5.8-1.9 1.2.3.5.7 1.1.7 1.1 2.7-.1 3.7-1.8 3.7-1.8 0-2.1-.6-4.1-1.9-5.8Z" />
+                  </svg>
                   Discord — Join Our Server
                 </a>
               </li>
@@ -219,7 +277,6 @@ const Footer = () => {
               <li className="text-gray-400 text-sm">Available 7 days/week</li>
             </ul>
           </motion.div>
-
         </div>
 
         {/* Bottom section */}

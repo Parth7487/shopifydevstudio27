@@ -28,7 +28,6 @@ const CollaborationSection = memo(() => {
     },
   ];
 
-
   const [calendlyOpen, setCalendlyOpen] = useState(false);
 
   return (
@@ -47,7 +46,6 @@ const CollaborationSection = memo(() => {
             real business growth.
           </p>
         </div>
-
 
         {/* Collaborations Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -113,12 +111,29 @@ const CollaborationSection = memo(() => {
             Connect with industry leaders and be part of a collaborative
             ecosystem that's shaping the future of e-commerce.
           </p>
-          <button onClick={() => { const url = (import.meta as any).env?.VITE_CALENDLY_URL as string | undefined; if (url) { setCalendlyOpen(true); } else { window.location.hash = "#contact"; } }} className="bg-gradient-to-r from-beige to-clay text-black font-semibold px-8 py-4 rounded-full hover:scale-105 transition-transform duration-300">
-              Start Your Project
-            </button>
+          <button
+            onClick={() => {
+              const url = (import.meta as any).env?.VITE_CALENDLY_URL as
+                | string
+                | undefined;
+              if (url) {
+                setCalendlyOpen(true);
+              } else {
+                window.location.hash = "#contact";
+              }
+            }}
+            className="bg-gradient-to-r from-beige to-clay text-black font-semibold px-8 py-4 rounded-full hover:scale-105 transition-transform duration-300"
+          >
+            Start Your Project
+          </button>
         </div>
       </div>
-      <CalendlyModal open={calendlyOpen && Boolean((import.meta as any).env?.VITE_CALENDLY_URL)} onClose={() => setCalendlyOpen(false)} />
+      <CalendlyModal
+        open={
+          calendlyOpen && Boolean((import.meta as any).env?.VITE_CALENDLY_URL)
+        }
+        onClose={() => setCalendlyOpen(false)}
+      />
     </section>
   );
 });

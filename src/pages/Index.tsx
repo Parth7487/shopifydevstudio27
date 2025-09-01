@@ -12,7 +12,9 @@ const CollaborationSection = lazy(
 );
 const FAQ = lazy(() => import("../components/sections/FAQ"));
 const WorkMarquee = lazy(() => import("../components/sections/WorkMarquee"));
-const WorkMarqueeAlt = lazy(() => import("../components/sections/WorkMarqueeAlt"));
+const WorkMarqueeAlt = lazy(
+  () => import("../components/sections/WorkMarqueeAlt"),
+);
 const ProblemSolution = lazy(
   () => import("../components/sections/ProblemSolution"),
 );
