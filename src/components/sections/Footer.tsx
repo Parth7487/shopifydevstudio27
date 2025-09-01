@@ -169,6 +169,53 @@ const Footer = () => {
               </p>
             </div>
           </motion.div>
+
+          {/* Quick Connect & Status - right of Get in Touch */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.25 }}
+            viewport={{ once: true }}
+          >
+            <ul className="space-y-2 mb-3">
+              <li>
+                <a
+                  href="https://wa.me/917487080421?text=Hello%20Shopify%20Dev%20Studio%20%E2%80%93%20I%20would%20like%20to%20connect"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-beige transition-colors duration-200 text-sm inline-flex items-center gap-2"
+                  aria-label="Chat on WhatsApp"
+                >
+                  WhatsApp — Quick Connect
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://t.me/prime2357"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-beige transition-colors duration-200 text-sm inline-flex items-center gap-2"
+                  aria-label="Chat on Telegram"
+                >
+                  Telegram — Quick Connect
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://discord.gg/GcfkVXsn"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-beige transition-colors duration-200 text-sm inline-flex items-center gap-2"
+                  aria-label="Join our Discord"
+                >
+                  Discord — Join Our Server
+                </a>
+              </li>
+              <li className="text-gray-400 text-sm">Remote, Worldwide</li>
+              <li className="text-gray-400 text-sm">24h Response Time</li>
+              <li className="text-gray-400 text-sm">Available 7 days/week</li>
+            </ul>
+          </motion.div>
         </div>
 
         {/* Bottom section */}
