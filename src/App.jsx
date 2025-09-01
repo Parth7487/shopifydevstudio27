@@ -149,6 +149,15 @@ const App = memo(() => (
           }
         />
         <Route
+          path="/404"
+          element={
+            <Suspense fallback={<MinimalLoader />}>
+              <NotFound />
+            </Suspense>
+          }
+        />
+        <Route path="/NotFound" element={<Navigate to="/404" replace />} />
+        <Route
           path="*"
           element={
             <Suspense fallback={<MinimalLoader />}>
