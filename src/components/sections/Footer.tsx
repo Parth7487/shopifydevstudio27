@@ -84,13 +84,13 @@ const Footer = () => {
             <h4 className="text-white font-semibold mb-3 text-sm">
               Get in Touch
             </h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-start">
-              <div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-start">
+              <div className="min-w-0">
                 <ul className="space-y-2 mb-3">
                   <li>
                     <a
                       href="mailto:contact@shopifydevstudio.tech"
-                      className="text-gray-400 hover:text-beige transition-colors duration-200 text-sm sm:text-base"
+                      className="text-gray-400 hover:text-beige transition-colors duration-200 text-sm sm:text-base break-words"
                     >
                       contact@shopifydevstudio.tech
                     </a>
@@ -98,7 +98,7 @@ const Footer = () => {
                   <li>
                     <a
                       href="mailto:consult@shopifydevstudio.tech"
-                      className="text-gray-400 hover:text-beige transition-colors duration-200 text-sm sm:text-base"
+                      className="text-gray-400 hover:text-beige transition-colors duration-200 text-sm sm:text-base break-words"
                     >
                       consult@shopifydevstudio.tech
                     </a>
@@ -106,7 +106,7 @@ const Footer = () => {
                   <li>
                     <a
                       href="mailto:shopifydevstudioo@gmail.com"
-                      className="text-gray-400 hover:text-beige transition-colors duration-200 text-sm sm:text-base"
+                      className="text-gray-400 hover:text-beige transition-colors duration-200 text-sm sm:text-base break-words"
                     >
                       shopifydevstudioo@gmail.com
                     </a>
@@ -127,14 +127,14 @@ const Footer = () => {
                 </div>
               </div>
 
-              <div>
-                <ul className="space-y-2 mb-3">
+              <div className="min-w-0">
+                <ul className="space-y-2 mb-3 break-words">
                   <li>
                     <a
                       href="https://wa.me/917487080421?text=Hello%20Shopify%20Dev%20Studio%20%E2%80%93%20I%20would%20like%20to%20connect"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-gray-400 hover:text-beige transition-colors duration-200 text-sm inline-flex items-center gap-2"
+                      className="text-gray-400 hover:text-beige transition-colors duration-200 text-sm inline-flex items-center gap-2 break-words"
                       aria-label="Chat on WhatsApp"
                     >
                       WhatsApp — Quick Connect
@@ -145,7 +145,7 @@ const Footer = () => {
                       href="https://t.me/prime2357"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-gray-400 hover:text-beige transition-colors duration-200 text-sm inline-flex items-center gap-2"
+                      className="text-gray-400 hover:text-beige transition-colors duration-200 text-sm inline-flex items-center gap-2 break-words"
                       aria-label="Chat on Telegram"
                     >
                       Telegram — Quick Connect
@@ -156,7 +156,7 @@ const Footer = () => {
                       href="https://discord.gg/GcfkVXsn"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-gray-400 hover:text-beige transition-colors duration-200 text-sm inline-flex items-center gap-2"
+                      className="text-gray-400 hover:text-beige transition-colors duration-200 text-sm inline-flex items-center gap-2 break-words"
                       aria-label="Join our Discord"
                     >
                       Discord — Join Our Server
