@@ -15,7 +15,7 @@ const Footer = () => {
   return (
     <footer className="bg-charcoal border-t border-beige/20 py-3 sm:py-4">
       <div className="max-w-7xl mx-auto mobile-safe-padding px-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-1.5 sm:gap-2 items-start">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-1.5 sm:gap-2 lg:gap-1 lg:gap-x-1 items-start">
           {/* Logo and description */}
           <motion.div
             className="order-1 lg:col-span-1 p-2 sm:p-3"
