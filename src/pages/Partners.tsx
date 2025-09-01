@@ -280,22 +280,6 @@ const Partners = memo(() => {
         instagramHandle: "@franklinhatchett",
         twitterHandle: "@franklinhatchett",
       },
-      {
-        name: "Nik Sharma",
-        title: "E-commerce Growth Expert",
-        company: "Sharma Brands",
-        avatar:
-          "https://cdn.builder.io/api/v1/image/assets%2Fa123f855fb4947d88a1058da019e0c23%2Ff8cc9ba8b8084ffab95f011c81451bdf?format=webp&width=800",
-        verified: true,
-        hook: "50+ DTC brands scaled • $500M+ revenue",
-        achievement: "Forbes 30 Under 30",
-        comment:
-          "Their development work is next level. They built our custom subscription platform that now handles $2M+ monthly recurring revenue. The technical execution was flawless.",
-        linkedinUrl: "https://www.linkedin.com/in/niksharma/",
-        website: "https://sharmabrands.com",
-        instagramHandle: "@mrsharma",
-        twitterHandle: "@mrsharma",
-      },
     ],
     [],
   );
@@ -690,43 +674,6 @@ const Partners = memo(() => {
           </div>
         </section>
 
-        {/* Verification Notice */}
-        <section className="px-4 mb-20">
-          <div className="max-w-4xl mx-auto">
-            <AnimatedCard>
-              <div className="bg-gradient-to-br from-green-500/10 to-blue-500/10 rounded-2xl border border-green-500/20 p-8 text-center">
-                <Verified className="w-12 h-12 text-green-400 mx-auto mb-4" />
-                <h3 className="text-2xl font-bold text-white mb-4">
-                  100% Verified Partnerships & Social Proof
-                </h3>
-                <p className="text-gray-300 mb-6 leading-relaxed">
-                  All partnerships, testimonials, and social media mentions are
-                  from real, verified professionals. LinkedIn profiles,
-                  websites, Instagram handles, and Twitter accounts are publicly
-                  verifiable. Click any link to verify authenticity.
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
-                  <div className="flex items-center justify-center gap-2 text-green-400">
-                    <Verified className="w-4 h-4" />
-                    LinkedIn Verified
-                  </div>
-                  <div className="flex items-center justify-center gap-2 text-blue-400">
-                    <Globe className="w-4 h-4" />
-                    Website Links
-                  </div>
-                  <div className="flex items-center justify-center gap-2 text-pink-400">
-                    <Instagram className="w-4 h-4" />
-                    Instagram Handles
-                  </div>
-                  <div className="flex items-center justify-center gap-2 text-blue-400">
-                    <Twitter className="w-4 h-4" />
-                    Twitter Profiles
-                  </div>
-                </div>
-              </div>
-            </AnimatedCard>
-          </div>
-        </section>
 
         {/* Call to Action */}
         <section className="px-4">
