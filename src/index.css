@@ -1,0 +1,183 @@
+/* Ultra-optimized font loading - preload with swap */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .elegant-button {
+    @apply bg-beige text-black font-medium transition-colors duration-200 hover:bg-beige/90;
+  }
+
+  .elegant-card {
+    @apply bg-charcoal/80 border border-gray-600/20;
+  }
+
+  /* Essential performance utility */
+  .gpu-accelerated {
+    transform: translateZ(0);
+  }
+
+  /* Hide scrollbars utility */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+
+  /* Ultra-smooth marquee track using GPU transforms */
+  .marquee-track {
+    display: flex;
+    gap: 1rem;
+    will-change: transform;
+    transform: translateZ(0);
+    animation-name: marquee-scroll;
+    animation-duration: var(--duration, 30s);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  .marquee-track[data-paused="true"] { animation-play-state: paused; }
+  .marquee-track-reverse { animation-name: marquee-scroll-reverse; }
+}
+
+@layer base {
+  @keyframes marquee-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(-1 * var(--marquee-distance, 100%))); }
+  }
+  @keyframes marquee-scroll-reverse {
+    from { transform: translateX(calc(-1 * var(--marquee-distance, 100%))); }
+    to { transform: translateX(0); }
+  }
+
+  /* Essential CSS variables only */
+  :root {
+    --background: 0 0% 4%;
+    --foreground: 0 0% 95%;
+    --card: 240 4% 11%;
+    --card-foreground: 0 0% 95%;
+    --popover: 240 4% 11%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 30 44% 70%;
+    --primary-foreground: 0 0% 4%;
+    --secondary: 240 3% 17%;
+    --secondary-foreground: 0 0% 95%;
+    --muted: 240 3% 17%;
+    --muted-foreground: 240 5% 64%;
+    --accent: 30 44% 70%;
+    --accent-foreground: 0 0% 4%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 95%;
+    --border: 240 3% 17%;
+    --input: 240 3% 17%;
+    --ring: 30 44% 70%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 0 0% 4%;
+    --foreground: 0 0% 95%;
+    --card: 240 4% 11%;
+    --card-foreground: 0 0% 95%;
+    --popover: 240 4% 11%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 42 100% 75%;
+    --primary-foreground: 0 0% 4%;
+    --secondary: 240 3% 17%;
+    --secondary-foreground: 0 0% 95%;
+    --muted: 240 3% 17%;
+    --muted-foreground: 240 5% 64%;
+    --accent: 2 100% 68%;
+    --accent-foreground: 0 0% 95%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 95%;
+    --border: 240 3% 17%;
+    --input: 240 3% 17%;
+    --ring: 42 100% 75%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-black text-white;
+    font-family:
+      "Inter",
+      system-ui,
+      -apple-system,
+      sans-serif;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    font-display: swap;
+    text-rendering: optimizeSpeed;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family:
+      "Inter",
+      system-ui,
+      -apple-system,
+      sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  body {
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+  }
+
+  #root {
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+}
+
+/* Minimal transitions for performance */
+* {
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+/* Minimal scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #e6b17e;
+  border-radius: 3px;
+}
+
+/* Selection styling */
+::selection {
+  background: rgba(230, 177, 126, 0.3);
+  color: white;
+}
+
+::-moz-selection {
+  background: rgba(230, 177, 126, 0.3);
+  color: white;
+}
