@@ -15,7 +15,7 @@ const Footer = () => {
   return (
     <footer className="bg-charcoal border-t border-beige/20 py-3 sm:py-4">
       <div className="max-w-7xl mx-auto mobile-safe-padding px-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-2 items-start">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-1.5 sm:gap-2 items-start">
           {/* Logo and description */}
           <motion.div
             className="order-1 lg:col-span-1 p-2 sm:p-3"
@@ -194,7 +194,6 @@ const Footer = () => {
           </motion.div>
           {/* Status (5th column) */}
           <motion.div className="order-5 p-2 sm:p-3" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }} viewport={{ once: true }}>
-            <h4 className="text-white font-semibold mb-2 text-sm">Status</h4>
             <ul className="space-y-2 mb-3">
               <li className="text-gray-400 text-sm">Remote, Worldwide</li>
               <li className="text-gray-400 text-sm">24h Response Time</li>
