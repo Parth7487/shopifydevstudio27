@@ -12,7 +12,9 @@ const CollaborationSection = lazy(
 );
 const FAQ = lazy(() => import("../components/sections/FAQ"));
 const WorkMarquee = lazy(() => import("../components/sections/WorkMarquee"));
-const WorkMarqueeAlt = lazy(() => import("../components/sections/WorkMarqueeAlt"));
+const WorkMarqueeAlt = lazy(
+  () => import("../components/sections/WorkMarqueeAlt"),
+);
 const ProblemSolution = lazy(
   () => import("../components/sections/ProblemSolution"),
 );
@@ -54,18 +56,6 @@ const Index = memo(() => {
 
         <section>
           <Suspense fallback={<ComponentLoader />}>
-            <Process />
-          </Suspense>
-        </section>
-
-        <section>
-          <Suspense fallback={<ComponentLoader />}>
-            <CollaborationSection />
-          </Suspense>
-        </section>
-
-        <section>
-          <Suspense fallback={<ComponentLoader />}>
             <WorkMarquee />
           </Suspense>
         </section>
@@ -73,6 +63,18 @@ const Index = memo(() => {
         <section>
           <Suspense fallback={<ComponentLoader />}>
             <WorkMarqueeAlt />
+          </Suspense>
+        </section>
+
+        <section>
+          <Suspense fallback={<ComponentLoader />}>
+            <Process />
+          </Suspense>
+        </section>
+
+        <section>
+          <Suspense fallback={<ComponentLoader />}>
+            <CollaborationSection />
           </Suspense>
         </section>
 

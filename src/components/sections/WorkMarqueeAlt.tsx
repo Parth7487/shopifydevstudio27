@@ -99,15 +99,17 @@ const WorkMarqueeAlt = memo(() => {
   const loopItems = useMemo(() => [...items, ...items], [items]);
 
   return (
-    <section className="py-6 sm:py-10 px-4 relative overflow-hidden" ref={containerRef}>
+    <section
+      className="py-6 sm:py-10 px-4 relative overflow-hidden"
+      ref={containerRef}
+    >
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-black to-transparent" />
         <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-black to-transparent" />
       </div>
 
       <div className="max-w-7xl mx-auto">
-        <div className="flex items-end justify-between mb-4 sm:mb-6">
-          <h2 className="text-xl sm:text-2xl font-bold text-white">Featured Brands</h2>
+        <div className="flex items-end justify-end mb-3 sm:mb-5">
           <button
             onClick={() => navigate("/work")}
             className="text-beige text-xs border border-beige/30 px-3 py-1.5 rounded-lg hover:bg-beige/10 transition-colors"
@@ -135,13 +137,25 @@ const WorkMarqueeAlt = memo(() => {
                 className="group relative block w-[88vw] sm:w-[60vw] md:w-[46vw] lg:w-[38vw] flex-shrink-0"
               >
                 <div className="h-52 sm:h-60 md:h-72 lg:h-80 rounded-xl overflow-hidden border border-beige/20 bg-charcoal relative">
-                  <OptimizedImage src={item.image} alt={item.brand} className="w-full h-full object-cover transition-opacity duration-300" placeholder={false} />
+                  <OptimizedImage
+                    src={item.image}
+                    alt={item.brand}
+                    className="w-full h-full object-cover transition-opacity duration-300"
+                    placeholder={false}
+                  />
                   {item.hover && (
-                    <OptimizedImage src={item.hover} alt={`${item.brand} hover`} className="w-full h-full object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" placeholder={false} />
+                    <OptimizedImage
+                      src={item.hover}
+                      alt={`${item.brand} hover`}
+                      className="w-full h-full object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                      placeholder={false}
+                    />
                   )}
                   <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4 bg-gradient-to-t from-black/70 to-transparent opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
                     <div className="flex items-center justify-between text-sm sm:text-base">
-                      <span className="text-white font-medium">{item.brand}</span>
+                      <span className="text-white font-medium">
+                        {item.brand}
+                      </span>
                       <span className="text-beige inline-flex items-center gap-1">
                         View <ExternalLink className="w-4 h-4" />
                       </span>
@@ -161,13 +175,25 @@ const WorkMarqueeAlt = memo(() => {
                 className="group relative block w-[88vw] sm:w-[60vw] md:w-[46vw] lg:w-[38vw] flex-shrink-0"
               >
                 <div className="h-52 sm:h-60 md:h-72 lg:h-80 rounded-xl overflow-hidden border border-beige/20 bg-charcoal relative">
-                  <OptimizedImage src={item.image} alt={item.brand} className="w-full h-full object-cover transition-opacity duration-300" placeholder={false} />
+                  <OptimizedImage
+                    src={item.image}
+                    alt={item.brand}
+                    className="w-full h-full object-cover transition-opacity duration-300"
+                    placeholder={false}
+                  />
                   {item.hover && (
-                    <OptimizedImage src={item.hover} alt={`${item.brand} hover`} className="w-full h-full object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" placeholder={false} />
+                    <OptimizedImage
+                      src={item.hover}
+                      alt={`${item.brand} hover`}
+                      className="w-full h-full object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                      placeholder={false}
+                    />
                   )}
                   <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4 bg-gradient-to-t from-black/70 to-transparent opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
                     <div className="flex items-center justify-between text-sm sm:text-base">
-                      <span className="text-white font-medium">{item.brand}</span>
+                      <span className="text-white font-medium">
+                        {item.brand}
+                      </span>
                       <span className="text-beige inline-flex items-center gap-1">
                         View <ExternalLink className="w-4 h-4" />
                       </span>
