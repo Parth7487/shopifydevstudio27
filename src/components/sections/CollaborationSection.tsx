@@ -5,28 +5,6 @@ import { Star, Users, Award, TrendingUp } from "lucide-react";
 const CollaborationSection = memo(() => {
   const collaborations = [
     {
-      name: "Nishkarsh Sharma",
-      role: "Shopify Expert & E-commerce Strategist",
-      company: "ShopifyGuru",
-      image:
-        "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2F3e2a9c87960747af8e9e7482187724be?format=webp&width=800",
-      quote:
-        "Their technical expertise and attention to detail is unmatched in the Shopify ecosystem.",
-      achievement: "150+ Stores Optimized",
-      verified: true,
-    },
-    {
-      name: "David Fogarty",
-      role: "E-commerce Growth Expert",
-      company: "The Oodie",
-      image:
-        "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2Fcd04eccfd8634e46bc9795fd561e4428?format=webp&width=800",
-      quote:
-        "Working with this team has been instrumental in scaling our operations efficiently.",
-      achievement: "$100M+ Revenue Generated",
-      verified: true,
-    },
-    {
       name: "Sarah Chen",
       role: "UX/UI Design Lead",
       company: "Figma Community",
