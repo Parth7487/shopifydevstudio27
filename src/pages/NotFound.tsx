@@ -5,13 +5,19 @@ const NotFound = () => {
   const location = useLocation();
 
   useEffect(() => {
-    console.warn(
-      "404 Not Found:",
-      location.pathname,
-    );
-    if (typeof window !== "undefined" && typeof (window as any).gtag === "function") {
-      (window as any).gtag("event", "page_view", { page_title: "404", page_path: location.pathname });
-      (window as any).gtag("event", "exception", { description: `404 Not Found: ${location.pathname}`, fatal: false });
+    console.warn("404 Not Found:", location.pathname);
+    if (
+      typeof window !== "undefined" &&
+      typeof (window as any).gtag === "function"
+    ) {
+      (window as any).gtag("event", "page_view", {
+        page_title: "404",
+        page_path: location.pathname,
+      });
+      (window as any).gtag("event", "exception", {
+        description: `404 Not Found: ${location.pathname}`,
+        fatal: false,
+      });
     }
   }, [location.pathname]);
 
