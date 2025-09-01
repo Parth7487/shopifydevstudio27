@@ -116,8 +116,7 @@ const WorkMarquee = memo(() => {
       </div>
 
       <div className="max-w-7xl mx-auto">
-        <div className="flex items-end justify-between mb-6 sm:mb-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white">Recent Work</h2>
+        <div className="flex items-end justify-end mb-4 sm:mb-6">
           <button
             onClick={() => navigate("/work")}
             className="text-beige text-sm border border-beige/30 px-3 py-1.5 rounded-lg hover:bg-beige/10 transition-colors"
