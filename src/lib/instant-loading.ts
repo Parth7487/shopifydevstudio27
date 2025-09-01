@@ -46,20 +46,8 @@ export const prefetchSupabaseData = async () => {
 // Optimize images for instant loading
 export const optimizeImageLoading = () => {
   if (typeof window !== 'undefined') {
-    // Preload critical images
-    const criticalImages = [
-      'https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=800',
-      'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800',
-      'https://images.unsplash.com/photo-1570194065650-d99fb4bedf0a?w=800'
-    ]
-
-    criticalImages.forEach(src => {
-      const link = document.createElement('link')
-      link.rel = 'preload'
-      link.as = 'image'
-      link.href = src
-      document.head.appendChild(link)
-    })
+    // Avoid preloading external images that may 404 or change over time
+    // Rely on browser lazy/priority hints in markup instead
   }
 }
 
