@@ -241,27 +241,6 @@ const Work = () => {
       hasVideo: true,
     },
     {
-      id: 16,
-      title: "MVMT - Minimalist Watches",
-      brand: "MVMT",
-      description:
-        "Minimalist watch brand that disrupted traditional retail with direct-to-consumer model. Features intelligent style matching quizzes, custom engraving services, interchangeable band systems, virtual try-on technology, and subscription services for watch enthusiasts.",
-      image: "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2Fd5ef16192a934217999bb0448ae4fcd0?format=webp&width=1280",
-      imageHover: "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2F372f556fe7f94ca28e2080a47880f704?format=webp&width=1280",
-      videoUrl:
-        "https://player.vimeo.com/video/678901345?autoplay=1&loop=1&muted=1",
-      category: "Jewelry",
-      tags: ["Minimalist Design", "Personalization"],
-      tech: ["Shopify Plus", "Style Quiz", "Custom Engraving"],
-      metrics: {
-        conversion: "385%",
-        loadTime: "0.5s",
-      },
-      liveUrl: "https://mvmt.com/",
-      featured: false,
-      hasVideo: true,
-    },
-    {
       id: 17,
       title: "Death Wish Coffee - Bold Brews",
       brand: "Death Wish Coffee",
