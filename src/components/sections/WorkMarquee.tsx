@@ -45,14 +45,6 @@ const WorkMarquee = memo(() => {
         url: "https://deathwishcoffee.com/",
       },
       {
-        brand: "MVMT",
-        image:
-          "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2Fd5ef16192a934217999bb0448ae4fcd0?format=webp&width=800",
-        hover:
-          "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2F372f556fe7f94ca28e2080a47880f704?format=webp&width=800",
-        url: "https://mvmt.com/",
-      },
-      {
         brand: "Triangl",
         image:
           "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2Fb519514eaa674de1b183894be58328cd?format=webp&width=800",
