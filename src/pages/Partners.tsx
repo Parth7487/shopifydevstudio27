@@ -331,26 +331,6 @@ const Partners = memo(() => {
   const workShowcases = useMemo(
     () => [
       {
-        storeName: "MVMT Watches",
-        category: "Fashion & Accessories",
-        beforeImage:
-          "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=400&fit=crop",
-        afterImage:
-          "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop",
-        improvements: [
-          "Conversion rate: 2.1% → 5.8%",
-          "Page load time: 4.2s → 1.1s",
-          "Mobile sales: +347%",
-          "Cart abandonment: 65% → 28%",
-        ],
-        testimonial:
-          "The redesign completely transformed our business. Revenue increased 240% in the first quarter.",
-        clientRole: "Marketing Director",
-        challenge: "Slow loading times and poor mobile experience",
-        solution: "Complete performance optimization and mobile-first redesign",
-        websiteUrl: "https://mvmtwatches.com",
-      },
-      {
         storeName: "Peak Performance",
         category: "Fitness & Sports",
         beforeImage:
