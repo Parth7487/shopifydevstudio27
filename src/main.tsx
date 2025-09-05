@@ -26,4 +26,5 @@ if (import.meta.env.DEV) {
 } else {
   // Skip StrictMode in production for better performance
   root.render(<App />);
+  import('./lib/perf-audit').then(m => m.runQuickPerfAudit?.());
 }
