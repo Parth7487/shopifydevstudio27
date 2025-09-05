@@ -6,6 +6,8 @@ interface ImageComparisonProps {
   className?: string;
 }
 
+import { getOptimizedImageSrc, getSrcSet } from "@/lib/performance";
+
 interface ImageComparisonImageProps {
   src: string;
   alt: string;
@@ -98,16 +100,25 @@ const ImageComparisonImage = React.forwardRef<
       ? `inset(0 ${100 - sliderPosition}% 0 0)`
       : `inset(0 0 0 ${sliderPosition}%)`;
 
+  const sizes = "100vw";
+  const srcSetAvif = getSrcSet(src, [640, 800, 1024, 1280], 80, 'avif');
+  const srcSetWebp = getSrcSet(src, [640, 800, 1024, 1280], 80, 'webp');
+  const fallback = getOptimizedImageSrc(src, 1024, 80);
+
   return (
-    <img
-      ref={ref}
-      src={src}
-      alt={alt}
-      className={cn("absolute inset-0 w-full h-full object-cover", className)}
-      style={{ clipPath }}
-      draggable={false}
-      {...props}
-    />
+    <picture>
+      <source type="image/avif" srcSet={srcSetAvif} sizes={sizes} />
+      <source type="image/webp" srcSet={srcSetWebp} sizes={sizes} />
+      <img
+        ref={ref}
+        src={fallback}
+        alt={alt}
+        className={cn("absolute inset-0 w-full h-full object-cover", className)}
+        style={{ clipPath }}
+        draggable={false}
+        {...props}
+      />
+    </picture>
   );
 });
 
