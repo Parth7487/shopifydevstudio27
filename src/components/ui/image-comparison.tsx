@@ -101,8 +101,8 @@ const ImageComparisonImage = React.forwardRef<
       : `inset(0 0 0 ${sliderPosition}%)`;
 
   const sizes = "100vw";
-  const srcSetAvif = getSrcSet(src, [640, 800, 1024, 1280], 80, 'avif');
-  const srcSetWebp = getSrcSet(src, [640, 800, 1024, 1280], 80, 'webp');
+  const srcSetAvif = getSrcSet(src, [640, 800, 1024, 1280], 80, "avif");
+  const srcSetWebp = getSrcSet(src, [640, 800, 1024, 1280], 80, "webp");
   const fallback = getOptimizedImageSrc(src, 1024, 80);
 
   return (

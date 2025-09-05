@@ -47,24 +47,30 @@ export const getOptimizedImageSrc = (
   baseSrc: string,
   width: number,
   quality = 75,
-  desiredFormat?: 'webp' | 'avif'
+  desiredFormat?: "webp" | "avif",
 ) => {
   try {
-    const url = new URL(baseSrc, typeof window !== 'undefined' ? window.location.href : 'https://local');
+    const url = new URL(
+      baseSrc,
+      typeof window !== "undefined" ? window.location.href : "https://local",
+    );
 
     // Unsplash: width, quality, and format via fm
-    if (url.hostname.includes('images.unsplash.com')) {
-      url.searchParams.set('w', String(width));
-      url.searchParams.set('q', String(Math.min(Math.max(quality, 30), 90)));
-      if (desiredFormat) url.searchParams.set('fm', desiredFormat);
+    if (url.hostname.includes("images.unsplash.com")) {
+      url.searchParams.set("w", String(width));
+      url.searchParams.set("q", String(Math.min(Math.max(quality, 30), 90)));
+      if (desiredFormat) url.searchParams.set("fm", desiredFormat);
       return url.toString();
     }
 
     // Builder.io CDN: ensure width and optional format
-    if (url.hostname.includes('cdn.builder.io')) {
-      url.searchParams.set('width', String(width));
-      url.searchParams.set('quality', String(Math.min(Math.max(quality, 30), 90)));
-      if (desiredFormat) url.searchParams.set('format', desiredFormat);
+    if (url.hostname.includes("cdn.builder.io")) {
+      url.searchParams.set("width", String(width));
+      url.searchParams.set(
+        "quality",
+        String(Math.min(Math.max(quality, 30), 90)),
+      );
+      if (desiredFormat) url.searchParams.set("format", desiredFormat);
       return url.toString();
     }
 
@@ -74,10 +80,18 @@ export const getOptimizedImageSrc = (
   }
 };
 
-export const getSrcSet = (baseSrc: string, widths = [360, 640, 768, 1024, 1280], quality = 75, desiredFormat?: 'webp' | 'avif') => {
+export const getSrcSet = (
+  baseSrc: string,
+  widths = [360, 640, 768, 1024, 1280],
+  quality = 75,
+  desiredFormat?: "webp" | "avif",
+) => {
   return widths
-    .map((w) => `${getOptimizedImageSrc(baseSrc, w, quality, desiredFormat)} ${w}w`)
-    .join(', ');
+    .map(
+      (w) =>
+        `${getOptimizedImageSrc(baseSrc, w, quality, desiredFormat)} ${w}w`,
+    )
+    .join(", ");
 };
 
 // Check if user prefers reduced motion
