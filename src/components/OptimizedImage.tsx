@@ -78,9 +78,8 @@ const OptimizedImage = ({
         />
       )}
       <picture>
-        {/* Prefer AVIF / WebP when CDN supports */}
-        <source type="image/avif" srcSet={srcSet.replaceAll('format=webp', 'format=avif')} sizes={sizes} />
-        <source type="image/webp" srcSet={srcSet} sizes={sizes} />
+        <source type="image/avif" srcSet={srcSetAvif} sizes={sizes} />
+        <source type="image/webp" srcSet={srcSetWebp} sizes={sizes} />
         <img
           src={optimized}
           alt={alt}
