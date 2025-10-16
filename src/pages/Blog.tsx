@@ -8,6 +8,7 @@ import {
   staggerContainerVariants,
 } from "../hooks/use-scroll-reveal";
 import { updatePageMeta } from "../lib/seo-meta";
+import { addBreadcrumbSchema } from "../lib/breadcrumb-schema";
 
 const Blog = () => {
   useEffect(() => {
