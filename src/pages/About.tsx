@@ -1,12 +1,47 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CalendlyModal from "../components/sections/CalendlyModal";
 import { Award, Users, Target, Heart, Calendar } from "lucide-react";
 import ElegantNavigation from "../components/sections/ElegantNavigation";
 import Footer from "../components/sections/Footer";
+import { updatePageMeta } from "../lib/seo-meta";
 
 const About = () => {
   const [calendlyOpen, setCalendlyOpen] = useState(false);
+
+  useEffect(() => {
+    updatePageMeta({
+      title: "About Shopify Dev Studio | Expert E-Commerce Developers",
+      description: "Meet the team behind Shopify Dev Studio. Results-driven developers creating high-converting Shopify stores with 98% client satisfaction and 24-hour response times.",
+      ogTitle: "About Shopify Dev Studio - Our Team & Values",
+      ogDescription: "Passionate Shopify experts dedicated to helping e-commerce businesses grow through custom themes and performance optimization.",
+      url: "https://shopifystudio.tech/about",
+    });
+
+    const schemaMarkup = {
+      "@context": "https://schema.org",
+      "@type": "AboutPage",
+      "name": "About Shopify Dev Studio",
+      "description": "About the Shopify Dev Studio team and company values",
+      "url": "https://shopifystudio.tech/about",
+      "mainEntity": {
+        "@type": "Organization",
+        "name": "Shopify Dev Studio",
+        "url": "https://shopifystudio.tech",
+        "description": "Custom Shopify theme development and e-commerce optimization agency",
+        "areaServed": "Worldwide"
+      }
+    };
+
+    let script = document.querySelector('script[data-about-schema]');
+    if (!script) {
+      script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.setAttribute('data-about-schema', 'true');
+      script.textContent = JSON.stringify(schemaMarkup);
+      document.head.appendChild(script);
+    }
+  }, []);
   const stats = [
     { value: "98%", label: "Client Satisfaction" },
     { value: "24h", label: "Average Response Time" },
