@@ -23,6 +23,18 @@ import {
 import ElegantNavigation from "../components/sections/ElegantNavigation";
 import Footer from "../components/sections/Footer";
 import CalendlyModal from "../components/sections/CalendlyModal";
+import { updatePageMeta } from "../lib/seo-meta";
+
+// Set meta tags on mount
+useEffect(() => {
+  updatePageMeta({
+    title: "Partnership Opportunities | Shopify Dev Studio",
+    description: "Join our partner network. Explore partnership programs with Shopify Dev Studio for agencies, developers, and e-commerce brands.",
+    ogTitle: "Strategic Partnerships - Shopify Dev Studio",
+    ogDescription: "Partner with us to grow your e-commerce business. Discover our partnership opportunities and collaboration programs.",
+    url: "https://shopifystudio.tech/partners",
+  });
+}, []);
 
 // Sliding carousel component
 const SlidingCarousel = memo(
