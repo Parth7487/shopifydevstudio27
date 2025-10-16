@@ -13,6 +13,7 @@ import DesignPlayground from "../components/sections/DesignPlayground";
 import { useState, useEffect } from "react";
 import CalendlyModal from "../components/sections/CalendlyModal";
 import { updatePageMeta } from "../lib/seo-meta";
+import { addBreadcrumbSchema } from "../lib/breadcrumb-schema";
 
 const Services = () => {
   const [calendlyOpen, setCalendlyOpen] = useState(false);
@@ -25,6 +26,11 @@ const Services = () => {
       ogDescription: "Professional Shopify services for custom themes, speed optimization, and conversion-focused development.",
       url: "https://shopifystudio.tech/services",
     });
+
+    addBreadcrumbSchema([
+      { name: "Home", url: "https://shopifystudio.tech/" },
+      { name: "Services", url: "https://shopifystudio.tech/services" }
+    ]);
 
     const schemaMarkup = {
       "@context": "https://schema.org",
