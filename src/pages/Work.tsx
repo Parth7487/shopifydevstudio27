@@ -19,6 +19,7 @@ import Footer from "../components/sections/Footer";
 import OptimizedImage from "../components/OptimizedImage";
 import CalendlyModal from "../components/sections/CalendlyModal";
 import { updatePageMeta } from "../lib/seo-meta";
+import { addBreadcrumbSchema } from "../lib/breadcrumb-schema";
 
 const Work = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -33,6 +34,11 @@ const Work = () => {
       ogDescription: "Real Shopify projects with proven results: 300%+ conversion improvements, 0.6-0.7s load times, and sustainable fashion to premium furniture.",
       url: "https://shopifystudio.tech/work",
     });
+
+    addBreadcrumbSchema([
+      { name: "Home", url: "https://shopifystudio.tech/" },
+      { name: "Work", url: "https://shopifystudio.tech/work" }
+    ]);
 
     const schemaMarkup = {
       "@context": "https://schema.org",
