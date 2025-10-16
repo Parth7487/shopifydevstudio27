@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
@@ -38,6 +39,37 @@ const testimonials = [
 ];
 
 const Testimonials = () => {
+  useEffect(() => {
+    const schemaMarkup = {
+      "@context": "https://schema.org",
+      "@type": "ReviewCollection",
+      "name": "Shopify Dev Studio Client Testimonials",
+      "review": testimonials.map(testimonial => ({
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": testimonial.author
+        },
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": testimonial.rating.toString(),
+          "bestRating": "5",
+          "worstRating": "1"
+        },
+        "reviewBody": testimonial.quote
+      }))
+    };
+
+    let script = document.querySelector('script[data-testimonial-schema]');
+    if (!script) {
+      script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.setAttribute('data-testimonial-schema', 'true');
+      script.textContent = JSON.stringify(schemaMarkup);
+      document.head.appendChild(script);
+    }
+  }, []);
+
   return (
     <section className="py-20 bg-navy-50 relative overflow-hidden">
       {/* Background elements */}
