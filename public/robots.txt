@@ -5,4 +5,4 @@ Disallow: /checkout
 Disallow: /order
 Disallow: /thank-you
 
-Sitemap: https://www.shopifydevstudio.tech/sitemap.xml
+Sitemap: https://shopifystudio.tech/sitemap.xml
