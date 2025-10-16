@@ -208,6 +208,11 @@ const Partners = memo(() => {
       ogDescription: "Partner with us to grow your e-commerce business. Discover our partnership opportunities and collaboration programs.",
       url: "https://shopifystudio.tech/partners",
     });
+
+    addBreadcrumbSchema([
+      { name: "Home", url: "https://shopifystudio.tech/" },
+      { name: "Partners", url: "https://shopifystudio.tech/partners" }
+    ]);
   }, []);
   // Enhanced Shopify influencers and experts with social links
   const shopifyExperts = useMemo(
