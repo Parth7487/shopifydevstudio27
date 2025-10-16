@@ -18,11 +18,44 @@ import ElegantNavigation from "../components/sections/ElegantNavigation";
 import Footer from "../components/sections/Footer";
 import OptimizedImage from "../components/OptimizedImage";
 import CalendlyModal from "../components/sections/CalendlyModal";
+import { updatePageMeta } from "../lib/seo-meta";
 
 const Work = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All Projects");
   const [calendlyOpen, setCalendlyOpen] = useState(false);
+
+  useEffect(() => {
+    updatePageMeta({
+      title: "Shopify Projects & Case Studies | Shopify Dev Studio Portfolio",
+      description: "Explore our portfolio of successful Shopify store transformations. See how we helped brands like Kotn, Rothy's, and more achieve 300%+ conversion increases.",
+      ogTitle: "Shopify Store Case Studies & Success Stories",
+      ogDescription: "Real Shopify projects with proven results: 300%+ conversion improvements, 0.6-0.7s load times, and sustainable fashion to premium furniture.",
+      url: "https://shopifystudio.tech/work",
+    });
+
+    const schemaMarkup = {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Shopify Portfolio & Case Studies",
+      "description": "Portfolio of successful Shopify store projects and case studies",
+      "url": "https://shopifystudio.tech/work",
+      "mainEntity": {
+        "@type": "Organization",
+        "name": "Shopify Dev Studio",
+        "url": "https://shopifystudio.tech"
+      }
+    };
+
+    let script = document.querySelector('script[data-work-schema]');
+    if (!script) {
+      script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.setAttribute('data-work-schema', 'true');
+      script.textContent = JSON.stringify(schemaMarkup);
+      document.head.appendChild(script);
+    }
+  }, []);
 
   // Fetch projects from Supabase
   const {
