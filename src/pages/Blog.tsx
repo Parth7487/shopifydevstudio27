@@ -18,6 +18,28 @@ const Blog = () => {
       ogDescription: "Read our expert blog posts on Shopify development, conversion optimization, and e-commerce growth strategies.",
       url: "https://shopifystudio.tech/blog",
     });
+
+    const schemaMarkup = {
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      "name": "Shopify Dev Studio Blog",
+      "description": "Expert blog articles on Shopify development, e-commerce optimization, and conversion strategies",
+      "url": "https://shopifystudio.tech/blog",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Shopify Dev Studio",
+        "url": "https://shopifystudio.tech"
+      }
+    };
+
+    let script = document.querySelector('script[data-blog-schema]');
+    if (!script) {
+      script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.setAttribute('data-blog-schema', 'true');
+      script.textContent = JSON.stringify(schemaMarkup);
+      document.head.appendChild(script);
+    }
   }, []);
 
   const blogPosts = [
