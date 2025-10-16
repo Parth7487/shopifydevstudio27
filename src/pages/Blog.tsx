@@ -305,6 +305,57 @@ const Blog = () => {
         </div>
       </section>
 
+      {/* Related Services Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            variants={staggerContainerVariants}
+            viewport={{ once: true }}
+          >
+            <motion.h2
+              variants={fadeInUpVariants}
+              className="text-2xl font-bold mb-12 text-center"
+            >
+              Ready to <span className="text-beige">Optimize Your Store?</span>
+            </motion.h2>
+            <div className="grid md:grid-cols-3 gap-8">
+              <motion.a
+                href="/services"
+                variants={fadeInUpVariants}
+                className="bg-gradient-to-br from-graphite/50 to-charcoal/30 border border-beige/10 rounded-2xl p-6 hover:border-beige/40 transition-all duration-300 group"
+              >
+                <div className="text-3xl mb-4">🎨</div>
+                <h3 className="text-lg font-bold mb-3 group-hover:text-beige transition-colors">Custom Theme Design</h3>
+                <p className="text-gray-400 text-sm mb-4">Brand-specific design language and conversion-optimized layouts</p>
+                <span className="text-beige text-sm font-medium">Learn More →</span>
+              </motion.a>
+              <motion.a
+                href="/services"
+                variants={fadeInUpVariants}
+                className="bg-gradient-to-br from-graphite/50 to-charcoal/30 border border-beige/10 rounded-2xl p-6 hover:border-beige/40 transition-all duration-300 group"
+              >
+                <div className="text-3xl mb-4">⚡</div>
+                <h3 className="text-lg font-bold mb-3 group-hover:text-beige transition-colors">Performance Enhancement</h3>
+                <p className="text-gray-400 text-sm mb-4">Speed optimization achieving 0.5-1s load times for better rankings</p>
+                <span className="text-beige text-sm font-medium">Learn More →</span>
+              </motion.a>
+              <motion.a
+                href="/services"
+                variants={fadeInUpVariants}
+                className="bg-gradient-to-br from-graphite/50 to-charcoal/30 border border-beige/10 rounded-2xl p-6 hover:border-beige/40 transition-all duration-300 group"
+              >
+                <div className="text-3xl mb-4">📈</div>
+                <h3 className="text-lg font-bold mb-3 group-hover:text-beige transition-colors">Conversion Optimization</h3>
+                <p className="text-gray-400 text-sm mb-4">A/B testing and psychological triggers to boost your revenue</p>
+                <span className="text-beige text-sm font-medium">Learn More →</span>
+              </motion.a>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Newsletter Signup */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-charcoal/30">
         <motion.div
