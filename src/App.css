@@ -9,12 +9,17 @@
   min-height: 100vh;
 }
 
-/* Smooth scrolling for better UX */
+/* Smooth scrolling for better UX - disabled on mobile */
 html {
-  scroll-behavior: smooth;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@media (min-width: 769px) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 /* Scroll performance optimizations */
