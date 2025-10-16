@@ -20,6 +20,11 @@ const Blog = () => {
       url: "https://shopifystudio.tech/blog",
     });
 
+    addBreadcrumbSchema([
+      { name: "Home", url: "https://shopifystudio.tech/" },
+      { name: "Blog", url: "https://shopifystudio.tech/blog" }
+    ]);
+
     const schemaMarkup = {
       "@context": "https://schema.org",
       "@type": "Blog",
