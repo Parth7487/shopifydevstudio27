@@ -9,11 +9,55 @@ import {
 } from "lucide-react";
 import ElegantNavigation from "../components/sections/ElegantNavigation";
 import Footer from "../components/sections/Footer";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CalendlyModal from "../components/sections/CalendlyModal";
+import { updatePageMeta } from "../lib/seo-meta";
 
 const Process = () => {
   const [calendlyOpen, setCalendlyOpen] = useState(false);
+
+  useEffect(() => {
+    updatePageMeta({
+      title: "Our Shopify Development Process | Custom Theme Strategy",
+      description: "Discover our proven 6-phase Shopify development process: Deep Dive Discovery, Psychology-First Design, Conversion-Driven Development, and more.",
+      ogTitle: "Shopify Development Process - From Discovery to Launch",
+      ogDescription: "Our complete process for building high-converting Shopify stores with proven results and transparent communication.",
+      url: "https://shopifystudio.tech/process",
+    });
+
+    const schemaMarkup = {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "Shopify Development Process",
+      "description": "Step-by-step process for developing custom Shopify stores",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "Deep Dive Discovery",
+          "text": "Understanding brand, customers, and competition analysis"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Psychology-First Design",
+          "text": "Creating designs based on conversion psychology"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Conversion-Driven Development",
+          "text": "Building high-converting store with optimized checkout"
+        }
+      ]
+    };
+
+    let script = document.querySelector('script[data-process-schema]');
+    if (!script) {
+      script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.setAttribute('data-process-schema', 'true');
+      script.textContent = JSON.stringify(schemaMarkup);
+      document.head.appendChild(script);
+    }
+  }, []);
   const processPhases = [
     {
       phase: "Phase 1",
