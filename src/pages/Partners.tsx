@@ -198,6 +198,16 @@ const TweetCard = memo(({ tweet }: { tweet: any }) => (
 
 const Partners = memo(() => {
   const [calendlyOpen, setCalendlyOpen] = useState(false);
+
+  useEffect(() => {
+    updatePageMeta({
+      title: "Partnership Opportunities | Shopify Dev Studio",
+      description: "Join our partner network. Explore partnership programs with Shopify Dev Studio for agencies, developers, and e-commerce brands.",
+      ogTitle: "Strategic Partnerships - Shopify Dev Studio",
+      ogDescription: "Partner with us to grow your e-commerce business. Discover our partnership opportunities and collaboration programs.",
+      url: "https://shopifystudio.tech/partners",
+    });
+  }, []);
   // Enhanced Shopify influencers and experts with social links
   const shopifyExperts = useMemo(
     () => [
