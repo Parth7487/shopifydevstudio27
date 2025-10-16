@@ -5,6 +5,7 @@ import { Award, Users, Target, Heart, Calendar } from "lucide-react";
 import ElegantNavigation from "../components/sections/ElegantNavigation";
 import Footer from "../components/sections/Footer";
 import { updatePageMeta } from "../lib/seo-meta";
+import { addBreadcrumbSchema } from "../lib/breadcrumb-schema";
 
 const About = () => {
   const [calendlyOpen, setCalendlyOpen] = useState(false);
@@ -17,6 +18,11 @@ const About = () => {
       ogDescription: "Passionate Shopify experts dedicated to helping e-commerce businesses grow through custom themes and performance optimization.",
       url: "https://shopifystudio.tech/about",
     });
+
+    addBreadcrumbSchema([
+      { name: "Home", url: "https://shopifystudio.tech/" },
+      { name: "About", url: "https://shopifystudio.tech/about" }
+    ]);
 
     const schemaMarkup = {
       "@context": "https://schema.org",
