@@ -70,7 +70,9 @@ const ElegantNavigation = memo(() => {
       } else if (location.pathname === "/") {
         const element = document.getElementById(itemId);
         if (element) {
-          element.scrollIntoView({ behavior: "smooth", block: "start" });
+          const isMobile = window.innerWidth < 768;
+          const behavior = isMobile ? "auto" : "smooth";
+          element.scrollIntoView({ behavior, block: "start" });
         }
       } else {
         navigate("/");
