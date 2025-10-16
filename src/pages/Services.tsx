@@ -10,11 +10,45 @@ import {
 import ElegantNavigation from "../components/sections/ElegantNavigation";
 import Footer from "../components/sections/Footer";
 import DesignPlayground from "../components/sections/DesignPlayground";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CalendlyModal from "../components/sections/CalendlyModal";
+import { updatePageMeta } from "../lib/seo-meta";
 
 const Services = () => {
   const [calendlyOpen, setCalendlyOpen] = useState(false);
+
+  useEffect(() => {
+    updatePageMeta({
+      title: "Custom Shopify Services & Theme Development | Shopify Dev Studio",
+      description: "Expert Shopify services including custom theme design, conversion optimization, performance enhancement, and mobile-first development. Trusted by top e-commerce brands.",
+      ogTitle: "Shopify Theme Development & Optimization Services",
+      ogDescription: "Professional Shopify services for custom themes, speed optimization, and conversion-focused development.",
+      url: "https://shopifystudio.tech/services",
+    });
+
+    const schemaMarkup = {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Shopify Development Services",
+      "description": "Custom Shopify theme design, conversion optimization, and performance enhancement services",
+      "provider": {
+        "@type": "Organization",
+        "name": "Shopify Dev Studio",
+        "url": "https://shopifystudio.tech"
+      },
+      "areaServed": "Worldwide",
+      "serviceType": ["Theme Design", "Conversion Optimization", "Performance Enhancement", "Mobile Development"]
+    };
+
+    let script = document.querySelector('script[data-service-schema]');
+    if (!script) {
+      script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.setAttribute('data-service-schema', 'true');
+      script.textContent = JSON.stringify(schemaMarkup);
+      document.head.appendChild(script);
+    }
+  }, []);
   const services = [
     {
       icon: Palette,
