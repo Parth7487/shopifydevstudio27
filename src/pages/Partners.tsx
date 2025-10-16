@@ -24,6 +24,7 @@ import ElegantNavigation from "../components/sections/ElegantNavigation";
 import Footer from "../components/sections/Footer";
 import CalendlyModal from "../components/sections/CalendlyModal";
 import { updatePageMeta } from "../lib/seo-meta";
+import { addBreadcrumbSchema } from "../lib/breadcrumb-schema";
 
 // Sliding carousel component
 const SlidingCarousel = memo(
