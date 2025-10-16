@@ -216,13 +216,13 @@ const ElegantNavigation = memo(() => {
 
       {/* Simple Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-40 lg:hidden">
+        <div className="fixed inset-0 z-40 lg:hidden pt-20">
           <div
             className="absolute inset-0 bg-black/95 backdrop-blur-xl"
             onClick={() => setIsMobileMenuOpen(false)}
           />
 
-          <div className="relative flex flex-col h-full bg-black/98 border-l border-beige/10">
+          <div className="relative flex flex-col h-full bg-black/98 border-l border-beige/10 overflow-y-auto">
             {/* Mobile menu header */}
             <div className="flex items-center justify-between p-5 border-b border-beige/20">
               <div className="flex items-center space-x-3">
