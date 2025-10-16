@@ -12,6 +12,7 @@ import Footer from "../components/sections/Footer";
 import { useState, useEffect } from "react";
 import CalendlyModal from "../components/sections/CalendlyModal";
 import { updatePageMeta } from "../lib/seo-meta";
+import { addBreadcrumbSchema } from "../lib/breadcrumb-schema";
 
 const Process = () => {
   const [calendlyOpen, setCalendlyOpen] = useState(false);
@@ -24,6 +25,11 @@ const Process = () => {
       ogDescription: "Our complete process for building high-converting Shopify stores with proven results and transparent communication.",
       url: "https://shopifystudio.tech/process",
     });
+
+    addBreadcrumbSchema([
+      { name: "Home", url: "https://shopifystudio.tech/" },
+      { name: "Process", url: "https://shopifystudio.tech/process" }
+    ]);
 
     const schemaMarkup = {
       "@context": "https://schema.org",
