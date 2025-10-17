@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 const StatsSection = () => {
   const stats = [
     { value: "98%", label: "Client Satisfaction" },
-    { value: "24h", label: "Response Time" }
+    { value: "24h", label: "Response Time" },
   ];
 
   const containerVariants = {

@@ -1,97 +1,112 @@
-import React, { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import { 
-  Cloud, 
-  Download, 
-  CheckCircle, 
-  AlertCircle, 
-  Loader2, 
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import {
+  Cloud,
+  Download,
+  CheckCircle,
+  AlertCircle,
+  Loader2,
   Image as ImageIcon,
   RefreshCw,
   Settings,
-  FolderOpen
-} from 'lucide-react'
-import { useGoogleDriveSync, GoogleDriveImage } from '../lib/google-drive-sync'
-import { useProjects } from '../hooks/useProjects'
+  FolderOpen,
+} from "lucide-react";
+import { useGoogleDriveSync, GoogleDriveImage } from "../lib/google-drive-sync";
+import { useProjects } from "../hooks/useProjects";
 
 interface GoogleDriveSyncProps {
-  className?: string
+  className?: string;
 }
 
-export const GoogleDriveSync: React.FC<GoogleDriveSyncProps> = ({ className = '' }) => {
-  const [apiKey, setApiKey] = useState(localStorage.getItem('googleDriveApiKey') || '')
-  const [folderId, setFolderId] = useState(localStorage.getItem('googleDriveFolderId') || '')
-  const [isLoading, setIsLoading] = useState(false)
-  const [images, setImages] = useState<GoogleDriveImage[]>([])
+export const GoogleDriveSync: React.FC<GoogleDriveSyncProps> = ({
+  className = "",
+}) => {
+  const [apiKey, setApiKey] = useState(
+    localStorage.getItem("googleDriveApiKey") || "",
+  );
+  const [folderId, setFolderId] = useState(
+    localStorage.getItem("googleDriveFolderId") || "",
+  );
+  const [isLoading, setIsLoading] = useState(false);
+  const [images, setImages] = useState<GoogleDriveImage[]>([]);
   const [syncResult, setSyncResult] = useState<{
-    success: boolean
-    updated: number
-    errors: string[]
-  } | null>(null)
-  
-  const { syncImages, fetchImages, updateProjectImage } = useGoogleDriveSync()
-  const { projects, refetch } = useProjects()
+    success: boolean;
+    updated: number;
+    errors: string[];
+  } | null>(null);
+
+  const { syncImages, fetchImages, updateProjectImage } = useGoogleDriveSync();
+  const { projects, refetch } = useProjects();
 
   // Save credentials to localStorage
   useEffect(() => {
-    if (apiKey) localStorage.setItem('googleDriveApiKey', apiKey)
-    if (folderId) localStorage.setItem('googleDriveFolderId', folderId)
-  }, [apiKey, folderId])
+    if (apiKey) localStorage.setItem("googleDriveApiKey", apiKey);
+    if (folderId) localStorage.setItem("googleDriveFolderId", folderId);
+  }, [apiKey, folderId]);
 
   const handleFetchImages = async () => {
     if (!apiKey || !folderId) {
-      alert('Please enter both Google Drive API Key and Folder ID')
-      return
+      alert("Please enter both Google Drive API Key and Folder ID");
+      return;
     }
 
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      const driveImages = await fetchImages(apiKey, folderId)
-      setImages(driveImages)
+      const driveImages = await fetchImages(apiKey, folderId);
+      setImages(driveImages);
     } catch (error) {
-      console.error('Failed to fetch images:', error)
-      alert('Failed to fetch images from Google Drive. Please check your API key and folder ID.')
+      console.error("Failed to fetch images:", error);
+      alert(
+        "Failed to fetch images from Google Drive. Please check your API key and folder ID.",
+      );
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const handleSyncImages = async () => {
     if (!apiKey || !folderId) {
-      alert('Please enter both Google Drive API Key and Folder ID')
-      return
+      alert("Please enter both Google Drive API Key and Folder ID");
+      return;
     }
 
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      const result = await syncImages(apiKey, folderId)
-      setSyncResult(result)
-      
+      const result = await syncImages(apiKey, folderId);
+      setSyncResult(result);
+
       if (result.success && result.updated > 0) {
         // Refresh the projects to show updated images
-        await refetch()
+        await refetch();
       }
     } catch (error) {
-      console.error('Sync failed:', error)
+      console.error("Sync failed:", error);
       setSyncResult({
         success: false,
         updated: 0,
-        errors: [error instanceof Error ? error.message : 'Unknown error']
-      })
+        errors: [error instanceof Error ? error.message : "Unknown error"],
+      });
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const getImagePreviewUrl = (image: GoogleDriveImage): string => {
-    return image.thumbnailLink || `https://drive.google.com/uc?export=view&id=${image.id}`
-  }
+    return (
+      image.thumbnailLink ||
+      `https://drive.google.com/uc?export=view&id=${image.id}`
+    );
+  };
 
   return (
-    <div className={`bg-black/90 backdrop-blur-md rounded-xl border border-white/10 p-6 ${className}`}>
+    <div
+      className={`bg-black/90 backdrop-blur-md rounded-xl border border-white/10 p-6 ${className}`}
+    >
       <div className="flex items-center gap-3 mb-6">
         <Cloud className="w-6 h-6 text-blue-400" />
-        <h3 className="text-xl font-bold text-white">Google Drive Image Sync</h3>
+        <h3 className="text-xl font-bold text-white">
+          Google Drive Image Sync
+        </h3>
       </div>
 
       {/* Configuration */}
@@ -123,12 +138,26 @@ export const GoogleDriveSync: React.FC<GoogleDriveSyncProps> = ({ className = ''
         </div>
 
         <div className="text-xs text-gray-400">
-          <p>📋 <strong>How to get your API key:</strong></p>
-          <p>1. Go to <a href="https://console.developers.google.com/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">Google Cloud Console</a></p>
+          <p>
+            📋 <strong>How to get your API key:</strong>
+          </p>
+          <p>
+            1. Go to{" "}
+            <a
+              href="https://console.developers.google.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-400 hover:underline"
+            >
+              Google Cloud Console
+            </a>
+          </p>
           <p>2. Enable Google Drive API</p>
           <p>3. Create credentials → API Key</p>
           <br />
-          <p>📁 <strong>How to get folder ID:</strong></p>
+          <p>
+            📁 <strong>How to get folder ID:</strong>
+          </p>
           <p>Copy the ID from your Google Drive folder URL after /folders/</p>
         </div>
       </div>
@@ -168,7 +197,9 @@ export const GoogleDriveSync: React.FC<GoogleDriveSyncProps> = ({ className = ''
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className={`p-4 rounded-lg mb-6 ${
-            syncResult.success ? 'bg-green-900/20 border border-green-500/20' : 'bg-red-900/20 border border-red-500/20'
+            syncResult.success
+              ? "bg-green-900/20 border border-green-500/20"
+              : "bg-red-900/20 border border-red-500/20"
           }`}
         >
           <div className="flex items-center gap-2 mb-2">
@@ -177,15 +208,18 @@ export const GoogleDriveSync: React.FC<GoogleDriveSyncProps> = ({ className = ''
             ) : (
               <AlertCircle className="w-5 h-5 text-red-400" />
             )}
-            <span className={`font-medium ${syncResult.success ? 'text-green-400' : 'text-red-400'}`}>
-              {syncResult.success ? 'Sync Successful' : 'Sync Failed'}
+            <span
+              className={`font-medium ${syncResult.success ? "text-green-400" : "text-red-400"}`}
+            >
+              {syncResult.success ? "Sync Successful" : "Sync Failed"}
             </span>
           </div>
-          
+
           <p className="text-gray-300 text-sm">
-            Updated {syncResult.updated} project{syncResult.updated !== 1 ? 's' : ''}
+            Updated {syncResult.updated} project
+            {syncResult.updated !== 1 ? "s" : ""}
           </p>
-          
+
           {syncResult.errors.length > 0 && (
             <div className="mt-2">
               <p className="text-red-400 text-sm font-medium">Errors:</p>
@@ -206,7 +240,7 @@ export const GoogleDriveSync: React.FC<GoogleDriveSyncProps> = ({ className = ''
             <ImageIcon className="w-5 h-5" />
             Found Images ({images.length})
           </h4>
-          
+
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {images.map((image) => (
               <motion.div
@@ -221,7 +255,10 @@ export const GoogleDriveSync: React.FC<GoogleDriveSyncProps> = ({ className = ''
                   className="w-full h-20 object-cover rounded mb-2"
                   loading="lazy"
                 />
-                <p className="text-xs text-gray-300 truncate" title={image.name}>
+                <p
+                  className="text-xs text-gray-300 truncate"
+                  title={image.name}
+                >
                   {image.name}
                 </p>
                 <p className="text-xs text-gray-500">
@@ -241,7 +278,10 @@ export const GoogleDriveSync: React.FC<GoogleDriveSyncProps> = ({ className = ''
           </h4>
           <div className="space-y-2 max-h-60 overflow-y-auto">
             {projects.slice(0, 10).map((project) => (
-              <div key={project.id} className="flex items-center gap-3 p-2 bg-black/40 rounded">
+              <div
+                key={project.id}
+                className="flex items-center gap-3 p-2 bg-black/40 rounded"
+              >
                 <img
                   src={project.image}
                   alt={project.title}
@@ -250,7 +290,9 @@ export const GoogleDriveSync: React.FC<GoogleDriveSyncProps> = ({ className = ''
                 />
                 <div className="flex-1 min-w-0">
                   <p className="text-sm text-white truncate">{project.title}</p>
-                  <p className="text-xs text-gray-400 truncate">{project.brand}</p>
+                  <p className="text-xs text-gray-400 truncate">
+                    {project.brand}
+                  </p>
                 </div>
               </div>
             ))}
@@ -263,7 +305,7 @@ export const GoogleDriveSync: React.FC<GoogleDriveSyncProps> = ({ className = ''
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default GoogleDriveSync
+export default GoogleDriveSync;

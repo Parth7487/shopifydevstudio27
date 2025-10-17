@@ -20,46 +20,48 @@ const Process = () => {
   useEffect(() => {
     updatePageMeta({
       title: "Our Shopify Development Process | Custom Theme Strategy",
-      description: "Discover our proven 6-phase Shopify development process: Deep Dive Discovery, Psychology-First Design, Conversion-Driven Development, and more.",
+      description:
+        "Discover our proven 6-phase Shopify development process: Deep Dive Discovery, Psychology-First Design, Conversion-Driven Development, and more.",
       ogTitle: "Shopify Development Process - From Discovery to Launch",
-      ogDescription: "Our complete process for building high-converting Shopify stores with proven results and transparent communication.",
+      ogDescription:
+        "Our complete process for building high-converting Shopify stores with proven results and transparent communication.",
       url: "https://shopifystudio.tech/process",
     });
 
     addBreadcrumbSchema([
       { name: "Home", url: "https://shopifystudio.tech/" },
-      { name: "Process", url: "https://shopifystudio.tech/process" }
+      { name: "Process", url: "https://shopifystudio.tech/process" },
     ]);
 
     const schemaMarkup = {
       "@context": "https://schema.org",
       "@type": "HowTo",
-      "name": "Shopify Development Process",
-      "description": "Step-by-step process for developing custom Shopify stores",
-      "step": [
+      name: "Shopify Development Process",
+      description: "Step-by-step process for developing custom Shopify stores",
+      step: [
         {
           "@type": "HowToStep",
-          "name": "Deep Dive Discovery",
-          "text": "Understanding brand, customers, and competition analysis"
+          name: "Deep Dive Discovery",
+          text: "Understanding brand, customers, and competition analysis",
         },
         {
           "@type": "HowToStep",
-          "name": "Psychology-First Design",
-          "text": "Creating designs based on conversion psychology"
+          name: "Psychology-First Design",
+          text: "Creating designs based on conversion psychology",
         },
         {
           "@type": "HowToStep",
-          "name": "Conversion-Driven Development",
-          "text": "Building high-converting store with optimized checkout"
-        }
-      ]
+          name: "Conversion-Driven Development",
+          text: "Building high-converting store with optimized checkout",
+        },
+      ],
     };
 
-    let script = document.querySelector('script[data-process-schema]');
+    let script = document.querySelector("script[data-process-schema]");
     if (!script) {
-      script = document.createElement('script');
-      script.type = 'application/ld+json';
-      script.setAttribute('data-process-schema', 'true');
+      script = document.createElement("script");
+      script.type = "application/ld+json";
+      script.setAttribute("data-process-schema", "true");
       script.textContent = JSON.stringify(schemaMarkup);
       document.head.appendChild(script);
     }
@@ -390,7 +392,19 @@ const Process = () => {
                 rates by an average of 340%. Let's discuss how we can transform
                 your Shopify store.
               </p>
-              <button onClick={() => { const url = (import.meta as any).env?.VITE_CALENDLY_URL as string | undefined; if (url) { setCalendlyOpen(true); } else { window.location.hash = "#contact"; } }} className="inline-block bg-beige rounded-lg text-black text-lg font-medium leading-7 py-3 px-8 hover:bg-beige/90 transition-colors duration-200">
+              <button
+                onClick={() => {
+                  const url = (import.meta as any).env?.VITE_CALENDLY_URL as
+                    | string
+                    | undefined;
+                  if (url) {
+                    setCalendlyOpen(true);
+                  } else {
+                    window.location.hash = "#contact";
+                  }
+                }}
+                className="inline-block bg-beige rounded-lg text-black text-lg font-medium leading-7 py-3 px-8 hover:bg-beige/90 transition-colors duration-200"
+              >
                 Schedule Your Discovery Call
               </button>
             </motion.div>
@@ -400,7 +414,12 @@ const Process = () => {
 
       {/* Footer */}
       <Footer />
-      <CalendlyModal open={calendlyOpen && Boolean((import.meta as any).env?.VITE_CALENDLY_URL)} onClose={() => setCalendlyOpen(false)} />
+      <CalendlyModal
+        open={
+          calendlyOpen && Boolean((import.meta as any).env?.VITE_CALENDLY_URL)
+        }
+        onClose={() => setCalendlyOpen(false)}
+      />
     </div>
   );
 };

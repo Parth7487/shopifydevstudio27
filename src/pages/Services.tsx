@@ -21,36 +21,44 @@ const Services = () => {
   useEffect(() => {
     updatePageMeta({
       title: "Custom Shopify Services & Theme Development | Shopify Dev Studio",
-      description: "Expert Shopify services including custom theme design, conversion optimization, performance enhancement, and mobile-first development. Trusted by top e-commerce brands.",
+      description:
+        "Expert Shopify services including custom theme design, conversion optimization, performance enhancement, and mobile-first development. Trusted by top e-commerce brands.",
       ogTitle: "Shopify Theme Development & Optimization Services",
-      ogDescription: "Professional Shopify services for custom themes, speed optimization, and conversion-focused development.",
+      ogDescription:
+        "Professional Shopify services for custom themes, speed optimization, and conversion-focused development.",
       url: "https://shopifystudio.tech/services",
     });
 
     addBreadcrumbSchema([
       { name: "Home", url: "https://shopifystudio.tech/" },
-      { name: "Services", url: "https://shopifystudio.tech/services" }
+      { name: "Services", url: "https://shopifystudio.tech/services" },
     ]);
 
     const schemaMarkup = {
       "@context": "https://schema.org",
       "@type": "Service",
-      "name": "Shopify Development Services",
-      "description": "Custom Shopify theme design, conversion optimization, and performance enhancement services",
-      "provider": {
+      name: "Shopify Development Services",
+      description:
+        "Custom Shopify theme design, conversion optimization, and performance enhancement services",
+      provider: {
         "@type": "Organization",
-        "name": "Shopify Dev Studio",
-        "url": "https://shopifystudio.tech"
+        name: "Shopify Dev Studio",
+        url: "https://shopifystudio.tech",
       },
-      "areaServed": "Worldwide",
-      "serviceType": ["Theme Design", "Conversion Optimization", "Performance Enhancement", "Mobile Development"]
+      areaServed: "Worldwide",
+      serviceType: [
+        "Theme Design",
+        "Conversion Optimization",
+        "Performance Enhancement",
+        "Mobile Development",
+      ],
     };
 
-    let script = document.querySelector('script[data-service-schema]');
+    let script = document.querySelector("script[data-service-schema]");
     if (!script) {
-      script = document.createElement('script');
-      script.type = 'application/ld+json';
-      script.setAttribute('data-service-schema', 'true');
+      script = document.createElement("script");
+      script.type = "application/ld+json";
+      script.setAttribute("data-service-schema", "true");
       script.textContent = JSON.stringify(schemaMarkup);
       document.head.appendChild(script);
     }
@@ -496,10 +504,25 @@ const Services = () => {
               business.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button onClick={() => { const url = (import.meta as any).env?.VITE_CALENDLY_URL as string | undefined; if (url) { setCalendlyOpen(true); } else { window.location.hash = "#contact"; } }} className="px-8 py-4 bg-beige text-black font-semibold rounded-lg hover:bg-beige/90 transition-colors duration-200">
-                  Start Your Project
-                </button>
-              <a href="/#work" className="px-8 py-4 border border-beige text-beige font-semibold rounded-lg hover:bg-beige/10 transition-colors duration-200">
+              <button
+                onClick={() => {
+                  const url = (import.meta as any).env?.VITE_CALENDLY_URL as
+                    | string
+                    | undefined;
+                  if (url) {
+                    setCalendlyOpen(true);
+                  } else {
+                    window.location.hash = "#contact";
+                  }
+                }}
+                className="px-8 py-4 bg-beige text-black font-semibold rounded-lg hover:bg-beige/90 transition-colors duration-200"
+              >
+                Start Your Project
+              </button>
+              <a
+                href="/#work"
+                className="px-8 py-4 border border-beige text-beige font-semibold rounded-lg hover:bg-beige/10 transition-colors duration-200"
+              >
                 View Our Work
               </a>
             </div>
@@ -509,7 +532,12 @@ const Services = () => {
 
       {/* Footer */}
       <Footer />
-      <CalendlyModal open={calendlyOpen && Boolean((import.meta as any).env?.VITE_CALENDLY_URL)} onClose={() => setCalendlyOpen(false)} />
+      <CalendlyModal
+        open={
+          calendlyOpen && Boolean((import.meta as any).env?.VITE_CALENDLY_URL)
+        }
+        onClose={() => setCalendlyOpen(false)}
+      />
     </div>
   );
 };

@@ -213,13 +213,15 @@ const CinematicFinalCTA = () => {
               />
               <Button
                 onClick={() => {
-                const url = (import.meta as any).env?.VITE_CALENDLY_URL as string | undefined;
-                if (url) {
-                  setCalendlyOpen(true);
-                } else {
-                  scrollToSection("contact");
-                }
-              }}
+                  const url = (import.meta as any).env?.VITE_CALENDLY_URL as
+                    | string
+                    | undefined;
+                  if (url) {
+                    setCalendlyOpen(true);
+                  } else {
+                    scrollToSection("contact");
+                  }
+                }}
                 className="relative bg-mint text-navy hover:bg-mint/90 font-bold text-xl px-16 py-5 rounded-full overflow-hidden group"
               >
                 <span className="relative z-10">Start the Conversation</span>
@@ -377,7 +379,12 @@ const CinematicFinalCTA = () => {
           />
         ))}
       </div>
-      <CalendlyModal open={calendlyOpen && Boolean((import.meta as any).env?.VITE_CALENDLY_URL)} onClose={() => setCalendlyOpen(false)} />
+      <CalendlyModal
+        open={
+          calendlyOpen && Boolean((import.meta as any).env?.VITE_CALENDLY_URL)
+        }
+        onClose={() => setCalendlyOpen(false)}
+      />
     </section>
   );
 };

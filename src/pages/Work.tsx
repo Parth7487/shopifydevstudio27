@@ -29,35 +29,38 @@ const Work = () => {
   useEffect(() => {
     updatePageMeta({
       title: "Shopify Projects & Case Studies | Shopify Dev Studio Portfolio",
-      description: "Explore our portfolio of successful Shopify store transformations. See how we helped brands like Kotn, Rothy's, and more achieve 300%+ conversion increases.",
+      description:
+        "Explore our portfolio of successful Shopify store transformations. See how we helped brands like Kotn, Rothy's, and more achieve 300%+ conversion increases.",
       ogTitle: "Shopify Store Case Studies & Success Stories",
-      ogDescription: "Real Shopify projects with proven results: 300%+ conversion improvements, 0.6-0.7s load times, and sustainable fashion to premium furniture.",
+      ogDescription:
+        "Real Shopify projects with proven results: 300%+ conversion improvements, 0.6-0.7s load times, and sustainable fashion to premium furniture.",
       url: "https://shopifystudio.tech/work",
     });
 
     addBreadcrumbSchema([
       { name: "Home", url: "https://shopifystudio.tech/" },
-      { name: "Work", url: "https://shopifystudio.tech/work" }
+      { name: "Work", url: "https://shopifystudio.tech/work" },
     ]);
 
     const schemaMarkup = {
       "@context": "https://schema.org",
       "@type": "CollectionPage",
-      "name": "Shopify Portfolio & Case Studies",
-      "description": "Portfolio of successful Shopify store projects and case studies",
-      "url": "https://shopifystudio.tech/work",
-      "mainEntity": {
+      name: "Shopify Portfolio & Case Studies",
+      description:
+        "Portfolio of successful Shopify store projects and case studies",
+      url: "https://shopifystudio.tech/work",
+      mainEntity: {
         "@type": "Organization",
-        "name": "Shopify Dev Studio",
-        "url": "https://shopifystudio.tech"
-      }
+        name: "Shopify Dev Studio",
+        url: "https://shopifystudio.tech",
+      },
     };
 
-    let script = document.querySelector('script[data-work-schema]');
+    let script = document.querySelector("script[data-work-schema]");
     if (!script) {
-      script = document.createElement('script');
-      script.type = 'application/ld+json';
-      script.setAttribute('data-work-schema', 'true');
+      script = document.createElement("script");
+      script.type = "application/ld+json";
+      script.setAttribute("data-work-schema", "true");
       script.textContent = JSON.stringify(schemaMarkup);
       document.head.appendChild(script);
     }

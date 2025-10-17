@@ -14,35 +14,38 @@ const Blog = () => {
   useEffect(() => {
     updatePageMeta({
       title: "Shopify Blog | E-Commerce Tips, Conversion Optimization & Design",
-      description: "Expert Shopify blog articles on conversion optimization, performance enhancement, mobile-first design, and e-commerce psychology. Tips to grow your store.",
+      description:
+        "Expert Shopify blog articles on conversion optimization, performance enhancement, mobile-first design, and e-commerce psychology. Tips to grow your store.",
       ogTitle: "Shopify Dev Studio Blog - E-Commerce Growth Strategies",
-      ogDescription: "Read our expert blog posts on Shopify development, conversion optimization, and e-commerce growth strategies.",
+      ogDescription:
+        "Read our expert blog posts on Shopify development, conversion optimization, and e-commerce growth strategies.",
       url: "https://shopifystudio.tech/blog",
     });
 
     addBreadcrumbSchema([
       { name: "Home", url: "https://shopifystudio.tech/" },
-      { name: "Blog", url: "https://shopifystudio.tech/blog" }
+      { name: "Blog", url: "https://shopifystudio.tech/blog" },
     ]);
 
     const schemaMarkup = {
       "@context": "https://schema.org",
       "@type": "Blog",
-      "name": "Shopify Dev Studio Blog",
-      "description": "Expert blog articles on Shopify development, e-commerce optimization, and conversion strategies",
-      "url": "https://shopifystudio.tech/blog",
-      "publisher": {
+      name: "Shopify Dev Studio Blog",
+      description:
+        "Expert blog articles on Shopify development, e-commerce optimization, and conversion strategies",
+      url: "https://shopifystudio.tech/blog",
+      publisher: {
         "@type": "Organization",
-        "name": "Shopify Dev Studio",
-        "url": "https://shopifystudio.tech"
-      }
+        name: "Shopify Dev Studio",
+        url: "https://shopifystudio.tech",
+      },
     };
 
-    let script = document.querySelector('script[data-blog-schema]');
+    let script = document.querySelector("script[data-blog-schema]");
     if (!script) {
-      script = document.createElement('script');
-      script.type = 'application/ld+json';
-      script.setAttribute('data-blog-schema', 'true');
+      script = document.createElement("script");
+      script.type = "application/ld+json";
+      script.setAttribute("data-blog-schema", "true");
       script.textContent = JSON.stringify(schemaMarkup);
       document.head.appendChild(script);
     }
@@ -58,7 +61,8 @@ const Blog = () => {
       date: "Dec 15, 2024",
       readTime: "8 min read",
       category: "Conversion",
-      image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop",
+      image:
+        "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop",
       featured: true,
     },
     {
@@ -70,7 +74,8 @@ const Blog = () => {
       date: "Dec 10, 2024",
       readTime: "6 min read",
       category: "Design",
-      image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&h=400&fit=crop",
+      image:
+        "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&h=400&fit=crop",
     },
     {
       id: 3,
@@ -81,7 +86,8 @@ const Blog = () => {
       date: "Dec 5, 2024",
       readTime: "5 min read",
       category: "Mobile",
-      image: "https://images.unsplash.com/photo-1512941691920-25bdb538f9a3?w=600&h=400&fit=crop",
+      image:
+        "https://images.unsplash.com/photo-1512941691920-25bdb538f9a3?w=600&h=400&fit=crop",
     },
     {
       id: 4,
@@ -92,7 +98,8 @@ const Blog = () => {
       date: "Nov 28, 2024",
       readTime: "10 min read",
       category: "Performance",
-      image: "https://images.unsplash.com/photo-1518438773649-970bae4d71f5?w=600&h=400&fit=crop",
+      image:
+        "https://images.unsplash.com/photo-1518438773649-970bae4d71f5?w=600&h=400&fit=crop",
     },
     {
       id: 5,
@@ -103,7 +110,8 @@ const Blog = () => {
       date: "Nov 20, 2024",
       readTime: "7 min read",
       category: "Testing",
-      image: "https://images.unsplash.com/photo-1460925895917-adf4e9eef346?w=600&h=400&fit=crop",
+      image:
+        "https://images.unsplash.com/photo-1460925895917-adf4e9eef346?w=600&h=400&fit=crop",
     },
     {
       id: 6,
@@ -114,7 +122,8 @@ const Blog = () => {
       date: "Nov 15, 2024",
       readTime: "6 min read",
       category: "Trust",
-      image: "https://images.unsplash.com/photo-1460925895917-adf4e9eef346?w=600&h=400&fit=crop",
+      image:
+        "https://images.unsplash.com/photo-1460925895917-adf4e9eef346?w=600&h=400&fit=crop",
     },
   ];
 
@@ -333,9 +342,16 @@ const Blog = () => {
                 className="bg-gradient-to-br from-graphite/50 to-charcoal/30 border border-beige/10 rounded-2xl p-6 hover:border-beige/40 transition-all duration-300 group"
               >
                 <div className="text-3xl mb-4">🎨</div>
-                <h3 className="text-lg font-bold mb-3 group-hover:text-beige transition-colors">Custom Theme Design</h3>
-                <p className="text-gray-400 text-sm mb-4">Brand-specific design language and conversion-optimized layouts</p>
-                <span className="text-beige text-sm font-medium">Learn More →</span>
+                <h3 className="text-lg font-bold mb-3 group-hover:text-beige transition-colors">
+                  Custom Theme Design
+                </h3>
+                <p className="text-gray-400 text-sm mb-4">
+                  Brand-specific design language and conversion-optimized
+                  layouts
+                </p>
+                <span className="text-beige text-sm font-medium">
+                  Learn More →
+                </span>
               </motion.a>
               <motion.a
                 href="/services"
@@ -343,9 +359,16 @@ const Blog = () => {
                 className="bg-gradient-to-br from-graphite/50 to-charcoal/30 border border-beige/10 rounded-2xl p-6 hover:border-beige/40 transition-all duration-300 group"
               >
                 <div className="text-3xl mb-4">⚡</div>
-                <h3 className="text-lg font-bold mb-3 group-hover:text-beige transition-colors">Performance Enhancement</h3>
-                <p className="text-gray-400 text-sm mb-4">Speed optimization achieving 0.5-1s load times for better rankings</p>
-                <span className="text-beige text-sm font-medium">Learn More →</span>
+                <h3 className="text-lg font-bold mb-3 group-hover:text-beige transition-colors">
+                  Performance Enhancement
+                </h3>
+                <p className="text-gray-400 text-sm mb-4">
+                  Speed optimization achieving 0.5-1s load times for better
+                  rankings
+                </p>
+                <span className="text-beige text-sm font-medium">
+                  Learn More →
+                </span>
               </motion.a>
               <motion.a
                 href="/services"
@@ -353,9 +376,15 @@ const Blog = () => {
                 className="bg-gradient-to-br from-graphite/50 to-charcoal/30 border border-beige/10 rounded-2xl p-6 hover:border-beige/40 transition-all duration-300 group"
               >
                 <div className="text-3xl mb-4">📈</div>
-                <h3 className="text-lg font-bold mb-3 group-hover:text-beige transition-colors">Conversion Optimization</h3>
-                <p className="text-gray-400 text-sm mb-4">A/B testing and psychological triggers to boost your revenue</p>
-                <span className="text-beige text-sm font-medium">Learn More →</span>
+                <h3 className="text-lg font-bold mb-3 group-hover:text-beige transition-colors">
+                  Conversion Optimization
+                </h3>
+                <p className="text-gray-400 text-sm mb-4">
+                  A/B testing and psychological triggers to boost your revenue
+                </p>
+                <span className="text-beige text-sm font-medium">
+                  Learn More →
+                </span>
               </motion.a>
             </div>
           </motion.div>

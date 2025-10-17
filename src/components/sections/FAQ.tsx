@@ -40,21 +40,21 @@ const FAQ = () => {
     const schemaMarkup = {
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      "mainEntity": faqs.map(faq => ({
+      mainEntity: faqs.map((faq) => ({
         "@type": "Question",
-        "name": faq.question,
-        "acceptedAnswer": {
+        name: faq.question,
+        acceptedAnswer: {
           "@type": "Answer",
-          "text": faq.answer
-        }
-      }))
+          text: faq.answer,
+        },
+      })),
     };
 
-    let script = document.querySelector('script[data-faq-schema]');
+    let script = document.querySelector("script[data-faq-schema]");
     if (!script) {
-      script = document.createElement('script');
-      script.type = 'application/ld+json';
-      script.setAttribute('data-faq-schema', 'true');
+      script = document.createElement("script");
+      script.type = "application/ld+json";
+      script.setAttribute("data-faq-schema", "true");
       script.textContent = JSON.stringify(schemaMarkup);
       document.head.appendChild(script);
     }

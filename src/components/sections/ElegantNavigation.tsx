@@ -128,10 +128,30 @@ const ElegantNavigation = memo(() => {
                 <span className="text-beige font-medium text-xs sm:text-sm">
                   S
                 </span>
-                <svg className="absolute -top-2 left-1/2 -translate-x-1/2 text-beige w-6 h-4 sm:w-7 sm:h-4 pointer-events-none" viewBox="0 0 24 14" fill="none" aria-hidden="true">
-                  <path d="M3 11 A9 9 0 0 1 21 11" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-                  <path d="M6 11 v3" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-                  <path d="M18 11 v3" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+                <svg
+                  className="absolute -top-2 left-1/2 -translate-x-1/2 text-beige w-6 h-4 sm:w-7 sm:h-4 pointer-events-none"
+                  viewBox="0 0 24 14"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M3 11 A9 9 0 0 1 21 11"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                  />
+                  <path
+                    d="M6 11 v3"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                  />
+                  <path
+                    d="M18 11 v3"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                  />
                 </svg>
               </div>
               <span className="text-gray-100 font-medium text-base sm:text-lg tracking-wide">
@@ -170,8 +190,14 @@ const ElegantNavigation = memo(() => {
                 aria-label="WhatsApp chat"
                 className="text-beige/80 hover:text-beige transition-colors p-2 rounded-lg border border-beige/20 hover:border-beige/40"
               >
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
-                  <path d="M17.5 6.5A7.5 7.5 0 0 0 6.2 17.2L5 21l3.9-1.1A7.5 7.5 0 1 0 17.5 6.5Zm-5.9 2.7c.2-.5.3-.5.6-.5h.5c.2 0 .4 0 .6.4.2.4.8 1.4.9 1.5.1.2.1.3 0 .5-.1.2-.2.3-.4.6-.2.2-.4.4-.2.7.2.2.8 1.4 1.9 2 .9.6 1.1.5 1.4.4.3-.1.7-.6.9-.8.2-.2.4-.2.6-.1.2.1 1.4.7 1.6.8.2.1.4.2.4.4 0 .2.1 1.1-.5 1.7-.5.6-1.1.7-1.6.7-.4 0-1 0-2-.4-1.1-.4-2-.9-2.8-1.7-.7-.7-1.3-1.5-1.9-2.5-.6-1-.9-1.8-1-2.1-.1-.3 0-.8.3-1.1.2-.3.6-.8.8-1.1Z"/>
+                <svg
+                  viewBox="0 0 24 24"
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path d="M17.5 6.5A7.5 7.5 0 0 0 6.2 17.2L5 21l3.9-1.1A7.5 7.5 0 1 0 17.5 6.5Zm-5.9 2.7c.2-.5.3-.5.6-.5h.5c.2 0 .4 0 .6.4.2.4.8 1.4.9 1.5.1.2.1.3 0 .5-.1.2-.2.3-.4.6-.2.2-.4.4-.2.7.2.2.8 1.4 1.9 2 .9.6 1.1.5 1.4.4.3-.1.7-.6.9-.8.2-.2.4-.2.6-.1.2.1 1.4.7 1.6.8.2.1.4.2.4.4 0 .2.1 1.1-.5 1.7-.5.6-1.1.7-1.6.7-.4 0-1 0-2-.4-1.1-.4-2-.9-2.8-1.7-.7-.7-1.3-1.5-1.9-2.5-.6-1-.9-1.8-1-2.1-.1-.3 0-.8.3-1.1.2-.3.6-.8.8-1.1Z" />
                 </svg>
               </a>
               <a
@@ -181,13 +207,21 @@ const ElegantNavigation = memo(() => {
                 aria-label="Telegram chat"
                 className="text-beige/80 hover:text-beige transition-colors p-2 rounded-lg border border-beige/20 hover:border-beige/40"
               >
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
-                  <path d="M9.7 14.6 9.5 18c.4 0 .6-.2.8-.4l2-1.9 4.1 3c.8.4 1.3.2 1.5-.7L21.6 5c.2-.9-.4-1.3-1.2-1L3.3 10.2c-.8.3-.8.8-.1 1l4.3 1.3 10-6.3-7.8 8.4Z"/>
+                <svg
+                  viewBox="0 0 24 24"
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path d="M9.7 14.6 9.5 18c.4 0 .6-.2.8-.4l2-1.9 4.1 3c.8.4 1.3.2 1.5-.7L21.6 5c.2-.9-.4-1.3-1.2-1L3.3 10.2c-.8.3-.8.8-.1 1l4.3 1.3 10-6.3-7.8 8.4Z" />
                 </svg>
               </a>
               <Button
                 onClick={() => {
-                  const url = (import.meta as any).env?.VITE_CALENDLY_URL as string | undefined;
+                  const url = (import.meta as any).env?.VITE_CALENDLY_URL as
+                    | string
+                    | undefined;
                   if (url) {
                     setCalendlyOpen(true);
                   } else {
@@ -230,10 +264,30 @@ const ElegantNavigation = memo(() => {
               <div className="flex items-center space-x-3">
                 <div className="w-8 h-8 border border-beige/60 rounded relative flex items-center justify-center">
                   <span className="text-beige font-medium text-xs">S</span>
-                  <svg className="absolute -top-2 left-1/2 -translate-x-1/2 text-beige w-6 h-4 pointer-events-none" viewBox="0 0 24 14" fill="none" aria-hidden="true">
-                    <path d="M3 11 A9 9 0 0 1 21 11" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-                    <path d="M6 11 v3" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-                    <path d="M18 11 v3" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+                  <svg
+                    className="absolute -top-2 left-1/2 -translate-x-1/2 text-beige w-6 h-4 pointer-events-none"
+                    viewBox="0 0 24 14"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M3 11 A9 9 0 0 1 21 11"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                    />
+                    <path
+                      d="M6 11 v3"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                    />
+                    <path
+                      d="M18 11 v3"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                    />
                   </svg>
                 </div>
                 <span className="text-gray-100 font-medium text-base tracking-wide">
@@ -277,7 +331,15 @@ const ElegantNavigation = memo(() => {
                   aria-label="WhatsApp chat"
                   className="p-3 rounded-xl border border-beige/20 text-beige/80 hover:text-beige hover:border-beige/40 transition-colors"
                 >
-                  <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M17.5 6.5A7.5 7.5 0 0 0 6.2 17.2L5 21l3.9-1.1A7.5 7.5 0 1 0 17.5 6.5Zm-5.9 2.7c.2-.5.3-.5.6-.5h.5c.2 0 .4 0 .6.4.2.4.8 1.4.9 1.5.1.2.1.3 0 .5-.1.2-.2.3-.4.6-.2.2-.4.4-.2.7.2.2.8 1.4 1.9 2 .9.6 1.1.5 1.4.4.3-.1.7-.6.9-.8.2-.2.4-.2.6-.1.2.1 1.4.7 1.6.8.2.1.4.2.4.4 0 .2.1 1.1-.5 1.7-.5.6-1.1.7-1.6.7-.4 0-1 0-2-.4-1.1-.4-2-.9-2.8-1.7-.7-.7-1.3-1.5-1.9-2.5-.6-1-.9-1.8-1-2.1-.1-.3 0-.8.3-1.1.2-.3.6-.8.8-1.1Z"/></svg>
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="22"
+                    height="22"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path d="M17.5 6.5A7.5 7.5 0 0 0 6.2 17.2L5 21l3.9-1.1A7.5 7.5 0 1 0 17.5 6.5Zm-5.9 2.7c.2-.5.3-.5.6-.5h.5c.2 0 .4 0 .6.4.2.4.8 1.4.9 1.5.1.2.1.3 0 .5-.1.2-.2.3-.4.6-.2.2-.4.4-.2.7.2.2.8 1.4 1.9 2 .9.6 1.1.5 1.4.4.3-.1.7-.6.9-.8.2-.2.4-.2.6-.1.2.1 1.4.7 1.6.8.2.1.4.2.4.4 0 .2.1 1.1-.5 1.7-.5.6-1.1.7-1.6.7-.4 0-1 0-2-.4-1.1-.4-2-.9-2.8-1.7-.7-.7-1.3-1.5-1.9-2.5-.6-1-.9-1.8-1-2.1-.1-.3 0-.8.3-1.1.2-.3.6-.8.8-1.1Z" />
+                  </svg>
                 </a>
                 <a
                   href="https://t.me/prime2357"
@@ -286,7 +348,15 @@ const ElegantNavigation = memo(() => {
                   aria-label="Telegram chat"
                   className="p-3 rounded-xl border border-beige/20 text-beige/80 hover:text-beige hover:border-beige/40 transition-colors"
                 >
-                  <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M9.7 14.6 9.5 18c.4 0 .6-.2.8-.4l2-1.9 4.1 3c.8.4 1.3.2 1.5-.7L21.6 5c.2-.9-.4-1.3-1.2-1L3.3 10.2c-.8.3-.8.8-.1 1l4.3 1.3 10-6.3-7.8 8.4Z"/></svg>
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="22"
+                    height="22"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path d="M9.7 14.6 9.5 18c.4 0 .6-.2.8-.4l2-1.9 4.1 3c.8.4 1.3.2 1.5-.7L21.6 5c.2-.9-.4-1.3-1.2-1L3.3 10.2c-.8.3-.8.8-.1 1l4.3 1.3 10-6.3-7.8 8.4Z" />
+                  </svg>
                 </a>
               </div>
 
@@ -302,7 +372,12 @@ const ElegantNavigation = memo(() => {
           </div>
         </div>
       )}
-      <CalendlyModal open={calendlyOpen && Boolean((import.meta as any).env?.VITE_CALENDLY_URL)} onClose={() => setCalendlyOpen(false)} />
+      <CalendlyModal
+        open={
+          calendlyOpen && Boolean((import.meta as any).env?.VITE_CALENDLY_URL)
+        }
+        onClose={() => setCalendlyOpen(false)}
+      />
     </>
   );
 });

@@ -139,7 +139,10 @@ const Documentation = () => {
 
       <section className="py-4 text-center bg-black/90 border-y border-white/10">
         <p className="text-[10px] sm:text-xs text-gray-500 max-w-3xl mx-auto px-4">
-          Note: Some websites shown or linked here are used purely as references or inspiration and were not fully developed by us. As expert developers, we can build similar features and experiences tailored to your needs with ease.
+          Note: Some websites shown or linked here are used purely as references
+          or inspiration and were not fully developed by us. As expert
+          developers, we can build similar features and experiences tailored to
+          your needs with ease.
         </p>
       </section>
 
@@ -450,7 +453,9 @@ const Documentation = () => {
                 </p>
                 <button
                   onClick={() => {
-                    const url = (import.meta as any).env?.VITE_CALENDLY_URL as string | undefined;
+                    const url = (import.meta as any).env?.VITE_CALENDLY_URL as
+                      | string
+                      | undefined;
                     if (url) {
                       setCalendlyOpen(true);
                     }
@@ -466,7 +471,12 @@ const Documentation = () => {
       </section>
 
       <Footer />
-      <CalendlyModal open={calendlyOpen && Boolean((import.meta as any).env?.VITE_CALENDLY_URL)} onClose={() => setCalendlyOpen(false)} />
+      <CalendlyModal
+        open={
+          calendlyOpen && Boolean((import.meta as any).env?.VITE_CALENDLY_URL)
+        }
+        onClose={() => setCalendlyOpen(false)}
+      />
     </div>
   );
 };

@@ -203,15 +203,17 @@ const Partners = memo(() => {
   useEffect(() => {
     updatePageMeta({
       title: "Partnership Opportunities | Shopify Dev Studio",
-      description: "Join our partner network. Explore partnership programs with Shopify Dev Studio for agencies, developers, and e-commerce brands.",
+      description:
+        "Join our partner network. Explore partnership programs with Shopify Dev Studio for agencies, developers, and e-commerce brands.",
       ogTitle: "Strategic Partnerships - Shopify Dev Studio",
-      ogDescription: "Partner with us to grow your e-commerce business. Discover our partnership opportunities and collaboration programs.",
+      ogDescription:
+        "Partner with us to grow your e-commerce business. Discover our partnership opportunities and collaboration programs.",
       url: "https://shopifystudio.tech/partners",
     });
 
     addBreadcrumbSchema([
       { name: "Home", url: "https://shopifystudio.tech/" },
-      { name: "Partners", url: "https://shopifystudio.tech/partners" }
+      { name: "Partners", url: "https://shopifystudio.tech/partners" },
     ]);
   }, []);
   // Enhanced Shopify influencers and experts with social links

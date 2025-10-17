@@ -13,37 +13,40 @@ const About = () => {
   useEffect(() => {
     updatePageMeta({
       title: "About Shopify Dev Studio | Expert E-Commerce Developers",
-      description: "Meet the team behind Shopify Dev Studio. Results-driven developers creating high-converting Shopify stores with 98% client satisfaction and 24-hour response times.",
+      description:
+        "Meet the team behind Shopify Dev Studio. Results-driven developers creating high-converting Shopify stores with 98% client satisfaction and 24-hour response times.",
       ogTitle: "About Shopify Dev Studio - Our Team & Values",
-      ogDescription: "Passionate Shopify experts dedicated to helping e-commerce businesses grow through custom themes and performance optimization.",
+      ogDescription:
+        "Passionate Shopify experts dedicated to helping e-commerce businesses grow through custom themes and performance optimization.",
       url: "https://shopifystudio.tech/about",
     });
 
     addBreadcrumbSchema([
       { name: "Home", url: "https://shopifystudio.tech/" },
-      { name: "About", url: "https://shopifystudio.tech/about" }
+      { name: "About", url: "https://shopifystudio.tech/about" },
     ]);
 
     const schemaMarkup = {
       "@context": "https://schema.org",
       "@type": "AboutPage",
-      "name": "About Shopify Dev Studio",
-      "description": "About the Shopify Dev Studio team and company values",
-      "url": "https://shopifystudio.tech/about",
-      "mainEntity": {
+      name: "About Shopify Dev Studio",
+      description: "About the Shopify Dev Studio team and company values",
+      url: "https://shopifystudio.tech/about",
+      mainEntity: {
         "@type": "Organization",
-        "name": "Shopify Dev Studio",
-        "url": "https://shopifystudio.tech",
-        "description": "Custom Shopify theme development and e-commerce optimization agency",
-        "areaServed": "Worldwide"
-      }
+        name: "Shopify Dev Studio",
+        url: "https://shopifystudio.tech",
+        description:
+          "Custom Shopify theme development and e-commerce optimization agency",
+        areaServed: "Worldwide",
+      },
     };
 
-    let script = document.querySelector('script[data-about-schema]');
+    let script = document.querySelector("script[data-about-schema]");
     if (!script) {
-      script = document.createElement('script');
-      script.type = 'application/ld+json';
-      script.setAttribute('data-about-schema', 'true');
+      script = document.createElement("script");
+      script.type = "application/ld+json";
+      script.setAttribute("data-about-schema", "true");
       script.textContent = JSON.stringify(schemaMarkup);
       document.head.appendChild(script);
     }
@@ -409,10 +412,25 @@ const About = () => {
               you achieve your e-commerce goals. Let's start a conversation.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button onClick={() => { const url = (import.meta as any).env?.VITE_CALENDLY_URL as string | undefined; if (url) { setCalendlyOpen(true); } else { window.location.hash = "#contact"; } }} className="px-8 py-4 bg-beige text-black font-semibold rounded-lg hover:bg-beige/90 transition-colors duration-200">
-                  Get in Touch
-                </button>
-              <a href="/process" className="px-8 py-4 border border-beige text-beige font-semibold rounded-lg hover:bg-beige/10 transition-colors duration-200">
+              <button
+                onClick={() => {
+                  const url = (import.meta as any).env?.VITE_CALENDLY_URL as
+                    | string
+                    | undefined;
+                  if (url) {
+                    setCalendlyOpen(true);
+                  } else {
+                    window.location.hash = "#contact";
+                  }
+                }}
+                className="px-8 py-4 bg-beige text-black font-semibold rounded-lg hover:bg-beige/90 transition-colors duration-200"
+              >
+                Get in Touch
+              </button>
+              <a
+                href="/process"
+                className="px-8 py-4 border border-beige text-beige font-semibold rounded-lg hover:bg-beige/10 transition-colors duration-200"
+              >
                 View Our Process
               </a>
             </div>
@@ -422,7 +440,12 @@ const About = () => {
 
       {/* Footer */}
       <Footer />
-      <CalendlyModal open={calendlyOpen && Boolean((import.meta as any).env?.VITE_CALENDLY_URL)} onClose={() => setCalendlyOpen(false)} />
+      <CalendlyModal
+        open={
+          calendlyOpen && Boolean((import.meta as any).env?.VITE_CALENDLY_URL)
+        }
+        onClose={() => setCalendlyOpen(false)}
+      />
     </div>
   );
 };

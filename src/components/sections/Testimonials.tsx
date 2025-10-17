@@ -43,28 +43,28 @@ const Testimonials = () => {
     const schemaMarkup = {
       "@context": "https://schema.org",
       "@type": "ReviewCollection",
-      "name": "Shopify Dev Studio Client Testimonials",
-      "review": testimonials.map(testimonial => ({
+      name: "Shopify Dev Studio Client Testimonials",
+      review: testimonials.map((testimonial) => ({
         "@type": "Review",
-        "author": {
+        author: {
           "@type": "Person",
-          "name": testimonial.author
+          name: testimonial.author,
         },
-        "reviewRating": {
+        reviewRating: {
           "@type": "Rating",
-          "ratingValue": testimonial.rating.toString(),
-          "bestRating": "5",
-          "worstRating": "1"
+          ratingValue: testimonial.rating.toString(),
+          bestRating: "5",
+          worstRating: "1",
         },
-        "reviewBody": testimonial.quote
-      }))
+        reviewBody: testimonial.quote,
+      })),
     };
 
-    let script = document.querySelector('script[data-testimonial-schema]');
+    let script = document.querySelector("script[data-testimonial-schema]");
     if (!script) {
-      script = document.createElement('script');
-      script.type = 'application/ld+json';
-      script.setAttribute('data-testimonial-schema', 'true');
+      script = document.createElement("script");
+      script.type = "application/ld+json";
+      script.setAttribute("data-testimonial-schema", "true");
       script.textContent = JSON.stringify(schemaMarkup);
       document.head.appendChild(script);
     }
