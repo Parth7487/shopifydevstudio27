@@ -11,7 +11,11 @@ const CalendlyModal = memo(({ open, onClose }: Props) => {
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-sm" role="dialog" aria-modal="true">
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-sm"
+      role="dialog"
+      aria-modal="true"
+    >
       <div className="relative w-[95vw] max-w-4xl h-[80vh] bg-black border border-beige/20 rounded-xl overflow-hidden">
         <button
           onClick={onClose}

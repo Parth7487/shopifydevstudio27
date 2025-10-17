@@ -36,7 +36,8 @@ const CinematicNavigation = () => {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const isMobile = window.innerWidth < 768;
+      element.scrollIntoView({ behavior: isMobile ? "auto" : "smooth" });
     }
     setIsMobileMenuOpen(false);
   };
@@ -154,7 +155,9 @@ const CinematicNavigation = () => {
               >
                 <Button
                   onClick={() => {
-                    const url = (import.meta as any).env?.VITE_CALENDLY_URL as string | undefined;
+                    const url = (import.meta as any).env?.VITE_CALENDLY_URL as
+                      | string
+                      | undefined;
                     if (url) {
                       setCalendlyOpen(true);
                     } else {
@@ -255,7 +258,12 @@ const CinematicNavigation = () => {
           transition={{ duration: 0.1 }}
         />
       </motion.div>
-      <CalendlyModal open={calendlyOpen && Boolean((import.meta as any).env?.VITE_CALENDLY_URL)} onClose={() => setCalendlyOpen(false)} />
+      <CalendlyModal
+        open={
+          calendlyOpen && Boolean((import.meta as any).env?.VITE_CALENDLY_URL)
+        }
+        onClose={() => setCalendlyOpen(false)}
+      />
     </>
   );
 };

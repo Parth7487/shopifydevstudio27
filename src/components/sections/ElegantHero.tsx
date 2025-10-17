@@ -8,8 +8,12 @@ import {
 } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-const LazySplashCursor = lazy(() => import("../ui/splash-cursor").then((m) => ({ default: m.SplashCursor })));
-const LiteSplashCursor = lazy(() => import("../SplashCursor").then((m) => ({ default: m.default })));
+const LazySplashCursor = lazy(() =>
+  import("../ui/splash-cursor").then((m) => ({ default: m.SplashCursor })),
+);
+const LiteSplashCursor = lazy(() =>
+  import("../SplashCursor").then((m) => ({ default: m.default })),
+);
 import CalendlyModal from "./CalendlyModal";
 
 const ElegantHero = () => {
@@ -27,7 +31,9 @@ const ElegantHero = () => {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
     if (prefersReduced) return;
 
     const isMobile = window.matchMedia("(max-width: 767px)").matches;
@@ -57,7 +63,11 @@ const ElegantHero = () => {
       idleId = setTimeout(enable, 600);
     }
     return () => {
-      if ((window as any).cancelIdleCallback && idleId && typeof idleId !== "number") {
+      if (
+        (window as any).cancelIdleCallback &&
+        idleId &&
+        typeof idleId !== "number"
+      ) {
         (window as any).cancelIdleCallback(idleId);
       } else if (typeof idleId === "number") {
         clearTimeout(idleId);
@@ -82,7 +92,8 @@ const ElegantHero = () => {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const isMobile = window.innerWidth < 768;
+      element.scrollIntoView({ behavior: isMobile ? "auto" : "smooth" });
     }
   };
 
@@ -212,13 +223,15 @@ const ElegantHero = () => {
           >
             <Button
               onClick={() => {
-              const url = (import.meta as any).env?.VITE_CALENDLY_URL as string | undefined;
-              if (url) {
-                setCalendlyOpen(true);
-              } else {
-                scrollToSection("contact");
-              }
-            }}
+                const url = (import.meta as any).env?.VITE_CALENDLY_URL as
+                  | string
+                  | undefined;
+                if (url) {
+                  setCalendlyOpen(true);
+                } else {
+                  scrollToSection("contact");
+                }
+              }}
               className="elegant-button w-full sm:w-auto px-6 sm:px-8 py-3 responsive-text-xs font-medium tracking-wide rounded"
             >
               Schedule a Call
@@ -249,7 +262,12 @@ const ElegantHero = () => {
           />
         </motion.div>
       </div>
-      <CalendlyModal open={calendlyOpen && Boolean((import.meta as any).env?.VITE_CALENDLY_URL)} onClose={() => setCalendlyOpen(false)} />
+      <CalendlyModal
+        open={
+          calendlyOpen && Boolean((import.meta as any).env?.VITE_CALENDLY_URL)
+        }
+        onClose={() => setCalendlyOpen(false)}
+      />
     </motion.section>
   );
 };

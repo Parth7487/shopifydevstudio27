@@ -24,7 +24,9 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
-  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 
   /* Ultra-smooth marquee track using GPU transforms */
   .marquee-track {
@@ -37,18 +39,30 @@
     animation-timing-function: linear;
     animation-iteration-count: infinite;
   }
-  .marquee-track[data-paused="true"] { animation-play-state: paused; }
-  .marquee-track-reverse { animation-name: marquee-scroll-reverse; }
+  .marquee-track[data-paused="true"] {
+    animation-play-state: paused;
+  }
+  .marquee-track-reverse {
+    animation-name: marquee-scroll-reverse;
+  }
 }
 
 @layer base {
   @keyframes marquee-scroll {
-    from { transform: translateX(0); }
-    to { transform: translateX(calc(-1 * var(--marquee-distance, 100%))); }
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-1 * var(--marquee-distance, 100%)));
+    }
   }
   @keyframes marquee-scroll-reverse {
-    from { transform: translateX(calc(-1 * var(--marquee-distance, 100%))); }
-    to { transform: translateX(0); }
+    from {
+      transform: translateX(calc(-1 * var(--marquee-distance, 100%)));
+    }
+    to {
+      transform: translateX(0);
+    }
   }
 
   /* Essential CSS variables only */
@@ -134,8 +148,13 @@
   }
 
   html {
-    scroll-behavior: smooth;
     overflow-x: hidden;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html:not(.mobile-scrolling) {
+      scroll-behavior: smooth;
+    }
   }
 
   body {
@@ -169,6 +188,13 @@
 ::-webkit-scrollbar-thumb {
   background: #e6b17e;
   border-radius: 3px;
+}
+
+/* Prevent scroll jank on mobile during programmatic scrolls */
+@media (max-width: 768px) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 /* Selection styling */

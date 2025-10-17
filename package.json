@@ -8,11 +8,17 @@
   },
   "scripts": {
     "dev": "vite",
+    "prebuild": "npm run sitemap:generate",
     "build": "vite build",
+    "postbuild": "npm run sitemap:gzip",
     "preview": "vite preview",
     "test": "vitest --run",
     "format.fix": "prettier --write .",
     "typecheck": "tsc",
+    "sitemap:generate": "node scripts/generate-sitemap.mjs",
+    "sitemap:gzip": "node scripts/gzip-sitemap.mjs",
+    "sitemap:ping": "node scripts/ping-sitemap.mjs",
+    "sitemap": "npm run sitemap:generate && npm run sitemap:gzip",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },

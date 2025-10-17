@@ -211,7 +211,8 @@ const CinematicHero = () => {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const isMobile = window.innerWidth < 768;
+      element.scrollIntoView({ behavior: isMobile ? "auto" : "smooth" });
     }
   };
 
@@ -362,13 +363,15 @@ const CinematicHero = () => {
               />
               <Button
                 onClick={() => {
-                const url = (import.meta as any).env?.VITE_CALENDLY_URL as string | undefined;
-                if (url) {
-                  setCalendlyOpen(true);
-                } else {
-                  scrollToSection("contact");
-                }
-              }}
+                  const url = (import.meta as any).env?.VITE_CALENDLY_URL as
+                    | string
+                    | undefined;
+                  if (url) {
+                    setCalendlyOpen(true);
+                  } else {
+                    scrollToSection("contact");
+                  }
+                }}
                 className="relative bg-gradient-to-r from-gold to-accent text-black hover:from-gold/90 hover:to-accent/90 font-bold text-lg px-12 py-6 rounded-xl overflow-hidden group tracking-wide"
               >
                 <span className="relative z-10">SCHEDULE A CALL</span>
@@ -486,7 +489,12 @@ const CinematicHero = () => {
           />
         </div>
       </motion.div>
-      <CalendlyModal open={calendlyOpen && Boolean((import.meta as any).env?.VITE_CALENDLY_URL)} onClose={() => setCalendlyOpen(false)} />
+      <CalendlyModal
+        open={
+          calendlyOpen && Boolean((import.meta as any).env?.VITE_CALENDLY_URL)
+        }
+        onClose={() => setCalendlyOpen(false)}
+      />
     </motion.section>
   );
 };

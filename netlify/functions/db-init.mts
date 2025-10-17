@@ -45,7 +45,7 @@ export default async (req: Request, context: Context) => {
 
     const result = {
       success: true,
-      message: 'Database initialized successfully',
+      message: "Database initialized successfully",
       tableCreated: true,
       projectCount: parseInt(count),
     };
@@ -53,24 +53,27 @@ export default async (req: Request, context: Context) => {
     return new Response(JSON.stringify(result), {
       status: 200,
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
   } catch (error) {
-    console.error('Database initialization error:', error);
-    
-    return new Response(JSON.stringify({
-      success: false,
-      error: error instanceof Error ? error.message : 'Unknown error',
-    }), {
-      status: 500,
-      headers: {
-        'Content-Type': 'application/json',
+    console.error("Database initialization error:", error);
+
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: error instanceof Error ? error.message : "Unknown error",
+      }),
+      {
+        status: 500,
+        headers: {
+          "Content-Type": "application/json",
+        },
       },
-    });
+    );
   }
 };
 
 export const config: Config = {
-  path: "/api/db-init"
+  path: "/api/db-init",
 };

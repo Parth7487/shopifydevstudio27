@@ -85,7 +85,6 @@
 The contact form currently uses a placeholder endpoint. To make it functional:
 
 1. **Formspree** (Recommended):
-
    - Sign up at https://formspree.io
    - Create a new form and get your form ID
    - Update `src/components/sections/EnhancedContact.tsx` line 35:
@@ -94,7 +93,6 @@ The contact form currently uses a placeholder endpoint. To make it functional:
      ```
 
 2. **Netlify Forms**:
-
    - Add `data-netlify="true"` to the form element
    - Deploy to Netlify
 
@@ -106,7 +104,6 @@ The contact form currently uses a placeholder endpoint. To make it functional:
 Add your analytics tracking:
 
 1. **Google Analytics**:
-
    - Add tracking code to `index.html`
 
 2. **Vercel Analytics**:

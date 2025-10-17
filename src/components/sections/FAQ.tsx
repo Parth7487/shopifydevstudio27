@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -7,6 +8,58 @@ import {
 } from "@/components/ui/accordion";
 
 const FAQ = () => {
+  useEffect(() => {
+    const faqs = [
+      {
+        question: "How long does a complete transformation take?",
+        answer:
+          "Most transformations take 2-4 weeks depending on complexity. We start with a strategy session, move through design and development phases, and finish with testing and optimization. Rush projects can be accommodated for an additional fee.",
+      },
+      {
+        question: "What if I already have a Shopify store?",
+        answer:
+          "Perfect! We specialize in transforming existing stores. We'll analyze your current setup, preserve what's working, and redesign areas that need improvement. All your products, customer data, and order history remain intact throughout the process.",
+      },
+      {
+        question: "Do you guarantee results?",
+        answer:
+          "Yes, we offer a 30-day satisfaction guarantee. If you're not happy with the results, we'll work with you to make it right or provide a full refund. Our average clients see 25-40% improvement in conversion rates within the first month.",
+      },
+      {
+        question: "How is this different from hiring a freelancer?",
+        answer:
+          "Unlike freelancers, we're a dedicated team with specialized expertise in Shopify psychology and conversion optimization. You get consistent communication, proven processes, ongoing support, and accountability that individual freelancers often can't provide.",
+      },
+      {
+        question: "What's included in ongoing support?",
+        answer:
+          "Our support includes monthly performance reviews, bug fixes, security updates, minor design tweaks, speed optimization, and priority email support. We also provide training materials and can handle product launches or seasonal campaigns.",
+      },
+    ];
+
+    const schemaMarkup = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      })),
+    };
+
+    let script = document.querySelector("script[data-faq-schema]");
+    if (!script) {
+      script = document.createElement("script");
+      script.type = "application/ld+json";
+      script.setAttribute("data-faq-schema", "true");
+      script.textContent = JSON.stringify(schemaMarkup);
+      document.head.appendChild(script);
+    }
+  }, []);
+
   const faqs = [
     {
       question: "How long does a complete transformation take?",

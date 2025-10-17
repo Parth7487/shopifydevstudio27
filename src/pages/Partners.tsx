@@ -23,6 +23,8 @@ import {
 import ElegantNavigation from "../components/sections/ElegantNavigation";
 import Footer from "../components/sections/Footer";
 import CalendlyModal from "../components/sections/CalendlyModal";
+import { updatePageMeta } from "../lib/seo-meta";
+import { addBreadcrumbSchema } from "../lib/breadcrumb-schema";
 
 // Sliding carousel component
 const SlidingCarousel = memo(
@@ -197,6 +199,23 @@ const TweetCard = memo(({ tweet }: { tweet: any }) => (
 
 const Partners = memo(() => {
   const [calendlyOpen, setCalendlyOpen] = useState(false);
+
+  useEffect(() => {
+    updatePageMeta({
+      title: "Partnership Opportunities | Shopify Dev Studio",
+      description:
+        "Join our partner network. Explore partnership programs with Shopify Dev Studio for agencies, developers, and e-commerce brands.",
+      ogTitle: "Strategic Partnerships - Shopify Dev Studio",
+      ogDescription:
+        "Partner with us to grow your e-commerce business. Discover our partnership opportunities and collaboration programs.",
+      url: "https://shopifystudio.tech/partners",
+    });
+
+    addBreadcrumbSchema([
+      { name: "Home", url: "https://shopifystudio.tech/" },
+      { name: "Partners", url: "https://shopifystudio.tech/partners" },
+    ]);
+  }, []);
   // Enhanced Shopify influencers and experts with social links
   const shopifyExperts = useMemo(
     () => [
@@ -330,26 +349,6 @@ const Partners = memo(() => {
   // Work showcases with realistic improvements
   const workShowcases = useMemo(
     () => [
-      {
-        storeName: "MVMT Watches",
-        category: "Fashion & Accessories",
-        beforeImage:
-          "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=400&fit=crop",
-        afterImage:
-          "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop",
-        improvements: [
-          "Conversion rate: 2.1% → 5.8%",
-          "Page load time: 4.2s → 1.1s",
-          "Mobile sales: +347%",
-          "Cart abandonment: 65% → 28%",
-        ],
-        testimonial:
-          "The redesign completely transformed our business. Revenue increased 240% in the first quarter.",
-        clientRole: "Marketing Director",
-        challenge: "Slow loading times and poor mobile experience",
-        solution: "Complete performance optimization and mobile-first redesign",
-        websiteUrl: "https://mvmtwatches.com",
-      },
       {
         storeName: "Peak Performance",
         category: "Fitness & Sports",

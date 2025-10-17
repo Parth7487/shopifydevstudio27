@@ -141,7 +141,6 @@ const ProblemSolution = () => {
             </motion.div>
           </motion.div>
         </motion.div>
-
       </div>
     </section>
   );

@@ -6,24 +6,24 @@ const sql = neon();
 export default async (req: Request, context: Context) => {
   const url = new URL(req.url);
   const method = req.method;
-  const pathSegments = url.pathname.split('/').filter(Boolean);
+  const pathSegments = url.pathname.split("/").filter(Boolean);
   const projectId = pathSegments[pathSegments.length - 1];
 
   try {
     // GET all projects or single project
-    if (method === 'GET') {
-      if (projectId && projectId !== 'portfolio') {
+    if (method === "GET") {
+      if (projectId && projectId !== "portfolio") {
         // Get single project
         const project = await sql`
           SELECT * FROM portfolio_projects 
           WHERE id = ${projectId} AND status = 'published'
         `;
-        
+
         return new Response(JSON.stringify(project[0] || null), {
           status: project.length ? 200 : 404,
           headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
           },
         });
       } else {
@@ -33,19 +33,19 @@ export default async (req: Request, context: Context) => {
           WHERE status = 'published'
           ORDER BY created_at DESC
         `;
-        
+
         return new Response(JSON.stringify(projects), {
           status: 200,
           headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
           },
         });
       }
     }
 
     // POST - Create new project
-    if (method === 'POST') {
+    if (method === "POST") {
       const body = await req.json();
       const {
         title,
@@ -59,16 +59,27 @@ export default async (req: Request, context: Context) => {
         metrics = { conversion: "0%", load_time: "0s" },
         live_url,
         featured = false,
-        has_video = false
+        has_video = false,
       } = body;
 
-      if (!title || !brand || !description || !image || !category || !live_url) {
-        return new Response(JSON.stringify({
-          error: 'Missing required fields: title, brand, description, image, category, live_url'
-        }), {
-          status: 400,
-          headers: { 'Content-Type': 'application/json' },
-        });
+      if (
+        !title ||
+        !brand ||
+        !description ||
+        !image ||
+        !category ||
+        !live_url
+      ) {
+        return new Response(
+          JSON.stringify({
+            error:
+              "Missing required fields: title, brand, description, image, category, live_url",
+          }),
+          {
+            status: 400,
+            headers: { "Content-Type": "application/json" },
+          },
+        );
       }
 
       const [newProject] = await sql`
@@ -84,14 +95,14 @@ export default async (req: Request, context: Context) => {
       return new Response(JSON.stringify(newProject), {
         status: 201,
         headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
         },
       });
     }
 
     // PUT - Update project
-    if (method === 'PUT' && projectId) {
+    if (method === "PUT" && projectId) {
       const body = await req.json();
       const {
         title,
@@ -106,7 +117,7 @@ export default async (req: Request, context: Context) => {
         live_url,
         featured,
         has_video,
-        status
+        status,
       } = body;
 
       const [updatedProject] = await sql`
@@ -132,14 +143,14 @@ export default async (req: Request, context: Context) => {
       return new Response(JSON.stringify(updatedProject), {
         status: 200,
         headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
         },
       });
     }
 
     // DELETE - Delete project
-    if (method === 'DELETE' && projectId) {
+    if (method === "DELETE" && projectId) {
       await sql`
         DELETE FROM portfolio_projects WHERE id = ${projectId}
       `;
@@ -147,29 +158,31 @@ export default async (req: Request, context: Context) => {
       return new Response(JSON.stringify({ success: true }), {
         status: 200,
         headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
         },
       });
     }
 
-    return new Response('Method not allowed', { status: 405 });
-
+    return new Response("Method not allowed", { status: 405 });
   } catch (error) {
-    console.error('Portfolio API error:', error);
-    
-    return new Response(JSON.stringify({
-      error: error instanceof Error ? error.message : 'Unknown error',
-    }), {
-      status: 500,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
+    console.error("Portfolio API error:", error);
+
+    return new Response(
+      JSON.stringify({
+        error: error instanceof Error ? error.message : "Unknown error",
+      }),
+      {
+        status: 500,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
       },
-    });
+    );
   }
 };
 
 export const config: Config = {
-  path: "/api/portfolio/*"
+  path: "/api/portfolio/*",
 };

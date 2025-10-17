@@ -18,18 +18,60 @@ import ElegantNavigation from "../components/sections/ElegantNavigation";
 import Footer from "../components/sections/Footer";
 import OptimizedImage from "../components/OptimizedImage";
 import CalendlyModal from "../components/sections/CalendlyModal";
+import { updatePageMeta } from "../lib/seo-meta";
+import { addBreadcrumbSchema } from "../lib/breadcrumb-schema";
 
 const Work = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All Projects");
   const [calendlyOpen, setCalendlyOpen] = useState(false);
 
+  useEffect(() => {
+    updatePageMeta({
+      title: "Shopify Projects & Case Studies | Shopify Dev Studio Portfolio",
+      description:
+        "Explore our portfolio of successful Shopify store transformations. See how we helped brands like Kotn, Rothy's, and more achieve 300%+ conversion increases.",
+      ogTitle: "Shopify Store Case Studies & Success Stories",
+      ogDescription:
+        "Real Shopify projects with proven results: 300%+ conversion improvements, 0.6-0.7s load times, and sustainable fashion to premium furniture.",
+      url: "https://shopifystudio.tech/work",
+    });
+
+    addBreadcrumbSchema([
+      { name: "Home", url: "https://shopifystudio.tech/" },
+      { name: "Work", url: "https://shopifystudio.tech/work" },
+    ]);
+
+    const schemaMarkup = {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      name: "Shopify Portfolio & Case Studies",
+      description:
+        "Portfolio of successful Shopify store projects and case studies",
+      url: "https://shopifystudio.tech/work",
+      mainEntity: {
+        "@type": "Organization",
+        name: "Shopify Dev Studio",
+        url: "https://shopifystudio.tech",
+      },
+    };
+
+    let script = document.querySelector("script[data-work-schema]");
+    if (!script) {
+      script = document.createElement("script");
+      script.type = "application/ld+json";
+      script.setAttribute("data-work-schema", "true");
+      script.textContent = JSON.stringify(schemaMarkup);
+      document.head.appendChild(script);
+    }
+  }, []);
+
   // Fetch projects from Supabase
   const {
     projects: supabaseProjects,
     loading: supabaseLoading,
     error: supabaseError,
-    refetch: refetchProjects
+    refetch: refetchProjects,
   } = useProjects();
 
   const [portfolioProjects, setPortfolioProjects] = useState<any[]>([]);
@@ -42,8 +84,10 @@ const Work = () => {
       brand: "Kotn",
       description:
         "A premium Egyptian cotton fashion brand that champions sustainable manufacturing. The site features immersive storytelling about their supply chain, impact tracking dashboards, and interactive product customization tools that helped increase customer engagement by showcasing their commitment to ethical fashion.",
-      image: "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2Fedcb8435931f44eb9b505c05d6b5320b?format=webp&width=1280",
-      imageHover: "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2Ffe0af747be454520afaf237069cbde7d?format=webp&width=1280",
+      image:
+        "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2Fedcb8435931f44eb9b505c05d6b5320b?format=webp&width=1280",
+      imageHover:
+        "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2Ffe0af747be454520afaf237069cbde7d?format=webp&width=1280",
       videoUrl:
         "https://player.vimeo.com/video/847503258?autoplay=1&loop=1&muted=1",
       category: "Fashion",
@@ -63,8 +107,10 @@ const Work = () => {
       brand: "Rothy's",
       description:
         "Revolutionary footwear brand creating shoes from recycled plastic bottles. The website showcases their innovative 3D knitting technology with interactive product visualization, precise size matching algorithms, and virtual try-on features that reduced returns and boosted customer confidence.",
-      image: "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2Fd4ca22878f6648a8914d31d02e810994?format=webp&width=1280",
-      imageHover: "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2F2125aea746ff422a86745d34681e8791?format=webp&width=1280",
+      image:
+        "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2Fd4ca22878f6648a8914d31d02e810994?format=webp&width=1280",
+      imageHover:
+        "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2F2125aea746ff422a86745d34681e8791?format=webp&width=1280",
       videoUrl:
         "https://player.vimeo.com/video/743163629?autoplay=1&loop=1&muted=1",
       category: "Fashion",
@@ -147,7 +193,8 @@ const Work = () => {
       brand: "Tuft & Needle",
       description:
         "Sleep innovation company focused on premium mattresses and sleep optimization. Features an intelligent mattress selector quiz, sleep tracking integration, educational content about sleep science, and a comprehensive trial program that builds customer trust and reduces purchase anxiety.",
-      image: "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2F949702c24f604351b6197d59ac91fd17?format=webp&width=800",
+      image:
+        "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2F949702c24f604351b6197d59ac91fd17?format=webp&width=800",
       category: "Home & Garden",
       tags: ["Sleep Tech", "Quiz Builder"],
       tech: ["Shopify", "Sleep Quiz", "Trial System"],
@@ -165,7 +212,8 @@ const Work = () => {
       brand: "Daily Harvest",
       description:
         "Superfood delivery service with nutritional tracking and meal planning tools.",
-      image: "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2Fbaba4c9c65ac4e99a9cd8353423de404?format=webp&width=800",
+      image:
+        "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2Fbaba4c9c65ac4e99a9cd8353423de404?format=webp&width=800",
       category: "Food & Beverage",
       tags: ["Superfood", "Meal Planning"],
       tech: ["Shopify Plus", "Nutrition API", "Meal Planner"],
@@ -204,8 +252,10 @@ const Work = () => {
       brand: "Outdoor Voices",
       description:
         "Community-driven athletic wear brand with social fitness integration and local event features.",
-      image: "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2F46ff449fe2264a32bcc421ec79f0fb81?format=webp&width=1280",
-      imageHover: "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2F6da0fe6abe844bfb822da2915cd23413?format=webp&width=1280",
+      image:
+        "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2F46ff449fe2264a32bcc421ec79f0fb81?format=webp&width=1280",
+      imageHover:
+        "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2F6da0fe6abe844bfb822da2915cd23413?format=webp&width=1280",
       videoUrl:
         "https://player.vimeo.com/video/678912345?autoplay=1&loop=1&muted=1",
       category: "Fashion",
@@ -225,8 +275,10 @@ const Work = () => {
       brand: "Allbirds",
       description:
         "Pioneer in sustainable footwear made from renewable materials like merino wool and eucalyptus. Features transparent carbon footprint tracking for every product, material innovation showcases, recycling programs, and environmental impact calculators that educated consumers about sustainable choices.",
-      image: "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2Ff263af1ef6614bbfb777cd05802bc9a6?format=webp&width=1280",
-      imageHover: "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2F71d7120cd41d44278771f138008ab204?format=webp&width=1280",
+      image:
+        "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2Ff263af1ef6614bbfb777cd05802bc9a6?format=webp&width=1280",
+      imageHover:
+        "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2F71d7120cd41d44278771f138008ab204?format=webp&width=1280",
       videoUrl:
         "https://player.vimeo.com/video/456789012?autoplay=1&loop=1&muted=1",
       category: "Fashion",
@@ -241,34 +293,15 @@ const Work = () => {
       hasVideo: true,
     },
     {
-      id: 16,
-      title: "MVMT - Minimalist Watches",
-      brand: "MVMT",
-      description:
-        "Minimalist watch brand that disrupted traditional retail with direct-to-consumer model. Features intelligent style matching quizzes, custom engraving services, interchangeable band systems, virtual try-on technology, and subscription services for watch enthusiasts.",
-      image: "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2Fd5ef16192a934217999bb0448ae4fcd0?format=webp&width=1280",
-      imageHover: "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2F372f556fe7f94ca28e2080a47880f704?format=webp&width=1280",
-      videoUrl:
-        "https://player.vimeo.com/video/678901345?autoplay=1&loop=1&muted=1",
-      category: "Jewelry",
-      tags: ["Minimalist Design", "Personalization"],
-      tech: ["Shopify Plus", "Style Quiz", "Custom Engraving"],
-      metrics: {
-        conversion: "385%",
-        loadTime: "0.5s",
-      },
-      liveUrl: "https://mvmt.com/",
-      featured: false,
-      hasVideo: true,
-    },
-    {
       id: 17,
       title: "Death Wish Coffee - Bold Brews",
       brand: "Death Wish Coffee",
       description:
         "World's strongest coffee with subscription model and brewing guides integration.",
-      image: "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2Fd3ccfd7f90bb40bba243ccf3e66ecd5d?format=webp&width=1280",
-      imageHover: "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2F952b87f38e4845aca65937386b0554f2?format=webp&width=1280",
+      image:
+        "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2Fd3ccfd7f90bb40bba243ccf3e66ecd5d?format=webp&width=1280",
+      imageHover:
+        "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2F952b87f38e4845aca65937386b0554f2?format=webp&width=1280",
       category: "Food & Beverage",
       tags: ["Subscription Model", "Strong Coffee"],
       tech: ["Shopify Plus", "Subscription Engine", "Brewing Guides"],
@@ -286,8 +319,10 @@ const Work = () => {
       brand: "Pura Vida",
       description:
         "Handcrafted jewelry with charity partnerships and artisan story integration.",
-      image: "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2F536d0ae12a9a4a46b044b3bd7a6a5923?format=webp&width=1280",
-      imageHover: "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2Fa78badeec40d467eb6f741ca447f6898?format=webp&width=1280",
+      image:
+        "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2F536d0ae12a9a4a46b044b3bd7a6a5923?format=webp&width=1280",
+      imageHover:
+        "https://cdn.builder.io/api/v1/image/assets%2F18655d8613064687a43655fcf3963c51%2Fa78badeec40d467eb6f741ca447f6898?format=webp&width=1280",
       videoUrl:
         "https://player.vimeo.com/video/789012456?autoplay=1&loop=1&muted=1",
       category: "Jewelry",
@@ -307,8 +342,10 @@ const Work = () => {
       brand: "Bombas",
       description:
         "Comfort-focused socks with social impact tracking and donation matching program.",
-      image: "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2F74949d852c074bc4b57ff0fff3c297ee?format=webp&width=800",
-      imageHover: "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2Fbbb37f4ca9c94d96bb1844865fe62925?format=webp&width=800",
+      image:
+        "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2F74949d852c074bc4b57ff0fff3c297ee?format=webp&width=800",
+      imageHover:
+        "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2Fbbb37f4ca9c94d96bb1844865fe62925?format=webp&width=800",
       category: "Fashion",
       tags: ["Social Impact", "Comfort Technology"],
       tech: ["Shopify Plus", "Impact Tracking", "Donation System"],
@@ -320,14 +357,16 @@ const Work = () => {
       featured: false,
       hasVideo: false,
     },
-      {
+    {
       id: 21,
       title: "Triangl - Designer Swimwear",
       brand: "Triangl",
       description:
         "Luxury swimwear brand with virtual fitting technology and seasonal collections.",
-      image: "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2Fb519514eaa674de1b183894be58328cd?format=webp&width=800",
-      imageHover: "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2F01d64a44f39844638e43f866b793afbc?format=webp&width=800",
+      image:
+        "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2Fb519514eaa674de1b183894be58328cd?format=webp&width=800",
+      imageHover:
+        "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2F01d64a44f39844638e43f866b793afbc?format=webp&width=800",
       category: "Fashion",
       tags: ["Luxury Swimwear", "Virtual Fitting"],
       tech: ["Shopify Plus", "AR Fitting", "Seasonal Collections"],
@@ -345,8 +384,10 @@ const Work = () => {
       brand: "Fashion Nova",
       description:
         "Trendy fashion with influencer integration and real-time inventory management.",
-      image: "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2F18fae872d56b46c4a993bdf2fb7ff6ce?format=webp&width=800",
-      imageHover: "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2Fef01753c32fb495484f3644394e2ef36?format=webp&width=800",
+      image:
+        "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2F18fae872d56b46c4a993bdf2fb7ff6ce?format=webp&width=800",
+      imageHover:
+        "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2Fef01753c32fb495484f3644394e2ef36?format=webp&width=800",
       videoUrl:
         "https://player.vimeo.com/video/901234678?autoplay=1&loop=1&muted=1",
       category: "Fashion",
@@ -366,8 +407,10 @@ const Work = () => {
       brand: "Casper",
       description:
         "Revolutionary sleep products with sleep tracking and personalized recommendations.",
-      image: "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2F6c1a58fd7160441ea71dd38a3916e374?format=webp&width=800",
-      imageHover: "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2F6a03f9f1f75140aa992029f74ad389c8?format=webp&width=800",
+      image:
+        "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2F6c1a58fd7160441ea71dd38a3916e374?format=webp&width=800",
+      imageHover:
+        "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2F6a03f9f1f75140aa992029f74ad389c8?format=webp&width=800",
       category: "Home & Garden",
       tags: ["Sleep Technology", "Personalization"],
       tech: ["Shopify Plus", "Sleep Quiz", "Smart Recommendations"],
@@ -385,8 +428,10 @@ const Work = () => {
       brand: "Warby Parker",
       description:
         "Affordable designer eyewear with virtual try-on and home try-on program.",
-      image: "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2Fb1dbcacf16f54c05997a0ae856630d68?format=webp&width=800",
-      imageHover: "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2F6ab5884447c14369814899e94a658233?format=webp&width=800",
+      image:
+        "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2Fb1dbcacf16f54c05997a0ae856630d68?format=webp&width=800",
+      imageHover:
+        "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2F6ab5884447c14369814899e94a658233?format=webp&width=800",
       videoUrl:
         "https://player.vimeo.com/video/012345789?autoplay=1&loop=1&muted=1",
       category: "Fashion",
@@ -406,8 +451,10 @@ const Work = () => {
       brand: "Glossier",
       description:
         "Community-driven beauty brand with user-generated content and skincare diagnostics.",
-      image: "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2F925b231ab1bf4c45aa302d09fe61667a?format=webp&width=800",
-      imageHover: "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2Fff589c465cb74fee8cecaf975a2dd075?format=webp&width=800",
+      image:
+        "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2F925b231ab1bf4c45aa302d09fe61667a?format=webp&width=800",
+      imageHover:
+        "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2Fff589c465cb74fee8cecaf975a2dd075?format=webp&width=800",
       category: "Beauty",
       tags: ["Community Driven", "User Generated"],
       tech: ["Shopify Plus", "Community Platform", "Skin Diagnostics"],
@@ -425,8 +472,10 @@ const Work = () => {
       brand: "Chubbies",
       description:
         "Fun men's shorts and apparel with gamified shopping and social sharing features.",
-      image: "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2F3f9d694493774c63bdcd12888444ad7e?format=webp&width=800",
-      imageHover: "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2F1838dfb9e6204821b4c22ec1c1a3f401?format=webp&width=800",
+      image:
+        "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2F3f9d694493774c63bdcd12888444ad7e?format=webp&width=800",
+      imageHover:
+        "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2F1838dfb9e6204821b4c22ec1c1a3f401?format=webp&width=800",
       category: "Fashion",
       tags: ["Fun Apparel", "Gamification"],
       tech: ["Shopify Plus", "Gamification", "Social Sharing"],
@@ -444,8 +493,10 @@ const Work = () => {
       brand: "Ritual",
       description:
         "Science-backed vitamins with ingredient transparency and health tracking integration.",
-      image: "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2Fcff9690ccdaf4822b5df5f145edd9901?format=webp&width=800",
-      imageHover: "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2Fee5ada50b5b74cbbad13a05508292566?format=webp&width=800",
+      image:
+        "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2Fcff9690ccdaf4822b5df5f145edd9901?format=webp&width=800",
+      imageHover:
+        "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2Fee5ada50b5b74cbbad13a05508292566?format=webp&width=800",
       videoUrl:
         "https://player.vimeo.com/video/234567901?autoplay=1&loop=1&muted=1",
       category: "Health & Wellness",
@@ -465,8 +516,10 @@ const Work = () => {
       brand: "Patagonia",
       description:
         "Sustainable outdoor gear with environmental impact tracking and repair guides.",
-      image: "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2Fef8620b9e4954c9c8d2a95d1bc542c53?format=webp&width=800",
-      imageHover: "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2Fec52cc61e4f0492b94fe59eb71e9bbe4?format=webp&width=800",
+      image:
+        "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2Fef8620b9e4954c9c8d2a95d1bc542c53?format=webp&width=800",
+      imageHover:
+        "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2Fec52cc61e4f0492b94fe59eb71e9bbe4?format=webp&width=800",
       category: "Sports & Outdoors",
       tags: ["Sustainability", "Outdoor Performance"],
       tech: ["Shopify Plus", "Impact Tracking", "Repair Guides"],
@@ -480,7 +533,10 @@ const Work = () => {
     },
   ];
 
-  const defaultPortfolioProjectsWithoutAllbirds = defaultPortfolioProjects.filter((p) => (p.brand || '').toLowerCase() !== 'allbirds');
+  const defaultPortfolioProjectsWithoutAllbirds =
+    defaultPortfolioProjects.filter(
+      (p) => (p.brand || "").toLowerCase() !== "allbirds",
+    );
 
   // Optimized load projects function with instant Supabase integration
   const loadProjects = useCallback(() => {
@@ -511,7 +567,6 @@ const Work = () => {
     loadProjects();
   }, [loadProjects]);
 
-
   // Dynamic categories based on actual projects
   const categories = useMemo(() => {
     const categoryCount: { [key: string]: number } = {};
@@ -535,11 +590,13 @@ const Work = () => {
   // Optimized filter projects with useMemo for better performance
   const filteredProjects = useMemo(() => {
     return portfolioProjects
-      .filter((project) => (project.brand || '').toLowerCase() !== 'allbirds')
+      .filter((project) => (project.brand || "").toLowerCase() !== "allbirds")
       .filter((project) => {
         const matchesSearch =
           project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          project.description
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase()) ||
           project.tags.some((tag) =>
             tag.toLowerCase().includes(searchTerm.toLowerCase()),
           );
@@ -583,7 +640,7 @@ const Work = () => {
       {/* Glossy overlay effects */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/20 pointer-events-none"></div>
       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.01] to-transparent pointer-events-none"></div>
-      
+
       <ElegantNavigation />
 
       {/* Hero Section */}
@@ -632,7 +689,8 @@ const Work = () => {
                   <div className="w-2 h-2 rounded-full bg-green-400"></div>
                   <span className="text-gray-300">Supabase Data</span>
                 </>
-              ) : portfolioProjects.length !== defaultPortfolioProjectsWithoutAllbirds.length ? (
+              ) : portfolioProjects.length !==
+                defaultPortfolioProjectsWithoutAllbirds.length ? (
                 <>
                   <div className="w-2 h-2 rounded-full bg-blue-400"></div>
                   <span className="text-gray-300">CMS Data</span>
@@ -658,7 +716,9 @@ const Work = () => {
             <div className="flex items-center gap-3">
               <AlertCircle className="w-5 h-5 text-red-400" />
               <div>
-                <p className="text-red-400 font-medium">Failed to load from Supabase</p>
+                <p className="text-red-400 font-medium">
+                  Failed to load from Supabase
+                </p>
                 <p className="text-red-300 text-sm">{supabaseError}</p>
               </div>
             </div>
@@ -739,7 +799,10 @@ const Work = () => {
                 rel="noopener noreferrer"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.2, delay: Math.min(index * 0.02, 0.3) }}
+                transition={{
+                  duration: 0.2,
+                  delay: Math.min(index * 0.02, 0.3),
+                }}
                 whileHover={{ y: -2 }}
                 className="group relative rounded-xl sm:rounded-2xl overflow-hidden bg-black/80 border border-white/10 shadow-xl hover:shadow-2xl hover:border-white/20 transition-all duration-300"
                 aria-label={`Open ${project.title}`}
@@ -752,7 +815,7 @@ const Work = () => {
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     width={1280}
                     height={720}
-                    loading={index < 4 ? 'eager' : 'lazy'}
+                    loading={index < 4 ? "eager" : "lazy"}
                   />
                   {project.imageHover && (
                     <div className="absolute inset-0 z-10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -773,8 +836,12 @@ const Work = () => {
                   <div className="absolute left-3 right-3 bottom-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <div className="flex items-center justify-between gap-2">
                       <div className="min-w-0">
-                        <h3 className="text-white text-sm sm:text-base font-semibold truncate">{project.title}</h3>
-                        <div className="text-xs text-gray-300 truncate">{project.brand}</div>
+                        <h3 className="text-white text-sm sm:text-base font-semibold truncate">
+                          {project.title}
+                        </h3>
+                        <div className="text-xs text-gray-300 truncate">
+                          {project.brand}
+                        </div>
                       </div>
                       <ExternalLink className="w-4 h-4 text-white/80 shrink-0" />
                     </div>
@@ -783,16 +850,19 @@ const Work = () => {
 
                 {/* Caption row */}
                 <div className="flex items-center gap-2 px-3 py-2 border-t border-white/10 bg-black/70 backdrop-blur-sm">
-                  <span className="text-sm font-medium truncate">{project.title}</span>
+                  <span className="text-sm font-medium truncate">
+                    {project.title}
+                  </span>
                   <span className="text-gray-500">•</span>
-                  <span className="text-xs text-gray-400 truncate">{project.brand}</span>
+                  <span className="text-xs text-gray-400 truncate">
+                    {project.brand}
+                  </span>
                 </div>
               </motion.a>
             ))}
           </div>
         </div>
       </section>
-
 
       {/* CTA Section */}
       <section className="py-20 px-8 text-center bg-black relative overflow-hidden border-t border-white/10">
@@ -822,7 +892,15 @@ const Work = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <motion.a
                 href={"/#contact"}
-                onClick={(e) => { const url = (import.meta as any).env?.VITE_CALENDLY_URL as string | undefined; if (url) { e.preventDefault(); setCalendlyOpen(true); } }}
+                onClick={(e) => {
+                  const url = (import.meta as any).env?.VITE_CALENDLY_URL as
+                    | string
+                    | undefined;
+                  if (url) {
+                    e.preventDefault();
+                    setCalendlyOpen(true);
+                  }
+                }}
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 className="px-8 py-4 bg-beige text-black font-semibold rounded-lg hover:bg-beige/90 transition-all duration-300 shadow-lg"
@@ -845,12 +923,19 @@ const Work = () => {
       {/* Disclaimer */}
       <section className="py-4 text-center bg-black/95 border-t border-white/10">
         <p className="text-[8px] sm:text-[10px] text-gray-500 max-w-3xl mx-auto px-4">
-          Disclaimer: Some showcased websites were not built end‑to‑end by us. In certain cases, we contributed select features, optimizations, or custom tweaks.
+          Disclaimer: Some showcased websites were not built end‑to‑end by us.
+          In certain cases, we contributed select features, optimizations, or
+          custom tweaks.
         </p>
       </section>
 
       <Footer />
-      <CalendlyModal open={calendlyOpen && Boolean((import.meta as any).env?.VITE_CALENDLY_URL)} onClose={() => setCalendlyOpen(false)} />
+      <CalendlyModal
+        open={
+          calendlyOpen && Boolean((import.meta as any).env?.VITE_CALENDLY_URL)
+        }
+        onClose={() => setCalendlyOpen(false)}
+      />
     </div>
   );
 };
