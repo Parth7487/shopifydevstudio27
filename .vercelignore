@@ -1,0 +1,8 @@
+netlify/
+netlify.toml
+DEPLOYMENT_CHECKLIST.md
+VERCEL_DEPLOYMENT.md
+.git
+.gitignore
+README.md
+node_modules
