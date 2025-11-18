@@ -135,7 +135,7 @@ const Footer = () => {
                     expandedSection === "contact" ? "rotate-180" : ""
                   }`}
                 >
-                  ▼
+                  ���
                 </span>
               </button>
             ) : (
@@ -266,12 +266,32 @@ const Footer = () => {
           </motion.div>
         </div>
 
-        {/* Bottom section */}
+        {/* Shopify Partner Badge */}
         <motion.div
-          className="border-t border-beige/10 pt-6 text-center"
+          className="border-t border-beige/10 pt-8 mb-6"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
+          viewport={{ once: true }}
+        >
+          <div className="flex flex-col items-center gap-3">
+            <img
+              src="https://cdn.builder.io/api/v1/image/assets%2F1673ec9568f943219a669aac87827a9f%2Fc80e013180444130bfd67d372b56eb41?format=webp&width=800"
+              alt="Official Shopify Partner"
+              className="h-16 w-auto object-contain"
+            />
+            <p className="text-gray-300 text-xs sm:text-sm font-medium">
+              Official Shopify Partner
+            </p>
+          </div>
+        </motion.div>
+
+        {/* Bottom section */}
+        <motion.div
+          className="text-center"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.35 }}
           viewport={{ once: true }}
         >
           <p className="text-gray-400 text-xs sm:text-sm">
