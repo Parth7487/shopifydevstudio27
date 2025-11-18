@@ -69,16 +69,16 @@ const OptimizedImage = ({
   const srcSetAvif = getSrcSet(
     src,
     [360, 640, 768, 1024, 1280],
-    quality,
+    adaptiveQuality,
     "avif",
   );
   const srcSetWebp = getSrcSet(
     src,
     [360, 640, 768, 1024, 1280],
-    quality,
+    adaptiveQuality,
     "webp",
   );
-  const optimized = getOptimizedImageSrc(src, 1024, quality);
+  const optimized = getOptimizedImageSrc(src, 1024, adaptiveQuality);
 
   // React < 18.3 may not recognize fetchPriority; pass lowercase custom attribute
   const extraImgAttrs: Record<string, any> = {};
