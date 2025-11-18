@@ -182,8 +182,9 @@ const ElegantNavigation = memo(() => {
               ))}
             </div>
 
-            {/* Desktop quick connect + CTA */}
+            {/* Desktop quick connect + Language + CTA */}
             <div className="hidden sm:flex items-center gap-3">
+              <LanguageSwitcher variant="dropdown" />
               <a
                 href="https://wa.me/917487080421?text=Hello%20Shopify%20Dev%20Studio%20%E2%80%93%20I%20would%20like%20to%20connect"
                 target="_blank"
