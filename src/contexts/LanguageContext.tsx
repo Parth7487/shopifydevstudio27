@@ -25,17 +25,42 @@ const LanguageContext = createContext<LanguageContextType | undefined>(
 // Get user's country code from IP geolocation
 const detectUserCountry = async (): Promise<string | null> => {
   try {
-    // Use a free geolocation API
-    const response = await fetch("https://ipapi.co/json/", {
-      mode: "no-cors",
-    });
-    if (!response.ok) return null;
-    const data = await response.json();
-    return data.country_code || null;
-  } catch {
+    // Try multiple geolocation APIs with fallback
+    const apis = [
+      "https://ipapi.co/json/",
+      "https://ip-api.com/json/",
+      "https://geolocation-db.com/json/",
+    ];
+
+    for (const api of apis) {
+      try {
+        const response = await Promise.race([
+          fetch(api).then((res) => (res.ok ? res.json() : null)),
+          new Promise((_, reject) =>
+            setTimeout(() => reject(new Error("timeout")), 3000),
+          ),
+        ]);
+
+        if (response) {
+          // Different APIs return country code in different fields
+          const countryCode =
+            response.country_code ||
+            response.countryCode ||
+            response.country_code_iso ||
+            null;
+          if (countryCode) return countryCode;
+        }
+      } catch {
+        // Continue to next API
+        continue;
+      }
+    }
+
     // Fallback: try using browser language
     const browserLang = navigator.language.split("-")[1]?.toUpperCase();
     return browserLang || null;
+  } catch {
+    return null;
   }
 };
 
