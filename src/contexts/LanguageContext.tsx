@@ -22,43 +22,21 @@ const LanguageContext = createContext<LanguageContextType | undefined>(
   undefined,
 );
 
-// Get user's country code from IP geolocation
-const detectUserCountry = async (): Promise<string | null> => {
+// Get user's preferred language from browser settings
+const detectUserLanguagePreference = (): string | null => {
   try {
-    // Try multiple geolocation APIs with fallback
-    const apis = [
-      "https://ipapi.co/json/",
-      "https://ip-api.com/json/",
-      "https://geolocation-db.com/json/",
-    ];
+    // Use browser language/locale detection (no network calls)
+    const browserLang = navigator.language || navigator.languages?.[0];
+    if (!browserLang) return null;
 
-    for (const api of apis) {
-      try {
-        const response = await Promise.race([
-          fetch(api).then((res) => (res.ok ? res.json() : null)),
-          new Promise((_, reject) =>
-            setTimeout(() => reject(new Error("timeout")), 3000),
-          ),
-        ]);
-
-        if (response) {
-          // Different APIs return country code in different fields
-          const countryCode =
-            response.country_code ||
-            response.countryCode ||
-            response.country_code_iso ||
-            null;
-          if (countryCode) return countryCode;
-        }
-      } catch {
-        // Continue to next API
-        continue;
-      }
+    // Extract country code from browser locale (e.g., "en-US" -> "US")
+    const parts = browserLang.split("-");
+    if (parts.length > 1) {
+      return parts[1].toUpperCase();
     }
 
-    // Fallback: try using browser language
-    const browserLang = navigator.language.split("-")[1]?.toUpperCase();
-    return browserLang || null;
+    // Fallback to language code
+    return parts[0].toLowerCase();
   } catch {
     return null;
   }
