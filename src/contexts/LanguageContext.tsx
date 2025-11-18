@@ -42,16 +42,16 @@ const detectUserLanguagePreference = (): string | null => {
   }
 };
 
-// Get preferred language based on browser and country
-const getPreferredLanguage = async (): Promise<Language> => {
+// Get preferred language based on browser settings
+const getPreferredLanguage = (): Language => {
   // Check localStorage first
   const stored = localStorage.getItem("language") as Language | null;
   if (stored && stored in SUPPORTED_LANGUAGES) {
     return stored;
   }
 
-  // Try to detect country and get language
-  const country = await detectUserCountry();
+  // Try to detect country from browser locale
+  const country = detectUserLanguagePreference();
   if (country && country in COUNTRY_TO_LANGUAGE) {
     return COUNTRY_TO_LANGUAGE[country];
   }
