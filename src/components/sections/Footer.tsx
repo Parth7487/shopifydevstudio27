@@ -98,14 +98,6 @@ const Footer = () => {
                 <ul className="space-y-2 mb-2">
                   <li>
                     <a
-                      href="mailto:contact@shopifydevstudio.tech"
-                      className="text-gray-400 hover:text-beige transition-colors duration-200 text-sm sm:text-base whitespace-nowrap"
-                    >
-                      contact@shopifydevstudio.tech
-                    </a>
-                  </li>
-                  <li>
-                    <a
                       href="mailto:consult@shopifydevstudio.tech"
                       className="text-gray-400 hover:text-beige transition-colors duration-200 text-sm sm:text-base whitespace-nowrap"
                     >
