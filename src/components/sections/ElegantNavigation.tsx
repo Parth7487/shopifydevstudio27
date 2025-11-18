@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import CalendlyModal from "./CalendlyModal";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const ElegantNavigation = memo(() => {
   const navigate = useNavigate();
