@@ -78,13 +78,9 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({
 
   // Initialize language on mount
   useEffect(() => {
-    const initializeLanguage = async () => {
-      const preferredLanguage = await getPreferredLanguage();
-      setLanguageState(preferredLanguage);
-      setIsInitialized(true);
-    };
-
-    initializeLanguage();
+    const preferredLanguage = getPreferredLanguage();
+    setLanguageState(preferredLanguage);
+    setIsInitialized(true);
   }, []);
 
   const setLanguage = (newLanguage: Language) => {
