@@ -161,11 +161,25 @@
     overflow-x: hidden;
     position: relative;
     min-height: 100vh;
+    /* Optimize scroll performance */
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    contain: layout;
   }
 
   #root {
     min-height: 100vh;
     overflow-x: hidden;
+    contain: layout;
+  }
+
+  /* Prevent scroll jank from animations */
+  main {
+    will-change: auto;
+  }
+
+  section {
+    contain: layout style paint;
   }
 }
 
