@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
 import { initInstantLoading } from "./lib/instant-loading";
+import { LanguageProvider } from "./contexts/LanguageContext";
 
 // Initialize instant loading optimizations immediately
 initInstantLoading();
@@ -19,12 +20,18 @@ const root = createRoot(container, {
 if (import.meta.env.DEV) {
   root.render(
     <StrictMode>
-      <App />
+      <LanguageProvider>
+        <App />
+      </LanguageProvider>
     </StrictMode>,
   );
   import("./lib/perf-audit").then((m) => m.runQuickPerfAudit?.());
 } else {
   // Skip StrictMode in production for better performance
-  root.render(<App />);
+  root.render(
+    <LanguageProvider>
+      <App />
+    </LanguageProvider>,
+  );
   import("./lib/perf-audit").then((m) => m.runQuickPerfAudit?.());
 }
