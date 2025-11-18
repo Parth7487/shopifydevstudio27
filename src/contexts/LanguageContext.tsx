@@ -73,15 +73,9 @@ interface LanguageProviderProps {
 export const LanguageProvider: React.FC<LanguageProviderProps> = ({
   children,
 }) => {
-  const [language, setLanguageState] = useState<Language>("en");
-  const [isInitialized, setIsInitialized] = useState(false);
-
-  // Initialize language on mount
-  useEffect(() => {
-    const preferredLanguage = getPreferredLanguage();
-    setLanguageState(preferredLanguage);
-    setIsInitialized(true);
-  }, []);
+  const [language, setLanguageState] = useState<Language>(() =>
+    getPreferredLanguage(),
+  );
 
   const setLanguage = (newLanguage: Language) => {
     if (newLanguage in SUPPORTED_LANGUAGES) {
@@ -96,11 +90,6 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({
   ): string => {
     return getTranslation(language, key, replacements);
   };
-
-  // Don't render until language is initialized to avoid flash
-  if (!isInitialized) {
-    return null;
-  }
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t }}>
