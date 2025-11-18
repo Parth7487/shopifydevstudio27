@@ -127,13 +127,69 @@ export const throttle = <T extends (...args: any[]) => any>(
   };
 };
 
+// Detect if device is mobile
+export const isMobileDevice = () => {
+  if (typeof window === "undefined") return false;
+  return (
+    window.matchMedia("(max-width: 768px)").matches ||
+    navigator.userAgent.toLowerCase().includes("mobile") ||
+    navigator.userAgent.toLowerCase().includes("android")
+  );
+};
+
+// Get optimized image quality based on device and connection
+export const getAdaptiveImageQuality = () => {
+  if (typeof window === "undefined") return 75;
+
+  const isMobile = isMobileDevice();
+  if (!isMobile) return 75;
+
+  // Reduce quality on 4G/5G for faster loading
+  if ("connection" in navigator) {
+    const conn = (navigator as any).connection;
+    if (conn && conn.effectiveType) {
+      if (conn.effectiveType === "4g") return 70;
+      if (conn.effectiveType === "3g") return 60;
+      if (conn.effectiveType === "2g" || conn.effectiveType === "slow-2g") {
+        return 50;
+      }
+    }
+  }
+
+  return 70; // Default for mobile
+};
+
+// Optimize animations based on device capability
+export const shouldReduceAnimations = () => {
+  if (typeof window === "undefined") return false;
+
+  // Reduce if user prefers reduced motion
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    return true;
+  }
+
+  // Reduce on low-end mobile devices
+  if (isMobileDevice()) {
+    // Check for GPU capability
+    const canvas = document.createElement("canvas");
+    const gl = canvas.getContext("webgl");
+    if (!gl) return true; // No WebGL support = likely low-end device
+  }
+
+  return false;
+};
+
 export default {
   preloadCriticalResources,
   lazyLoadComponent,
   prefetchRoute,
   cleanupUnusedResources,
   getOptimizedImageSrc,
+  getSrcSet,
   prefersReducedMotion,
+  isMobileDevice,
+  getAdaptiveImageQuality,
+  shouldReduceAnimations,
   debounce,
   throttle,
 };
