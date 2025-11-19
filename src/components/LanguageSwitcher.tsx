@@ -60,7 +60,9 @@ const LanguageSwitcher = ({
         aria-expanded={isOpen}
       >
         <span>{flagEmojis[language] || "🌐"}</span>
-        <span className="hidden sm:inline">{SUPPORTED_LANGUAGES[language]}</span>
+        <span className="hidden sm:inline">
+          {SUPPORTED_LANGUAGES[language]}
+        </span>
         <span className="text-xs text-gray-500">▼</span>
       </button>
 

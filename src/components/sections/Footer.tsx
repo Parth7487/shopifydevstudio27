@@ -71,7 +71,9 @@ const Footer = () => {
                 onClick={() => toggleSection("resources")}
                 className="w-full flex justify-between items-center py-3 px-4 bg-charcoal/50 hover:bg-charcoal/70 rounded-lg transition-colors mb-2"
               >
-                <h3 className="text-white font-semibold text-base">Resources</h3>
+                <h3 className="text-white font-semibold text-base">
+                  Resources
+                </h3>
                 <span
                   className={`transform transition-transform ${
                     expandedSection === "resources" ? "rotate-180" : ""

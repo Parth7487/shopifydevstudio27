@@ -209,7 +209,6 @@ const Contact = () => {
             </div>
 
             <div className="space-y-6">
-
               <div className="flex items-start space-x-4">
                 <div className="w-12 h-12 bg-mint/20 rounded-lg flex items-center justify-center flex-shrink-0">
                   <svg

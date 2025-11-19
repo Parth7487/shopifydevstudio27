@@ -81,7 +81,8 @@ export const translations: Record<Language, Record<string, string>> = {
     "footer.description":
       "Premium Shopify theme development agency creating exceptional e-commerce experiences that drive results and exceed expectations.",
     "footer.urgentProject": "Urgent Project?",
-    "footer.emergencySpaces": "2 emergency spaces available for quick turnaround projects",
+    "footer.emergencySpaces":
+      "2 emergency spaces available for quick turnaround projects",
 
     // Common
     "common.language": "Language",
@@ -140,8 +141,7 @@ export const translations: Record<Language, Record<string, string>> = {
     "footer.remote": "À distance, Partout",
     "footer.responseTime": "Réponse en 24h",
     "footer.available": "Disponible 7 jours par semaine",
-    "footer.copyright":
-      "© {{year}} Shopify Dev Studio. Tous droits réservés.",
+    "footer.copyright": "© {{year}} Shopify Dev Studio. Tous droits réservés.",
     "footer.description":
       "Agence premium de développement de thèmes Shopify créant des expériences e-commerce exceptionnelles qui génèrent des résultats et dépassent les attentes.",
     "footer.urgentProject": "Projet Urgent?",
@@ -177,8 +177,7 @@ export const translations: Record<Language, Record<string, string>> = {
     "footer.description":
       "Premium-Shopify-Theme-Entwicklungsagentur, die außergewöhnliche E-Commerce-Erfahrungen schafft, die Ergebnisse liefern und Erwartungen übertreffen.",
     "footer.urgentProject": "Dringendes Projekt?",
-    "footer.emergencySpaces":
-      "2 Notfallplätze für schnelle Projekte verfügbar",
+    "footer.emergencySpaces": "2 Notfallplätze für schnelle Projekte verfügbar",
 
     "common.language": "Sprache",
     "common.selectLanguage": "Sprache wählen",
@@ -209,7 +208,8 @@ export const translations: Record<Language, Record<string, string>> = {
     "footer.description":
       "Agenzia premium di sviluppo temi Shopify che crea esperienze di e-commerce straordinarie che generano risultati e superano le aspettative.",
     "footer.urgentProject": "Progetto Urgente?",
-    "footer.emergencySpaces": "2 spazi d'emergenza disponibili per progetti veloci",
+    "footer.emergencySpaces":
+      "2 spazi d'emergenza disponibili per progetti veloci",
 
     "common.language": "Lingua",
     "common.selectLanguage": "Seleziona Lingua",
@@ -267,11 +267,13 @@ export const translations: Record<Language, Record<string, string>> = {
     "footer.remote": "リモート、世界中",
     "footer.responseTime": "24時間以内にお返事",
     "footer.available": "週7日利用可能",
-    "footer.copyright": "© {{year}} Shopify Dev Studio. すべての権利を保有しています。",
+    "footer.copyright":
+      "© {{year}} Shopify Dev Studio. すべての権利を保有しています。",
     "footer.description":
       "優れたeコマース体験を生み出すプレミアムShopifyテーマ開発エージェンシー。",
     "footer.urgentProject": "緊急プロジェクト?",
-    "footer.emergencySpaces": "迅速なプロジェクト用に2つの緊急スペースが利用可能",
+    "footer.emergencySpaces":
+      "迅速なプロジェクト用に2つの緊急スペースが利用可能",
 
     "common.language": "言語",
     "common.selectLanguage": "言語を選択",
@@ -298,8 +300,7 @@ export const translations: Record<Language, Record<string, string>> = {
     "footer.responseTime": "24小时内回复",
     "footer.available": "每周7天可用",
     "footer.copyright": "© {{year}} Shopify Dev Studio. 版权所有。",
-    "footer.description":
-      "创建非凡电子商务体验的高级Shopify主题开发机构。",
+    "footer.description": "创建非凡电子商务体验的高级Shopify主题开发机构。",
     "footer.urgentProject": "紧急项目?",
     "footer.emergencySpaces": "可用2个紧急时段用于快速交付项目",
 
@@ -331,7 +332,8 @@ export const translations: Record<Language, Record<string, string>> = {
     "footer.description":
       "뛰어난 전자상거래 경험을 창출하는 프리미엄 Shopify 테마 개발 에이전시.",
     "footer.urgentProject": "긴급 프로젝트?",
-    "footer.emergencySpaces": "신속한 프로젝트를 위해 2개의 긴급 시간대 이용 가능",
+    "footer.emergencySpaces":
+      "신속한 프로젝트를 위해 2개의 긴급 시간대 이용 가능",
 
     "common.language": "언어",
     "common.selectLanguage": "언어 선택",
@@ -391,7 +393,8 @@ export const translations: Record<Language, Record<string, string>> = {
     "footer.description":
       "Премиум-агентство по разработке тем Shopify, создающее исключительные электронные впечатления.",
     "footer.urgentProject": "Срочный проект?",
-    "footer.emergencySpaces": "2 экстренных слота доступны для быстрых проектов",
+    "footer.emergencySpaces":
+      "2 экстренных слота доступны для быстрых проектов",
 
     "common.language": "Язык",
     "common.selectLanguage": "Выберите язык",
