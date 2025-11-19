@@ -538,12 +538,6 @@ const EnhancedContact = () => {
             <div className="space-y-6">
               {[
                 {
-                  icon: "📧",
-                  title: "Email Us",
-                  content: "hello@shopifydevstudio.com",
-                  color: "#00FFB2",
-                },
-                {
                   icon: "⚡",
                   title: "Response Time",
                   content: "Within 24 hours",

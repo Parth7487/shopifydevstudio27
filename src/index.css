@@ -161,11 +161,25 @@
     overflow-x: hidden;
     position: relative;
     min-height: 100vh;
+    /* Optimize scroll performance */
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    contain: layout;
   }
 
   #root {
     min-height: 100vh;
     overflow-x: hidden;
+    contain: layout;
+  }
+
+  /* Prevent scroll jank from animations */
+  main {
+    will-change: auto;
+  }
+
+  section {
+    contain: layout style paint;
   }
 }
 
@@ -206,4 +220,36 @@
 ::-moz-selection {
   background: rgba(230, 177, 126, 0.3);
   color: white;
+}
+
+/* Mobile performance optimizations */
+@media (max-width: 768px) {
+  /* Reduce animation complexity on mobile */
+  * {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  /* Disable heavy animations on mobile */
+  section,
+  .motion-safe {
+    will-change: auto !important;
+  }
+
+  /* Optimize image rendering */
+  img {
+    image-rendering: crisp-edges;
+  }
+
+  /* Disable box shadows on mobile for better performance */
+  .shadow,
+  .shadow-lg,
+  .shadow-xl {
+    box-shadow: none !important;
+  }
+
+  /* Optimize transitions on mobile */
+  * {
+    transition-duration: 0.08s !important;
+  }
 }

@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import CalendlyModal from "./CalendlyModal";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const ElegantNavigation = memo(() => {
   const navigate = useNavigate();
@@ -181,8 +182,9 @@ const ElegantNavigation = memo(() => {
               ))}
             </div>
 
-            {/* Desktop quick connect + CTA */}
+            {/* Desktop quick connect + Language + CTA */}
             <div className="hidden sm:flex items-center gap-3">
+              <LanguageSwitcher variant="dropdown" />
               <a
                 href="https://wa.me/917487080421?text=Hello%20Shopify%20Dev%20Studio%20%E2%80%93%20I%20would%20like%20to%20connect"
                 target="_blank"
@@ -322,8 +324,13 @@ const ElegantNavigation = memo(() => {
                 ))}
               </nav>
 
+              {/* Language Switcher */}
+              <div className="mt-8 mb-6">
+                <LanguageSwitcher variant="inline" className="justify-center" />
+              </div>
+
               {/* Mobile CTA */}
-              <div className="mt-8 flex items-center justify-center gap-4">
+              <div className="flex items-center justify-center gap-4">
                 <a
                   href="https://wa.me/917487080421?text=Hello%20Shopify%20Dev%20Studio%20%E2%80%93%20I%20would%20like%20to%20connect"
                   target="_blank"

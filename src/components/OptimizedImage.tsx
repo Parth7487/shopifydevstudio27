@@ -1,6 +1,10 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 
-import { getOptimizedImageSrc, getSrcSet } from "../lib/performance";
+import {
+  getOptimizedImageSrc,
+  getSrcSet,
+  getAdaptiveImageQuality,
+} from "../lib/performance";
 
 interface OptimizedImageProps {
   src: string;
@@ -22,11 +26,16 @@ const OptimizedImage = ({
   width,
   height,
   loading = "lazy",
-  quality = 75,
+  quality,
   sizes = "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw",
   fetchPriority = "auto",
   placeholder = true,
 }: OptimizedImageProps) => {
+  // Use adaptive quality if not explicitly set
+  const adaptiveQuality = useMemo(
+    () => quality ?? getAdaptiveImageQuality(),
+    [quality],
+  );
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
 
@@ -60,16 +69,16 @@ const OptimizedImage = ({
   const srcSetAvif = getSrcSet(
     src,
     [360, 640, 768, 1024, 1280],
-    quality,
+    adaptiveQuality,
     "avif",
   );
   const srcSetWebp = getSrcSet(
     src,
     [360, 640, 768, 1024, 1280],
-    quality,
+    adaptiveQuality,
     "webp",
   );
-  const optimized = getOptimizedImageSrc(src, 1024, quality);
+  const optimized = getOptimizedImageSrc(src, 1024, adaptiveQuality);
 
   // React < 18.3 may not recognize fetchPriority; pass lowercase custom attribute
   const extraImgAttrs: Record<string, any> = {};
