@@ -5,9 +5,11 @@ interface Props {
   onClose: () => void;
 }
 
+const CALENDLY_URL = "https://calendly.com/shopifydevstudioo/30min";
+
 const CalendlyModal = memo(({ open, onClose }: Props) => {
-  const url = import.meta.env.VITE_CALENDLY_URL as string | undefined;
-  if (!url) return null;
+  const url =
+    (import.meta.env.VITE_CALENDLY_URL as string | undefined) || CALENDLY_URL;
   if (!open) return null;
 
   return (

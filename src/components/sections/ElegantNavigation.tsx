@@ -220,16 +220,7 @@ const ElegantNavigation = memo(() => {
                 </svg>
               </a>
               <Button
-                onClick={() => {
-                  const url = (import.meta as any).env?.VITE_CALENDLY_URL as
-                    | string
-                    | undefined;
-                  if (url) {
-                    setCalendlyOpen(true);
-                  } else {
-                    handleNavigation("contact", "Contact");
-                  }
-                }}
+                onClick={() => setCalendlyOpen(true)}
                 className="elegant-button px-4 lg:px-6 py-2 text-xs lg:text-sm font-medium tracking-wide rounded transition-all duration-200"
               >
                 <span className="hidden md:inline">Start the Conversation</span>
@@ -369,7 +360,10 @@ const ElegantNavigation = memo(() => {
 
               <div className="mt-6">
                 <Button
-                  onClick={() => handleNavigation("contact", "Contact")}
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    setCalendlyOpen(true);
+                  }}
                   className="w-full elegant-button px-6 py-4 text-base font-medium tracking-wide rounded-xl"
                 >
                   Start the Conversation
@@ -380,9 +374,7 @@ const ElegantNavigation = memo(() => {
         </div>
       )}
       <CalendlyModal
-        open={
-          calendlyOpen && Boolean((import.meta as any).env?.VITE_CALENDLY_URL)
-        }
+        open={calendlyOpen}
         onClose={() => setCalendlyOpen(false)}
       />
     </>

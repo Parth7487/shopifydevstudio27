@@ -222,16 +222,7 @@ const ElegantHero = () => {
             whileTap={{ scale: 0.98 }}
           >
             <Button
-              onClick={() => {
-                const url = (import.meta as any).env?.VITE_CALENDLY_URL as
-                  | string
-                  | undefined;
-                if (url) {
-                  setCalendlyOpen(true);
-                } else {
-                  scrollToSection("contact");
-                }
-              }}
+              onClick={() => setCalendlyOpen(true)}
               className="elegant-button w-full sm:w-auto px-6 sm:px-8 py-3 responsive-text-xs font-medium tracking-wide rounded"
             >
               Schedule a Call
@@ -263,9 +254,7 @@ const ElegantHero = () => {
         </motion.div>
       </div>
       <CalendlyModal
-        open={
-          calendlyOpen && Boolean((import.meta as any).env?.VITE_CALENDLY_URL)
-        }
+        open={calendlyOpen}
         onClose={() => setCalendlyOpen(false)}
       />
     </motion.section>
