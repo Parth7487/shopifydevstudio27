@@ -41,7 +41,7 @@ const Services = () => {
       setFormError("");
       setSubmitting(true);
       try {
-        const body = new FormData();
+        const body = new URLSearchParams();
         body.append("entry.685928678", storeUrl);
         body.append("entry.394477450", email);
         body.append("entry.1833102669", businessName);
@@ -50,7 +50,8 @@ const Services = () => {
         await fetch(GOOGLE_FORM_ACTION, {
           method: "POST",
           mode: "no-cors",
-          body,
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: body.toString(),
         });
         setSubmitted(true);
         setStoreUrl("");
