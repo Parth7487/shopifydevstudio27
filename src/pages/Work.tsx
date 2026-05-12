@@ -34,12 +34,12 @@ const Work = () => {
       ogTitle: "Shopify Store Case Studies & Success Stories",
       ogDescription:
         "Real Shopify projects with proven results: 300%+ conversion improvements, 0.6-0.7s load times, and sustainable fashion to premium furniture.",
-      url: "https://shopifystudio.tech/work",
+      url: "https://www.shopifydevstudio.com/work",
     });
 
     addBreadcrumbSchema([
-      { name: "Home", url: "https://shopifystudio.tech/" },
-      { name: "Work", url: "https://shopifystudio.tech/work" },
+      { name: "Home", url: "https://www.shopifydevstudio.com/" },
+      { name: "Work", url: "https://www.shopifydevstudio.com/work" },
     ]);
 
     const schemaMarkup = {
@@ -48,11 +48,11 @@ const Work = () => {
       name: "Shopify Portfolio & Case Studies",
       description:
         "Portfolio of successful Shopify store projects and case studies",
-      url: "https://shopifystudio.tech/work",
+      url: "https://www.shopifydevstudio.com/work",
       mainEntity: {
         "@type": "Organization",
         name: "Shopify Dev Studio",
-        url: "https://shopifystudio.tech",
+        url: "https://www.shopifydevstudio.com",
       },
     };
 

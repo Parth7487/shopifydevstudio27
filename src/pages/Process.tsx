@@ -25,12 +25,12 @@ const Process = () => {
       ogTitle: "Shopify Development Process - From Discovery to Launch",
       ogDescription:
         "Our complete process for building high-converting Shopify stores with proven results and transparent communication.",
-      url: "https://shopifystudio.tech/process",
+      url: "https://www.shopifydevstudio.com/process",
     });
 
     addBreadcrumbSchema([
-      { name: "Home", url: "https://shopifystudio.tech/" },
-      { name: "Process", url: "https://shopifystudio.tech/process" },
+      { name: "Home", url: "https://www.shopifydevstudio.com/" },
+      { name: "Process", url: "https://www.shopifydevstudio.com/process" },
     ]);
 
     const schemaMarkup = {

@@ -19,12 +19,12 @@ const Blog = () => {
       ogTitle: "Shopify Dev Studio Blog - E-Commerce Growth Strategies",
       ogDescription:
         "Read our expert blog posts on Shopify development, conversion optimization, and e-commerce growth strategies.",
-      url: "https://shopifystudio.tech/blog",
+      url: "https://www.shopifydevstudio.com/blog",
     });
 
     addBreadcrumbSchema([
-      { name: "Home", url: "https://shopifystudio.tech/" },
-      { name: "Blog", url: "https://shopifystudio.tech/blog" },
+      { name: "Home", url: "https://www.shopifydevstudio.com/" },
+      { name: "Blog", url: "https://www.shopifydevstudio.com/blog" },
     ]);
 
     const schemaMarkup = {
@@ -33,11 +33,11 @@ const Blog = () => {
       name: "Shopify Dev Studio Blog",
       description:
         "Expert blog articles on Shopify development, e-commerce optimization, and conversion strategies",
-      url: "https://shopifystudio.tech/blog",
+      url: "https://www.shopifydevstudio.com/blog",
       publisher: {
         "@type": "Organization",
         name: "Shopify Dev Studio",
-        url: "https://shopifystudio.tech",
+        url: "https://www.shopifydevstudio.com",
       },
     };
 

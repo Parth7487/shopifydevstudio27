@@ -97,12 +97,12 @@ const Services = () => {
       ogTitle: "Shopify Theme Development & Optimization Services",
       ogDescription:
         "Professional Shopify services for custom themes, speed optimization, and conversion-focused development.",
-      url: "https://shopifystudio.tech/services",
+      url: "https://www.shopifydevstudio.com/services",
     });
 
     addBreadcrumbSchema([
-      { name: "Home", url: "https://shopifystudio.tech/" },
-      { name: "Services", url: "https://shopifystudio.tech/services" },
+      { name: "Home", url: "https://www.shopifydevstudio.com/" },
+      { name: "Services", url: "https://www.shopifydevstudio.com/services" },
     ]);
 
     const schemaMarkup = {
@@ -114,7 +114,7 @@ const Services = () => {
       provider: {
         "@type": "Organization",
         name: "Shopify Dev Studio",
-        url: "https://shopifystudio.tech",
+        url: "https://www.shopifydevstudio.com",
       },
       areaServed: "Worldwide",
       serviceType: [

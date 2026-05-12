@@ -18,12 +18,12 @@ const About = () => {
       ogTitle: "About Shopify Dev Studio - Our Team & Values",
       ogDescription:
         "Passionate Shopify experts dedicated to helping e-commerce businesses grow through custom themes and performance optimization.",
-      url: "https://shopifystudio.tech/about",
+      url: "https://www.shopifydevstudio.com/about",
     });
 
     addBreadcrumbSchema([
-      { name: "Home", url: "https://shopifystudio.tech/" },
-      { name: "About", url: "https://shopifystudio.tech/about" },
+      { name: "Home", url: "https://www.shopifydevstudio.com/" },
+      { name: "About", url: "https://www.shopifydevstudio.com/about" },
     ]);
 
     const schemaMarkup = {
@@ -31,11 +31,11 @@ const About = () => {
       "@type": "AboutPage",
       name: "About Shopify Dev Studio",
       description: "About the Shopify Dev Studio team and company values",
-      url: "https://shopifystudio.tech/about",
+      url: "https://www.shopifydevstudio.com/about",
       mainEntity: {
         "@type": "Organization",
         name: "Shopify Dev Studio",
-        url: "https://shopifystudio.tech",
+        url: "https://www.shopifydevstudio.com",
         description:
           "Custom Shopify theme development and e-commerce optimization agency",
         areaServed: "Worldwide",
