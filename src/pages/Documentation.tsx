@@ -16,9 +16,76 @@ import {
   fadeInUpVariants,
   staggerContainerVariants,
 } from "../hooks/use-scroll-reveal";
+import { useEffect } from "react";
+import { updatePageMeta } from "../lib/seo-meta";
+import { addBreadcrumbSchema } from "../lib/breadcrumb-schema";
 
 const Documentation = () => {
   const [calendlyOpen, setCalendlyOpen] = useState(false);
+
+  useEffect(() => {
+    updatePageMeta({
+      title:
+        "Shopify Development Documentation & Guides | Shopify Dev Studio",
+      description:
+        "Complete documentation for Shopify theme development, Liquid programming, speed optimization, and conversion rate improvement. Step-by-step guides for all skill levels.",
+      ogTitle: "Shopify Dev Studio Documentation",
+      ogDescription:
+        "In-depth guides for Shopify theme development, custom Liquid code, performance optimization, and UX best practices.",
+      url: "https://www.shopifydevstudio.com/documentation",
+    });
+    addBreadcrumbSchema([
+      { name: "Home", url: "https://www.shopifydevstudio.com/" },
+      {
+        name: "Documentation",
+        url: "https://www.shopifydevstudio.com/documentation",
+      },
+    ]);
+
+    // HowTo schema on docs page — AI engines love step-by-step guides
+    const howToSchema = {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      name: "How to Optimize Your Shopify Store for Maximum Conversions",
+      description:
+        "A complete step-by-step guide to optimizing your Shopify store for speed, mobile, and conversions.",
+      step: [
+        {
+          "@type": "HowToStep",
+          name: "Audit Your Current Store Performance",
+          text: "Use Google PageSpeed Insights to measure your current load times and identify critical rendering path issues.",
+        },
+        {
+          "@type": "HowToStep",
+          name: "Optimize Images and Assets",
+          text: "Compress all images using WebP format, implement lazy loading, and remove unused theme assets.",
+        },
+        {
+          "@type": "HowToStep",
+          name: "Customize Your Theme with Liquid",
+          text: "Use Shopify Liquid templating to create custom sections, blocks, and dynamic content tailored to your brand.",
+        },
+        {
+          "@type": "HowToStep",
+          name: "Implement Conversion Psychology",
+          text: "Add trust signals, urgency elements, social proof, and psychology-based color choices to increase conversion rates.",
+        },
+        {
+          "@type": "HowToStep",
+          name: "Test on Mobile Devices",
+          text: "Ensure touch-optimized interactions, fast mobile load times under 2 seconds, and seamless checkout on all devices.",
+        },
+      ],
+    };
+
+    if (!document.querySelector("script[data-howto-schema]")) {
+      const script = document.createElement("script");
+      script.type = "application/ld+json";
+      script.setAttribute("data-howto-schema", "true");
+      script.textContent = JSON.stringify(howToSchema);
+      document.head.appendChild(script);
+    }
+  }, []);
   const docSections = [
     {
       icon: Zap,

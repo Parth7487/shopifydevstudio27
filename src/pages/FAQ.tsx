@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   ChevronDown,
   Search,
@@ -15,6 +15,8 @@ import {
   fadeInUpVariants,
   staggerContainerVariants,
 } from "../hooks/use-scroll-reveal";
+import { updatePageMeta } from "../lib/seo-meta";
+import { addBreadcrumbSchema } from "../lib/breadcrumb-schema";
 
 const FAQ = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -129,6 +131,49 @@ const FAQ = () => {
     { icon: Users, label: "Happy Clients", value: "200+" },
     { icon: Shield, label: "Success Rate", value: "99.5%" },
   ];
+
+  useEffect(() => {
+    updatePageMeta({
+      title:
+        "Shopify Development FAQ | Common Questions Answered | Shopify Dev Studio",
+      description:
+        "Answers to frequently asked questions about Shopify custom theme development, pricing, timelines, support, and optimization. Get expert answers before you hire.",
+      ogTitle: "Shopify Development FAQ | Shopify Dev Studio",
+      ogDescription:
+        "Common questions about custom Shopify development answered by experts. Pricing, timelines, technical questions, and more.",
+      url: "https://www.shopifydevstudio.com/faq",
+    });
+
+    addBreadcrumbSchema([
+      { name: "Home", url: "https://www.shopifydevstudio.com/" },
+      { name: "FAQ", url: "https://www.shopifydevstudio.com/faq" },
+    ]);
+
+    // FAQPage schema — Google shows these as dropdowns directly in search results
+    const faqSchema = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqData.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      })),
+    };
+
+    let script = document.querySelector("script[data-faq-schema]");
+    if (!script) {
+      script = document.createElement("script");
+      script.type = "application/ld+json";
+      script.setAttribute("data-faq-schema", "true");
+      script.textContent = JSON.stringify(faqSchema);
+      document.head.appendChild(script);
+    } else {
+      script.textContent = JSON.stringify(faqSchema);
+    }
+  }, []);
 
   return (
     <div className="min-h-screen bg-black text-white">

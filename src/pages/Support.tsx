@@ -17,6 +17,9 @@ import {
   fadeInUpVariants,
   staggerContainerVariants,
 } from "../hooks/use-scroll-reveal";
+import { useEffect } from "react";
+import { updatePageMeta } from "../lib/seo-meta";
+import { addBreadcrumbSchema } from "../lib/breadcrumb-schema";
 
 const Support = () => {
   const supportOptions = [
@@ -88,6 +91,22 @@ const Support = () => {
     { service: "Support System", status: "Operational", uptime: "99.9%" },
     { service: "API Services", status: "Operational", uptime: "99.7%" },
   ];
+
+  useEffect(() => {
+    updatePageMeta({
+      title: "Shopify Support | Get Expert Help Fast | Shopify Dev Studio",
+      description:
+        "Get fast, expert support for your Shopify store. Email and phone support available. Common issues, solutions, and resources for Shopify theme development and optimization.",
+      ogTitle: "Shopify Dev Studio Support Center",
+      ogDescription:
+        "Expert support for custom Shopify development. Response times under 4 hours. Browse common solutions or contact our team directly.",
+      url: "https://www.shopifydevstudio.com/support",
+    });
+    addBreadcrumbSchema([
+      { name: "Home", url: "https://www.shopifydevstudio.com/" },
+      { name: "Support", url: "https://www.shopifydevstudio.com/support" },
+    ]);
+  }, []);
 
   return (
     <div className="min-h-screen bg-black text-white">

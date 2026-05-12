@@ -5,6 +5,8 @@ export interface PageMeta {
   ogDescription?: string;
   ogImage?: string;
   url?: string;
+  twitterTitle?: string;
+  twitterDescription?: string;
 }
 
 export const updatePageMeta = (meta: PageMeta) => {
@@ -59,4 +61,40 @@ export const updatePageMeta = (meta: PageMeta) => {
     }
     ogUrl.setAttribute("content", meta.url);
   }
+  // Update or create canonical link
+  if (meta.url) {
+    let canonical = document.querySelector(
+      'link[rel="canonical"]',
+    ) as HTMLLinkElement | null;
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute("href", meta.url);
+  }
+
+  // Update Twitter title
+  let twitterTitle = document.querySelector('meta[name="twitter:title"]');
+  if (!twitterTitle) {
+    twitterTitle = document.createElement("meta");
+    twitterTitle.setAttribute("name", "twitter:title");
+    document.head.appendChild(twitterTitle);
+  }
+  twitterTitle.setAttribute(
+    "content",
+    meta.twitterTitle || meta.ogTitle || meta.title,
+  );
+
+  // Update Twitter description
+  let twitterDesc = document.querySelector('meta[name="twitter:description"]');
+  if (!twitterDesc) {
+    twitterDesc = document.createElement("meta");
+    twitterDesc.setAttribute("name", "twitter:description");
+    document.head.appendChild(twitterDesc);
+  }
+  twitterDesc.setAttribute(
+    "content",
+    meta.twitterDescription || meta.ogDescription || meta.description,
+  );
 };
