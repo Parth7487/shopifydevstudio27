@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useRef } from "react";
 import {
   Palette,
   Zap,
@@ -20,6 +21,7 @@ const GOOGLE_FORM_ACTION =
 
 const Services = () => {
   const [calendlyOpen, setCalendlyOpen] = useState(false);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   // Form state
   const [storeUrl, setStoreUrl] = useState("");
@@ -41,27 +43,46 @@ const Services = () => {
       setFormError("");
       setSubmitting(true);
       try {
-        const body = new URLSearchParams();
-        body.append("entry.685928678", storeUrl);
-        body.append("entry.394477450", email);
-        body.append("entry.1833102669", businessName);
-        body.append("entry.216188150", challenges);
-        body.append("entry.1293722889", "Yes, I agree");
-        await fetch(GOOGLE_FORM_ACTION, {
-          method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: body.toString(),
+        // Build a hidden form and submit it into a hidden iframe
+        // This is the only reliable cross-origin Google Forms submission method
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = GOOGLE_FORM_ACTION;
+        form.target = "google-form-iframe";
+        form.style.display = "none";
+
+        const fields: Record<string, string> = {
+          "entry.685928678": storeUrl,
+          "entry.394477450": email,
+          "entry.1833102669": businessName,
+          "entry.216188150": challenges,
+          "entry.1293722889": "Yes, I agree",
+        };
+
+        Object.entries(fields).forEach(([name, value]) => {
+          const input = document.createElement("input");
+          input.type = "hidden";
+          input.name = name;
+          input.value = value;
+          form.appendChild(input);
         });
-        setSubmitted(true);
-        setStoreUrl("");
-        setEmail("");
-        setBusinessName("");
-        setChallenges("");
-        setConsent(false);
+
+        document.body.appendChild(form);
+        form.submit();
+        document.body.removeChild(form);
+
+        // Allow time for iframe to receive Google's response
+        setTimeout(() => {
+          setSubmitted(true);
+          setStoreUrl("");
+          setEmail("");
+          setBusinessName("");
+          setChallenges("");
+          setConsent(false);
+          setSubmitting(false);
+        }, 1500);
       } catch {
         setFormError("Something went wrong. Please try again or email us directly.");
-      } finally {
         setSubmitting(false);
       }
     },
@@ -623,6 +644,14 @@ const Services = () => {
           </motion.div>
         </div>
       </section>
+
+      {/* Hidden iframe to absorb Google Forms redirect response */}
+      <iframe
+        ref={iframeRef}
+        name="google-form-iframe"
+        title="hidden"
+        style={{ display: "none" }}
+      />
 
       {/* Footer */}
       <Footer />
