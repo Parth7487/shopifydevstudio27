@@ -10,13 +10,62 @@ import {
 import ElegantNavigation from "../components/sections/ElegantNavigation";
 import Footer from "../components/sections/Footer";
 import DesignPlayground from "../components/sections/DesignPlayground";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import CalendlyModal from "../components/sections/CalendlyModal";
 import { updatePageMeta } from "../lib/seo-meta";
 import { addBreadcrumbSchema } from "../lib/breadcrumb-schema";
 
+const GOOGLE_FORM_ACTION =
+  "https://docs.google.com/forms/d/e/1FAIpQLSep634nSKatUABsfVfIN06ZnvaWmSGfd-u6XtURvWxE7R8Lig/formResponse";
+
 const Services = () => {
   const [calendlyOpen, setCalendlyOpen] = useState(false);
+
+  // Form state
+  const [storeUrl, setStoreUrl] = useState("");
+  const [email, setEmail] = useState("");
+  const [businessName, setBusinessName] = useState("");
+  const [challenges, setChallenges] = useState("");
+  const [consent, setConsent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [formError, setFormError] = useState("");
+
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      if (!consent) {
+        setFormError("Please check the consent box to continue.");
+        return;
+      }
+      setFormError("");
+      setSubmitting(true);
+      try {
+        const body = new FormData();
+        body.append("entry.685928678", storeUrl);
+        body.append("entry.394477450", email);
+        body.append("entry.1833102669", businessName);
+        body.append("entry.216188150", challenges);
+        body.append("entry.1293722889", "Yes, I agree");
+        await fetch(GOOGLE_FORM_ACTION, {
+          method: "POST",
+          mode: "no-cors",
+          body,
+        });
+        setSubmitted(true);
+        setStoreUrl("");
+        setEmail("");
+        setBusinessName("");
+        setChallenges("");
+        setConsent(false);
+      } catch {
+        setFormError("Something went wrong. Please try again or email us directly.");
+      } finally {
+        setSubmitting(false);
+      }
+    },
+    [storeUrl, email, businessName, challenges, consent],
+  );
 
   useEffect(() => {
     updatePageMeta({
@@ -367,93 +416,137 @@ const Services = () => {
 
         <div className="max-w-4xl mx-auto px-8 w-full relative z-10">
           <div className="bg-graphite border border-beige/20 rounded-2xl p-8">
-            <form>
-              <div>
-                <label
-                  htmlFor="storeUrl"
-                  className="block text-sm font-medium leading-5 mb-2"
+{submitted ? (
+              <div className="text-center py-10">
+                <div className="w-16 h-16 bg-beige/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-beige" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <h3 className="text-beige text-2xl font-bold mb-2">Request Received!</h3>
+                <p className="text-gray-400 text-sm leading-relaxed">
+                  We'll analyze your store and send detailed recommendations within 24 hours.
+                </p>
+                <button
+                  onClick={() => setSubmitted(false)}
+                  className="mt-6 text-beige underline text-sm hover:text-beige/80 transition-colors"
                 >
-                  Your Store URL *
-                </label>
-                <input
-                  type="url"
-                  id="storeUrl"
-                  placeholder="https://yourstore.com"
-                  required
-                  className="w-full bg-charcoal border border-black rounded-lg px-4 py-3 text-white transition-colors duration-150 focus:border-beige focus:outline-none"
-                />
+                  Submit another request
+                </button>
               </div>
-
-              <div className="grid md:grid-cols-2 gap-4 mt-6">
+            ) : (
+              <form onSubmit={handleSubmit}>
                 <div>
                   <label
-                    htmlFor="email"
+                    htmlFor="storeUrl"
                     className="block text-sm font-medium leading-5 mb-2"
                   >
-                    Email Address *
+                    Your Store URL *
                   </label>
                   <input
-                    type="email"
-                    id="email"
-                    placeholder="your@email.com"
+                    type="url"
+                    id="storeUrl"
+                    placeholder="https://yourstore.com"
                     required
+                    value={storeUrl}
+                    onChange={(e) => setStoreUrl(e.target.value)}
                     className="w-full bg-charcoal border border-black rounded-lg px-4 py-3 text-white transition-colors duration-150 focus:border-beige focus:outline-none"
                   />
                 </div>
-                <div>
+
+                <div className="grid md:grid-cols-2 gap-4 mt-6">
+                  <div>
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-medium leading-5 mb-2"
+                    >
+                      Email Address *
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      placeholder="your@email.com"
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="w-full bg-charcoal border border-black rounded-lg px-4 py-3 text-white transition-colors duration-150 focus:border-beige focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="businessName"
+                      className="block text-sm font-medium leading-5 mb-2"
+                    >
+                      Business Name
+                    </label>
+                    <input
+                      type="text"
+                      id="businessName"
+                      placeholder="Your Business"
+                      value={businessName}
+                      onChange={(e) => setBusinessName(e.target.value)}
+                      className="w-full bg-charcoal border border-black rounded-lg px-4 py-3 text-white transition-colors duration-150 focus:border-beige focus:outline-none"
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-6">
                   <label
-                    htmlFor="businessName"
+                    htmlFor="currentChallenges"
                     className="block text-sm font-medium leading-5 mb-2"
                   >
-                    Business Name
+                    What challenges are you facing? (Optional)
                   </label>
-                  <input
-                    type="text"
-                    id="businessName"
-                    placeholder="Your Business"
-                    className="w-full bg-charcoal border border-black rounded-lg px-4 py-3 text-white transition-colors duration-150 focus:border-beige focus:outline-none"
+                  <textarea
+                    id="currentChallenges"
+                    rows={4}
+                    placeholder="Tell us about your current conversion rate, loading issues, mobile problems, etc."
+                    value={challenges}
+                    onChange={(e) => setChallenges(e.target.value)}
+                    className="w-full bg-charcoal border border-black rounded-lg px-4 py-3 text-white resize-none transition-colors duration-150 focus:border-beige focus:outline-none"
                   />
                 </div>
-              </div>
 
-              <div className="mt-6">
-                <label
-                  htmlFor="currentChallenges"
-                  className="block text-sm font-medium leading-5 mb-2"
+                <div className="flex items-start gap-3 mt-6">
+                  <input
+                    type="checkbox"
+                    id="consent"
+                    checked={consent}
+                    onChange={(e) => setConsent(e.target.checked)}
+                    className="w-4 h-4 mt-1 bg-charcoal border-none text-beige rounded focus:ring-beige"
+                  />
+                  <label
+                    htmlFor="consent"
+                    className="text-gray-400 text-sm leading-5"
+                  >
+                    I agree to receive a detailed analysis of my store and
+                    follow-up communications about optimization opportunities.
+                  </label>
+                </div>
+
+                {formError && (
+                  <p className="text-red-400 text-sm mt-3">{formError}</p>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="w-full bg-beige text-black font-medium text-lg leading-7 py-4 px-8 rounded-lg mt-6 hover:bg-beige/90 transition-colors duration-150 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
-                  What challenges are you facing? (Optional)
-                </label>
-                <textarea
-                  id="currentChallenges"
-                  rows={4}
-                  placeholder="Tell us about your current conversion rate, loading issues, mobile problems, etc."
-                  className="w-full bg-charcoal border border-black rounded-lg px-4 py-3 text-white resize-none transition-colors duration-150 focus:border-beige focus:outline-none"
-                />
-              </div>
-
-              <div className="flex items-start gap-3 mt-6">
-                <input
-                  type="checkbox"
-                  id="consent"
-                  required
-                  className="w-4 h-4 mt-1 bg-charcoal border-none text-beige rounded focus:ring-beige"
-                />
-                <label
-                  htmlFor="consent"
-                  className="text-gray-400 text-sm leading-5"
-                >
-                  I agree to receive a detailed analysis of my store and
-                  follow-up communications about optimization opportunities.
-                </label>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-beige text-black font-medium text-lg leading-7 py-4 px-8 rounded-lg mt-6 hover:bg-beige/90 transition-colors duration-150"
-              >
-                Get Free Analysis
-              </button>
-            </form>
+                  {submitting ? (
+                    <>
+                      <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                      </svg>
+                      Sending...
+                    </>
+                  ) : (
+                    "Get Free Analysis"
+                  )}
+                </button>
+              </form>
+            )}
 
             <div className="bg-beige/10 border border-beige/20 rounded-xl p-6 mt-8">
               <h3 className="text-beige font-bold mb-3">What You'll Get:</h3>
