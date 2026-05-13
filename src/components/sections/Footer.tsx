@@ -37,7 +37,7 @@ const Footer = () => {
               <span className="text-black font-bold text-lg">S</span>
             </div>
             <span className="text-gray-100 font-semibold text-lg">
-              shopifydevstudio
+              Shopifydevstudio
             </span>
           </div>
           <p className="text-gray-400 font-light text-sm leading-relaxed max-w-2xl">
@@ -297,7 +297,7 @@ const Footer = () => {
           viewport={{ once: true }}
         >
           <p className="text-gray-400 text-xs sm:text-sm">
-            © {currentYear} shopifydevstudio. All rights reserved.
+            © {currentYear} Shopifydevstudio. All rights reserved.
           </p>
         </motion.div>
       </div>
