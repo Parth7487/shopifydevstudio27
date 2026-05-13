@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { useRef } from "react";
 import {
   Palette,
   Zap,
@@ -16,12 +15,14 @@ import CalendlyModal from "../components/sections/CalendlyModal";
 import { updatePageMeta } from "../lib/seo-meta";
 import { addBreadcrumbSchema } from "../lib/breadcrumb-schema";
 
-const GOOGLE_FORM_ACTION =
-  "https://docs.google.com/forms/d/e/1FAIpQLSep634nSKatUABsfVfIN06ZnvaWmSGfd-u6XtURvWxE7R8Lig/formResponse";
+// ─── Formspree endpoint ────────────────────────────────────────────────────
+// 1. Go to https://formspree.io  →  sign up free with shopifydevstudioo@gmail.com
+// 2. Create New Form  →  copy the Form ID (looks like "abcdefgh")
+// 3. Replace FORMSPREE_ID below with your ID
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xwpovpla";
 
 const Services = () => {
   const [calendlyOpen, setCalendlyOpen] = useState(false);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   // Form state
   const [storeUrl, setStoreUrl] = useState("");
@@ -43,46 +44,40 @@ const Services = () => {
       setFormError("");
       setSubmitting(true);
       try {
-        // Build a hidden form and submit it into a hidden iframe
-        // This is the only reliable cross-origin Google Forms submission method
-        const form = document.createElement("form");
-        form.method = "POST";
-        form.action = GOOGLE_FORM_ACTION;
-        form.target = "google-form-iframe";
-        form.style.display = "none";
-
-        const fields: Record<string, string> = {
-          "entry.685928678": storeUrl,
-          "entry.394477450": email,
-          "entry.1833102669": businessName,
-          "entry.216188150": challenges,
-          "entry.1293722889": "Yes, I agree",
-        };
-
-        Object.entries(fields).forEach(([name, value]) => {
-          const input = document.createElement("input");
-          input.type = "hidden";
-          input.name = name;
-          input.value = value;
-          form.appendChild(input);
+        const res = await fetch(FORMSPREE_ENDPOINT, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            storeUrl,
+            email,
+            businessName,
+            challenges,
+            consent: "Yes, I agree",
+          }),
         });
 
-        document.body.appendChild(form);
-        form.submit();
-        document.body.removeChild(form);
-
-        // Allow time for iframe to receive Google's response
-        setTimeout(() => {
+        if (res.ok) {
           setSubmitted(true);
           setStoreUrl("");
           setEmail("");
           setBusinessName("");
           setChallenges("");
           setConsent(false);
-          setSubmitting(false);
-        }, 1500);
+        } else {
+          const data = await res.json();
+          setFormError(
+            data?.errors?.[0]?.message ||
+              "Something went wrong. Please try WhatsApp instead.",
+          );
+        }
       } catch {
-        setFormError("Something went wrong. Please try again or email us directly.");
+        setFormError(
+          "Network error. Please reach us directly on WhatsApp or email.",
+        );
+      } finally {
         setSubmitting(false);
       }
     },
@@ -645,20 +640,11 @@ const Services = () => {
         </div>
       </section>
 
-      {/* Hidden iframe to absorb Google Forms redirect response */}
-      <iframe
-        ref={iframeRef}
-        name="google-form-iframe"
-        title="hidden"
-        style={{ display: "none" }}
-      />
 
       {/* Footer */}
       <Footer />
       <CalendlyModal
-        open={
-          calendlyOpen && Boolean((import.meta as any).env?.VITE_CALENDLY_URL)
-        }
+        open={calendlyOpen}
         onClose={() => setCalendlyOpen(false)}
       />
     </div>
