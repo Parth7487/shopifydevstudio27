@@ -502,6 +502,182 @@ const VideoUpload = ({ value, onChange }: VideoUploadProps) => {
   );
 };
 
+// ─── Multi Image Upload Component ──────────────────────────────────────────────
+
+interface MultiImageUploadProps {
+  value: string[];
+  onChange: (urls: string[]) => void;
+}
+
+const MultiImageUpload = ({ value = [], onChange }: MultiImageUploadProps) => {
+  const [isDraggingOver, setIsDraggingOver] = useState(false);
+  const [uploadingFiles, setUploadingFiles] = useState<{ id: string; name: string; progress: number }[]>([]);
+  const [uploadError, setUploadError] = useState("");
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  const uploadFile = async (file: File, tempId: string) => {
+    try {
+      const signRes = await fetch("/api/cloudinary-sign", { method: "POST" });
+      if (!signRes.ok) throw new Error("Failed to get signature");
+      const { signature, timestamp, api_key, cloud_name, folder } = await signRes.json();
+
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("signature", signature);
+      formData.append("timestamp", String(timestamp));
+      formData.append("api_key", api_key);
+      formData.append("folder", folder);
+
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`);
+
+      xhr.upload.onprogress = (e) => {
+        if (e.lengthComputable) {
+          const percent = Math.round((e.loaded / e.total) * 100);
+          setUploadingFiles((prev) =>
+            prev.map((f) => (f.id === tempId ? { ...f, progress: percent } : f))
+          );
+        }
+      };
+
+      const uploadPromise = new Promise<{ secure_url: string }>((resolve, reject) => {
+        xhr.onload = () => {
+          if (xhr.status === 200) {
+            try {
+              resolve(JSON.parse(xhr.responseText));
+            } catch (err) {
+              reject(new Error("Failed to parse response"));
+            }
+          } else {
+            try {
+              const err = JSON.parse(xhr.responseText);
+              reject(new Error(err.error?.message || "Upload failed"));
+            } catch (e) {
+              reject(new Error("Upload failed"));
+            }
+          }
+        };
+        xhr.onerror = () => reject(new Error("Network error"));
+      });
+
+      xhr.send(formData);
+      const data = await uploadPromise;
+
+      const optimizedUrl = data.secure_url.replace(
+        "/upload/",
+        "/upload/f_auto,q_auto,w_800/"
+      );
+
+      // Append new image URL
+      onChange([...value, optimizedUrl]);
+    } catch (err) {
+      setUploadError(err instanceof Error ? err.message : "Upload failed");
+    } finally {
+      // Remove from uploading list
+      setUploadingFiles((prev) => prev.filter((f) => f.id !== tempId));
+    }
+  };
+
+  const handleFiles = (files: FileList) => {
+    setUploadError("");
+    Array.from(files).forEach((file) => {
+      if (!file.type.startsWith("image/")) {
+        setUploadError("Only image files are allowed");
+        return;
+      }
+      if (file.size > 10 * 1024 * 1024) {
+        setUploadError("Image too large (max 10MB)");
+        return;
+      }
+
+      const tempId = Math.random().toString(36).substring(7);
+      setUploadingFiles((prev) => [...prev, { id: tempId, name: file.name, progress: 0 }]);
+      uploadFile(file, tempId);
+    });
+  };
+
+  const handleDrop = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDraggingOver(false);
+    if (e.dataTransfer.files) handleFiles(e.dataTransfer.files);
+  }, [value, onChange]);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) handleFiles(e.target.files);
+  };
+
+  const removeImage = (indexToRemove: number) => {
+    onChange(value.filter((_, i) => i !== indexToRemove));
+  };
+
+  return (
+    <div className="space-y-4">
+      {/* Drop Zone */}
+      <div
+        onDragOver={(e) => { e.preventDefault(); setIsDraggingOver(true); }}
+        onDragLeave={() => setIsDraggingOver(false)}
+        onDrop={handleDrop}
+        onClick={() => fileRef.current?.click()}
+        className={`relative w-full h-28 rounded-xl border-2 border-dashed flex flex-col items-center justify-center cursor-pointer transition-all duration-200 overflow-hidden ${
+          isDraggingOver
+            ? "border-beige/80 bg-beige/10"
+            : "border-white/20 hover:border-white/40 bg-white/[0.02] hover:bg-white/[0.04]"
+        }`}
+      >
+        <div className="flex flex-col items-center gap-2 text-center px-4">
+          <ImagePlus className={`w-8 h-8 ${isDraggingOver ? "text-beige" : "text-gray-500"}`} />
+          <div>
+            <p className="text-xs font-medium text-gray-300">
+              Drag & drop images here or click to select multiple
+            </p>
+            <p className="text-[10px] text-gray-500 mt-0.5">JPG, PNG, WebP · max 10MB per image</p>
+          </div>
+        </div>
+      </div>
+
+      <input ref={fileRef} type="file" multiple accept="image/*" onChange={handleFileChange} className="hidden" />
+
+      {uploadError && <p className="text-red-400 text-xs">{uploadError}</p>}
+
+      {/* Upload Progress List */}
+      {uploadingFiles.length > 0 && (
+        <div className="space-y-2">
+          {uploadingFiles.map((file) => (
+            <div key={file.id} className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-lg p-2.5">
+              <Loader2 className="w-3.5 h-3.5 text-beige animate-spin shrink-0" />
+              <div className="flex-1 min-w-0">
+                <p className="text-xs text-gray-300 truncate font-medium">{file.name}</p>
+                <div className="w-full bg-white/10 h-1 rounded-full overflow-hidden mt-1.5">
+                  <div className="bg-beige h-full transition-all duration-150" style={{ width: `${file.progress}%` }} />
+                </div>
+              </div>
+              <span className="text-[10px] text-gray-400 shrink-0 font-semibold">{file.progress}%</span>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Grid of thumbnails */}
+      {value.length > 0 && (
+        <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
+          {value.map((url, i) => (
+            <div key={i} className="relative aspect-video rounded-lg overflow-hidden border border-white/10 bg-gray-900 group">
+              <img src={url} alt={`Gallery ${i}`} className="w-full h-full object-cover" />
+              <button
+                type="button"
+                onClick={() => removeImage(i)}
+                className="absolute top-1.5 right-1.5 z-10 w-5 h-5 bg-red-900/95 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-colors opacity-0 group-hover:opacity-100 shadow-md"
+              >
+                <X className="w-2.5 h-2.5 pointer-events-none" />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
 // Custom PointerSensor subclass to only activate dragging on elements with data-drag-handle
 class SmartPointerSensor extends PointerSensor {
   static activators = [
@@ -603,6 +779,7 @@ const Admin = () => {
   const [brand, setBrand] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
+  const [images, setImages] = useState<string[]>([]);
   const [videoUrl, setVideoUrl] = useState("");
   const [category, setCategory] = useState("Fashion");
   const [tagsInput, setTagsInput] = useState("");
@@ -628,7 +805,7 @@ const Admin = () => {
 
   const openAddForm = () => {
     setEditingProject(null);
-    setTitle(""); setBrand(""); setDescription(""); setImage(""); setVideoUrl("");
+    setTitle(""); setBrand(""); setDescription(""); setImage(""); setImages([]); setVideoUrl("");
     setCategory("Fashion"); setTagsInput(""); setTechInput("");
     setConversionMetric("350%"); setLoadTimeMetric("0.6s");
     setLiveUrl(""); setFeatured(false); setHasVideo(false); setStatus("published");
@@ -641,6 +818,7 @@ const Admin = () => {
     setBrand(project.brand || "");
     setDescription(project.description || "");
     setImage(project.image || "");
+    setImages(project.images || []);
     setVideoUrl(project.videoUrl || "");
     setCategory(project.category || "Fashion");
     setTagsInput((project.tags || []).join(", "));
@@ -669,6 +847,7 @@ const Admin = () => {
       featured,
       has_video: hasVideo,
       status,
+      images,
     };
 
     try {
@@ -1070,9 +1249,17 @@ const Admin = () => {
                 {/* Image Upload */}
                 <div>
                   <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                    <ImagePlus className="w-3.5 h-3.5 text-beige" /> Project Image
+                    <ImagePlus className="w-3.5 h-3.5 text-beige" /> Project Cover Image
                   </label>
                   <ImageUpload value={image} onChange={setImage} />
+                </div>
+
+                {/* Multiple Images Upload */}
+                <div>
+                  <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                    <ImagePlus className="w-3.5 h-3.5 text-beige" /> Project Gallery (Optional)
+                  </label>
+                  <MultiImageUpload value={images} onChange={setImages} />
                 </div>
 
                 {/* Video URL */}

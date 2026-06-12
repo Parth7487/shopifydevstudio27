@@ -609,6 +609,18 @@ const Work = () => {
 
   // Prioritize specific brands order
   const orderedProjects = useMemo(() => {
+    const mappedProjects = filteredProjects.map((project) => ({
+      ...project,
+      imageHover:
+        project.images && project.images.length > 0
+          ? project.images[0]
+          : (project.imageHover || null),
+    }));
+
+    if (supabaseProjects.length > 0) {
+      return mappedProjects;
+    }
+
     const priority = [
       "Kotn",
       "Outdoor Voices",
@@ -624,7 +636,7 @@ const Work = () => {
       const i = priority.indexOf(brand);
       return i === -1 ? Number.MAX_SAFE_INTEGER : i;
     };
-    return filteredProjects
+    return mappedProjects
       .map((p, i) => ({ p, i }))
       .sort((a, b) => {
         const pa = indexOf(a.p.brand);
@@ -633,7 +645,7 @@ const Work = () => {
         return a.i - b.i; // stable for equal priority
       })
       .map(({ p }) => p);
-  }, [filteredProjects]);
+  }, [filteredProjects, supabaseProjects.length]);
 
   return (
     <div className="min-h-screen bg-black text-white relative">

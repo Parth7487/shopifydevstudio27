@@ -16,6 +16,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       ADD COLUMN IF NOT EXISTS sort_order INTEGER DEFAULT 0
     `;
 
+    // Add images column if it doesn't exist
+    await sql`
+      ALTER TABLE portfolio_projects 
+      ADD COLUMN IF NOT EXISTS images TEXT[] DEFAULT '{}'
+    `;
+
     // Backfill sort_order based on created_at order for existing rows
     await sql`
       WITH ranked AS (

@@ -59,7 +59,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         live_url,
         featured = false,
         has_video = false,
-        status = "published"
+        status = "published",
+        images = []
       } = req.body;
 
       if (!title || !brand || !description || !image || !category || !live_url) {
@@ -69,10 +70,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const [newProject] = await sql`
         INSERT INTO portfolio_projects (
           title, brand, description, image, video_url, category, 
-          tags, tech, metrics, live_url, featured, has_video, status
+          tags, tech, metrics, live_url, featured, has_video, status, images
         ) VALUES (
           ${title}, ${brand}, ${description}, ${image}, ${video_url}, ${category},
-          ${tags}, ${tech}, ${JSON.stringify(metrics)}, ${live_url}, ${featured}, ${has_video}, ${status}
+          ${tags}, ${tech}, ${JSON.stringify(metrics)}, ${live_url}, ${featured}, ${has_video}, ${status}, ${images}
         ) RETURNING *
       `;
       return res.status(201).json(newProject);
@@ -92,7 +93,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         live_url,
         featured,
         has_video,
-        status
+        status,
+        images
       } = req.body;
 
       // Use explicit SET for all fields — booleans break with COALESCE (false is treated as NULL)
@@ -111,6 +113,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           featured = ${featured !== undefined ? featured : sql`featured`},
           has_video = ${has_video !== undefined ? has_video : sql`has_video`},
           status = ${status ?? sql`status`},
+          images = ${images ?? sql`images`},
           updated_at = NOW()
         WHERE id = ${projectId}
         RETURNING *

@@ -15,6 +15,7 @@ export interface PortfolioProject {
   featured: boolean;
   hasVideo: boolean;
   status: string;
+  images?: string[];
   created_at?: string;
   updated_at?: string;
 }
@@ -82,6 +83,7 @@ export const useProjects = (): UseProjectsReturn => {
           featured: project.featured || false,
           hasVideo: project.has_video || false,
           status: project.status,
+          images: Array.isArray(project.images) ? project.images : [],
           created_at: project.created_at,
           updated_at: project.updated_at,
         }),
@@ -169,6 +171,7 @@ export const useProject = (id: string) => {
             featured: data.featured || false,
             hasVideo: data.has_video || false,
             status: data.status,
+            images: Array.isArray(data.images) ? data.images : [],
             created_at: data.created_at,
             updated_at: data.updated_at,
           };
