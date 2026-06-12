@@ -251,13 +251,13 @@ const Admin = () => {
                   <h4 className="font-medium text-white mb-2">Environment</h4>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-gray-400">Supabase:</span>
+                      <span className="text-gray-400">Neon Database:</span>
                       <span
                         className={
-                          supabaseConnected ? "text-green-400" : "text-gray-400"
+                          neonConnected ? "text-green-400" : "text-gray-400"
                         }
                       >
-                        {supabaseConnected ? "Enabled ✓" : "Disabled"}
+                        {neonConnected ? "Enabled ✓" : "Disabled"}
                       </span>
                     </div>
                   </div>
