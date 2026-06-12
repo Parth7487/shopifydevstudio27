@@ -37,42 +37,12 @@ export const useProjects = (): UseProjectsReturn => {
       setLoading(!cachedProjects); // Don't show loading if we have cached data
       setError(null);
 
-      // Check if Supabase is available
-      if (!supabase) {
-        setProjects([]);
-        setLoading(false);
-        return;
+      // Fetch from Netlify/Neon DB API
+      const response = await fetch("/api/portfolio");
+      if (!response.ok) {
+        throw new Error(`Failed to fetch projects: ${response.status} ${response.statusText}`);
       }
-
-      const { data, error: fetchError } = await supabase
-        .from(TABLES.PORTFOLIO_PROJECTS)
-        .select(
-          `
-          id,
-          title,
-          brand,
-          description,
-          image,
-          video_url,
-          category,
-          tags,
-          tech,
-          metrics,
-          live_url,
-          featured,
-          has_video,
-          status,
-          created_at,
-          updated_at
-        `,
-        )
-        .eq("status", "published")
-        .order("created_at", { ascending: false })
-        .limit(100);
-
-      if (fetchError) {
-        throw new Error(fetchError.message);
-      }
+      const data = await response.json();
 
       // Transform data to match the expected format
       const transformedProjects: PortfolioProject[] = (data || []).map(
@@ -128,32 +98,9 @@ export const useProjects = (): UseProjectsReturn => {
     }
   }, [fetchProjects]);
 
-  // Set up real-time subscription for project updates
+  // Real-time subscription removed (serverless DB mode)
   useEffect(() => {
-    // Only set up subscription if Supabase is available
-    if (!supabase) {
-      return;
-    }
-
-    const channel = supabase
-      .channel("portfolio_projects_changes")
-      .on(
-        "postgres_changes",
-        {
-          event: "*",
-          schema: "public",
-          table: TABLES.PORTFOLIO_PROJECTS,
-        },
-        () => {
-          // Force refresh cache when data changes
-          fetchProjects(true);
-        },
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
+    // No-op
   }, [fetchProjects]);
 
   return {
@@ -176,22 +123,16 @@ export const useProject = (id: string) => {
         setLoading(true);
         setError(null);
 
-        // Check if Supabase is available
-        if (!supabase) {
-          setProject(null);
-          setLoading(false);
-          return;
+        // Fetch from Netlify/Neon DB API
+        const response = await fetch(`/api/portfolio/${id}`);
+        if (!response.ok) {
+          if (response.status === 404) {
+            setProject(null);
+            return;
+          }
+          throw new Error(`Failed to fetch project: ${response.status} ${response.statusText}`);
         }
-
-        const { data, error: fetchError } = await supabase
-          .from(TABLES.PORTFOLIO_PROJECTS)
-          .select("*")
-          .eq("id", id)
-          .single();
-
-        if (fetchError) {
-          throw new Error(fetchError.message);
-        }
+        const data = await response.json();
 
         if (data) {
           const transformedProject: PortfolioProject = {

@@ -74,6 +74,24 @@ export const getOptimizedImageSrc = (
       return url.toString();
     }
 
+    // Cloudinary CDN: replace transformations with optimized width/quality/format
+    if (url.hostname.includes("res.cloudinary.com")) {
+      const parts = baseSrc.split("/upload/");
+      if (parts.length > 1) {
+        const afterUpload = parts[1];
+        // Check if there are existing transformations
+        const hasTransformations = afterUpload.includes("/") && !afterUpload.startsWith("v");
+        const remainingPath = hasTransformations 
+          ? afterUpload.substring(afterUpload.indexOf("/") + 1)
+          : afterUpload;
+        
+        const q = Math.min(Math.max(quality, 30), 90);
+        const f = desiredFormat || "auto";
+        const newTransform = `w_${width},q_${q},f_${f}`;
+        return `${parts[0]}/upload/${newTransform}/${remainingPath}`;
+      }
+    }
+
     return baseSrc;
   } catch {
     return baseSrc;

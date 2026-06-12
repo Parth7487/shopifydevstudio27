@@ -9,9 +9,6 @@ import {
 import ElegantNavigation from "../components/sections/ElegantNavigation";
 import Footer from "../components/sections/Footer";
 import GoogleDriveSync from "../components/GoogleDriveSync";
-import { useMemo, useState } from "react";
-import { supabase } from "../lib/supabase";
-
 const Admin = () => {
   const [activeTab, setActiveTab] = useState<"drive" | "database" | "settings">(
     "drive",
@@ -23,7 +20,13 @@ const Admin = () => {
     { id: "settings", label: "Settings", icon: SettingsIcon },
   ] as const;
 
-  const supabaseConnected = useMemo(() => !!supabase, []);
+  const [neonConnected, setNeonConnected] = useState<boolean | null>(null);
+
+  React.useEffect(() => {
+    fetch("/api/portfolio")
+      .then((res) => setNeonConnected(res.ok))
+      .catch(() => setNeonConnected(false));
+  }, []);
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -110,21 +113,27 @@ const Admin = () => {
               <div className="space-y-4">
                 <div className="p-4 bg-black/40 rounded-lg">
                   <h4 className="font-medium text-white mb-2">
-                    Supabase Connection
+                    Neon Connection (PostgreSQL)
                   </h4>
                   <p className="text-gray-400 text-sm">
-                    {supabaseConnected
-                      ? "Your portfolio is connected to Supabase database for real-time updates."
-                      : "Supabase is not configured. The app will use local/Netlify data sources."}
+                    {neonConnected === null
+                      ? "Checking connection..."
+                      : neonConnected
+                        ? "Your portfolio is successfully connected to the Neon Serverless PostgreSQL database."
+                        : "Neon database connection failed. Please check your environment variables and connection string."}
                   </p>
                   <div className="flex items-center gap-2 mt-2">
                     <div
-                      className={`w-2 h-2 rounded-full ${supabaseConnected ? "bg-green-400" : "bg-gray-500"}`}
+                      className={`w-2 h-2 rounded-full ${neonConnected === null ? "bg-yellow-400" : neonConnected ? "bg-green-400" : "bg-red-500"}`}
                     ></div>
                     <span
-                      className={`text-sm ${supabaseConnected ? "text-green-400" : "text-gray-400"}`}
+                      className={`text-sm ${neonConnected === null ? "text-yellow-400" : neonConnected ? "text-green-400" : "text-red-400"}`}
                     >
-                      {supabaseConnected ? "Connected" : "Not Configured"}
+                      {neonConnected === null
+                        ? "Checking..."
+                        : neonConnected
+                          ? "Connected"
+                          : "Connection Failed"}
                     </span>
                   </div>
                 </div>
@@ -135,7 +144,7 @@ const Admin = () => {
                   </h4>
                   <p className="text-gray-400 text-sm">
                     Use the Google Drive Sync tab to update portfolio images, or
-                    manage data directly in the Supabase dashboard.
+                    manage data directly in your Neon console.
                   </p>
                 </div>
               </div>
