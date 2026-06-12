@@ -77,10 +77,11 @@ const SortableProjectCard = ({ project, onEdit, onDelete }: ProjectCardProps) =>
         <div
           {...attributes}
           {...listeners}
+          data-drag-handle
           className="absolute top-3 left-3 z-10 p-1.5 bg-black/70 rounded-lg cursor-grab active:cursor-grabbing text-gray-400 hover:text-white hover:bg-black/90 transition-all"
           title="Drag to reorder"
         >
-          <GripVertical className="w-4 h-4" />
+          <GripVertical className="w-4 h-4 pointer-events-none" />
         </div>
 
         <div>
@@ -121,14 +122,14 @@ const SortableProjectCard = ({ project, onEdit, onDelete }: ProjectCardProps) =>
             onClick={() => onEdit(project)}
             className="flex-1 py-2 bg-white/5 hover:bg-white/10 border border-white/15 text-white rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 transition-colors"
           >
-            <Edit2 className="w-3.5 h-3.5" />
+            <Edit2 className="w-3.5 h-3.5 pointer-events-none" />
             Edit
           </button>
           <button
             onClick={() => onDelete(project.id)}
             className="px-3 py-2 bg-red-950/20 hover:bg-red-950/40 border border-red-900/30 text-red-400 rounded-lg text-xs font-medium flex items-center justify-center transition-colors"
           >
-            <Trash2 className="w-3.5 h-3.5" />
+            <Trash2 className="w-3.5 h-3.5 pointer-events-none" />
           </button>
         </div>
       </motion.div>
@@ -501,6 +502,19 @@ const VideoUpload = ({ value, onChange }: VideoUploadProps) => {
   );
 };
 
+// Custom PointerSensor subclass to only activate dragging on elements with data-drag-handle
+class SmartPointerSensor extends PointerSensor {
+  static activators = [
+    {
+      eventName: "onPointerDown" as const,
+      handler: ({ nativeEvent: event }: { nativeEvent: PointerEvent }) => {
+        const element = event.target as HTMLElement;
+        return !!element.closest("[data-drag-handle]");
+      },
+    },
+  ];
+}
+
 // ─── Main Admin Component ─────────────────────────────────────────────────────
 
 const Admin = () => {
@@ -524,17 +538,21 @@ const Admin = () => {
 
   // Local ordered list for drag-and-drop
   const [localProjects, setLocalProjects] = useState<any[]>([]);
+  const [originalOrder, setOriginalOrder] = useState<any[]>([]);
+  const [isOrderChanged, setIsOrderChanged] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [isSavingOrder, setIsSavingOrder] = useState(false);
 
-  // Sync localProjects when rawProjects changes
+  // Sync localProjects and originalOrder when rawProjects changes
   React.useEffect(() => {
     setLocalProjects(rawProjects);
+    setOriginalOrder(rawProjects);
+    setIsOrderChanged(false);
   }, [rawProjects]);
 
   // DnD sensors
   const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
+    useSensor(SmartPointerSensor),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
   );
 
@@ -542,7 +560,7 @@ const Admin = () => {
     setActiveId(event.active.id as string);
   };
 
-  const handleDragEnd = async (event: DragEndEvent) => {
+  const handleDragEnd = (event: DragEndEvent) => {
     setActiveId(null);
     const { active, over } = event;
     if (!over || active.id === over.id) return;
@@ -551,20 +569,29 @@ const Admin = () => {
     const newIndex = localProjects.findIndex((p) => p.id === over.id);
     const newOrder = arrayMove(localProjects, oldIndex, newIndex);
     setLocalProjects(newOrder);
+    setIsOrderChanged(true);
+  };
 
-    // Save to backend
+  const handleSaveOrder = async () => {
     setIsSavingOrder(true);
     try {
-      await fetch("/api/portfolio-order", {
+      const res = await fetch("/api/portfolio-order", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ order: newOrder.map((p) => p.id) }),
+        body: JSON.stringify({ order: localProjects.map((p) => p.id) }),
       });
+      if (!res.ok) throw new Error("Failed to save layout order");
+      await refetch();
     } catch (err) {
-      console.error("Failed to save order:", err);
+      alert(err instanceof Error ? err.message : "Failed to save order");
     } finally {
       setIsSavingOrder(false);
     }
+  };
+
+  const handleCancelOrderChange = () => {
+    setLocalProjects(originalOrder);
+    setIsOrderChanged(false);
   };
 
   // Form state
@@ -838,6 +865,40 @@ const Admin = () => {
                   </button>
                 </div>
               </div>
+
+              {isOrderChanged && (
+                <div className="flex flex-col sm:flex-row justify-between items-center bg-beige/10 border border-beige/30 rounded-xl p-5 text-sm gap-4 transition-all animate-fadeIn">
+                  <div className="flex items-center gap-3">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-beige opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-beige"></span>
+                    </span>
+                    <span className="text-gray-300 font-medium">Layout order changed. Save changes to apply to your portfolio website.</span>
+                  </div>
+                  <div className="flex gap-3 w-full sm:w-auto">
+                    <button
+                      onClick={handleCancelOrderChange}
+                      className="flex-1 sm:flex-initial px-5 py-2 bg-white/5 hover:bg-white/10 border border-white/15 text-gray-300 rounded-lg text-xs font-semibold transition-all"
+                    >
+                      Revert Changes
+                    </button>
+                    <button
+                      onClick={handleSaveOrder}
+                      disabled={isSavingOrder}
+                      className="flex-1 sm:flex-initial px-5 py-2 bg-beige hover:bg-beige/90 text-charcoal font-bold rounded-lg text-xs transition-all shadow-md flex items-center justify-center gap-1.5 disabled:opacity-50"
+                    >
+                      {isSavingOrder ? (
+                        <>
+                          <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                          Saving...
+                        </>
+                      ) : (
+                        "Save Layout Order"
+                      )}
+                    </button>
+                  </div>
+                </div>
+              )}
 
               {/* Grid */}
               {projectsLoading ? (
