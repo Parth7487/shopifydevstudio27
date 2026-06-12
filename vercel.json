@@ -22,6 +22,9 @@
     { "source": "/robots.txt", "destination": "/robots.txt" },
     { "source": "/ads.txt", "destination": "/ads.txt" },
     { "source": "/api/portfolio/:id", "destination": "/api/portfolio?id=:id" },
+    { "source": "/api/portfolio-order", "destination": "/api/portfolio-order" },
+    { "source": "/api/migrate", "destination": "/api/migrate" },
+    { "source": "/api/cloudinary-sign", "destination": "/api/cloudinary-sign" },
     { "source": "/api/:path*", "destination": "/api/:path*" },
     { "source": "/:path*", "destination": "/index.html" }
   ],

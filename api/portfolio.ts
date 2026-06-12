@@ -39,7 +39,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const projects = await sql`
           SELECT * FROM portfolio_projects 
           WHERE status = 'published'
-          ORDER BY created_at DESC
+          ORDER BY sort_order ASC, created_at DESC
         `;
         return res.status(200).json(projects);
       }
