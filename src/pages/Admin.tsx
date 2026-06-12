@@ -506,14 +506,77 @@ const VideoUpload = ({ value, onChange }: VideoUploadProps) => {
 
 interface MultiImageUploadProps {
   value: string[];
-  onChange: (urls: string[]) => void;
+  onChange: React.Dispatch<React.SetStateAction<string[]>>;
 }
+
+interface SortablePhotoProps {
+  url: string;
+  index: number;
+  onRemove: (index: number) => void;
+}
+
+const SortablePhoto = ({ url, index, onRemove }: SortablePhotoProps) => {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: url });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    zIndex: isDragging ? 50 : 1,
+    opacity: isDragging ? 0.6 : 1,
+  };
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      className={`relative aspect-video rounded-lg overflow-hidden border bg-gray-950 group cursor-grab active:cursor-grabbing transition-shadow duration-200 ${
+        isDragging ? "border-beige/50 shadow-lg shadow-beige/10" : "border-white/10 hover:border-white/20"
+      }`}
+    >
+      <img src={url} alt={`Gallery ${index}`} className="w-full h-full object-cover pointer-events-none select-none" />
+      <button
+        type="button"
+        onPointerDown={(e) => e.stopPropagation()} // stop propagation to prevent dragging on button press
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          onRemove(index);
+        }}
+        className="absolute top-1.5 right-1.5 z-10 w-5 h-5 bg-red-900/90 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-colors shadow-md"
+      >
+        <X className="w-2.5 h-2.5" />
+      </button>
+      {index === 0 && (
+        <span className="absolute bottom-1.5 left-1.5 bg-beige text-black text-[9px] font-bold px-1.5 py-0.5 rounded shadow-sm uppercase tracking-wider pointer-events-none select-none">
+          Hover Cover
+        </span>
+      )}
+    </div>
+  );
+};
 
 const MultiImageUpload = ({ value = [], onChange }: MultiImageUploadProps) => {
   const [isDraggingOver, setIsDraggingOver] = useState(false);
   const [uploadingFiles, setUploadingFiles] = useState<{ id: string; name: string; progress: number }[]>([]);
   const [uploadError, setUploadError] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8, // Wait until pointer drags 8px so simple clicks aren't swallowed
+      },
+    })
+  );
 
   const uploadFile = async (file: File, tempId: string) => {
     try {
@@ -568,8 +631,8 @@ const MultiImageUpload = ({ value = [], onChange }: MultiImageUploadProps) => {
         "/upload/f_auto,q_auto,w_800/"
       );
 
-      // Append new image URL
-      onChange([...value, optimizedUrl]);
+      // Append new image URL safely using functional state update
+      onChange((prev) => [...prev, optimizedUrl]);
     } catch (err) {
       setUploadError(err instanceof Error ? err.message : "Upload failed");
     } finally {
@@ -600,14 +663,28 @@ const MultiImageUpload = ({ value = [], onChange }: MultiImageUploadProps) => {
     e.preventDefault();
     setIsDraggingOver(false);
     if (e.dataTransfer.files) handleFiles(e.dataTransfer.files);
-  }, [value, onChange]);
+  }, []);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) handleFiles(e.target.files);
   };
 
   const removeImage = (indexToRemove: number) => {
-    onChange(value.filter((_, i) => i !== indexToRemove));
+    onChange((prev) => prev.filter((_, i) => i !== indexToRemove));
+  };
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+
+    onChange((prev) => {
+      const oldIndex = prev.indexOf(active.id as string);
+      const newIndex = prev.indexOf(over.id as string);
+      if (oldIndex !== -1 && newIndex !== -1) {
+        return arrayMove(prev, oldIndex, newIndex);
+      }
+      return prev;
+    });
   };
 
   return (
@@ -630,7 +707,7 @@ const MultiImageUpload = ({ value = [], onChange }: MultiImageUploadProps) => {
             <p className="text-xs font-medium text-gray-300">
               Drag & drop images here or click to select multiple
             </p>
-            <p className="text-[10px] text-gray-500 mt-0.5">JPG, PNG, WebP · max 10MB per image</p>
+            <p className="text-[10px] text-gray-500 mt-0.5">JPG, PNG, WebP · No limit on count</p>
           </div>
         </div>
       </div>
@@ -657,22 +734,17 @@ const MultiImageUpload = ({ value = [], onChange }: MultiImageUploadProps) => {
         </div>
       )}
 
-      {/* Grid of thumbnails */}
+      {/* Grid of thumbnails with Drag-and-Drop Sortable Context */}
       {value.length > 0 && (
-        <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
-          {value.map((url, i) => (
-            <div key={i} className="relative aspect-video rounded-lg overflow-hidden border border-white/10 bg-gray-900 group">
-              <img src={url} alt={`Gallery ${i}`} className="w-full h-full object-cover" />
-              <button
-                type="button"
-                onClick={() => removeImage(i)}
-                className="absolute top-1.5 right-1.5 z-10 w-5 h-5 bg-red-900/95 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-colors opacity-0 group-hover:opacity-100 shadow-md"
-              >
-                <X className="w-2.5 h-2.5 pointer-events-none" />
-              </button>
+        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+          <SortableContext items={value} strategy={rectSortingStrategy}>
+            <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
+              {value.map((url, i) => (
+                <SortablePhoto key={url} url={url} index={i} onRemove={removeImage} />
+              ))}
             </div>
-          ))}
-        </div>
+          </SortableContext>
+        </DndContext>
       )}
     </div>
   );
@@ -1273,10 +1345,50 @@ const Admin = () => {
                   <div>
                     <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2 flex items-center gap-1.5"><Cpu className="w-3.5 h-3.5 text-beige" /> Tags</label>
                     <input type="text" value={tagsInput} onChange={(e) => setTagsInput(e.target.value)} placeholder="Sustainable, Story-driven, Minimal" className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors" />
+                    {tagsInput.split(",").map((t) => t.trim()).filter(Boolean).length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 mt-2">
+                        {tagsInput.split(",").map((t) => t.trim()).filter(Boolean).map((tag, idx) => (
+                          <span key={idx} className="inline-flex items-center gap-1 bg-beige/10 border border-beige/30 text-beige text-[11px] px-2 py-0.5 rounded-full">
+                            {tag}
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const list = tagsInput.split(",").map((t) => t.trim()).filter(Boolean);
+                                const newList = list.filter((_, i) => i !== idx);
+                                setTagsInput(newList.join(", "));
+                              }}
+                              className="hover:text-red-400 transition-colors"
+                            >
+                              <X className="w-2.5 h-2.5" />
+                            </button>
+                          </span>
+                        ))}
+                      </div>
+                    )}
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2 flex items-center gap-1.5"><Cpu className="w-3.5 h-3.5 text-beige" /> Tech Stack</label>
                     <input type="text" value={techInput} onChange={(e) => setTechInput(e.target.value)} placeholder="Shopify Plus, Custom App, React" className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors" />
+                    {techInput.split(",").map((t) => t.trim()).filter(Boolean).length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 mt-2">
+                        {techInput.split(",").map((t) => t.trim()).filter(Boolean).map((tech, idx) => (
+                          <span key={idx} className="inline-flex items-center gap-1 bg-white/5 border border-white/15 text-gray-300 text-[11px] px-2 py-0.5 rounded-full">
+                            {tech}
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const list = techInput.split(",").map((t) => t.trim()).filter(Boolean);
+                                const newList = list.filter((_, i) => i !== idx);
+                                setTechInput(newList.join(", "));
+                              }}
+                              className="hover:text-red-400 transition-colors"
+                            >
+                              <X className="w-2.5 h-2.5" />
+                            </button>
+                          </span>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
 
