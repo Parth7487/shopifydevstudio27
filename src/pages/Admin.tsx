@@ -52,10 +52,11 @@ interface ProjectCardProps {
   project: any;
   onEdit: (p: any) => void;
   onDelete: (id: string) => void;
+  onClone: (p: any) => void;
   isDragging?: boolean;
 }
 
-const SortableProjectCard = ({ project, onEdit, onDelete }: ProjectCardProps) => {
+const SortableProjectCard = ({ project, onEdit, onDelete, onClone }: ProjectCardProps) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
     useSortable({ id: project.id });
 
@@ -92,9 +93,18 @@ const SortableProjectCard = ({ project, onEdit, onDelete }: ProjectCardProps) =>
               className="w-full h-full object-cover"
               loading="lazy"
             />
-            <span className="absolute top-3 right-3 px-3 py-1 bg-black/80 text-xs font-semibold text-beige border border-beige/30 rounded-full">
-              {project.category}
-            </span>
+            <div className="absolute top-3 right-3 flex items-center gap-1.5">
+              <span className="px-2 py-0.5 bg-black/80 text-[10px] font-semibold text-beige border border-beige/30 rounded-full">
+                {project.category}
+              </span>
+              <span className={`px-2 py-0.5 text-[10px] font-semibold rounded-full border ${
+                project.status === "draft"
+                  ? "bg-amber-950/70 border-amber-500/40 text-amber-400"
+                  : "bg-emerald-950/70 border-emerald-500/40 text-emerald-400"
+              }`}>
+                {project.status === "draft" ? "Draft" : "Published"}
+              </span>
+            </div>
             {project.featured && (
               <span className="absolute top-3 left-10 px-2 py-1 bg-beige/20 text-xs font-semibold text-beige border border-beige/40 rounded-full">
                 ★ Featured
@@ -117,13 +127,20 @@ const SortableProjectCard = ({ project, onEdit, onDelete }: ProjectCardProps) =>
           </div>
         </div>
 
-        <div className="px-5 pb-5 border-t border-white/5 flex gap-3 mt-3 pt-3">
+        <div className="px-5 pb-5 border-t border-white/5 flex gap-2.5 mt-3 pt-3">
           <button
             onClick={() => onEdit(project)}
             className="flex-1 py-2 bg-white/5 hover:bg-white/10 border border-white/15 text-white rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 transition-colors"
           >
             <Edit2 className="w-3.5 h-3.5 pointer-events-none" />
             Edit
+          </button>
+          <button
+            onClick={() => onClone(project)}
+            title="Duplicate Project"
+            className="px-3 py-2 bg-white/5 hover:bg-white/10 border border-white/15 text-gray-300 hover:text-white rounded-lg text-xs font-medium flex items-center justify-center transition-colors"
+          >
+            <Plus className="w-3.5 h-3.5 pointer-events-none" />
           </button>
           <button
             onClick={() => onDelete(project.id)}
@@ -863,6 +880,36 @@ const Admin = () => {
   const [hasVideo, setHasVideo] = useState(false);
   const [status, setStatus] = useState("published");
 
+  // Custom Category States
+  const [showCustomCategory, setShowCustomCategory] = useState(false);
+  const [customCategoryInput, setCustomCategoryInput] = useState("");
+
+  const allCategories = React.useMemo(() => {
+    const defaultCats = [
+      "Fashion",
+      "Beauty",
+      "Home & Garden",
+      "Food & Beverage",
+      "Jewelry",
+      "Sports & Outdoors",
+      "Health & Wellness",
+    ];
+    const uniqueFromProjects = Array.from(
+      new Set(localProjects.map((p) => p.category).filter(Boolean))
+    );
+    return Array.from(new Set([...defaultCats, ...uniqueFromProjects]));
+  }, [localProjects]);
+
+  const handleCategoryChange = (val: string) => {
+    if (val === "CUSTOM_NEW") {
+      setShowCustomCategory(true);
+      setCategory("");
+    } else {
+      setShowCustomCategory(false);
+      setCategory(val);
+    }
+  };
+
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     const correctPassword = import.meta.env.VITE_ADMIN_PASSWORD || "admin123";
@@ -881,6 +928,8 @@ const Admin = () => {
     setCategory("Fashion"); setTagsInput(""); setTechInput("");
     setConversionMetric("350%"); setLoadTimeMetric("0.6s");
     setLiveUrl(""); setFeatured(false); setHasVideo(false); setStatus("published");
+    setShowCustomCategory(false);
+    setCustomCategoryInput("");
     setShowForm(true);
   };
 
@@ -901,6 +950,30 @@ const Admin = () => {
     setFeatured(project.featured || false);
     setHasVideo(project.hasVideo || false);
     setStatus(project.status || "published");
+    setShowCustomCategory(false);
+    setCustomCategoryInput("");
+    setShowForm(true);
+  };
+
+  const handleCloneProject = (project: any) => {
+    setEditingProject(null); // Cloning creates a new project!
+    setTitle(`${project.title || ""} (Copy)`);
+    setBrand(project.brand || "");
+    setDescription(project.description || "");
+    setImage(project.image || "");
+    setImages(project.images || []);
+    setVideoUrl(project.videoUrl || "");
+    setCategory(project.category || "Fashion");
+    setTagsInput((project.tags || []).join(", "));
+    setTechInput((project.tech || []).join(", "));
+    setConversionMetric(project.metrics?.conversion || "0%");
+    setLoadTimeMetric(project.metrics?.loadTime || "0s");
+    setLiveUrl(project.liveUrl || "");
+    setFeatured(project.featured || false);
+    setHasVideo(project.hasVideo || false);
+    setStatus("draft"); // Default duplicated project to Draft for safety!
+    setShowCustomCategory(false);
+    setCustomCategoryInput("");
     setShowForm(true);
   };
 
@@ -1173,6 +1246,7 @@ const Admin = () => {
                           project={project}
                           onEdit={openEditForm}
                           onDelete={handleDeleteProject}
+                          onClone={handleCloneProject}
                         />
                       ))}
                     </div>
@@ -1310,11 +1384,42 @@ const Admin = () => {
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2 flex items-center gap-1.5"><Tag className="w-3.5 h-3.5 text-beige" /> Category</label>
-                    <select value={category} onChange={(e) => setCategory(e.target.value)} className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors">
-                      {["Fashion","Beauty","Home & Garden","Food & Beverage","Jewelry","Sports & Outdoors","Health & Wellness"].map((c) => (
-                        <option key={c} className="bg-black">{c}</option>
-                      ))}
-                    </select>
+                    {!showCustomCategory ? (
+                      <select 
+                        value={category} 
+                        onChange={(e) => handleCategoryChange(e.target.value)} 
+                        className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
+                      >
+                        {allCategories.map((c) => (
+                          <option key={c} value={c} className="bg-black">{c}</option>
+                        ))}
+                        <option value="CUSTOM_NEW" className="bg-black text-beige font-semibold">+ Create Custom Category...</option>
+                      </select>
+                    ) : (
+                      <div className="flex gap-2">
+                        <input
+                          type="text"
+                          required
+                          value={customCategoryInput}
+                          onChange={(e) => {
+                            setCustomCategoryInput(e.target.value);
+                            setCategory(e.target.value);
+                          }}
+                          placeholder="Type custom category name..."
+                          className="flex-1 bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setShowCustomCategory(false);
+                            setCategory(allCategories[0] || "Fashion");
+                          }}
+                          className="px-3 bg-white/10 hover:bg-white/20 border border-white/15 text-gray-300 hover:text-white rounded-lg text-xs font-semibold transition-colors"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -1405,15 +1510,25 @@ const Admin = () => {
                 </div>
 
                 {/* Toggles */}
-                <div className="flex flex-wrap gap-6 pt-1">
-                  <label className="flex items-center gap-2 text-sm text-gray-300 cursor-pointer select-none">
-                    <input type="checkbox" checked={featured} onChange={(e) => setFeatured(e.target.checked)} className="w-4 h-4 accent-beige cursor-pointer" />
-                    Featured Case Study
-                  </label>
-                  <label className="flex items-center gap-2 text-sm text-gray-300 cursor-pointer select-none">
-                    <input type="checkbox" checked={hasVideo} onChange={(e) => setHasVideo(e.target.checked)} className="w-4 h-4 accent-beige cursor-pointer" />
-                    Has Video Preview
-                  </label>
+                {/* Toggles + Status */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+                  <div className="flex flex-wrap gap-6">
+                    <label className="flex items-center gap-2 text-sm text-gray-300 cursor-pointer select-none">
+                      <input type="checkbox" checked={featured} onChange={(e) => setFeatured(e.target.checked)} className="w-4 h-4 accent-beige cursor-pointer" />
+                      Featured Case Study
+                    </label>
+                    <label className="flex items-center gap-2 text-sm text-gray-300 cursor-pointer select-none">
+                      <input type="checkbox" checked={hasVideo} onChange={(e) => setHasVideo(e.target.checked)} className="w-4 h-4 accent-beige cursor-pointer" />
+                      Has Video Preview
+                    </label>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2 flex items-center gap-1.5"><Globe className="w-3.5 h-3.5 text-beige" /> Project Status</label>
+                    <select value={status} onChange={(e) => setStatus(e.target.value)} className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors">
+                      <option value="published" className="bg-black text-green-400 font-semibold">Published (Visible on Live Grid)</option>
+                      <option value="draft" className="bg-black text-orange-400 font-semibold">Draft (Hidden from Live Grid)</option>
+                    </select>
+                  </div>
                 </div>
 
                 {/* Actions */}
