@@ -26,9 +26,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     if (req.method === "GET") {
       if (projectId) {
+        // Admin can fetch any project by ID regardless of status
         const project = await sql`
           SELECT * FROM portfolio_projects 
-          WHERE id = ${projectId} AND status = 'published'
+          WHERE id = ${projectId}
         `;
         if (project.length) {
           return res.status(200).json(project[0]);
@@ -94,25 +95,29 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         status
       } = req.body;
 
+      // Use explicit SET for all fields — booleans break with COALESCE (false is treated as NULL)
       const [updatedProject] = await sql`
         UPDATE portfolio_projects SET
-          title = COALESCE(${title}, title),
-          brand = COALESCE(${brand}, brand),
-          description = COALESCE(${description}, description),
-          image = COALESCE(${image}, image),
-          video_url = COALESCE(${video_url}, video_url),
-          category = COALESCE(${category}, category),
-          tags = COALESCE(${tags}, tags),
-          tech = COALESCE(${tech}, tech),
-          metrics = COALESCE(${metrics ? JSON.stringify(metrics) : null}, metrics),
-          live_url = COALESCE(${live_url}, live_url),
-          featured = COALESCE(${featured}, featured),
-          has_video = COALESCE(${has_video}, has_video),
-          status = COALESCE(${status}, status),
+          title = ${title ?? sql`title`},
+          brand = ${brand ?? sql`brand`},
+          description = ${description ?? sql`description`},
+          image = ${image ?? sql`image`},
+          video_url = ${video_url !== undefined ? video_url : sql`video_url`},
+          category = ${category ?? sql`category`},
+          tags = ${tags ?? sql`tags`},
+          tech = ${tech ?? sql`tech`},
+          metrics = ${metrics ? JSON.stringify(metrics) : sql`metrics`},
+          live_url = ${live_url ?? sql`live_url`},
+          featured = ${featured !== undefined ? featured : sql`featured`},
+          has_video = ${has_video !== undefined ? has_video : sql`has_video`},
+          status = ${status ?? sql`status`},
           updated_at = NOW()
         WHERE id = ${projectId}
         RETURNING *
       `;
+      if (!updatedProject) {
+        return res.status(404).json({ error: "Project not found" });
+      }
       return res.status(200).json(updatedProject);
     }
 

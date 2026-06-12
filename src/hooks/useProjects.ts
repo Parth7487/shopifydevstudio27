@@ -1,5 +1,23 @@
 import { useState, useEffect, useCallback } from "react";
-import { supabase, PortfolioProject, TABLES } from "../lib/supabase";
+
+export interface PortfolioProject {
+  id: string;
+  title: string;
+  brand: string;
+  description: string;
+  image: string;
+  videoUrl?: string;
+  category: string;
+  tags: string[];
+  tech: string[];
+  metrics: { conversion: string; loadTime: string };
+  liveUrl: string;
+  featured: boolean;
+  hasVideo: boolean;
+  status: string;
+  created_at?: string;
+  updated_at?: string;
+}
 
 export interface UseProjectsReturn {
   projects: PortfolioProject[];
@@ -83,7 +101,8 @@ export const useProjects = (): UseProjectsReturn => {
   }, []);
 
   const refetch = useCallback(async () => {
-    await fetchProjects();
+    // Always bypass cache so UI reflects the latest saved data
+    await fetchProjects(true);
   }, [fetchProjects]);
 
   useEffect(() => {
@@ -98,10 +117,7 @@ export const useProjects = (): UseProjectsReturn => {
     }
   }, [fetchProjects]);
 
-  // Real-time subscription removed (serverless DB mode)
-  useEffect(() => {
-    // No-op
-  }, [fetchProjects]);
+
 
   return {
     projects,
