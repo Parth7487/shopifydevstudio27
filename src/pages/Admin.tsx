@@ -597,15 +597,11 @@ const Admin = () => {
       </section>
 
       {/* EDIT/ADD PROJECT POPUP MODAL */}
-      <AnimatePresence>
-        {showForm && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-black/95 border border-white/15 rounded-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl relative"
-            >
+      {showForm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
+          <div
+            className="bg-black/95 border border-white/15 rounded-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl relative transition-all duration-200"
+          >
               <div className="sticky top-0 bg-black border-b border-white/10 p-6 flex justify-between items-center z-10">
                 <h3 className="text-xl font-bold">
                   {editingProject ? "Edit Project Details" : "Create New Project"}
@@ -797,10 +793,9 @@ const Admin = () => {
                   </button>
                 </div>
               </form>
-            </motion.div>
           </div>
-        )}
-      </AnimatePresence>
+        </div>
+      )}
 
       <Footer />
     </div>
