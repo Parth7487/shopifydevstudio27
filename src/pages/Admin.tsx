@@ -598,17 +598,24 @@ const Admin = () => {
 
       {/* EDIT/ADD PROJECT POPUP MODAL */}
       {showForm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
-          <div
-            className="bg-black/95 border border-white/15 rounded-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl relative transition-all duration-200"
-          >
-              <div className="sticky top-0 bg-black border-b border-white/10 p-6 flex justify-between items-center z-10">
+        <div
+          className="fixed inset-0 z-[100] bg-black/80"
+          onClick={(e) => { if (e.target === e.currentTarget) setShowForm(false); }}
+        >
+          <div className="flex items-start justify-center min-h-full p-4 pt-16 overflow-y-auto">
+            <div
+              className="bg-[#0a0a0a] border border-white/15 rounded-xl w-full max-w-2xl shadow-2xl relative mb-8"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Header */}
+              <div className="sticky top-0 bg-[#0a0a0a] border-b border-white/10 p-6 flex justify-between items-center z-10 rounded-t-xl">
                 <h3 className="text-xl font-bold">
                   {editingProject ? "Edit Project Details" : "Create New Project"}
                 </h3>
                 <button
+                  type="button"
                   onClick={() => setShowForm(false)}
-                  className="text-gray-400 hover:text-white text-lg font-bold"
+                  className="w-8 h-8 flex items-center justify-center rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-colors text-lg font-bold"
                 >
                   ✕
                 </button>
@@ -624,7 +631,7 @@ const Admin = () => {
                       value={title}
                       onChange={e => setTitle(e.target.value)}
                       placeholder="Kotn - Sustainable Fashion"
-                      className="w-full bg-black/60 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/50 text-sm"
+                      className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 focus:bg-white/8 text-sm transition-colors"
                     />
                   </div>
                   <div>
@@ -635,7 +642,7 @@ const Admin = () => {
                       value={brand}
                       onChange={e => setBrand(e.target.value)}
                       placeholder="Kotn"
-                      className="w-full bg-black/60 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/50 text-sm"
+                      className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 focus:bg-white/8 text-sm transition-colors"
                     />
                   </div>
                 </div>
@@ -648,7 +655,7 @@ const Admin = () => {
                     value={description}
                     onChange={e => setDescription(e.target.value)}
                     placeholder="Enter detailed description of the project case study..."
-                    className="w-full bg-black/60 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/50 text-sm resize-none"
+                    className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm resize-none transition-colors"
                   />
                 </div>
 
@@ -661,7 +668,7 @@ const Admin = () => {
                       value={liveUrl}
                       onChange={e => setLiveUrl(e.target.value)}
                       placeholder="https://brandname.com/"
-                      className="w-full bg-black/60 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/50 text-sm"
+                      className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
                     />
                   </div>
                   <div>
@@ -669,29 +676,29 @@ const Admin = () => {
                     <select
                       value={category}
                       onChange={e => setCategory(e.target.value)}
-                      className="w-full bg-black/60 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/50 text-sm"
+                      className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
                     >
-                      <option>Fashion</option>
-                      <option>Beauty</option>
-                      <option>Home & Garden</option>
-                      <option>Food & Beverage</option>
-                      <option>Jewelry</option>
-                      <option>Sports & Outdoors</option>
-                      <option>Health & Wellness</option>
+                      <option className="bg-black">Fashion</option>
+                      <option className="bg-black">Beauty</option>
+                      <option className="bg-black">Home & Garden</option>
+                      <option className="bg-black">Food & Beverage</option>
+                      <option className="bg-black">Jewelry</option>
+                      <option className="bg-black">Sports & Outdoors</option>
+                      <option className="bg-black">Health & Wellness</option>
                     </select>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Image URL (Cloudinary or unsplash)</label>
+                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Image URL (Cloudinary or Unsplash)</label>
                     <input
                       type="text"
                       required
                       value={image}
                       onChange={e => setImage(e.target.value)}
                       placeholder="https://res.cloudinary.com/..."
-                      className="w-full bg-black/60 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/50 text-sm"
+                      className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
                     />
                   </div>
                   <div>
@@ -701,78 +708,78 @@ const Admin = () => {
                       value={videoUrl}
                       onChange={e => setVideoUrl(e.target.value)}
                       placeholder="https://player.vimeo.com/video/..."
-                      className="w-full bg-black/60 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/50 text-sm"
+                      className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2 flex items-center gap-1.5"><Cpu className="w-3.5 h-3.5 text-beige" /> Tags (Comma separated)</label>
+                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2 flex items-center gap-1.5"><Cpu className="w-3.5 h-3.5 text-beige" /> Tags (comma separated)</label>
                     <input
                       type="text"
                       value={tagsInput}
                       onChange={e => setTagsInput(e.target.value)}
                       placeholder="Sustainable, Story-driven, Minimal"
-                      className="w-full bg-black/60 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/50 text-sm"
+                      className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2 flex items-center gap-1.5"><Cpu className="w-3.5 h-3.5 text-beige" /> Tech Stack (Comma separated)</label>
+                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2 flex items-center gap-1.5"><Cpu className="w-3.5 h-3.5 text-beige" /> Tech Stack (comma separated)</label>
                     <input
                       type="text"
                       value={techInput}
                       onChange={e => setTechInput(e.target.value)}
                       placeholder="Shopify Plus, Custom App, React"
-                      className="w-full bg-black/60 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/50 text-sm"
+                      className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2 flex items-center gap-1.5"><BarChart className="w-3.5 h-3.5 text-beige" /> Conversion metric</label>
+                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2 flex items-center gap-1.5"><BarChart className="w-3.5 h-3.5 text-beige" /> Conversion Metric</label>
                     <input
                       type="text"
                       required
                       value={conversionMetric}
                       onChange={e => setConversionMetric(e.target.value)}
                       placeholder="400%"
-                      className="w-full bg-black/60 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/50 text-sm"
+                      className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2 flex items-center gap-1.5"><BarChart className="w-3.5 h-3.5 text-beige" /> Speed / Load Time metric</label>
+                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2 flex items-center gap-1.5"><BarChart className="w-3.5 h-3.5 text-beige" /> Speed / Load Time Metric</label>
                     <input
                       type="text"
                       required
                       value={loadTimeMetric}
                       onChange={e => setLoadTimeMetric(e.target.value)}
                       placeholder="0.6s"
-                      className="w-full bg-black/60 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/50 text-sm"
+                      className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
                     />
                   </div>
                 </div>
 
                 <div className="flex flex-wrap gap-6 pt-2">
-                  <label className="flex items-center gap-2 text-sm text-gray-300 cursor-pointer">
+                  <label className="flex items-center gap-2 text-sm text-gray-300 cursor-pointer select-none">
                     <input
                       type="checkbox"
                       checked={featured}
                       onChange={e => setFeatured(e.target.checked)}
-                      className="accent-beige rounded border-white/20"
+                      className="w-4 h-4 accent-beige rounded border-white/20 cursor-pointer"
                     />
                     Featured Case Study
                   </label>
 
-                  <label className="flex items-center gap-2 text-sm text-gray-300 cursor-pointer">
+                  <label className="flex items-center gap-2 text-sm text-gray-300 cursor-pointer select-none">
                     <input
                       type="checkbox"
                       checked={hasVideo}
                       onChange={e => setHasVideo(e.target.checked)}
-                      className="accent-beige rounded border-white/20"
+                      className="w-4 h-4 accent-beige rounded border-white/20 cursor-pointer"
                     />
-                    Has Video preview
+                    Has Video Preview
                   </label>
                 </div>
 
@@ -780,7 +787,7 @@ const Admin = () => {
                   <button
                     type="button"
                     onClick={() => setShowForm(false)}
-                    className="px-6 py-2.5 bg-black/60 hover:bg-black/80 border border-white/15 text-sm text-gray-300 rounded-lg transition-all"
+                    className="px-6 py-2.5 bg-white/5 hover:bg-white/10 border border-white/15 text-sm text-gray-300 rounded-lg transition-all"
                   >
                     Cancel
                   </button>
@@ -793,6 +800,7 @@ const Admin = () => {
                   </button>
                 </div>
               </form>
+            </div>
           </div>
         </div>
       )}
