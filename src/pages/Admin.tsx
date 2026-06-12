@@ -43,6 +43,8 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 import ElegantNavigation from "../components/sections/ElegantNavigation";
 import Footer from "../components/sections/Footer";
+import { useSettings } from "../hooks/useSettings";
+import { useTestimonials } from "../hooks/useTestimonials";
 import GoogleDriveSync from "../components/GoogleDriveSync";
 import { useProjects } from "../hooks/useProjects";
 
@@ -801,6 +803,146 @@ const Admin = () => {
 
   const { projects: rawProjects, loading: projectsLoading, error: projectsError, refetch } = useProjects();
 
+  // ─── Settings and Testimonials Hooks ──────────────────────────────────────────
+  const { settings, updateSetting, loading: settingsLoading, refetch: refetchSettings } = useSettings();
+  const { testimonials, saveTestimonial, deleteTestimonial, updateTestimonialOrder, loading: testimonialsLoading, refetch: refetchTestimonials } = useTestimonials();
+
+  // Sub-tabs under settings
+  const [settingsSubTab, setSettingsSubTab] = useState<"general" | "navigation" | "testimonials" | "system">("general");
+
+  // Local settings form states
+  const [waNum, setWaNum] = useState("");
+  const [tgHandle, setTgHandle] = useState("");
+  const [copyrightText, setCopyrightText] = useState("");
+  const [logoTxt, setLogoTxt] = useState("");
+  const [supportMail, setSupportMail] = useState("");
+  const [localNav, setLocalNav] = useState<any[]>([]);
+
+  // Sync settings states
+  React.useEffect(() => {
+    if (settings) {
+      setWaNum(settings.socials.whatsapp || "");
+      setTgHandle(settings.socials.telegram || "");
+      setCopyrightText(settings.footer.copyright || "");
+      setLogoTxt(settings.footer.logo_text || "");
+      setSupportMail(settings.footer.email || "");
+      setLocalNav(settings.navigation || []);
+    }
+  }, [settings]);
+
+  // Testimonials modal states
+  const [showTestimonialForm, setShowTestimonialForm] = useState(false);
+  const [editingTestimonial, setEditingTestimonial] = useState<any | null>(null);
+  const [tAuthor, setTAuthor] = useState("");
+  const [tRole, setTRole] = useState("");
+  const [tCompany, setTCompany] = useState("");
+  const [tQuote, setTQuote] = useState("");
+  const [tAvatar, setTAvatar] = useState("");
+  const [tRating, setTRating] = useState(5);
+  const [tMetric, setTMetric] = useState("");
+  const [tIndustry, setTIndustry] = useState("");
+  const [tVerified, setTVerified] = useState(true);
+  const [tSortOrder, setTSortOrder] = useState(0);
+
+  const [isSavingSettings, setIsSavingSettings] = useState(false);
+
+  const handleSaveGeneralSettings = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSavingSettings(true);
+    const success1 = await updateSetting("socials", {
+      whatsapp: waNum,
+      telegram: tgHandle
+    });
+    const success2 = await updateSetting("footer", {
+      copyright: copyrightText,
+      logo_text: logoTxt,
+      email: supportMail
+    });
+    setIsSavingSettings(false);
+    if (success1 && success2) {
+      alert("General settings saved successfully!");
+    } else {
+      alert("Failed to save some settings.");
+    }
+  };
+
+  const handleSaveNavigation = async () => {
+    setIsSavingSettings(true);
+    const success = await updateSetting("navigation", localNav);
+    setIsSavingSettings(false);
+    if (success) {
+      alert("Navigation menu saved successfully!");
+    } else {
+      alert("Failed to save navigation menu.");
+    }
+  };
+
+  const handleAddTestimonial = () => {
+    setEditingTestimonial(null);
+    setTAuthor("");
+    setTRole("");
+    setTCompany("");
+    setTQuote("");
+    setTAvatar("");
+    setTRating(5);
+    setTMetric("");
+    setTIndustry("");
+    setTVerified(true);
+    setTSortOrder(testimonials.length);
+    setShowTestimonialForm(true);
+  };
+
+  const handleEditTestimonial = (t: any) => {
+    setEditingTestimonial(t);
+    setTAuthor(t.author || "");
+    setTRole(t.role || "");
+    setTCompany(t.company || "");
+    setTQuote(t.quote || "");
+    setTAvatar(t.avatar || "");
+    setTRating(t.rating || 5);
+    setTMetric(t.metric || "");
+    setTIndustry(t.industry || "");
+    setTVerified(t.verified !== false);
+    setTSortOrder(t.sort_order || 0);
+    setShowTestimonialForm(true);
+  };
+
+  const handleSaveTestimonialSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      await saveTestimonial({
+        id: editingTestimonial?.id,
+        author: tAuthor,
+        role: tRole,
+        company: tCompany,
+        quote: tQuote,
+        avatar: tAvatar,
+        rating: Number(tRating),
+        metric: tMetric,
+        industry: tIndustry,
+        verified: tVerified,
+        sort_order: Number(tSortOrder)
+      });
+      setShowTestimonialForm(false);
+      alert("Testimonial saved successfully!");
+    } catch (err) {
+      alert("Failed to save testimonial.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleDeleteTestimonialClick = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this testimonial?")) return;
+    const success = await deleteTestimonial(id);
+    if (success) {
+      alert("Testimonial deleted successfully!");
+    } else {
+      alert("Failed to delete testimonial.");
+    }
+  };
+
   // Local ordered list for drag-and-drop
   const [localProjects, setLocalProjects] = useState<any[]>([]);
   const [originalOrder, setOriginalOrder] = useState<any[]>([]);
@@ -1307,29 +1449,429 @@ const Admin = () => {
           {/* ── SETTINGS TAB ── */}
           {activeTab === "settings" && (
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="bg-black/90 rounded-xl border border-white/10 p-6">
-              <div className="flex items-center gap-3 mb-6">
-                <SettingsIcon className="w-6 h-6 text-blue-400" />
-                <h3 className="text-xl font-bold">Settings</h3>
-              </div>
-              <div className="space-y-4">
-                <div className="p-4 bg-black/40 rounded-lg">
-                  <h4 className="font-medium text-white mb-2">API Configuration</h4>
-                  <p className="text-gray-400 text-sm mb-3">Google Drive API keys are stored in your browser.</p>
-                  <button
-                    onClick={() => { localStorage.removeItem("googleDriveApiKey"); localStorage.removeItem("googleDriveFolderId"); alert("Stored credentials cleared"); }}
-                    className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm transition-colors"
-                  >
-                    Clear Stored Credentials
-                  </button>
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 border-b border-white/10 pb-4">
+                <div className="flex items-center gap-3">
+                  <SettingsIcon className="w-6 h-6 text-beige" />
+                  <h3 className="text-xl font-bold text-white">Site Settings</h3>
                 </div>
-                <div className="p-4 bg-black/40 rounded-lg">
-                  <h4 className="font-medium text-white mb-2">Environment</h4>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-400">Neon Database:</span>
-                    <span className={neonConnected ? "text-green-400" : "text-gray-400"}>{neonConnected ? "Enabled ✓" : "Disabled"}</span>
+                <div className="flex flex-wrap gap-2">
+                  {(["general", "navigation", "testimonials", "system"] as const).map((tab) => (
+                    <button
+                      key={tab}
+                      onClick={() => setSettingsSubTab(tab)}
+                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                        settingsSubTab === tab
+                          ? "bg-beige text-charcoal shadow-md"
+                          : "bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white"
+                      }`}
+                    >
+                      {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* General Settings Sub-tab */}
+              {settingsSubTab === "general" && (
+                <form onSubmit={handleSaveGeneralSettings} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Logo Text</label>
+                      <input
+                        type="text"
+                        value={logoTxt}
+                        onChange={(e) => setLogoTxt(e.target.value)}
+                        placeholder="Dev Studio"
+                        className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Support Email</label>
+                      <input
+                        type="email"
+                        value={supportMail}
+                        onChange={(e) => setSupportMail(e.target.value)}
+                        placeholder="shopifydevstudioo@gmail.com"
+                        className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">WhatsApp Contact Number</label>
+                      <input
+                        type="text"
+                        value={waNum}
+                        onChange={(e) => setWaNum(e.target.value)}
+                        placeholder="+917487080421"
+                        className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
+                      />
+                      <span className="text-xs text-gray-500 mt-1 block">Include country code without spaces or symbols (e.g. +917487080421)</span>
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Telegram Username</label>
+                      <input
+                        type="text"
+                        value={tgHandle}
+                        onChange={(e) => setTgHandle(e.target.value)}
+                        placeholder="prime2357"
+                        className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
+                      />
+                      <span className="text-xs text-gray-500 mt-1 block">Your Telegram username without @ symbol</span>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Copyright Text</label>
+                    <input
+                      type="text"
+                      value={copyrightText}
+                      onChange={(e) => setCopyrightText(e.target.value)}
+                      placeholder="© 2026 Shopifydevstudio. All rights reserved."
+                      className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
+                    />
+                  </div>
+                  <div className="flex justify-end pt-4 border-t border-white/10">
+                    <button
+                      type="submit"
+                      disabled={isSavingSettings}
+                      className="px-6 py-2.5 bg-beige text-charcoal font-bold rounded-lg text-sm hover:bg-beige/95 disabled:opacity-50 transition-all shadow-md flex items-center gap-2"
+                    >
+                      {isSavingSettings ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" /> Saving...
+                        </>
+                      ) : (
+                        "Save General Settings"
+                      )}
+                    </button>
+                  </div>
+                </form>
+              )}
+
+              {/* Navigation Settings Sub-tab */}
+              {settingsSubTab === "navigation" && (
+                <div className="space-y-6">
+                  <div className="flex items-center justify-between mb-2">
+                    <div>
+                      <h4 className="font-semibold text-white">Header Navigation Menu</h4>
+                      <p className="text-gray-400 text-sm">Configure the links in the header navigation menu.</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const newId = `custom-${Date.now()}`;
+                        setLocalNav([...localNav, { id: newId, label: "New Link" }]);
+                      }}
+                      className="px-3 py-1.5 bg-white/5 border border-white/10 hover:bg-beige/10 hover:border-beige/30 text-beige hover:text-white rounded-lg text-xs font-medium transition-all flex items-center gap-1.5"
+                    >
+                      <Plus className="w-3.5 h-3.5" /> Add Menu Item
+                    </button>
+                  </div>
+
+                  <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2">
+                    {localNav.map((item, index) => (
+                      <div
+                        key={item.id || index}
+                        className="flex items-center gap-4 bg-white/5 border border-white/10 rounded-xl p-4 transition-all hover:border-white/20"
+                      >
+                        <span className="text-xs text-gray-500 font-mono w-6 text-center">{index + 1}</span>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1">
+                          <div>
+                            <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Link Label</label>
+                            <input
+                              type="text"
+                              value={item.label}
+                              onChange={(e) => {
+                                const updated = [...localNav];
+                                updated[index] = { ...updated[index], label: e.target.value };
+                                setLocalNav(updated);
+                              }}
+                              placeholder="e.g. Services"
+                              className="w-full bg-black/40 border border-white/10 rounded-lg px-3 py-1.5 text-white focus:outline-none focus:border-beige/40 text-sm transition-colors"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Target Element ID / URL</label>
+                            <input
+                              type="text"
+                              value={item.id}
+                              onChange={(e) => {
+                                const updated = [...localNav];
+                                updated[index] = { ...updated[index], id: e.target.value };
+                                setLocalNav(updated);
+                              }}
+                              placeholder="e.g. services"
+                              className="w-full bg-black/40 border border-white/10 rounded-lg px-3 py-1.5 text-white focus:outline-none focus:border-beige/40 text-sm transition-colors"
+                            />
+                          </div>
+                        </div>
+
+                        {/* Reorder and Delete Actions */}
+                        <div className="flex items-center gap-1">
+                          <button
+                            type="button"
+                            disabled={index === 0}
+                            onClick={() => {
+                              if (index === 0) return;
+                              const updated = [...localNav];
+                              const temp = updated[index];
+                              updated[index] = updated[index - 1];
+                              updated[index - 1] = temp;
+                              setLocalNav(updated);
+                            }}
+                            className="p-1.5 bg-black/40 hover:bg-white/10 text-gray-400 hover:text-white rounded disabled:opacity-30 transition-colors"
+                            title="Move Up"
+                          >
+                            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
+                            </svg>
+                          </button>
+                          <button
+                            type="button"
+                            disabled={index === localNav.length - 1}
+                            onClick={() => {
+                              if (index === localNav.length - 1) return;
+                              const updated = [...localNav];
+                              const temp = updated[index];
+                              updated[index] = updated[index + 1];
+                              updated[index + 1] = temp;
+                              setLocalNav(updated);
+                            }}
+                            className="p-1.5 bg-black/40 hover:bg-white/10 text-gray-400 hover:text-white rounded disabled:opacity-30 transition-colors"
+                            title="Move Down"
+                          >
+                            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                            </svg>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              if (confirm("Remove this navigation item?")) {
+                                setLocalNav(localNav.filter((_, i) => i !== index));
+                              }
+                            }}
+                            className="p-1.5 bg-red-950/20 border border-red-500/20 hover:bg-red-500/20 text-red-400 hover:text-red-300 rounded transition-colors"
+                            title="Delete"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                    {localNav.length === 0 && (
+                      <div className="text-center py-8 text-gray-500 border border-dashed border-white/10 rounded-xl">
+                        No navigation items. Click "Add Menu Item" to start.
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="flex justify-end pt-4 border-t border-white/10">
+                    <button
+                      type="button"
+                      onClick={handleSaveNavigation}
+                      disabled={isSavingSettings}
+                      className="px-6 py-2.5 bg-beige text-charcoal font-bold rounded-lg text-sm hover:bg-beige/95 disabled:opacity-50 transition-all shadow-md flex items-center gap-2"
+                    >
+                      {isSavingSettings ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" /> Saving...
+                        </>
+                      ) : (
+                        "Save Navigation Menu"
+                      )}
+                    </button>
                   </div>
                 </div>
-              </div>
+              )}
+
+              {/* Testimonials Settings Sub-tab */}
+              {settingsSubTab === "testimonials" && (
+                <div className="space-y-6">
+                  <div className="flex items-center justify-between mb-2">
+                    <div>
+                      <h4 className="font-semibold text-white">Client Testimonials</h4>
+                      <p className="text-gray-400 text-sm">Manage the customer feedback cards shown in the collaboration section.</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={handleAddTestimonial}
+                      className="px-4 py-2 bg-beige text-charcoal font-bold rounded-lg text-sm hover:bg-beige/95 transition-all flex items-center gap-1.5 shadow-md"
+                    >
+                      <Plus className="w-4 h-4" /> Add Testimonial
+                    </button>
+                  </div>
+
+                  {/* Testimonial List Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[500px] overflow-y-auto pr-2">
+                    {testimonials.map((t, index) => (
+                      <div
+                        key={t.id || index}
+                        className="bg-white/5 border border-white/10 rounded-xl p-4 flex flex-col justify-between hover:border-white/20 transition-all group relative"
+                      >
+                        <div>
+                          <div className="flex items-start justify-between gap-2 mb-2">
+                            <div className="flex items-center gap-3">
+                              {t.avatar ? (
+                                <img src={t.avatar} alt={t.author} className="w-10 h-10 rounded-full object-cover border border-beige/40 bg-gray-900" />
+                              ) : (
+                                <div className="w-10 h-10 rounded-full bg-beige/10 border border-beige/30 flex items-center justify-center font-bold text-beige text-sm">
+                                  {t.author ? t.author.charAt(0) : "T"}
+                                </div>
+                              )}
+                              <div>
+                                <h5 className="font-medium text-white text-sm flex items-center gap-1.5">
+                                  {t.author}
+                                  {t.verified && (
+                                    <span className="text-[10px] bg-green-500/10 text-green-400 border border-green-500/20 px-1.5 py-0.5 rounded-full">
+                                      Verified
+                                    </span>
+                                  )}
+                                </h5>
+                                <p className="text-xs text-gray-400">{t.role} {t.company ? `@ ${t.company}` : ""}</p>
+                              </div>
+                            </div>
+                            <span className="text-xs font-semibold text-beige bg-beige/10 px-2 py-0.5 rounded border border-beige/20 font-mono">
+                              {t.rating} ★
+                            </span>
+                          </div>
+                          <p className="text-xs text-gray-300 italic line-clamp-3 mb-4">"{t.quote}"</p>
+                        </div>
+
+                        <div className="flex items-center justify-between border-t border-white/5 pt-3 mt-auto">
+                          <div className="flex flex-col gap-0.5">
+                            {t.metric && (
+                              <span className="text-[10px] text-gray-400">
+                                Metric: <span className="text-white font-medium">{t.metric}</span>
+                              </span>
+                            )}
+                            {t.industry && (
+                              <span className="text-[10px] text-gray-400">
+                                Industry: <span className="text-white font-medium">{t.industry}</span>
+                              </span>
+                            )}
+                          </div>
+                          
+                          <div className="flex items-center gap-2">
+                            {/* Reorder Buttons */}
+                            <button
+                              type="button"
+                              disabled={index === 0}
+                              onClick={async () => {
+                                if (index === 0) return;
+                                const orderedIds = testimonials.map(item => item.id);
+                                const temp = orderedIds[index];
+                                orderedIds[index] = orderedIds[index - 1];
+                                orderedIds[index - 1] = temp;
+                                await updateTestimonialOrder(orderedIds);
+                              }}
+                              className="p-1 bg-black/40 hover:bg-white/10 text-gray-400 hover:text-white rounded disabled:opacity-30 transition-colors"
+                              title="Move Left/Up"
+                            >
+                              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                              </svg>
+                            </button>
+                            <button
+                              type="button"
+                              disabled={index === testimonials.length - 1}
+                              onClick={async () => {
+                                if (index === testimonials.length - 1) return;
+                                const orderedIds = testimonials.map(item => item.id);
+                                const temp = orderedIds[index];
+                                orderedIds[index] = orderedIds[index + 1];
+                                orderedIds[index + 1] = temp;
+                                await updateTestimonialOrder(orderedIds);
+                              }}
+                              className="p-1 bg-black/40 hover:bg-white/10 text-gray-400 hover:text-white rounded disabled:opacity-30 transition-colors"
+                              title="Move Right/Down"
+                            >
+                              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                              </svg>
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => handleEditTestimonial(t)}
+                              className="p-1.5 bg-white/5 border border-white/10 hover:bg-beige/20 hover:border-beige/40 text-beige hover:text-white rounded-lg transition-colors"
+                              title="Edit Testimonial"
+                            >
+                              <Edit2 className="w-3.5 h-3.5" />
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteTestimonialClick(t.id)}
+                              className="p-1.5 bg-red-950/20 border border-red-500/20 hover:bg-red-500/20 text-red-400 hover:text-red-300 rounded-lg transition-colors"
+                              title="Delete Testimonial"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                    {testimonials.length === 0 && (
+                      <div className="col-span-full text-center py-12 text-gray-500 border border-dashed border-white/10 rounded-xl">
+                        No testimonials found. Click "Add Testimonial" to create one.
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* System Settings Sub-tab */}
+              {settingsSubTab === "system" && (
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="font-semibold text-white mb-2">Google Drive API Configuration</h4>
+                    <p className="text-gray-400 text-sm mb-4">
+                      The credentials for Google Drive image upload are stored securely in your browser's local storage.
+                    </p>
+                    <div className="p-4 bg-black/40 border border-white/10 rounded-lg">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <span className="text-sm font-medium text-white block">Status</span>
+                          <span className="text-xs text-gray-500">
+                            {localStorage.getItem("googleDriveApiKey") ? "API Key stored" : "No API Key stored"}
+                          </span>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if (confirm("Are you sure you want to clear your stored credentials?")) {
+                              localStorage.removeItem("googleDriveApiKey");
+                              localStorage.removeItem("googleDriveFolderId");
+                              alert("Stored credentials cleared");
+                              window.location.reload();
+                            }
+                          }}
+                          className="px-4 py-2 bg-red-600/20 hover:bg-red-600 border border-red-500/30 hover:border-red-600 text-red-200 hover:text-white rounded-lg text-sm transition-colors"
+                        >
+                          Clear Stored Credentials
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold text-white mb-2">Database Environment Details</h4>
+                    <div className="p-4 bg-black/40 border border-white/10 rounded-lg space-y-3">
+                      <div className="flex justify-between items-center text-sm">
+                        <span className="text-gray-400">PostgreSQL Provider:</span>
+                        <span className="text-white font-medium font-mono">Neon Serverless</span>
+                      </div>
+                      <div className="flex justify-between items-center text-sm">
+                        <span className="text-gray-400">Neon Status:</span>
+                        <div className="flex items-center gap-2">
+                          <div className={`w-2 h-2 rounded-full ${neonConnected ? "bg-green-400" : "bg-red-500"}`} />
+                          <span className={neonConnected ? "text-green-400" : "text-red-400"}>
+                            {neonConnected ? "Connected" : "Disconnected"}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </motion.div>
           )}
         </div>
@@ -1536,6 +2078,184 @@ const Admin = () => {
                   <button type="button" onClick={() => setShowForm(false)} className="px-6 py-2.5 bg-white/5 hover:bg-white/10 border border-white/15 text-sm text-gray-300 rounded-lg transition-all">Cancel</button>
                   <button type="submit" disabled={isSubmitting} className="px-6 py-2.5 bg-beige text-charcoal font-bold rounded-lg text-sm hover:bg-beige/95 disabled:opacity-50 transition-all shadow-md">
                     {isSubmitting ? "Saving…" : "Save Project"}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── TESTIMONIAL EDIT / ADD MODAL ── */}
+      {showTestimonialForm && (
+        <div
+          className="fixed inset-0 z-[100] bg-black/80"
+          onClick={(e) => { if (e.target === e.currentTarget) setShowTestimonialForm(false); }}
+        >
+          <div className="flex items-start justify-center min-h-full p-4 pt-16 overflow-y-auto">
+            <div
+              className="bg-[#0a0a0a] border border-white/15 rounded-xl w-full max-w-2xl shadow-2xl relative mb-8"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Header */}
+              <div className="sticky top-0 bg-[#0a0a0a] border-b border-white/10 p-6 flex justify-between items-center rounded-t-xl z-10">
+                <h3 className="text-xl font-bold">
+                  {editingTestimonial ? "Edit Testimonial" : "Add New Testimonial"}
+                </h3>
+                <button type="button" onClick={() => setShowTestimonialForm(false)} className="w-8 h-8 flex items-center justify-center rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-colors">
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              <form onSubmit={handleSaveTestimonialSubmit} className="p-6 space-y-5">
+                {/* Author Name + Role */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Author Name</label>
+                    <input
+                      type="text"
+                      required
+                      value={tAuthor}
+                      onChange={(e) => setTAuthor(e.target.value)}
+                      placeholder="e.g. Sarah Chen"
+                      className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Role / Position</label>
+                    <input
+                      type="text"
+                      required
+                      value={tRole}
+                      onChange={(e) => setTRole(e.target.value)}
+                      placeholder="e.g. UX/UI Design Lead"
+                      className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
+                    />
+                  </div>
+                </div>
+
+                {/* Company + Avatar URL */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Company / Organization</label>
+                    <input
+                      type="text"
+                      value={tCompany}
+                      onChange={(e) => setTCompany(e.target.value)}
+                      placeholder="e.g. Figma Community"
+                      className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Avatar Image URL (Optional)</label>
+                    <input
+                      type="url"
+                      value={tAvatar}
+                      onChange={(e) => setTAvatar(e.target.value)}
+                      placeholder="e.g. https://domain.com/avatar.jpg"
+                      className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
+                    />
+                  </div>
+                </div>
+
+                {/* Quote */}
+                <div>
+                  <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Testimonial Quote</label>
+                  <textarea
+                    required
+                    rows={4}
+                    value={tQuote}
+                    onChange={(e) => setTQuote(e.target.value)}
+                    placeholder="Enter the client's testimonial quote..."
+                    className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm resize-none transition-colors"
+                  />
+                </div>
+
+                {/* Metric + Industry */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Key Metric / Result (Optional)</label>
+                    <input
+                      type="text"
+                      value={tMetric}
+                      onChange={(e) => setTMetric(e.target.value)}
+                      placeholder="e.g. 50K+ Design Downloads"
+                      className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Industry / Category (Optional)</label>
+                    <input
+                      type="text"
+                      value={tIndustry}
+                      onChange={(e) => setTIndustry(e.target.value)}
+                      placeholder="e.g. Design"
+                      className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
+                    />
+                  </div>
+                </div>
+
+                {/* Rating + Sort Order + Verified Checkbox */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Rating (Stars)</label>
+                    <select
+                      value={tRating}
+                      onChange={(e) => setTRating(Number(e.target.value))}
+                      className="w-full bg-[#0a0a0a] border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors font-sans"
+                    >
+                      <option value={5}>5 Stars</option>
+                      <option value={4}>4 Stars</option>
+                      <option value={3}>3 Stars</option>
+                      <option value={2}>2 Stars</option>
+                      <option value={1}>1 Star</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Sort Order</label>
+                    <input
+                      type="number"
+                      required
+                      value={tSortOrder}
+                      onChange={(e) => setTSortOrder(Number(e.target.value))}
+                      placeholder="e.g. 0"
+                      className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
+                    />
+                  </div>
+                  <div className="flex items-center pt-6">
+                    <label className="flex items-center gap-3 cursor-pointer select-none">
+                      <input
+                        type="checkbox"
+                        checked={tVerified}
+                        onChange={(e) => setTVerified(e.target.checked)}
+                        className="w-4 h-4 rounded border-white/15 bg-white/5 text-beige focus:ring-beige/30"
+                      />
+                      <span className="text-sm font-semibold text-gray-300">Verified Client</span>
+                    </label>
+                  </div>
+                </div>
+
+                {/* Actions */}
+                <div className="border-t border-white/10 pt-5 flex justify-end gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setShowTestimonialForm(false)}
+                    className="px-6 py-2.5 bg-white/5 hover:bg-white/10 border border-white/15 text-sm text-gray-300 rounded-lg transition-all"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="px-6 py-2.5 bg-beige text-charcoal font-bold rounded-lg text-sm hover:bg-beige/95 disabled:opacity-50 transition-all shadow-md flex items-center gap-2"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" /> Saving...
+                      </>
+                    ) : (
+                      "Save Testimonial"
+                    )}
                   </button>
                 </div>
               </form>

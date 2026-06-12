@@ -2,8 +2,10 @@ import { useState, useEffect, useCallback, memo } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-import CalendlyModal from "./CalendlyModal";
+import BookingModal from "./CalendlyModal";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { useSettings } from "../../hooks/useSettings";
+
 
 const ElegantNavigation = memo(() => {
   const navigate = useNavigate();
@@ -11,6 +13,7 @@ const ElegantNavigation = memo(() => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [calendlyOpen, setCalendlyOpen] = useState(false);
+  const { settings } = useSettings();
 
   // Throttled scroll handler for better performance
   useEffect(() => {
@@ -87,14 +90,7 @@ const ElegantNavigation = memo(() => {
     setIsMobileMenuOpen(false);
   }, [location.pathname]);
 
-  const navItems = [
-    { id: "hero", label: "Home" },
-    { id: "services", label: "Services" },
-    { id: "process", label: "Process" },
-    { id: "work", label: "Work" },
-    { id: "partners", label: "Partners" },
-    { id: "about", label: "About" },
-  ];
+  const navItems = settings.navigation;
 
   const isActiveItem = (itemLabel: string) => {
     if (location.pathname === "/" && itemLabel === "Home") return true;
@@ -108,6 +104,9 @@ const ElegantNavigation = memo(() => {
       return true;
     return false;
   };
+
+  const logoText = settings.footer.logo_text || "Dev Studio";
+  const logoInitial = logoText.trim().charAt(0);
 
   return (
     <>
@@ -127,7 +126,7 @@ const ElegantNavigation = memo(() => {
             >
               <div className="w-8 h-8 sm:w-10 sm:h-10 border border-beige/60 rounded relative flex items-center justify-center">
                 <span className="text-beige font-medium text-xs sm:text-sm">
-                  S
+                  {logoInitial}
                 </span>
                 <svg
                   className="absolute -top-2 left-1/2 -translate-x-1/2 text-beige w-6 h-4 sm:w-7 sm:h-4 pointer-events-none"
@@ -156,7 +155,7 @@ const ElegantNavigation = memo(() => {
                 </svg>
               </div>
               <span className="text-gray-100 font-medium text-base sm:text-lg tracking-wide">
-                Dev Studio
+                {logoText}
               </span>
             </div>
 
@@ -186,7 +185,7 @@ const ElegantNavigation = memo(() => {
             <div className="hidden sm:flex items-center gap-3">
               <LanguageSwitcher variant="dropdown" />
               <a
-                href="https://wa.me/917487080421?text=Hello%20Shopify%20Dev%20Studio%20%E2%80%93%20I%20would%20like%20to%20connect"
+                href={`https://wa.me/${(settings.socials.whatsapp || "").replace(/\D/g, "")}?text=Hello%20Shopify%20Dev%20Studio%20%E2%80%93%20I%20would%20like%20to%20connect`}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="WhatsApp chat"
@@ -203,7 +202,7 @@ const ElegantNavigation = memo(() => {
                 </svg>
               </a>
               <a
-                href="https://t.me/prime2357"
+                href={`https://t.me/${settings.socials.telegram}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Telegram chat"
@@ -256,7 +255,7 @@ const ElegantNavigation = memo(() => {
             <div className="flex items-center justify-between p-5 border-b border-beige/20">
               <div className="flex items-center space-x-3">
                 <div className="w-8 h-8 border border-beige/60 rounded relative flex items-center justify-center">
-                  <span className="text-beige font-medium text-xs">S</span>
+                  <span className="text-beige font-medium text-xs">{logoInitial}</span>
                   <svg
                     className="absolute -top-2 left-1/2 -translate-x-1/2 text-beige w-6 h-4 pointer-events-none"
                     viewBox="0 0 24 14"
@@ -284,7 +283,7 @@ const ElegantNavigation = memo(() => {
                   </svg>
                 </div>
                 <span className="text-gray-100 font-medium text-base tracking-wide">
-                  Dev Studio
+                  {logoText}
                 </span>
               </div>
               <button
@@ -323,7 +322,7 @@ const ElegantNavigation = memo(() => {
               {/* Mobile CTA */}
               <div className="flex items-center justify-center gap-4">
                 <a
-                  href="https://wa.me/917487080421?text=Hello%20Shopify%20Dev%20Studio%20%E2%80%93%20I%20would%20like%20to%20connect"
+                  href={`https://wa.me/${(settings.socials.whatsapp || "").replace(/\D/g, "")}?text=Hello%20Shopify%20Dev%20Studio%20%E2%80%93%20I%20would%20like%20to%20connect`}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="WhatsApp chat"
@@ -340,7 +339,7 @@ const ElegantNavigation = memo(() => {
                   </svg>
                 </a>
                 <a
-                  href="https://t.me/prime2357"
+                  href={`https://t.me/${settings.socials.telegram}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Telegram chat"
@@ -373,7 +372,7 @@ const ElegantNavigation = memo(() => {
           </div>
         </div>
       )}
-      <CalendlyModal
+      <BookingModal
         open={calendlyOpen}
         onClose={() => setCalendlyOpen(false)}
       />

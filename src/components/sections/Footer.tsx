@@ -1,11 +1,15 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useSettings } from "../../hooks/useSettings";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const navigate = useNavigate();
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
+  const { settings } = useSettings();
+  const logoText = settings.footer.logo_text || "Shopifydevstudio";
+  const logoInitial = logoText.trim().charAt(0);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -34,10 +38,10 @@ const Footer = () => {
         >
           <div className="flex items-center space-x-3 mb-4">
             <div className="w-10 h-10 bg-beige rounded-lg flex items-center justify-center flex-shrink-0">
-              <span className="text-black font-bold text-lg">S</span>
+              <span className="text-black font-bold text-lg">{logoInitial}</span>
             </div>
             <span className="text-gray-100 font-semibold text-lg">
-              Shopifydevstudio
+              {logoText}
             </span>
           </div>
           <p className="text-gray-400 font-light text-sm leading-relaxed max-w-2xl">
@@ -157,10 +161,10 @@ const Footer = () => {
                 </li>
                 <li>
                   <a
-                    href="mailto:shopifydevstudioo@gmail.com"
+                    href={`mailto:${settings.footer.email}`}
                     className="text-gray-400 hover:text-beige transition-colors duration-150 text-sm block py-1.5 px-4 md:px-0 hover:bg-beige/5 md:hover:bg-transparent rounded md:rounded-none font-medium"
                   >
-                    shopifydevstudioo@gmail.com
+                    {settings.footer.email}
                   </a>
                 </li>
                 <li className="text-gray-400 text-sm py-1.5 px-4 md:px-0">
@@ -297,7 +301,7 @@ const Footer = () => {
           viewport={{ once: true }}
         >
           <p className="text-gray-400 text-xs sm:text-sm">
-            © {currentYear} Shopifydevstudio. All rights reserved.
+            {settings.footer.copyright}
           </p>
         </motion.div>
       </div>

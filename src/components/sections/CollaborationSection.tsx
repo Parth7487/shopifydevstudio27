@@ -1,32 +1,19 @@
 import { memo, useState } from "react";
 import CalendlyModal from "./CalendlyModal";
 import { Star, Users, Award, TrendingUp } from "lucide-react";
+import { useTestimonials } from "../../hooks/useTestimonials";
 
 const CollaborationSection = memo(() => {
-  const collaborations = [
-    {
-      name: "Sarah Chen",
-      role: "UX/UI Design Lead",
-      company: "Figma Community",
-      image:
-        "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2F2db76c02fb2f4424869be58cff012b97?format=webp&width=800",
-      quote:
-        "Their design implementation perfectly captures our vision while maintaining performance.",
-      achievement: "50K+ Design Downloads",
-      verified: true,
-    },
-    {
-      name: "Marcus Williams",
-      role: "Performance Optimization Specialist",
-      company: "ShopifyPlus Partner",
-      image:
-        "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2F12b9f370a7b141828551d29b95ea5b8e?format=webp&width=800",
-      quote:
-        "They consistently deliver lightning-fast stores that convert at industry-leading rates.",
-      achievement: "40% Average Speed Increase",
-      verified: true,
-    },
-  ];
+  const { testimonials } = useTestimonials();
+  const collaborations = testimonials.map((t) => ({
+    name: t.author,
+    role: t.role,
+    company: t.company,
+    image: t.avatar || "",
+    quote: t.quote,
+    achievement: t.metric || "",
+    verified: t.verified,
+  }));
 
   const [calendlyOpen, setCalendlyOpen] = useState(false);
 
