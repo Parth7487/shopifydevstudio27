@@ -682,34 +682,8 @@ const Work = () => {
             combine stunning design with powerful performance optimization.
           </motion.p>
 
-          {/* Admin Access Button and Data Source Status */}
-          <div className="absolute top-4 right-4 flex items-center gap-2">
-            {/* Data Source Status Indicator */}
-            <div className="flex items-center gap-1 bg-black/60 backdrop-blur-md rounded-full px-3 py-1 text-xs border border-white/10">
-              {supabaseLoading ? (
-                <>
-                  <Loader2 className="w-2 h-2 animate-spin text-blue-400" />
-                  <span className="text-gray-300">Loading...</span>
-                </>
-              ) : supabaseError ? (
-                <>
-                  <AlertCircle className="w-2 h-2 text-red-400" />
-                  <span className="text-gray-300">Supabase Error</span>
-                </>
-              ) : supabaseProjects.length > 0 ? (
-                <>
-                  <div className="w-2 h-2 rounded-full bg-green-400"></div>
-                  <span className="text-gray-300">Supabase Data</span>
-                </>
-              ) : portfolioProjects.length !==
-                defaultPortfolioProjectsWithoutAllbirds.length ? (
-                <>
-                  <div className="w-2 h-2 rounded-full bg-blue-400"></div>
-                  <span className="text-gray-300">CMS Data</span>
-                </>
-              ) : null}
-            </div>
-
+          {/* Admin Access Button */}
+          <div className="absolute top-4 right-4">
             <button
               onClick={() => (window.location.href = "/admin")}
               className="opacity-0 hover:opacity-100 transition-opacity duration-300 p-2 text-gray-500 hover:text-beige text-xs bg-black/60 backdrop-blur-md rounded-full border border-white/10"
