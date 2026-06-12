@@ -17,9 +17,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(200).end();
   }
 
-  const url = new URL(req.url || "", `https://${req.headers.host}`);
-  const pathSegments = url.pathname.split("/").filter(Boolean);
-  const projectId = pathSegments[pathSegments.length - 1] !== "portfolio" ? pathSegments[pathSegments.length - 1] : null;
+  const projectId = (req.query.id as string) || (() => {
+    const url = new URL(req.url || "", `https://${req.headers.host}`);
+    const pathSegments = url.pathname.split("/").filter(Boolean);
+    return pathSegments[pathSegments.length - 1] !== "portfolio" ? pathSegments[pathSegments.length - 1] : null;
+  })();
 
   try {
     if (req.method === "GET") {
