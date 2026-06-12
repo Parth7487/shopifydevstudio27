@@ -187,7 +187,7 @@ export const GoogleDriveSync: React.FC<GoogleDriveSyncProps> = ({
           ) : (
             <RefreshCw className="w-4 h-4" />
           )}
-          Sync to Supabase
+          Sync to Neon
         </button>
       </div>
 

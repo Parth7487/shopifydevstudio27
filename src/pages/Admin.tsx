@@ -21,12 +21,75 @@ const Admin = () => {
   ] as const;
 
   const [neonConnected, setNeonConnected] = useState<boolean | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return sessionStorage.getItem("admin_authenticated") === "true";
+  });
+  const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    const correctPassword = import.meta.env.VITE_ADMIN_PASSWORD || "admin123";
+    if (password === correctPassword) {
+      setIsAuthenticated(true);
+      sessionStorage.setItem("admin_authenticated", "true");
+      setPasswordError("");
+    } else {
+      setPasswordError("Incorrect password. Please try again.");
+    }
+  };
 
   React.useEffect(() => {
     fetch("/api/portfolio")
       .then((res) => setNeonConnected(res.ok))
       .catch(() => setNeonConnected(false));
   }, []);
+
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-black text-white flex flex-col justify-between">
+        <ElegantNavigation />
+        <div className="flex-1 flex items-center justify-center px-4 relative py-20">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-beige/10 rounded-full filter blur-[128px] pointer-events-none"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-white/[0.02] rounded-full filter blur-[128px] pointer-events-none"></div>
+          
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="w-full max-w-md bg-black/85 backdrop-blur-xl border border-white/10 rounded-xl p-8 shadow-2xl relative z-10"
+          >
+            <h2 className="text-2xl font-bold text-center mb-6">
+              Admin <span className="text-beige">Access</span>
+            </h2>
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Enter Admin Password
+                </label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  className="w-full bg-black/60 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-beige/50 transition-all duration-300"
+                />
+              </div>
+              {passwordError && (
+                <p className="text-red-400 text-sm">{passwordError}</p>
+              )}
+              <button
+                type="submit"
+                className="w-full py-3 bg-beige hover:bg-beige/95 text-charcoal font-bold rounded-lg transition-all duration-300 shadow-lg"
+              >
+                Unlock Dashboard
+              </button>
+            </form>
+          </motion.div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-black text-white">

@@ -1,8 +1,7 @@
 import type { Context, Config } from "@netlify/functions";
-import { createClient } from "@supabase/supabase-js";
+import { neon } from "@netlify/neon";
 
-const supabaseUrl = process.env.VITE_SUPABASE_URL || "";
-const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY || "";
+const sql = neon();
 
 interface GoogleDriveImage {
   id: string;
@@ -80,9 +79,6 @@ export default async (req: Request, context: Context) => {
       );
     }
 
-    // Initialize Supabase client
-    const supabase = createClient(supabaseUrl, supabaseKey);
-
     if (action === "fetch") {
       // Just fetch and return images
       const images = await fetchImagesFromFolder(apiKey, folderId);
@@ -96,15 +92,11 @@ export default async (req: Request, context: Context) => {
       // Fetch images from Google Drive
       const driveImages = await fetchImagesFromFolder(apiKey, folderId);
 
-      // Fetch current portfolio projects
-      const { data: projects, error: fetchError } = await supabase
-        .from("portfolio_projects")
-        .select("*")
-        .eq("status", "published");
-
-      if (fetchError) {
-        throw new Error(`Failed to fetch projects: ${fetchError.message}`);
-      }
+      // Fetch current portfolio projects from Neon
+      const projects = await sql`
+        SELECT * FROM portfolio_projects 
+        WHERE status = 'published'
+      `;
 
       const errors: string[] = [];
       let updated = 0;
@@ -130,25 +122,16 @@ export default async (req: Request, context: Context) => {
           if (matchingImage) {
             const directImageUrl = getDirectImageUrl(matchingImage.id);
 
-            // Update the project with the new image URL
-            const { error: updateError } = await supabase
-              .from("portfolio_projects")
-              .update({
-                image: directImageUrl,
-                updated_at: new Date().toISOString(),
-              })
-              .eq("id", project.id);
-
-            if (updateError) {
-              errors.push(
-                `Failed to update ${project.title}: ${updateError.message}`,
-              );
-            } else {
-              updated++;
-              console.log(
-                `Updated ${project.title} with image: ${matchingImage.name}`,
-              );
-            }
+            // Update the project in Neon with the new image URL
+            await sql`
+              UPDATE portfolio_projects 
+              SET image = ${directImageUrl}, updated_at = NOW() 
+              WHERE id = ${project.id}
+            `;
+            updated++;
+            console.log(
+              `Updated ${project.title} with image: ${matchingImage.name}`,
+            );
           }
         } catch (error) {
           errors.push(
@@ -190,26 +173,11 @@ export default async (req: Request, context: Context) => {
 
       const directImageUrl = getDirectImageUrl(imageFileId);
 
-      const { error } = await supabase
-        .from("portfolio_projects")
-        .update({
-          image: directImageUrl,
-          updated_at: new Date().toISOString(),
-        })
-        .eq("id", projectId);
-
-      if (error) {
-        return new Response(
-          JSON.stringify({
-            success: false,
-            error: error.message,
-          }),
-          {
-            status: 500,
-            headers,
-          },
-        );
-      }
+      await sql`
+        UPDATE portfolio_projects 
+        SET image = ${directImageUrl}, updated_at = NOW() 
+        WHERE id = ${projectId}
+      `;
 
       return new Response(
         JSON.stringify({
