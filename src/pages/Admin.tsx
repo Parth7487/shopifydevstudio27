@@ -249,7 +249,11 @@ const Admin = () => {
 
   React.useEffect(() => {
     fetch("/api/portfolio")
-      .then((res) => setNeonConnected(res.ok))
+      .then((res) => {
+        const contentType = res.headers.get("content-type");
+        return res.ok && contentType && contentType.includes("application/json") ? true : false;
+      })
+      .then((ok) => setNeonConnected(ok))
       .catch(() => setNeonConnected(false));
   }, []);
 
