@@ -1,20 +1,34 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowLeft,
   Database,
   Cloud,
   Settings as SettingsIcon,
+  Plus,
+  Edit2,
+  Trash2,
+  Download,
+  Upload,
+  FolderLock,
+  Globe,
+  Tag,
+  Cpu,
+  BarChart,
+  Tv
 } from "lucide-react";
 import ElegantNavigation from "../components/sections/ElegantNavigation";
 import Footer from "../components/sections/Footer";
 import GoogleDriveSync from "../components/GoogleDriveSync";
+import { useProjects } from "../hooks/useProjects";
+
 const Admin = () => {
-  const [activeTab, setActiveTab] = useState<"drive" | "database" | "settings">(
-    "drive",
+  const [activeTab, setActiveTab] = useState<"projects" | "drive" | "database" | "settings">(
+    "projects",
   );
 
   const tabs = [
+    { id: "projects", label: "Manage Projects", icon: FolderLock },
     { id: "drive", label: "Google Drive Sync", icon: Cloud },
     { id: "database", label: "Database", icon: Database },
     { id: "settings", label: "Settings", icon: SettingsIcon },
@@ -27,6 +41,30 @@ const Admin = () => {
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
+  // Projects data fetching
+  const { projects, loading: projectsLoading, error: projectsError, refetch } = useProjects();
+
+  // Project Editor state
+  const [showForm, setShowForm] = useState(false);
+  const [editingProject, setEditingProject] = useState<any | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Form fields
+  const [title, setTitle] = useState("");
+  const [brand, setBrand] = useState("");
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState("");
+  const [videoUrl, setVideoUrl] = useState("");
+  const [category, setCategory] = useState("Fashion");
+  const [tagsInput, setTagsInput] = useState("");
+  const [techInput, setTechInput] = useState("");
+  const [conversionMetric, setConversionMetric] = useState("");
+  const [loadTimeMetric, setLoadTimeMetric] = useState("");
+  const [liveUrl, setLiveUrl] = useState("");
+  const [featured, setFeatured] = useState(false);
+  const [hasVideo, setHasVideo] = useState(false);
+  const [status, setStatus] = useState("published");
+
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     const correctPassword = import.meta.env.VITE_ADMIN_PASSWORD || "admin123";
@@ -37,6 +75,176 @@ const Admin = () => {
     } else {
       setPasswordError("Incorrect password. Please try again.");
     }
+  };
+
+  const openAddForm = () => {
+    setEditingProject(null);
+    setTitle("");
+    setBrand("");
+    setDescription("");
+    setImage("");
+    setVideoUrl("");
+    setCategory("Fashion");
+    setTagsInput("");
+    setTechInput("");
+    setConversionMetric("350%");
+    setLoadTimeMetric("0.6s");
+    setLiveUrl("");
+    setFeatured(false);
+    setHasVideo(false);
+    setStatus("published");
+    setShowForm(true);
+  };
+
+  const openEditForm = (project: any) => {
+    setEditingProject(project);
+    setTitle(project.title || "");
+    setBrand(project.brand || "");
+    setDescription(project.description || "");
+    setImage(project.image || "");
+    setVideoUrl(project.videoUrl || "");
+    setCategory(project.category || "Fashion");
+    setTagsInput((project.tags || []).join(", "));
+    setTechInput((project.tech || []).join(", "));
+    setConversionMetric(project.metrics?.conversion || "0%");
+    setLoadTimeMetric(project.metrics?.loadTime || "0s");
+    setLiveUrl(project.liveUrl || "");
+    setFeatured(project.featured || false);
+    setHasVideo(project.hasVideo || false);
+    setStatus(project.status || "published");
+    setShowForm(true);
+  };
+
+  const handleSaveProject = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    const payload = {
+      title,
+      brand,
+      description,
+      image,
+      video_url: videoUrl || null,
+      category,
+      tags: tagsInput.split(",").map(t => t.trim()).filter(Boolean),
+      tech: techInput.split(",").map(t => t.trim()).filter(Boolean),
+      metrics: {
+        conversion: conversionMetric,
+        load_time: loadTimeMetric
+      },
+      live_url: liveUrl,
+      featured,
+      has_video: hasVideo,
+      status
+    };
+
+    try {
+      const url = editingProject 
+        ? `/api/portfolio/${editingProject.id}`
+        : "/api/portfolio";
+      const method = editingProject ? "PUT" : "POST";
+
+      const res = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      if (!res.ok) {
+        throw new Error(`Server error: ${res.statusText}`);
+      }
+
+      setShowForm(false);
+      await refetch();
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Failed to save project");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleDeleteProject = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this project?")) return;
+
+    try {
+      const res = await fetch(`/api/portfolio/${id}`, {
+        method: "DELETE"
+      });
+
+      if (!res.ok) {
+        throw new Error(`Server error: ${res.statusText}`);
+      }
+
+      await refetch();
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Failed to delete project");
+    }
+  };
+
+  // Export JSON Backup
+  const handleExportBackup = () => {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(projects, null, 2));
+    const downloadAnchor = document.createElement('a');
+    downloadAnchor.setAttribute("href", dataStr);
+    downloadAnchor.setAttribute("download", `shopifydevstudio_backup_${new Date().toISOString().slice(0,10)}.json`);
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
+  };
+
+  // Import JSON Backup
+  const handleImportBackup = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+      try {
+        const parsed = JSON.parse(event.target?.result as string);
+        if (!Array.isArray(parsed)) {
+          alert("Invalid backup file: Must be a JSON array of projects");
+          return;
+        }
+
+        if (!confirm(`Are you sure you want to import ${parsed.length} projects into Neon database?`)) return;
+
+        setIsSubmitting(true);
+        for (const item of parsed) {
+          const payload = {
+            title: item.title,
+            brand: item.brand,
+            description: item.description,
+            image: item.image,
+            video_url: item.videoUrl || item.video_url || null,
+            category: item.category || "Fashion",
+            tags: item.tags || [],
+            tech: item.tech || [],
+            metrics: {
+              conversion: item.metrics?.conversion || "0%",
+              load_time: item.metrics?.loadTime || item.metrics?.load_time || "0s"
+            },
+            live_url: item.liveUrl || item.live_url || "",
+            featured: item.featured || false,
+            has_video: item.hasVideo || item.has_video || false,
+            status: item.status || "published"
+          };
+
+          await fetch("/api/portfolio", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+        }
+
+        alert("Database backup imported successfully!");
+        await refetch();
+      } catch (err) {
+        alert("Failed to parse or upload backup file");
+      } finally {
+        setIsSubmitting(false);
+      }
+    };
+    reader.readAsText(file);
   };
 
   React.useEffect(() => {
@@ -122,8 +330,7 @@ const Admin = () => {
             transition={{ duration: 0.3, delay: 0.1 }}
             className="text-xl text-gray-400 mb-8 max-w-3xl"
           >
-            Manage your portfolio data, sync images from Google Drive, and
-            configure settings.
+            Manage your portfolio projects, run Google Drive sync jobs, and review database connections.
           </motion.p>
 
           {/* Tab Navigation */}
@@ -149,6 +356,123 @@ const Admin = () => {
       {/* Content */}
       <section className="py-12 bg-black relative">
         <div className="max-w-6xl mx-auto px-8">
+          
+          {/* PROJECTS CRUD TAB */}
+          {activeTab === "projects" && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="space-y-6"
+            >
+              <div className="flex justify-between items-center bg-black/95 backdrop-blur border border-white/10 rounded-xl p-6">
+                <div>
+                  <h3 className="text-xl font-bold">Portfolio Projects</h3>
+                  <p className="text-gray-400 text-sm mt-1">
+                    Manage the live case studies shown on your portfolio.
+                  </p>
+                </div>
+                
+                <div className="flex gap-3">
+                  <button
+                    onClick={handleExportBackup}
+                    className="flex items-center gap-2 px-4 py-2.5 bg-black/60 hover:bg-black/80 border border-white/15 hover:border-white/30 rounded-lg text-sm text-gray-300 transition-all"
+                  >
+                    <Download className="w-4 h-4" />
+                    Export JSON
+                  </button>
+                  
+                  <label className="flex items-center gap-2 px-4 py-2.5 bg-black/60 hover:bg-black/80 border border-white/15 hover:border-white/30 rounded-lg text-sm text-gray-300 cursor-pointer transition-all">
+                    <Upload className="w-4 h-4" />
+                    Import JSON
+                    <input
+                      type="file"
+                      accept=".json"
+                      onChange={handleImportBackup}
+                      className="hidden"
+                    />
+                  </label>
+
+                  <button
+                    onClick={openAddForm}
+                    className="flex items-center gap-2 px-5 py-2.5 bg-beige text-charcoal font-bold rounded-lg text-sm hover:bg-beige/90 transition-all shadow-md"
+                  >
+                    <Plus className="w-4 h-4" />
+                    Add Project
+                  </button>
+                </div>
+              </div>
+
+              {projectsLoading ? (
+                <div className="flex justify-center items-center py-20">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-beige"></div>
+                </div>
+              ) : projectsError ? (
+                <div className="text-center text-red-400 py-10">
+                  Error loading projects: {projectsError}
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {projects.map((project: any) => (
+                    <motion.div
+                      key={project.id}
+                      className="bg-black/80 border border-white/10 rounded-xl overflow-hidden shadow-xl flex flex-col justify-between"
+                    >
+                      <div>
+                        <div className="relative h-44 bg-gray-900">
+                          <img
+                            src={project.image}
+                            alt={project.title}
+                            className="w-full h-full object-cover"
+                          />
+                          <span className="absolute top-3 right-3 px-3 py-1 bg-black/80 text-xs font-semibold text-beige border border-beige/30 rounded-full">
+                            {project.category}
+                          </span>
+                        </div>
+                        
+                        <div className="p-6 space-y-3">
+                          <div className="flex justify-between items-start">
+                            <h4 className="text-lg font-bold text-white leading-tight">
+                              {project.title}
+                            </h4>
+                          </div>
+                          
+                          <p className="text-gray-400 text-xs line-clamp-3">
+                            {project.description}
+                          </p>
+
+                          <div className="flex flex-wrap gap-1.5 pt-2">
+                            {project.tags.slice(0, 3).map((tag: string, i: number) => (
+                              <span key={i} className="text-[10px] bg-white/5 border border-white/10 px-2 py-0.5 rounded text-gray-300">
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="p-6 pt-0 border-t border-white/5 flex gap-3 mt-4">
+                        <button
+                          onClick={() => openEditForm(project)}
+                          className="flex-1 py-2 bg-white/5 hover:bg-white/10 border border-white/15 text-white rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 transition-colors"
+                        >
+                          <Edit2 className="w-3.5 h-3.5" />
+                          Edit Details
+                        </button>
+                        <button
+                          onClick={() => handleDeleteProject(project.id)}
+                          className="px-3 py-2 bg-red-950/20 hover:bg-red-950/40 border border-red-900/30 text-red-400 rounded-lg text-xs font-medium flex items-center justify-center transition-colors"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              )}
+            </motion.div>
+          )}
+
           {activeTab === "drive" && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -267,6 +591,212 @@ const Admin = () => {
           )}
         </div>
       </section>
+
+      {/* EDIT/ADD PROJECT POPUP MODAL */}
+      <AnimatePresence>
+        {showForm && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="bg-black/95 border border-white/15 rounded-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl relative"
+            >
+              <div className="sticky top-0 bg-black border-b border-white/10 p-6 flex justify-between items-center z-10">
+                <h3 className="text-xl font-bold">
+                  {editingProject ? "Edit Project Details" : "Create New Project"}
+                </h3>
+                <button
+                  onClick={() => setShowForm(false)}
+                  className="text-gray-400 hover:text-white text-lg font-bold"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <form onSubmit={handleSaveProject} className="p-6 space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Project Title</label>
+                    <input
+                      type="text"
+                      required
+                      value={title}
+                      onChange={e => setTitle(e.target.value)}
+                      placeholder="Kotn - Sustainable Fashion"
+                      className="w-full bg-black/60 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/50 text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Brand / Client</label>
+                    <input
+                      type="text"
+                      required
+                      value={brand}
+                      onChange={e => setBrand(e.target.value)}
+                      placeholder="Kotn"
+                      className="w-full bg-black/60 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/50 text-sm"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Description</label>
+                  <textarea
+                    required
+                    rows={4}
+                    value={description}
+                    onChange={e => setDescription(e.target.value)}
+                    placeholder="Enter detailed description of the project case study..."
+                    className="w-full bg-black/60 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/50 text-sm resize-none"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2 flex items-center gap-1.5"><Globe className="w-3.5 h-3.5 text-beige" /> Live Website URL</label>
+                    <input
+                      type="url"
+                      required
+                      value={liveUrl}
+                      onChange={e => setLiveUrl(e.target.value)}
+                      placeholder="https://brandname.com/"
+                      className="w-full bg-black/60 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/50 text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2 flex items-center gap-1.5"><Tag className="w-3.5 h-3.5 text-beige" /> Category</label>
+                    <select
+                      value={category}
+                      onChange={e => setCategory(e.target.value)}
+                      className="w-full bg-black/60 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/50 text-sm"
+                    >
+                      <option>Fashion</option>
+                      <option>Beauty</option>
+                      <option>Home & Garden</option>
+                      <option>Food & Beverage</option>
+                      <option>Jewelry</option>
+                      <option>Sports & Outdoors</option>
+                      <option>Health & Wellness</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Image URL (Cloudinary or unsplash)</label>
+                    <input
+                      type="text"
+                      required
+                      value={image}
+                      onChange={e => setImage(e.target.value)}
+                      placeholder="https://res.cloudinary.com/..."
+                      className="w-full bg-black/60 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/50 text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2 flex items-center gap-1.5"><Tv className="w-3.5 h-3.5 text-beige" /> Video Embed URL (Optional)</label>
+                    <input
+                      type="text"
+                      value={videoUrl}
+                      onChange={e => setVideoUrl(e.target.value)}
+                      placeholder="https://player.vimeo.com/video/..."
+                      className="w-full bg-black/60 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/50 text-sm"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2 flex items-center gap-1.5"><Cpu className="w-3.5 h-3.5 text-beige" /> Tags (Comma separated)</label>
+                    <input
+                      type="text"
+                      value={tagsInput}
+                      onChange={e => setTagsInput(e.target.value)}
+                      placeholder="Sustainable, Story-driven, Minimal"
+                      className="w-full bg-black/60 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/50 text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2 flex items-center gap-1.5"><Cpu className="w-3.5 h-3.5 text-beige" /> Tech Stack (Comma separated)</label>
+                    <input
+                      type="text"
+                      value={techInput}
+                      onChange={e => setTechInput(e.target.value)}
+                      placeholder="Shopify Plus, Custom App, React"
+                      className="w-full bg-black/60 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/50 text-sm"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2 flex items-center gap-1.5"><BarChart className="w-3.5 h-3.5 text-beige" /> Conversion metric</label>
+                    <input
+                      type="text"
+                      required
+                      value={conversionMetric}
+                      onChange={e => setConversionMetric(e.target.value)}
+                      placeholder="400%"
+                      className="w-full bg-black/60 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/50 text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2 flex items-center gap-1.5"><BarChart className="w-3.5 h-3.5 text-beige" /> Speed / Load Time metric</label>
+                    <input
+                      type="text"
+                      required
+                      value={loadTimeMetric}
+                      onChange={e => setLoadTimeMetric(e.target.value)}
+                      placeholder="0.6s"
+                      className="w-full bg-black/60 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/50 text-sm"
+                    />
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap gap-6 pt-2">
+                  <label className="flex items-center gap-2 text-sm text-gray-300 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={featured}
+                      onChange={e => setFeatured(e.target.checked)}
+                      className="accent-beige rounded border-white/20"
+                    />
+                    Featured Case Study
+                  </label>
+
+                  <label className="flex items-center gap-2 text-sm text-gray-300 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={hasVideo}
+                      onChange={e => setHasVideo(e.target.checked)}
+                      className="accent-beige rounded border-white/20"
+                    />
+                    Has Video preview
+                  </label>
+                </div>
+
+                <div className="border-t border-white/10 pt-6 flex justify-end gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setShowForm(false)}
+                    className="px-6 py-2.5 bg-black/60 hover:bg-black/80 border border-white/15 text-sm text-gray-300 rounded-lg transition-all"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="px-6 py-2.5 bg-beige text-charcoal font-bold rounded-lg text-sm hover:bg-beige/95 disabled:opacity-50 transition-all shadow-md"
+                  >
+                    {isSubmitting ? "Saving..." : "Save Project"}
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       <Footer />
     </div>
