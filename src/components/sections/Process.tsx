@@ -109,7 +109,7 @@ const Process = () => {
   };
 
   return (
-    <section className="bg-gradient-to-b from-charcoal/30 to-black py-24 px-8">
+    <section className="py-24 px-8" style={{ background: "linear-gradient(to bottom, var(--theme-bg-subtle), var(--theme-bg))" }}>
       <div className="max-w-6xl mx-auto">
         <motion.div
           ref={titleRef.ref}
@@ -118,11 +118,11 @@ const Process = () => {
           variants={scrollRevealVariants}
           className="text-center mb-16"
         >
-          <h2 className="text-6xl font-bold text-white mb-6 leading-tight">
+          <h2 className="text-6xl font-bold theme-text mb-6 leading-tight">
             <span>Our Proven </span>
             <span className="text-beige">Process</span>
           </h2>
-          <p className="text-gray-400 text-xl leading-7 max-w-3xl mx-auto">
+          <p className="theme-text-sec text-xl leading-7 max-w-3xl mx-auto">
             From strategy to launch, every step is designed for maximum impact
           </p>
         </motion.div>
@@ -154,7 +154,7 @@ const Process = () => {
                       scale: 1.02,
                       transition: { duration: 0.3 },
                     }}
-                    className="backdrop-blur-sm bg-gradient-to-br from-graphite/50 to-charcoal/30 border border-beige/10 rounded-2xl p-8 shadow-xl"
+                    className="theme-card border theme-border rounded-2xl p-8 shadow-xl"
                   >
                     <div className="flex items-center mb-4">
                       <span
@@ -165,11 +165,11 @@ const Process = () => {
                       >
                         {step.number}
                       </span>
-                      <h3 className="text-white text-2xl font-bold leading-8">
+                      <h3 className="theme-text text-2xl font-bold leading-8">
                         {step.title}
                       </h3>
                     </div>
-                    <p className="text-gray-400 leading-relaxed mb-4">
+                    <p className="theme-text-sec leading-relaxed mb-4">
                       {step.description}
                     </p>
                     <div className="flex items-center">
@@ -185,8 +185,9 @@ const Process = () => {
                 <div className="relative hidden md:block">
                   <motion.div
                     variants={cardVariants}
-                    className="w-4 h-4 bg-beige border-3 border-black rounded-full"
+                    className="w-4 h-4 bg-beige border-2 rounded-full"
                     style={{
+                      borderColor: "var(--theme-bg)",
                       boxShadow: `0 0 ${15 + index * 3}px rgba(230, 177, 126, ${0.4 + index * 0.1})`,
                     }}
                   />

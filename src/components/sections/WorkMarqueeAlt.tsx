@@ -103,9 +103,9 @@ const WorkMarqueeAlt = memo(() => {
       className="py-6 sm:py-10 px-4 relative overflow-hidden"
       ref={containerRef}
     >
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-black to-transparent" />
-        <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-black to-transparent" />
+      <div className="absolute inset-0 pointer-events-none z-10">
+        <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[var(--theme-bg)] to-transparent" />
+        <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[var(--theme-bg)] to-transparent" />
       </div>
 
       <div className="max-w-7xl mx-auto">
@@ -136,7 +136,7 @@ const WorkMarqueeAlt = memo(() => {
                 rel={item.url ? "noopener noreferrer" : undefined}
                 className="group relative block w-[88vw] sm:w-[60vw] md:w-[46vw] lg:w-[38vw] flex-shrink-0"
               >
-                <div className="h-52 sm:h-60 md:h-72 lg:h-80 rounded-xl overflow-hidden border border-beige/20 bg-charcoal relative">
+                <div className="h-52 sm:h-60 md:h-72 lg:h-80 rounded-xl overflow-hidden border theme-border theme-card relative">
                   <OptimizedImage
                     src={item.image}
                     alt={item.brand}
@@ -174,7 +174,7 @@ const WorkMarqueeAlt = memo(() => {
                 rel={item.url ? "noopener noreferrer" : undefined}
                 className="group relative block w-[88vw] sm:w-[60vw] md:w-[46vw] lg:w-[38vw] flex-shrink-0"
               >
-                <div className="h-52 sm:h-60 md:h-72 lg:h-80 rounded-xl overflow-hidden border border-beige/20 bg-charcoal relative">
+                <div className="h-52 sm:h-60 md:h-72 lg:h-80 rounded-xl overflow-hidden border theme-border theme-card relative">
                   <OptimizedImage
                     src={item.image}
                     alt={item.brand}

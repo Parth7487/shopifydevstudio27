@@ -140,7 +140,8 @@ const AnimatedTestimonials = () => {
   return (
     <section
       ref={containerRef}
-      className="py-32 bg-gradient-to-b from-black via-charcoal/20 to-black relative overflow-hidden min-h-screen flex items-center"
+      className="py-32 relative overflow-hidden min-h-screen flex items-center"
+      style={{ background: "linear-gradient(to bottom, var(--theme-bg), var(--theme-bg-subtle))" }}
     >
       {/* Background elements */}
       <div className="absolute inset-0 opacity-10">
@@ -203,7 +204,7 @@ const AnimatedTestimonials = () => {
           transition={{ duration: 0.8 }}
         >
           <motion.h2
-            className="text-5xl md:text-7xl font-bold text-white mb-8"
+            className="text-5xl md:text-7xl font-bold theme-text mb-8"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 1, delay: 0.2 }}
@@ -214,7 +215,7 @@ const AnimatedTestimonials = () => {
             </span>
           </motion.h2>
           <motion.p
-            className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed"
+            className="text-xl md:text-2xl theme-text-sec max-w-4xl mx-auto leading-relaxed"
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -246,7 +247,7 @@ const AnimatedTestimonials = () => {
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
             >
-              <Card className="bg-charcoal/80 border-beige/30 backdrop-blur-xl overflow-hidden relative">
+              <Card className="theme-card border-beige/30 backdrop-blur-xl overflow-hidden relative">
                 {/* Enhanced animated background gradient */}
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-br from-beige/5 via-transparent to-clay/5"
@@ -280,7 +281,7 @@ const AnimatedTestimonials = () => {
 
                       {/* Quote */}
                       <motion.blockquote
-                        className={`${isMobile ? "text-lg" : "text-2xl md:text-3xl"} text-white mb-6 leading-relaxed font-light italic`}
+                        className={`${isMobile ? "text-lg" : "text-2xl md:text-3xl"} theme-text mb-6 leading-relaxed font-light italic`}
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.3 }}
@@ -365,7 +366,7 @@ const AnimatedTestimonials = () => {
                       </motion.div>
 
                       <h4
-                        className={`font-bold text-white ${isMobile ? "text-lg" : "text-xl"} mb-1`}
+                        className={`font-bold theme-text ${isMobile ? "text-lg" : "text-xl"} mb-1`}
                       >
                         {testimonials[currentIndex].author}
                       </h4>
@@ -375,7 +376,7 @@ const AnimatedTestimonials = () => {
                         {testimonials[currentIndex].role}
                       </p>
                       <p
-                        className={`text-gray-400 ${isMobile ? "text-sm" : ""}`}
+                        className={`theme-text-sec ${isMobile ? "text-sm" : ""}`}
                       >
                         {testimonials[currentIndex].company}
                       </p>
@@ -391,7 +392,7 @@ const AnimatedTestimonials = () => {
             <>
               <motion.button
                 onClick={prevTestimonial}
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-charcoal/80 border border-beige/30 rounded-full flex items-center justify-center text-beige hover:bg-beige/10 transition-all duration-300 backdrop-blur-sm"
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 theme-card border border-beige/30 rounded-full flex items-center justify-center text-beige hover:bg-beige/10 transition-all duration-300 backdrop-blur-sm"
                 whileHover={{ scale: 1.1, x: -5 }}
                 whileTap={{ scale: 0.9 }}
                 disabled={currentIndex === 0}
@@ -400,7 +401,7 @@ const AnimatedTestimonials = () => {
               </motion.button>
               <motion.button
                 onClick={nextTestimonial}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-charcoal/80 border border-beige/30 rounded-full flex items-center justify-center text-beige hover:bg-beige/10 transition-all duration-300 backdrop-blur-sm"
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 theme-card border border-beige/30 rounded-full flex items-center justify-center text-beige hover:bg-beige/10 transition-all duration-300 backdrop-blur-sm"
                 whileHover={{ scale: 1.1, x: 5 }}
                 whileTap={{ scale: 0.9 }}
                 disabled={currentIndex === testimonials.length - 1}
@@ -420,7 +421,7 @@ const AnimatedTestimonials = () => {
             >
               <motion.button
                 onClick={prevTestimonial}
-                className="w-10 h-10 bg-charcoal/80 border border-beige/30 rounded-full flex items-center justify-center text-beige hover:bg-beige/10 transition-all duration-300"
+                className="w-10 h-10 theme-card border border-beige/30 rounded-full flex items-center justify-center text-beige hover:bg-beige/10 transition-all duration-300"
                 whileTap={{ scale: 0.9 }}
                 disabled={currentIndex === 0}
               >
@@ -429,7 +430,7 @@ const AnimatedTestimonials = () => {
 
               <motion.button
                 onClick={toggleAutoPlay}
-                className="w-10 h-10 bg-charcoal/80 border border-beige/30 rounded-full flex items-center justify-center text-beige hover:bg-beige/10 transition-all duration-300"
+                className="w-10 h-10 theme-card border border-beige/30 rounded-full flex items-center justify-center text-beige hover:bg-beige/10 transition-all duration-300"
                 whileTap={{ scale: 0.9 }}
               >
                 {isAutoPlaying ? (
@@ -441,7 +442,7 @@ const AnimatedTestimonials = () => {
 
               <motion.button
                 onClick={nextTestimonial}
-                className="w-10 h-10 bg-charcoal/80 border border-beige/30 rounded-full flex items-center justify-center text-beige hover:bg-beige/10 transition-all duration-300"
+                className="w-10 h-10 theme-card border border-beige/30 rounded-full flex items-center justify-center text-beige hover:bg-beige/10 transition-all duration-300"
                 whileTap={{ scale: 0.9 }}
                 disabled={currentIndex === testimonials.length - 1}
               >
@@ -503,7 +504,7 @@ const AnimatedTestimonials = () => {
               >
                 {stat.value}
               </motion.div>
-              <div className="text-gray-400 text-sm">{stat.label}</div>
+              <div className="theme-text-sec text-sm">{stat.label}</div>
             </motion.div>
           ))}
         </motion.div>

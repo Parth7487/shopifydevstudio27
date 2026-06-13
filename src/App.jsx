@@ -24,7 +24,7 @@ const FaviconExport = lazy(() => import("./pages/FaviconExport"));
 const ScrollToTop = lazy(() => import("./components/ScrollToTop"));
 
 // Absolute minimal loader for instant feel
-const MinimalLoader = memo(() => <div className="h-4 bg-black"></div>);
+const MinimalLoader = memo(() => <div className="h-4 bg-[var(--theme-bg)]"></div>);
 
 // Ultra-aggressive caching for speed
 const queryClient = new QueryClient({

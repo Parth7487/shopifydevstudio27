@@ -103,7 +103,8 @@ const EnhancedContact = () => {
     <section
       id="contact"
       ref={containerRef}
-      className="py-32 bg-navy relative overflow-hidden"
+      className="py-32 relative overflow-hidden"
+      style={{ backgroundColor: "var(--theme-bg)" }}
     >
       {/* Background elements */}
       <div className="absolute inset-0 opacity-10">
@@ -148,7 +149,7 @@ const EnhancedContact = () => {
           transition={{ duration: 0.8 }}
         >
           <motion.h2
-            className="text-5xl md:text-7xl font-bold text-white mb-8"
+            className="text-5xl md:text-7xl font-bold theme-text mb-8"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 1, delay: 0.2 }}
@@ -159,7 +160,7 @@ const EnhancedContact = () => {
             </span>
           </motion.h2>
           <motion.p
-            className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed"
+            className="text-xl md:text-2xl theme-text-sec max-w-4xl mx-auto leading-relaxed"
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -176,7 +177,7 @@ const EnhancedContact = () => {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            <Card className="bg-navy-700/60 border-mint/30 backdrop-blur-xl relative overflow-hidden">
+            <Card className="theme-card border-mint/30 backdrop-blur-xl relative overflow-hidden">
               {/* Animated background */}
               <motion.div
                 className="absolute inset-0 bg-gradient-to-br from-mint/5 via-transparent to-purple-500/5"
@@ -230,7 +231,7 @@ const EnhancedContact = () => {
                       </motion.div>
 
                       <motion.h3
-                        className="text-3xl font-bold text-white mb-4"
+                        className="text-3xl font-bold theme-text mb-4"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.4 }}
@@ -238,7 +239,7 @@ const EnhancedContact = () => {
                         Message Sent Successfully!
                       </motion.h3>
                       <motion.p
-                        className="text-gray-300 mb-8 text-lg"
+                        className="theme-text-sec mb-8 text-lg"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.5 }}
@@ -278,7 +279,7 @@ const EnhancedContact = () => {
                           }
                           transition={{ duration: 0.5, delay: 0.8 }}
                         >
-                          <label className="block text-white mb-3 font-medium">
+                          <label className="block theme-text mb-3 font-medium">
                             Full Name *
                           </label>
                           <motion.div
@@ -297,7 +298,7 @@ const EnhancedContact = () => {
                               onFocus={() => setFocusedField("name")}
                               onBlur={() => setFocusedField(null)}
                               required
-                              className="bg-navy-800/50 border-mint/20 text-white placeholder-gray-400 focus:border-mint focus:ring-mint py-3"
+                              className="bg-[var(--theme-input-bg)] border-[var(--theme-border)] text-[var(--theme-text)] placeholder-[var(--theme-text-muted)] focus:border-mint focus:ring-mint py-3"
                               placeholder="Your full name"
                             />
                           </motion.div>
@@ -312,7 +313,7 @@ const EnhancedContact = () => {
                           }
                           transition={{ duration: 0.5, delay: 0.9 }}
                         >
-                          <label className="block text-white mb-3 font-medium">
+                          <label className="block theme-text mb-3 font-medium">
                             Email Address *
                           </label>
                           <motion.div
@@ -331,7 +332,7 @@ const EnhancedContact = () => {
                               onFocus={() => setFocusedField("email")}
                               onBlur={() => setFocusedField(null)}
                               required
-                              className="bg-navy-800/50 border-mint/20 text-white placeholder-gray-400 focus:border-mint focus:ring-mint py-3"
+                              className="bg-[var(--theme-input-bg)] border-[var(--theme-border)] text-[var(--theme-text)] placeholder-[var(--theme-text-muted)] focus:border-mint focus:ring-mint py-3"
                               placeholder="your.email@example.com"
                             />
                           </motion.div>
@@ -348,7 +349,7 @@ const EnhancedContact = () => {
                         }
                         transition={{ duration: 0.5, delay: 1 }}
                       >
-                        <label className="block text-white mb-3 font-medium">
+                         <label className="block theme-text mb-3 font-medium">
                           Company Name
                         </label>
                         <Input
@@ -356,7 +357,7 @@ const EnhancedContact = () => {
                           name="company"
                           value={formData.company}
                           onChange={handleChange}
-                          className="bg-navy-800/50 border-mint/20 text-white placeholder-gray-400 focus:border-mint focus:ring-mint py-3"
+                          className="bg-[var(--theme-input-bg)] border-[var(--theme-border)] text-[var(--theme-text)] placeholder-[var(--theme-text-muted)] focus:border-mint focus:ring-mint py-3"
                           placeholder="Your company name"
                         />
                       </motion.div>
@@ -372,14 +373,14 @@ const EnhancedContact = () => {
                           }
                           transition={{ duration: 0.5, delay: 1.1 }}
                         >
-                          <label className="block text-white mb-3 font-medium">
+                          <label className="block theme-text mb-3 font-medium">
                             Project Type
                           </label>
                           <select
                             name="projectType"
                             value={formData.projectType}
                             onChange={handleChange}
-                            className="w-full bg-navy-800/50 border border-mint/20 text-white py-3 px-4 rounded-md focus:border-mint focus:ring-mint"
+                            className="w-full bg-[var(--theme-input-bg)] border border-[var(--theme-border)] text-[var(--theme-text)] py-3 px-4 rounded-md focus:border-mint focus:ring-mint"
                           >
                             <option value="">Select project type</option>
                             {projectTypes.map((type) => (
@@ -399,14 +400,14 @@ const EnhancedContact = () => {
                           }
                           transition={{ duration: 0.5, delay: 1.2 }}
                         >
-                          <label className="block text-white mb-3 font-medium">
+                          <label className="block theme-text mb-3 font-medium">
                             Budget Range
                           </label>
                           <select
                             name="budget"
                             value={formData.budget}
                             onChange={handleChange}
-                            className="w-full bg-navy-800/50 border border-mint/20 text-white py-3 px-4 rounded-md focus:border-mint focus:ring-mint"
+                            className="w-full bg-[var(--theme-input-bg)] border border-[var(--theme-border)] text-[var(--theme-text)] py-3 px-4 rounded-md focus:border-mint focus:ring-mint"
                           >
                             <option value="">Select budget range</option>
                             {budgetRanges.map((range) => (
@@ -428,7 +429,7 @@ const EnhancedContact = () => {
                         }
                         transition={{ duration: 0.5, delay: 1.3 }}
                       >
-                        <label className="block text-white mb-3 font-medium">
+                        <label className="block theme-text mb-3 font-medium">
                           Project Details *
                         </label>
                         <motion.div
@@ -447,7 +448,7 @@ const EnhancedContact = () => {
                             onBlur={() => setFocusedField(null)}
                             required
                             rows={6}
-                            className="bg-navy-800/50 border-mint/20 text-white placeholder-gray-400 focus:border-mint focus:ring-mint resize-none"
+                            className="bg-[var(--theme-input-bg)] border-[var(--theme-border)] text-[var(--theme-text)] placeholder-[var(--theme-text-muted)] focus:border-mint focus:ring-mint resize-none"
                             placeholder="Tell us about your project goals, timeline, and any specific requirements..."
                           />
                         </motion.div>
@@ -515,7 +516,7 @@ const EnhancedContact = () => {
           >
             <div>
               <motion.h3
-                className="text-3xl font-bold text-white mb-6"
+                className="text-3xl font-bold theme-text mb-6"
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: 1 }}
@@ -523,7 +524,7 @@ const EnhancedContact = () => {
                 Ready to Get Started?
               </motion.h3>
               <motion.p
-                className="text-gray-300 text-lg leading-relaxed mb-10"
+                className="theme-text-sec text-lg leading-relaxed mb-10"
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: 1.1 }}
@@ -558,7 +559,7 @@ const EnhancedContact = () => {
               ].map((item, index) => (
                 <motion.div
                   key={index}
-                  className="flex items-start space-x-4 p-4 bg-navy-700/30 rounded-lg border border-mint/10 hover:border-mint/30 transition-all duration-300"
+                  className="flex items-start space-x-4 p-4 theme-card rounded-lg border theme-border hover:border-mint/30 transition-all duration-300"
                   initial={{ opacity: 0, x: 20 }}
                   animate={isInView ? { opacity: 1, x: 0 } : {}}
                   transition={{ duration: 0.5, delay: 1.2 + index * 0.1 }}
@@ -578,7 +579,7 @@ const EnhancedContact = () => {
                     {item.icon}
                   </motion.div>
                   <div>
-                    <h4 className="font-semibold text-white mb-1">
+                    <h4 className="font-semibold theme-text mb-1">
                       {item.title}
                     </h4>
                     <p className="font-medium" style={{ color: item.color }}>
@@ -596,10 +597,10 @@ const EnhancedContact = () => {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 1.6 }}
             >
-              <h4 className="text-white font-semibold mb-2">
+              <h4 className="theme-text font-semibold mb-2">
                 Prefer to schedule a call?
               </h4>
-              <p className="text-gray-300 text-sm mb-4">
+              <p className="theme-text-sec text-sm mb-4">
                 Book a free 30-minute consultation to discuss your project in
                 detail.
               </p>

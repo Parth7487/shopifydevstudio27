@@ -73,10 +73,10 @@ const ProblemSolution = () => {
           variants={titleVariants}
           className="text-center mb-16"
         >
-          <h2 className="text-6xl font-bold text-white mb-6 leading-tight">
+          <h2 className="text-6xl font-bold theme-text mb-6 leading-tight">
             The $10,000 Question
           </h2>
-          <p className="text-gray-400 text-xl leading-7 max-w-3xl mx-auto">
+          <p className="theme-text-sec text-xl leading-7 max-w-3xl mx-auto">
             Why do some Shopify stores make millions while others struggle to
             make their first sale?
           </p>
@@ -93,19 +93,19 @@ const ProblemSolution = () => {
           <motion.div variants={itemVariants}>
             <motion.div
               variants={cardVariants}
-              className="bg-slate-800/40 border border-slate-600/50 rounded-xl p-6"
+              className="theme-card border theme-border rounded-xl p-6"
             >
-              <h3 className="text-slate-300 text-2xl font-bold leading-8 mb-4">
+              <h3 className="theme-text text-2xl font-bold leading-8 mb-4">
                 The Painful Truth
               </h3>
-              <ul className="text-gray-400">
+              <ul className="theme-text-sec">
                 {problems.map((problem, index) => (
                   <motion.li
                     key={index}
                     variants={itemVariants}
                     className="flex items-start mt-3 first:mt-0"
                   >
-                    <span className="block text-slate-400 mt-1 text-lg">✗</span>
+                    <span className="block theme-text-muted mt-1 text-lg">✗</span>
                     <span className="block ml-3 leading-relaxed">
                       {problem}
                     </span>
@@ -119,12 +119,12 @@ const ProblemSolution = () => {
           <motion.div variants={itemVariants}>
             <motion.div
               variants={cardVariants}
-              className="bg-slate-800/40 border border-beige/30 rounded-xl p-6"
+              className="theme-card border border-beige/30 rounded-xl p-6"
             >
               <h3 className="text-beige text-2xl font-bold leading-8 mb-4">
                 The Transformation
               </h3>
-              <ul className="text-gray-400">
+              <ul className="theme-text-sec">
                 {solutions.map((solution, index) => (
                   <motion.li
                     key={index}

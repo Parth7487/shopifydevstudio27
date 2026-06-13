@@ -4,6 +4,7 @@ import App from "./App.jsx";
 import "./index.css";
 import { initInstantLoading } from "./lib/instant-loading";
 import { LanguageProvider } from "./contexts/LanguageContext";
+import { ThemeProvider } from "./contexts/ThemeContext";
 
 // Initialize instant loading optimizations immediately
 initInstantLoading();
@@ -20,18 +21,22 @@ const root = createRoot(container, {
 if (import.meta.env.DEV) {
   root.render(
     <StrictMode>
-      <LanguageProvider>
-        <App />
-      </LanguageProvider>
+      <ThemeProvider>
+        <LanguageProvider>
+          <App />
+        </LanguageProvider>
+      </ThemeProvider>
     </StrictMode>,
   );
   import("./lib/perf-audit").then((m) => m.runQuickPerfAudit?.());
 } else {
   // Skip StrictMode in production for better performance
   root.render(
-    <LanguageProvider>
-      <App />
-    </LanguageProvider>,
+    <ThemeProvider>
+      <LanguageProvider>
+        <App />
+      </LanguageProvider>
+    </ThemeProvider>,
   );
   import("./lib/perf-audit").then((m) => m.runQuickPerfAudit?.());
 }

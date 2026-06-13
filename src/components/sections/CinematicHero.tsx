@@ -223,7 +223,7 @@ const CinematicHero = () => {
       style={{ y, opacity }}
     >
       {/* Cinematic base background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-black via-charcoal to-graphite" />
+      <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom right, var(--theme-bg), var(--theme-bg-subtle))" }} />
 
       {/* Interactive ripple background */}
       <CinematicRippleBackground />
@@ -286,7 +286,7 @@ const CinematicHero = () => {
           >
             <h1 className="text-6xl md:text-8xl lg:text-[7rem] font-bold leading-[0.9] tracking-tight">
               <motion.span
-                className="block text-gray-100 mb-2"
+                className="block theme-text mb-2"
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.8, delay: 0.8 }}
@@ -302,7 +302,7 @@ const CinematicHero = () => {
                 SHOPIFY
               </motion.span>
               <motion.span
-                className="block text-gray-100 mb-2"
+                className="block theme-text mb-2"
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.8, delay: 1.2 }}
@@ -325,7 +325,7 @@ const CinematicHero = () => {
 
           {/* Subtitle */}
           <motion.p
-            className="text-2xl md:text-3xl text-gray-300 max-w-2xl font-light leading-relaxed"
+            className="text-2xl md:text-3xl theme-text-sec max-w-2xl font-light leading-relaxed"
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 1.6 }}
@@ -386,7 +386,7 @@ const CinematicHero = () => {
 
             <motion.button
               onClick={() => scrollToSection("work")}
-              className="text-gray-200 border-2 border-gold/40 hover:border-gold/80 hover:text-gold px-10 py-6 rounded-xl transition-all duration-300 relative group font-medium tracking-wide"
+              className="theme-text border-2 border-gold/40 hover:border-gold/80 hover:text-gold px-10 py-6 rounded-xl transition-all duration-300 relative group font-medium tracking-wide"
               whileHover={{ scale: 1.05, y: -8 }}
             >
               <span className="relative z-10">VIEW OUR WORK</span>
@@ -441,34 +441,34 @@ const CinematicHero = () => {
 
           {/* Performance metrics with cinematic styling */}
           <motion.div
-            className="absolute top-24 -left-8 bg-black/90 backdrop-blur-sm border border-gold/30 rounded-xl px-6 py-4"
+            className="absolute top-24 -left-8 theme-card backdrop-blur-sm border border-gold/30 rounded-xl px-6 py-4"
             animate={{ y: [0, -15, 0] }}
             transition={{ duration: 5, repeat: Infinity }}
           >
             <div className="text-gold font-bold text-xl">+127%</div>
-            <div className="text-gray-400 text-xs tracking-wider uppercase">
+            <div className="theme-text-sec text-xs tracking-wider uppercase">
               Revenue Growth
             </div>
           </motion.div>
 
           <motion.div
-            className="absolute bottom-32 -right-8 bg-black/90 backdrop-blur-sm border border-accent/30 rounded-xl px-6 py-4"
+            className="absolute bottom-32 -right-8 theme-card backdrop-blur-sm border border-accent/30 rounded-xl px-6 py-4"
             animate={{ y: [0, 18, 0] }}
             transition={{ duration: 5, repeat: Infinity, delay: 2.5 }}
           >
             <div className="text-accent font-bold text-xl">0.9s</div>
-            <div className="text-gray-400 text-xs tracking-wider uppercase">
+            <div className="theme-text-sec text-xs tracking-wider uppercase">
               Load Time
             </div>
           </motion.div>
 
           <motion.div
-            className="absolute top-1/2 -left-12 bg-black/90 backdrop-blur-sm border border-gold/30 rounded-xl px-6 py-4"
+            className="absolute top-1/2 -left-12 theme-card backdrop-blur-sm border border-gold/30 rounded-xl px-6 py-4"
             animate={{ x: [0, -12, 0] }}
             transition={{ duration: 6, repeat: Infinity, delay: 1 }}
           >
             <div className="text-gold font-bold text-xl">99</div>
-            <div className="text-gray-400 text-xs tracking-wider uppercase">
+            <div className="theme-text-sec text-xs tracking-wider uppercase">
               Lighthouse Score
             </div>
           </motion.div>

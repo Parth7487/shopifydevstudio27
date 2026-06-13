@@ -5,6 +5,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Theme utility classes — use throughout components ─────────────────── */
+@layer utilities {
+  .theme-bg         { background-color: var(--theme-bg); }
+  .theme-bg-subtle  { background-color: var(--theme-bg-subtle); }
+  .theme-card       { background-color: var(--theme-card); }
+  .theme-card-alt   { background-color: var(--theme-card-alt); }
+  .theme-border     { border-color: var(--theme-border); }
+  .theme-text       { color: var(--theme-text); }
+  .theme-text-sec   { color: var(--theme-text-sec); }
+  .theme-text-muted { color: var(--theme-text-muted); }
+}
+
+
 @layer components {
   .elegant-button {
     @apply bg-beige text-black font-medium transition-colors duration-200 hover:bg-beige/90;
@@ -65,28 +78,42 @@
     }
   }
 
-  /* Essential CSS variables only */
+  /* ── Shared Radix/shadcn tokens ───────────────────────────────────────── */
   :root {
-    --background: 0 0% 4%;
-    --foreground: 0 0% 95%;
-    --card: 240 4% 11%;
-    --card-foreground: 0 0% 95%;
-    --popover: 240 4% 11%;
-    --popover-foreground: 0 0% 95%;
+    --background: 36 50% 97%;
+    --foreground: 240 5% 10%;
+    --card: 36 30% 93%;
+    --card-foreground: 240 5% 10%;
+    --popover: 36 30% 93%;
+    --popover-foreground: 240 5% 10%;
     --primary: 30 44% 70%;
     --primary-foreground: 0 0% 4%;
-    --secondary: 240 3% 17%;
-    --secondary-foreground: 0 0% 95%;
-    --muted: 240 3% 17%;
-    --muted-foreground: 240 5% 64%;
+    --secondary: 36 20% 88%;
+    --secondary-foreground: 240 5% 10%;
+    --muted: 36 20% 88%;
+    --muted-foreground: 240 5% 45%;
     --accent: 30 44% 70%;
     --accent-foreground: 0 0% 4%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 95%;
-    --border: 240 3% 17%;
-    --input: 240 3% 17%;
+    --border: 36 30% 82%;
+    --input: 36 30% 82%;
     --ring: 30 44% 70%;
     --radius: 0.5rem;
+
+    /* ── Theme surface tokens (light) ─────────────────────────────────── */
+    --theme-bg:          #FAF7F2;
+    --theme-bg-subtle:   #F4EEE4;
+    --theme-card:        #F0EBE0;
+    --theme-card-alt:    #EBE4D7;
+    --theme-border:      rgba(180, 140, 80, 0.18);
+    --theme-text:        #1A1A1D;
+    --theme-text-sec:    #4D4A45;
+    --theme-text-muted:  #7A7671;
+    --theme-nav-bg:      rgba(250, 247, 242, 0.97);
+    --theme-nav-border:  rgba(180, 140, 80, 0.18);
+    --theme-input-bg:    #F0EBE0;
+    --theme-shadow:      rgba(140, 100, 40, 0.10);
   }
 
   .dark {
@@ -109,6 +136,20 @@
     --border: 240 3% 17%;
     --input: 240 3% 17%;
     --ring: 42 100% 75%;
+
+    /* ── Theme surface tokens (dark) ──────────────────────────────────── */
+    --theme-bg:          #0A0A0A;
+    --theme-bg-subtle:   #111111;
+    --theme-card:        #1A1A1D;
+    --theme-card-alt:    #242427;
+    --theme-border:      rgba(255, 255, 255, 0.08);
+    --theme-text:        #F0EDE8;
+    --theme-text-sec:    #9CA3AF;
+    --theme-text-muted:  #6B7280;
+    --theme-nav-bg:      rgba(10, 10, 10, 0.95);
+    --theme-nav-border:  rgba(55, 55, 55, 0.5);
+    --theme-input-bg:    #1A1A1D;
+    --theme-shadow:      rgba(0, 0, 0, 0.40);
   }
 }
 
@@ -118,7 +159,8 @@
   }
 
   body {
-    @apply bg-black text-white;
+    background-color: var(--theme-bg);
+    color: var(--theme-text);
     font-family:
       "Inter",
       system-ui,
@@ -196,7 +238,7 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #000;
+  background: var(--theme-bg-subtle, #000);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -213,13 +255,13 @@
 
 /* Selection styling */
 ::selection {
-  background: rgba(230, 177, 126, 0.3);
-  color: white;
+  background: rgba(230, 177, 126, 0.35);
+  color: var(--theme-text, #1A1A1D);
 }
 
 ::-moz-selection {
-  background: rgba(230, 177, 126, 0.3);
-  color: white;
+  background: rgba(230, 177, 126, 0.35);
+  color: var(--theme-text, #1A1A1D);
 }
 
 /* Mobile performance optimizations */

@@ -4,6 +4,10 @@ export interface FooterSettings {
   copyright: string;
   logo_text: string;
   email: string;
+  logo_type?: "text" | "image";
+  logo_image?: string;
+  favicon?: string;
+  social_share_image?: string;
 }
 
 export interface SocialSettings {
@@ -271,7 +275,11 @@ export const DEFAULT_SETTINGS: SiteSettings = {
   footer: {
     copyright: "© 2026 Shopifydevstudio. All rights reserved.",
     logo_text: "Dev Studio",
-    email: "shopifydevstudioo@gmail.com"
+    email: "shopifydevstudioo@gmail.com",
+    logo_type: "text",
+    logo_image: "",
+    favicon: "",
+    social_share_image: ""
   },
   socials: {
     whatsapp: "+917487080421",
@@ -366,6 +374,37 @@ export const useSettings = () => {
   useEffect(() => {
     fetchSettings();
   }, [fetchSettings]);
+
+  useEffect(() => {
+    if (settings && settings.footer) {
+      // 1. Update favicon if present
+      const faviconUrl = settings.footer.favicon;
+      if (faviconUrl) {
+        const icons = document.querySelectorAll('link[rel="icon"], link[rel="apple-touch-icon"]');
+        icons.forEach(el => {
+          el.setAttribute('href', faviconUrl);
+        });
+        
+        const maskIcon = document.querySelector('link[rel="mask-icon"]');
+        if (maskIcon) {
+          maskIcon.setAttribute('href', faviconUrl);
+        }
+      }
+
+      // 2. Update social share image if present
+      const ogImageUrl = settings.footer.social_share_image;
+      if (ogImageUrl) {
+        const ogImage = document.querySelector('meta[property="og:image"]');
+        if (ogImage) {
+          ogImage.setAttribute('content', ogImageUrl);
+        }
+        const twitterImage = document.querySelector('meta[name="twitter:image"]');
+        if (twitterImage) {
+          twitterImage.setAttribute('content', ogImageUrl);
+        }
+      }
+    }
+  }, [settings]);
 
   return {
     settings,

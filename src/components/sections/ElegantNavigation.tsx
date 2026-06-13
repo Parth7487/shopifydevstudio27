@@ -1,10 +1,11 @@
 import { useState, useEffect, useCallback, memo } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
 import BookingModal from "./CalendlyModal";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useSettings } from "../../hooks/useSettings";
+import { useTheme } from "../../contexts/ThemeContext";
 
 
 const ElegantNavigation = memo(() => {
@@ -14,6 +15,7 @@ const ElegantNavigation = memo(() => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [calendlyOpen, setCalendlyOpen] = useState(false);
   const { settings } = useSettings();
+  const { theme, toggleTheme, isDark } = useTheme();
 
   // Throttled scroll handler for better performance
   useEffect(() => {
@@ -113,9 +115,17 @@ const ElegantNavigation = memo(() => {
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? "bg-black/95 backdrop-blur-sm border-b border-gray-800/50"
-            : "bg-transparent"
+            ? "backdrop-blur-sm border-b"
+            : "bg-transparent border-transparent"
         }`}
+        style={
+          isScrolled
+            ? {
+                backgroundColor: "var(--theme-nav-bg)",
+                borderColor: "var(--theme-nav-border)",
+              }
+            : undefined
+        }
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-6">
           <div className="flex items-center justify-between">
@@ -124,39 +134,49 @@ const ElegantNavigation = memo(() => {
               className="flex items-center space-x-2 sm:space-x-3 cursor-pointer"
               onClick={() => navigate("/")}
             >
-              <div className="w-8 h-8 sm:w-10 sm:h-10 border border-beige/60 rounded relative flex items-center justify-center">
-                <span className="text-beige font-medium text-xs sm:text-sm">
-                  {logoInitial}
-                </span>
-                <svg
-                  className="absolute -top-2 left-1/2 -translate-x-1/2 text-beige w-6 h-4 sm:w-7 sm:h-4 pointer-events-none"
-                  viewBox="0 0 24 14"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M3 11 A9 9 0 0 1 21 11"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                  />
-                  <path
-                    d="M6 11 v3"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                  />
-                  <path
-                    d="M18 11 v3"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </div>
-              <span className="text-gray-100 font-medium text-base sm:text-lg tracking-wide">
-                {logoText}
-              </span>
+              {settings.footer.logo_type === "image" && settings.footer.logo_image ? (
+                <img
+                  src={settings.footer.logo_image}
+                  alt={logoText}
+                  className="h-8 sm:h-9 w-auto object-contain"
+                />
+              ) : (
+                <>
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 border border-beige/60 rounded relative flex items-center justify-center">
+                    <span className="text-beige font-medium text-xs sm:text-sm">
+                      {logoInitial}
+                    </span>
+                    <svg
+                      className="absolute -top-2 left-1/2 -translate-x-1/2 text-beige w-6 h-4 sm:w-7 sm:h-4 pointer-events-none"
+                      viewBox="0 0 24 14"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M3 11 A9 9 0 0 1 21 11"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                      />
+                      <path
+                        d="M6 11 v3"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                      />
+                      <path
+                        d="M18 11 v3"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </div>
+                  <span className="theme-text font-medium text-base sm:text-lg tracking-wide">
+                    {logoText}
+                  </span>
+                </>
+              )}
             </div>
 
             {/* Desktop Navigation */}
@@ -170,7 +190,7 @@ const ElegantNavigation = memo(() => {
                   className={`relative text-sm font-medium tracking-wide transition-colors duration-200 ${
                     isActiveItem(item.label)
                       ? "text-beige"
-                      : "text-gray-400 hover:text-gray-200"
+                      : "theme-text-muted hover:text-beige"
                   }`}
                 >
                   {item.label}
@@ -181,7 +201,7 @@ const ElegantNavigation = memo(() => {
               ))}
             </div>
 
-            {/* Desktop quick connect + Language + CTA */}
+            {/* Desktop: Language + Social + Theme toggle + CTA */}
             <div className="hidden sm:flex items-center gap-3">
               <LanguageSwitcher variant="dropdown" />
               <a
@@ -218,6 +238,35 @@ const ElegantNavigation = memo(() => {
                   <path d="M9.7 14.6 9.5 18c.4 0 .6-.2.8-.4l2-1.9 4.1 3c.8.4 1.3.2 1.5-.7L21.6 5c.2-.9-.4-1.3-1.2-1L3.3 10.2c-.8.3-.8.8-.1 1l4.3 1.3 10-6.3-7.8 8.4Z" />
                 </svg>
               </a>
+
+              {/* ── Theme toggle ── */}
+              <button
+                id="theme-toggle"
+                onClick={toggleTheme}
+                aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+                title={isDark ? "Light mode" : "Dark mode"}
+                className="relative p-2 rounded-lg border border-beige/20 hover:border-beige/40 text-beige/80 hover:text-beige transition-all duration-300 overflow-hidden group"
+              >
+                <span
+                  className={`block transition-all duration-300 ${
+                    isDark
+                      ? "opacity-100 rotate-0 scale-100"
+                      : "opacity-0 rotate-90 scale-75 absolute inset-0 m-auto w-5 h-5"
+                  }`}
+                >
+                  <Sun className="w-5 h-5" />
+                </span>
+                <span
+                  className={`block transition-all duration-300 ${
+                    !isDark
+                      ? "opacity-100 rotate-0 scale-100"
+                      : "opacity-0 -rotate-90 scale-75 absolute inset-0 m-auto w-5 h-5"
+                  }`}
+                >
+                  <Moon className="w-5 h-5" />
+                </span>
+              </button>
+
               <Button
                 onClick={() => setCalendlyOpen(true)}
                 className="elegant-button px-4 lg:px-6 py-2 text-xs lg:text-sm font-medium tracking-wide rounded transition-all duration-200"
@@ -229,7 +278,7 @@ const ElegantNavigation = memo(() => {
 
             {/* Mobile menu button */}
             <button
-              className="lg:hidden text-gray-300 hover:text-beige transition-colors duration-200 p-2"
+              className="lg:hidden theme-text-muted hover:text-beige transition-colors duration-200 p-2"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               {isMobileMenuOpen ? (
@@ -242,56 +291,86 @@ const ElegantNavigation = memo(() => {
         </div>
       </nav>
 
-      {/* Simple Mobile Menu */}
+      {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-40 lg:hidden pt-20">
           <div
-            className="absolute inset-0 bg-black/95 backdrop-blur-xl"
+            className="absolute inset-0 backdrop-blur-xl"
+            style={{ backgroundColor: "var(--theme-nav-bg)" }}
             onClick={() => setIsMobileMenuOpen(false)}
           />
 
-          <div className="relative flex flex-col h-full bg-black/98 border-l border-beige/10 overflow-y-auto">
+          <div
+            className="relative flex flex-col h-full border-l border-beige/10 overflow-y-auto"
+            style={{ backgroundColor: "var(--theme-bg)" }}
+          >
             {/* Mobile menu header */}
-            <div className="flex items-center justify-between p-5 border-b border-beige/20">
+            <div
+              className="flex items-center justify-between p-5 border-b border-beige/20"
+            >
               <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 border border-beige/60 rounded relative flex items-center justify-center">
-                  <span className="text-beige font-medium text-xs">{logoInitial}</span>
-                  <svg
-                    className="absolute -top-2 left-1/2 -translate-x-1/2 text-beige w-6 h-4 pointer-events-none"
-                    viewBox="0 0 24 14"
-                    fill="none"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M3 11 A9 9 0 0 1 21 11"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M6 11 v3"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M18 11 v3"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </div>
-                <span className="text-gray-100 font-medium text-base tracking-wide">
-                  {logoText}
-                </span>
+                {settings.footer.logo_type === "image" && settings.footer.logo_image ? (
+                  <img
+                    src={settings.footer.logo_image}
+                    alt={logoText}
+                    className="h-8 w-auto object-contain"
+                  />
+                ) : (
+                  <>
+                    <div className="w-8 h-8 border border-beige/60 rounded relative flex items-center justify-center">
+                      <span className="text-beige font-medium text-xs">{logoInitial}</span>
+                      <svg
+                        className="absolute -top-2 left-1/2 -translate-x-1/2 text-beige w-6 h-4 pointer-events-none"
+                        viewBox="0 0 24 14"
+                        fill="none"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M3 11 A9 9 0 0 1 21 11"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                        />
+                        <path
+                          d="M6 11 v3"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                        />
+                        <path
+                          d="M18 11 v3"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                        />
+                      </svg>
+                    </div>
+                    <span className="theme-text font-medium text-base tracking-wide">
+                      {logoText}
+                    </span>
+                  </>
+                )}
               </div>
-              <button
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-gray-300 hover:text-beige transition-colors p-2"
-              >
-                <X className="w-6 h-6" />
-              </button>
+              <div className="flex items-center gap-2">
+                {/* Theme toggle in mobile header */}
+                <button
+                  onClick={toggleTheme}
+                  aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+                  className="p-2 rounded-lg border border-beige/20 text-beige/80 hover:text-beige hover:border-beige/40 transition-all duration-300"
+                >
+                  {isDark ? (
+                    <Sun className="w-5 h-5" />
+                  ) : (
+                    <Moon className="w-5 h-5" />
+                  )}
+                </button>
+                <button
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="theme-text-muted hover:text-beige transition-colors p-2"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
             </div>
 
             {/* Mobile navigation */}
@@ -304,7 +383,7 @@ const ElegantNavigation = memo(() => {
                     className={`block w-full text-left py-3 px-4 rounded-xl transition-colors ${
                       isActiveItem(item.label)
                         ? "text-beige bg-beige/10"
-                        : "text-gray-300 hover:text-beige hover:bg-beige/5"
+                        : "theme-text-muted hover:text-beige hover:bg-beige/5"
                     }`}
                   >
                     <span className="text-xl font-medium tracking-wide">

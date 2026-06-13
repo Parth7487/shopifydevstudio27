@@ -19,7 +19,7 @@ const CollaborationSection = memo(() => {
 
   return (
     <section className="py-20 px-4 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-black via-charcoal to-graphite"></div>
+      <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom right, var(--theme-bg), var(--theme-bg-subtle))" }}></div>
 
       <div className="relative z-10 max-w-7xl mx-auto">
         {/* Header */}
@@ -27,7 +27,7 @@ const CollaborationSection = memo(() => {
           <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-beige to-clay bg-clip-text text-transparent">
             Trusted by Industry Leaders
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl theme-text-sec max-w-3xl mx-auto">
             We collaborate with the world's top Shopify experts, designers, and
             e-commerce professionals to deliver exceptional results that drive
             real business growth.
@@ -39,7 +39,7 @@ const CollaborationSection = memo(() => {
           {collaborations.map((collab, index) => (
             <div
               key={index}
-              className="bg-gradient-to-br from-charcoal/50 to-graphite/50 backdrop-blur-sm border border-beige/20 rounded-2xl p-8 hover:border-beige/40 transition-colors duration-300"
+              className="theme-card backdrop-blur-sm border theme-border rounded-2xl p-8 hover:border-beige/40 transition-colors duration-300"
             >
               <div className="flex items-start gap-6">
                 <div className="relative">
@@ -67,13 +67,13 @@ const CollaborationSection = memo(() => {
                 </div>
 
                 <div className="flex-1">
-                  <h3 className="text-xl font-bold text-white mb-1">
+                  <h3 className="text-xl font-bold theme-text mb-1">
                     {collab.name}
                   </h3>
                   <p className="text-beige text-sm mb-1">{collab.role}</p>
-                  <p className="text-gray-400 text-sm mb-4">{collab.company}</p>
+                  <p className="theme-text-muted text-sm mb-4">{collab.company}</p>
 
-                  <blockquote className="text-gray-300 italic mb-4">
+                  <blockquote className="theme-text-sec italic mb-4">
                     "{collab.quote}"
                   </blockquote>
 
@@ -91,10 +91,10 @@ const CollaborationSection = memo(() => {
 
         {/* Call to Action */}
         <div className="text-center mt-16">
-          <h3 className="text-2xl font-bold text-white mb-4">
+          <h3 className="text-2xl font-bold theme-text mb-4">
             Ready to Join Our Network of Success Stories?
           </h3>
-          <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
+          <p className="theme-text-sec mb-8 max-w-2xl mx-auto">
             Connect with industry leaders and be part of a collaborative
             ecosystem that's shaping the future of e-commerce.
           </p>

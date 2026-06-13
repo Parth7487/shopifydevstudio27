@@ -817,6 +817,10 @@ const Admin = () => {
   const [copyrightText, setCopyrightText] = useState("");
   const [logoTxt, setLogoTxt] = useState("");
   const [supportMail, setSupportMail] = useState("");
+  const [logoType, setLogoType] = useState<"text" | "image">("text");
+  const [logoImg, setLogoImg] = useState("");
+  const [faviconImg, setFaviconImg] = useState("");
+  const [ogImg, setOgImg] = useState("");
   const [localNav, setLocalNav] = useState<any[]>([]);
   const [localPartners, setLocalPartners] = useState<any>(null);
 
@@ -828,6 +832,10 @@ const Admin = () => {
       setCopyrightText(settings.footer.copyright || "");
       setLogoTxt(settings.footer.logo_text || "");
       setSupportMail(settings.footer.email || "");
+      setLogoType(settings.footer.logo_type || "text");
+      setLogoImg(settings.footer.logo_image || "");
+      setFaviconImg(settings.footer.favicon || "");
+      setOgImg(settings.footer.social_share_image || "");
       setLocalNav(settings.navigation || []);
       setLocalPartners(settings.partners || null);
     }
@@ -859,7 +867,11 @@ const Admin = () => {
     const success2 = await updateSetting("footer", {
       copyright: copyrightText,
       logo_text: logoTxt,
-      email: supportMail
+      email: supportMail,
+      logo_type: logoType,
+      logo_image: logoImg,
+      favicon: faviconImg,
+      social_share_image: ogImg
     });
     setIsSavingSettings(false);
     if (success1 && success2) {
@@ -1488,60 +1500,130 @@ const Admin = () => {
               {/* General Settings Sub-tab */}
               {settingsSubTab === "general" && (
                 <form onSubmit={handleSaveGeneralSettings} className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Logo Text</label>
-                      <input
-                        type="text"
-                        value={logoTxt}
-                        onChange={(e) => setLogoTxt(e.target.value)}
-                        placeholder="Dev Studio"
-                        className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
-                      />
+                  {/* Logo Configuration */}
+                  <div className="bg-white/[0.02] border border-white/5 rounded-xl p-5 space-y-4">
+                    <h4 className="text-sm font-semibold text-beige tracking-wider uppercase mb-1">Logo Customization</h4>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Logo Type</label>
+                        <div className="flex gap-2">
+                          {(["text", "image"] as const).map((type) => (
+                            <button
+                              key={type}
+                              type="button"
+                              onClick={() => setLogoType(type)}
+                              className={`flex-1 py-2 rounded-lg text-xs font-medium transition-all border ${
+                                logoType === type
+                                  ? "bg-beige text-charcoal border-beige shadow-md font-bold"
+                                  : "bg-white/5 text-gray-400 border-white/10 hover:bg-white/10 hover:text-white"
+                              }`}
+                            >
+                              {type === "text" ? "Text Initials Logo" : "Custom Image Logo"}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Logo Text / Brand Name</label>
+                        <input
+                          type="text"
+                          value={logoTxt}
+                          onChange={(e) => setLogoTxt(e.target.value)}
+                          placeholder="Dev Studio"
+                          className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
+                        />
+                        <span className="text-[10px] text-gray-500 mt-1 block">Used as fallback logo text, footer copyright brand, and alt text for accessibility.</span>
+                      </div>
                     </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Support Email</label>
-                      <input
-                        type="email"
-                        value={supportMail}
-                        onChange={(e) => setSupportMail(e.target.value)}
-                        placeholder="shopifydevstudioo@gmail.com"
-                        className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">WhatsApp Contact Number</label>
-                      <input
-                        type="text"
-                        value={waNum}
-                        onChange={(e) => setWaNum(e.target.value)}
-                        placeholder="+917487080421"
-                        className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
-                      />
-                      <span className="text-xs text-gray-500 mt-1 block">Include country code without spaces or symbols (e.g. +917487080421)</span>
-                    </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Telegram Username</label>
-                      <input
-                        type="text"
-                        value={tgHandle}
-                        onChange={(e) => setTgHandle(e.target.value)}
-                        placeholder="prime2357"
-                        className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
-                      />
-                      <span className="text-xs text-gray-500 mt-1 block">Your Telegram username without @ symbol</span>
+
+                    {logoType === "image" && (
+                      <div className="pt-2">
+                        <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Upload Custom Logo Image</label>
+                        <ImageUpload
+                          value={logoImg}
+                          onChange={(url) => setLogoImg(url)}
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Brand Assets (Favicon & Open Graph Image) */}
+                  <div className="bg-white/[0.02] border border-white/5 rounded-xl p-5 space-y-4">
+                    <h4 className="text-sm font-semibold text-beige tracking-wider uppercase mb-1">Branding Assets</h4>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Browser Favicon</label>
+                        <ImageUpload
+                          value={faviconImg}
+                          onChange={(url) => setFaviconImg(url)}
+                        />
+                        <span className="text-[10px] text-gray-500 mt-1 block">Standard ICO, PNG, or SVG icon file. Appears in browser tab.</span>
+                      </div>
+                      
+                      <div>
+                        <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Social Share / OG Image (Social Icon)</label>
+                        <ImageUpload
+                          value={ogImg}
+                          onChange={(url) => setOgImg(url)}
+                        />
+                        <span className="text-[10px] text-gray-500 mt-1 block">Preview image displayed when link is shared on WhatsApp, Telegram, Twitter, etc.</span>
+                      </div>
                     </div>
                   </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Copyright Text</label>
-                    <input
-                      type="text"
-                      value={copyrightText}
-                      onChange={(e) => setCopyrightText(e.target.value)}
-                      placeholder="© 2026 Shopifydevstudio. All rights reserved."
-                      className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
-                    />
+
+                  {/* Contact & Copyright Info */}
+                  <div className="bg-white/[0.02] border border-white/5 rounded-xl p-5 space-y-4">
+                    <h4 className="text-sm font-semibold text-beige tracking-wider uppercase mb-1">Contact & Copyright</h4>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Support Email</label>
+                        <input
+                          type="email"
+                          value={supportMail}
+                          onChange={(e) => setSupportMail(e.target.value)}
+                          placeholder="shopifydevstudioo@gmail.com"
+                          className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">WhatsApp Contact Number</label>
+                        <input
+                          type="text"
+                          value={waNum}
+                          onChange={(e) => setWaNum(e.target.value)}
+                          placeholder="+917487080421"
+                          className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
+                        />
+                        <span className="text-[10px] text-gray-500 mt-1 block">Include country code without spaces or symbols (e.g. +917487080421)</span>
+                      </div>
+                      <div>
+                        <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Telegram Username</label>
+                        <input
+                          type="text"
+                          value={tgHandle}
+                          onChange={(e) => setTgHandle(e.target.value)}
+                          placeholder="prime2357"
+                          className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
+                        />
+                        <span className="text-[10px] text-gray-500 mt-1 block">Your Telegram username without @ symbol</span>
+                      </div>
+                      <div>
+                        <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Copyright Text</label>
+                        <input
+                          type="text"
+                          value={copyrightText}
+                          onChange={(e) => setCopyrightText(e.target.value)}
+                          placeholder="© 2026 Shopifydevstudio. All rights reserved."
+                          className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
+                        />
+                      </div>
+                    </div>
                   </div>
+
                   <div className="flex justify-end pt-4 border-t border-white/10">
                     <button
                       type="submit"

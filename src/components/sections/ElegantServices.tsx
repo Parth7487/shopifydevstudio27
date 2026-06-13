@@ -61,7 +61,8 @@ const ElegantServices = () => {
   return (
     <section
       ref={containerRef}
-      className="py-32 bg-gradient-to-b from-black via-charcoal/30 to-black relative min-h-screen flex items-center"
+      className="py-32 relative min-h-screen flex items-center"
+      style={{ background: "linear-gradient(to bottom, var(--theme-bg), var(--theme-bg-subtle))" }}
     >
       <div className="max-w-7xl mx-auto px-8">
         {/* Section header */}
@@ -71,10 +72,10 @@ const ElegantServices = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-4xl md:text-6xl font-light text-gray-100 mb-6 leading-tight">
+          <h2 className="text-4xl md:text-6xl font-light theme-text mb-6 leading-tight">
             Our <span className="text-beige">Services</span>
           </h2>
-          <p className="text-xl text-gray-400 font-light max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl theme-text-sec font-light max-w-3xl mx-auto leading-relaxed">
             We specialize in creating exceptional Shopify experiences that
             combine aesthetic excellence with technical precision.
           </p>
@@ -106,7 +107,7 @@ const ElegantServices = () => {
                 whileHover={{ y: -8, scale: 1.02 }}
                 className="group cursor-pointer"
               >
-                <Card className="elegant-card h-full transition-all duration-500 hover:border-beige/40 hover:shadow-2xl hover:shadow-beige/20">
+                <Card className="elegant-card theme-card h-full transition-all duration-500 hover:border-beige/40 hover:shadow-2xl hover:shadow-beige/20">
                   <CardContent className="p-8 relative overflow-hidden">
                     {/* Hover glow effect */}
                     <motion.div
@@ -122,10 +123,10 @@ const ElegantServices = () => {
                       >
                         {service.icon}
                       </motion.div>
-                      <h3 className="text-xl font-medium text-gray-100 mb-4 group-hover:text-beige transition-colors duration-300">
+                      <h3 className="text-xl font-medium theme-text mb-4 group-hover:text-beige transition-colors duration-300">
                         {service.title}
                       </h3>
-                      <p className="text-gray-400 leading-relaxed font-light group-hover:text-gray-300 transition-colors duration-300">
+                      <p className="theme-text-sec leading-relaxed font-light group-hover:text-beige/90 transition-colors duration-300">
                         {service.description}
                       </p>
 
@@ -154,7 +155,7 @@ const ElegantServices = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.5 }}
         >
-          <h3 className="text-lg font-medium text-gray-300 mb-8 tracking-wide">
+          <h3 className="text-lg font-medium theme-text-sec mb-8 tracking-wide">
             TECHNOLOGIES WE MASTER
           </h3>
           <div className="flex flex-wrap justify-center items-center gap-12">
@@ -168,7 +169,7 @@ const ElegantServices = () => {
             ].map((tech, index) => (
               <motion.span
                 key={index}
-                className="text-gray-400 hover:text-beige font-light tracking-wide transition-colors duration-300"
+                className="theme-text-muted hover:text-beige font-light tracking-wide transition-colors duration-300"
                 initial={{ opacity: 0 }}
                 animate={isInView ? { opacity: 1 } : {}}
                 transition={{ duration: 0.5, delay: 0.7 + index * 0.1 }}

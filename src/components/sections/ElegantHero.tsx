@@ -110,7 +110,7 @@ const ElegantHero = () => {
       }}
     >
       {/* Elegant background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-black via-charcoal/40 to-black subtle-grain" />
+      <div className="absolute inset-0 subtle-grain" style={{ background: "linear-gradient(135deg, var(--theme-bg) 0%, var(--theme-bg-subtle) 100%)" }} />
 
       {/* Fluid cursor effect with graceful fallback */}
       <div className="absolute inset-0 z-0 gpu-accelerated pointer-events-none">
@@ -171,7 +171,7 @@ const ElegantHero = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1, delay: 0.5 }}
         >
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-extrabold leading-[0.9] tracking-tight text-gray-100 mb-6 sm:mb-8">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-extrabold leading-[0.9] tracking-tight theme-text mb-6 sm:mb-8">
             <motion.span
               className="block"
               initial={{ opacity: 0, y: 30 }}
@@ -201,7 +201,7 @@ const ElegantHero = () => {
 
         {/* Elegant subtitle */}
         <motion.p
-          className="responsive-text-base text-gray-400 font-light leading-relaxed max-w-3xl mx-auto mb-10 sm:mb-16"
+          className="responsive-text-base theme-text-sec font-light leading-relaxed max-w-3xl mx-auto mb-10 sm:mb-16"
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 1.3 }}

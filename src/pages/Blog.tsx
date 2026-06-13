@@ -138,7 +138,7 @@ const Blog = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen" style={{ backgroundColor: "var(--theme-bg)", color: "var(--theme-text)" }}>
       <ElegantNavigation />
 
       {/* Hero Section */}

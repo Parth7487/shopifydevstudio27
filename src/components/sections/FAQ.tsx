@@ -124,7 +124,7 @@ const FAQ = () => {
   };
 
   return (
-    <section className="bg-black py-20 px-4">
+    <section className="py-20 px-4" style={{ backgroundColor: "var(--theme-bg)" }}>
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial="hidden"
@@ -133,10 +133,10 @@ const FAQ = () => {
           variants={titleVariants}
           className="text-center mb-16"
         >
-          <h2 className="text-5xl font-bold text-white mb-6 tracking-tight">
+          <h2 className="text-5xl font-bold theme-text mb-6 tracking-tight">
             Questions? <span className="text-beige">Answered.</span>
           </h2>
-          <p className="text-gray-300 text-lg leading-7">
+          <p className="theme-text-sec text-lg leading-7">
             Everything you need to know about transforming your store
           </p>
         </motion.div>
@@ -152,12 +152,12 @@ const FAQ = () => {
               <motion.div key={index} variants={itemVariants}>
                 <AccordionItem
                   value={`item-${index}`}
-                  className="bg-gray-900/20 border border-gray-700 rounded-lg px-6"
+                  className="theme-card border theme-border rounded-lg px-6"
                 >
-                  <AccordionTrigger className="text-lg font-medium text-white text-left py-6 hover:no-underline">
+                  <AccordionTrigger className="text-lg font-medium theme-text text-left py-6 hover:no-underline">
                     {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-gray-300 pb-6 leading-relaxed">
+                  <AccordionContent className="theme-text-sec pb-6 leading-relaxed">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>

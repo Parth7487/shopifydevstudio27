@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSettings } from "../hooks/useSettings";
 
 interface Props {
   onFinish: () => void;
@@ -7,6 +8,7 @@ interface Props {
 
 const CinematicIntroOverlay = ({ onFinish }: Props) => {
   const [visible, setVisible] = useState(true);
+  const { settings } = useSettings();
 
   useEffect(() => {
     const t = setTimeout(() => {
@@ -35,9 +37,9 @@ const CinematicIntroOverlay = ({ onFinish }: Props) => {
             className="absolute inset-0 flex items-center justify-center"
           >
             <motion.img
-              src="/favicon.svg"
-              alt="Logo"
-              className="w-28 h-28 rounded-xl drop-shadow-[0_0_30px_rgba(230,177,126,0.2)]"
+              src={settings.footer.logo_image || settings.footer.favicon || "/favicon.svg"}
+              alt={settings.footer.logo_text || "Logo"}
+              className="w-28 h-28 rounded-xl object-contain drop-shadow-[0_0_30px_rgba(230,177,126,0.2)]"
               initial={{ rotate: -8, filter: "blur(4px)" }}
               animate={{ rotate: 0, filter: "blur(0px)" }}
               transition={{ duration: 0.8, ease: "easeOut" }}

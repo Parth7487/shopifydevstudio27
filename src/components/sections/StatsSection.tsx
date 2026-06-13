@@ -42,7 +42,7 @@ const StatsSection = () => {
   };
 
   return (
-    <section className="bg-black py-16 px-6">
+    <section className="py-16 px-6" style={{ backgroundColor: "var(--theme-bg)" }}>
       <div className="max-w-4xl mx-auto text-center">
         <motion.div
           initial="hidden"
@@ -51,7 +51,7 @@ const StatsSection = () => {
           variants={textVariants}
           className="mb-12"
         >
-          <p className="text-white text-lg md:text-xl leading-relaxed mb-4">
+          <p className="theme-text text-lg md:text-xl leading-relaxed mb-4">
             Stop losing customers to poorly designed stores.{" "}
             <span className="text-beige font-semibold">87% of shoppers</span>{" "}
             judge credibility by design alone. We craft{" "}
@@ -75,7 +75,7 @@ const StatsSection = () => {
             >
               <div className="w-2 h-2 bg-green-400 rounded-full flex-shrink-0"></div>
               <div className="text-left">
-                <span className="text-white font-medium text-base">
+                <span className="theme-text font-medium text-base">
                   {stat.value} {stat.label}
                 </span>
               </div>

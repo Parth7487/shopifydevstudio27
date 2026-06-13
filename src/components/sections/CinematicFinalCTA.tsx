@@ -26,7 +26,8 @@ const CinematicFinalCTA = () => {
   return (
     <section
       ref={containerRef}
-      className="py-40 bg-navy relative overflow-hidden"
+      className="py-40 relative overflow-hidden"
+      style={{ backgroundColor: "var(--theme-bg)" }}
     >
       {/* Dynamic background */}
       <motion.div className="absolute inset-0" style={{ y }}>
@@ -133,7 +134,7 @@ const CinematicFinalCTA = () => {
         >
           {/* Main headline */}
           <motion.h2
-            className="text-6xl md:text-8xl lg:text-9xl font-bold text-white mb-8 leading-tight"
+            className="text-6xl md:text-8xl lg:text-9xl font-bold theme-text mb-8 leading-tight"
             initial={{ opacity: 0, y: 50 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 1, delay: 0.4 }}
@@ -163,7 +164,7 @@ const CinematicFinalCTA = () => {
             <br />
             <motion.span
               animate={{
-                color: ["#ffffff", "#00FFB2", "#ffffff"],
+                color: ["var(--theme-text)", "#00FFB2", "var(--theme-text)"],
               }}
               transition={{ duration: 4, repeat: Infinity, delay: 1 }}
             >
@@ -173,7 +174,7 @@ const CinematicFinalCTA = () => {
 
           {/* Subheadline */}
           <motion.p
-            className="text-2xl md:text-3xl text-gray-300 mb-16 max-w-4xl mx-auto leading-relaxed"
+            className="text-2xl md:text-3xl theme-text-sec mb-16 max-w-4xl mx-auto leading-relaxed"
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.8 }}
@@ -305,7 +306,7 @@ const CinematicFinalCTA = () => {
                   {stat.icon}
                 </motion.div>
                 <motion.div
-                  className="text-4xl md:text-5xl font-bold text-mint mb-2 group-hover:text-white transition-colors duration-300"
+                  className="text-4xl md:text-5xl font-bold text-mint mb-2 group-hover:text-[var(--theme-text)] transition-colors duration-300"
                   animate={{
                     scale: [1, 1.05, 1],
                   }}
@@ -317,7 +318,7 @@ const CinematicFinalCTA = () => {
                 >
                   {stat.value}
                 </motion.div>
-                <div className="text-gray-400 text-sm group-hover:text-gray-300 transition-colors duration-300">
+                <div className="theme-text-muted text-sm group-hover:text-[var(--theme-text-sec)] transition-colors duration-300">
                   {stat.label}
                 </div>
               </motion.div>
@@ -332,7 +333,7 @@ const CinematicFinalCTA = () => {
             transition={{ duration: 0.8, delay: 2.2 }}
           >
             <motion.p
-              className="text-lg text-gray-400 max-w-3xl mx-auto"
+              className="text-lg theme-text-muted max-w-3xl mx-auto"
               animate={{
                 opacity: [0.7, 1, 0.7],
               }}
@@ -344,7 +345,7 @@ const CinematicFinalCTA = () => {
               <motion.span
                 className="text-mint font-medium"
                 animate={{
-                  color: ["#00FFB2", "#ffffff", "#00FFB2"],
+                  color: ["#00FFB2", "var(--theme-text)", "#00FFB2"],
                 }}
                 transition={{ duration: 2, repeat: Infinity, delay: 1 }}
               >

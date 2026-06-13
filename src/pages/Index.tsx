@@ -25,9 +25,7 @@ const ProblemSolution = lazy(
 const ComponentLoader = memo(() => <div className="h-4" />);
 
 const Index = memo(() => {
-  // Set dark mode immediately - no delays
   useEffect(() => {
-    document.documentElement.classList.add("dark");
 
     updatePageMeta({
       title:
@@ -112,7 +110,7 @@ const Index = memo(() => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-black text-white overflow-x-hidden">
+    <div className="min-h-screen overflow-x-hidden" style={{ backgroundColor: "var(--theme-bg)", color: "var(--theme-text)" }}>
       {showPreloader && <Preloader onComplete={handlePreloaderComplete} />}
 
       {/* Navigation - critical above-the-fold */}

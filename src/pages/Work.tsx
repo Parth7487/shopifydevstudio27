@@ -648,7 +648,7 @@ const Work = () => {
   }, [filteredProjects, supabaseProjects.length]);
 
   return (
-    <div className="min-h-screen bg-black text-white relative">
+    <div className="min-h-screen relative" style={{ backgroundColor: "var(--theme-bg)", color: "var(--theme-text)" }}>
       {/* Glossy overlay effects */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/20 pointer-events-none"></div>
       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.01] to-transparent pointer-events-none"></div>

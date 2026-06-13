@@ -119,7 +119,7 @@ const About = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen" style={{ backgroundColor: "var(--theme-bg)", color: "var(--theme-text)" }}>
       {/* Navigation */}
       <ElegantNavigation />
 

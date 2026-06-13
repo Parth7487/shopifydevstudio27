@@ -50,7 +50,7 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-20 bg-navy relative overflow-hidden">
+    <section id="contact" className="py-20 relative overflow-hidden" style={{ backgroundColor: "var(--theme-bg)" }}>
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-5">
         <div
@@ -70,10 +70,10 @@ const Contact = () => {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">
+          <h2 className="text-4xl md:text-6xl font-bold theme-text mb-6">
             Let's Start <span className="text-gradient">Building</span>
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl theme-text-sec max-w-3xl mx-auto">
             Ready to transform your Shopify store? Get in touch and let's
             discuss how we can bring your vision to life.
           </p>
@@ -87,7 +87,7 @@ const Contact = () => {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <Card className="bg-navy-700/50 border-mint/20 backdrop-blur-sm">
+            <Card className="theme-card border-mint/20 backdrop-blur-sm">
               <CardContent className="p-8">
                 {isSubmitted ? (
                   <motion.div
@@ -111,10 +111,10 @@ const Contact = () => {
                         />
                       </svg>
                     </div>
-                    <h3 className="text-2xl font-bold text-white mb-4">
+                    <h3 className="text-2xl font-bold theme-text mb-4">
                       Message Sent Successfully!
                     </h3>
-                    <p className="text-gray-300">
+                    <p className="theme-text-sec">
                       Thank you for reaching out. We'll get back to you within
                       24 hours.
                     </p>
@@ -128,7 +128,7 @@ const Contact = () => {
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                      <label className="block text-white mb-2 font-medium">
+                      <label className="block theme-text mb-2 font-medium">
                         Name
                       </label>
                       <Input
@@ -137,12 +137,12 @@ const Contact = () => {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="bg-navy-800/50 border-mint/20 text-white placeholder-gray-400 focus:border-mint focus:ring-mint"
+                        className="bg-[var(--theme-input-bg)] border-[var(--theme-border)] text-[var(--theme-text)] placeholder-[var(--theme-text-muted)] focus:border-mint focus:ring-mint"
                         placeholder="Your full name"
                       />
                     </div>
                     <div>
-                      <label className="block text-white mb-2 font-medium">
+                      <label className="block theme-text mb-2 font-medium">
                         Email
                       </label>
                       <Input
@@ -151,12 +151,12 @@ const Contact = () => {
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className="bg-navy-800/50 border-mint/20 text-white placeholder-gray-400 focus:border-mint focus:ring-mint"
+                        className="bg-[var(--theme-input-bg)] border-[var(--theme-border)] text-[var(--theme-text)] placeholder-[var(--theme-text-muted)] focus:border-mint focus:ring-mint"
                         placeholder="your.email@example.com"
                       />
                     </div>
                     <div>
-                      <label className="block text-white mb-2 font-medium">
+                      <label className="block theme-text mb-2 font-medium">
                         Message
                       </label>
                       <Textarea
@@ -165,7 +165,7 @@ const Contact = () => {
                         onChange={handleChange}
                         required
                         rows={5}
-                        className="bg-navy-800/50 border-mint/20 text-white placeholder-gray-400 focus:border-mint focus:ring-mint resize-none"
+                        className="bg-[var(--theme-input-bg)] border-[var(--theme-border)] text-[var(--theme-text)] placeholder-[var(--theme-text-muted)] focus:border-mint focus:ring-mint resize-none"
                         placeholder="Tell us about your project..."
                       />
                     </div>
@@ -198,10 +198,10 @@ const Contact = () => {
             className="space-y-8"
           >
             <div>
-              <h3 className="text-2xl font-bold text-white mb-6">
+              <h3 className="text-2xl font-bold theme-text mb-6">
                 Ready to Get Started?
               </h3>
-              <p className="text-gray-300 text-lg leading-relaxed mb-8">
+              <p className="theme-text-sec text-lg leading-relaxed mb-8">
                 Whether you need a complete store redesign, performance
                 optimization, or custom feature development, we're here to help
                 you succeed.
@@ -226,10 +226,10 @@ const Contact = () => {
                   </svg>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-white mb-1">
+                  <h4 className="font-semibold theme-text mb-1">
                     Response Time
                   </h4>
-                  <p className="text-gray-300">Within 24 hours</p>
+                  <p className="theme-text-sec">Within 24 hours</p>
                 </div>
               </div>
 
@@ -256,8 +256,8 @@ const Contact = () => {
                   </svg>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-white mb-1">Location</h4>
-                  <p className="text-gray-300">Remote, Worldwide</p>
+                  <h4 className="font-semibold theme-text mb-1">Location</h4>
+                  <p className="theme-text-sec">Remote, Worldwide</p>
                 </div>
               </div>
             </div>

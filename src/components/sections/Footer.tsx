@@ -26,36 +26,46 @@ const Footer = () => {
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
   return (
-    <footer className="bg-charcoal border-t border-beige/20 py-8 sm:py-12">
+    <footer className="theme-card border-t theme-border py-8 sm:py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Logo and Description */}
         <motion.div
-          className="mb-8 pb-8 border-b border-beige/10"
+          className="mb-8 pb-8 border-b theme-border"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
           <div className="flex items-center space-x-3 mb-4">
-            <div className="w-10 h-10 bg-beige rounded-lg flex items-center justify-center flex-shrink-0">
-              <span className="text-black font-bold text-lg">{logoInitial}</span>
-            </div>
-            <span className="text-gray-100 font-semibold text-lg">
-              {logoText}
-            </span>
+            {settings.footer.logo_type === "image" && settings.footer.logo_image ? (
+              <img
+                src={settings.footer.logo_image}
+                alt={logoText}
+                className="h-10 w-auto object-contain"
+              />
+            ) : (
+              <>
+                <div className="w-10 h-10 bg-beige rounded-lg flex items-center justify-center flex-shrink-0">
+                  <span className="text-black font-bold text-lg">{logoInitial}</span>
+                </div>
+                <span className="theme-text font-semibold text-lg">
+                  {logoText}
+                </span>
+              </>
+            )}
           </div>
-          <p className="text-gray-400 font-light text-sm leading-relaxed max-w-2xl">
+          <p className="theme-text-sec font-light text-sm leading-relaxed max-w-2xl">
             Premium Shopify theme development agency creating exceptional
             e-commerce experiences that drive results and exceed expectations.
           </p>
-          <div className="bg-gradient-to-r from-beige/20 to-clay/20 border border-beige/30 rounded-lg p-4 mt-5 w-full sm:w-fit">
+          <div className="bg-gradient-to-r from-beige/15 to-clay/15 border border-beige/30 rounded-lg p-4 mt-5 w-full sm:w-fit">
             <div className="flex items-center gap-2 mb-2">
               <span className="text-beige text-xl">🔥</span>
               <span className="text-beige text-sm font-semibold">
                 Urgent Project?
               </span>
             </div>
-            <p className="text-gray-300 text-xs leading-relaxed">
+            <p className="theme-text-sec text-xs leading-relaxed">
               2 emergency spaces available for quick turnaround projects
             </p>
           </div>
@@ -73,13 +83,14 @@ const Footer = () => {
             {isMobile ? (
               <button
                 onClick={() => toggleSection("resources")}
-                className="w-full flex justify-between items-center py-3 px-4 bg-charcoal/50 hover:bg-charcoal/70 rounded-lg transition-colors mb-2"
+                className="w-full flex justify-between items-center py-3 px-4 rounded-lg transition-colors mb-2"
+                style={{ backgroundColor: "var(--theme-bg-subtle)" }}
               >
-                <h3 className="text-white font-semibold text-base">
+                <h3 className="theme-text font-semibold text-base">
                   Resources
                 </h3>
                 <span
-                  className={`transform transition-transform ${
+                  className={`theme-text transform transition-transform ${
                     expandedSection === "resources" ? "rotate-180" : ""
                   }`}
                 >
@@ -87,7 +98,7 @@ const Footer = () => {
                 </span>
               </button>
             ) : (
-              <h3 className="text-white font-semibold mb-4 text-base">
+              <h3 className="theme-text font-semibold mb-4 text-base">
                 Resources
               </h3>
             )}
@@ -96,7 +107,7 @@ const Footer = () => {
                 <li>
                   <button
                     onClick={() => navigate("/documentation")}
-                    className="text-gray-400 hover:text-beige transition-colors duration-150 text-sm cursor-pointer font-medium block w-full text-left py-1.5 px-4 md:px-0 hover:bg-beige/5 md:hover:bg-transparent rounded md:rounded-none"
+                    className="theme-text-muted hover:text-beige transition-colors duration-150 text-sm cursor-pointer font-medium block w-full text-left py-1.5 px-4 md:px-0 hover:bg-beige/5 md:hover:bg-transparent rounded md:rounded-none"
                   >
                     Documentation
                   </button>
@@ -104,7 +115,7 @@ const Footer = () => {
                 <li>
                   <button
                     onClick={() => navigate("/support")}
-                    className="text-gray-400 hover:text-beige transition-colors duration-150 text-sm cursor-pointer font-medium block w-full text-left py-1.5 px-4 md:px-0 hover:bg-beige/5 md:hover:bg-transparent rounded md:rounded-none"
+                    className="theme-text-muted hover:text-beige transition-colors duration-150 text-sm cursor-pointer font-medium block w-full text-left py-1.5 px-4 md:px-0 hover:bg-beige/5 md:hover:bg-transparent rounded md:rounded-none"
                   >
                     Support
                   </button>
@@ -112,7 +123,7 @@ const Footer = () => {
                 <li>
                   <button
                     onClick={() => navigate("/faq")}
-                    className="text-gray-400 hover:text-beige transition-colors duration-150 text-sm cursor-pointer font-medium block w-full text-left py-1.5 px-4 md:px-0 hover:bg-beige/5 md:hover:bg-transparent rounded md:rounded-none"
+                    className="theme-text-muted hover:text-beige transition-colors duration-150 text-sm cursor-pointer font-medium block w-full text-left py-1.5 px-4 md:px-0 hover:bg-beige/5 md:hover:bg-transparent rounded md:rounded-none"
                   >
                     FAQ
                   </button>
@@ -131,21 +142,22 @@ const Footer = () => {
             {isMobile ? (
               <button
                 onClick={() => toggleSection("contact")}
-                className="w-full flex justify-between items-center py-3 px-4 bg-charcoal/50 hover:bg-charcoal/70 rounded-lg transition-colors mb-2"
+                className="w-full flex justify-between items-center py-3 px-4 rounded-lg transition-colors mb-2"
+                style={{ backgroundColor: "var(--theme-bg-subtle)" }}
               >
-                <h3 className="text-white font-semibold text-base">
+                <h3 className="theme-text font-semibold text-base">
                   Get in Touch
                 </h3>
                 <span
-                  className={`transform transition-transform ${
+                  className={`theme-text transform transition-transform ${
                     expandedSection === "contact" ? "rotate-180" : ""
                   }`}
                 >
-                  ���
+                  ▼
                 </span>
               </button>
             ) : (
-              <h3 className="text-white font-semibold mb-4 text-base">
+              <h3 className="theme-text font-semibold mb-4 text-base">
                 Get in Touch
               </h3>
             )}
@@ -154,7 +166,7 @@ const Footer = () => {
                 <li>
                   <a
                     href="mailto:consult@shopifydevstudio.tech"
-                    className="text-gray-400 hover:text-beige transition-colors duration-150 text-sm block py-1.5 px-4 md:px-0 hover:bg-beige/5 md:hover:bg-transparent rounded md:rounded-none font-medium"
+                    className="theme-text-muted hover:text-beige transition-colors duration-150 text-sm block py-1.5 px-4 md:px-0 hover:bg-beige/5 md:hover:bg-transparent rounded md:rounded-none font-medium"
                   >
                     consult@shopifydevstudio.tech
                   </a>
@@ -162,15 +174,15 @@ const Footer = () => {
                 <li>
                   <a
                     href={`mailto:${settings.footer.email}`}
-                    className="text-gray-400 hover:text-beige transition-colors duration-150 text-sm block py-1.5 px-4 md:px-0 hover:bg-beige/5 md:hover:bg-transparent rounded md:rounded-none font-medium"
+                    className="theme-text-muted hover:text-beige transition-colors duration-150 text-sm block py-1.5 px-4 md:px-0 hover:bg-beige/5 md:hover:bg-transparent rounded md:rounded-none font-medium"
                   >
                     {settings.footer.email}
                   </a>
                 </li>
-                <li className="text-gray-400 text-sm py-1.5 px-4 md:px-0">
+                <li className="theme-text-muted text-sm py-1.5 px-4 md:px-0 font-medium">
                   Remote, Worldwide
                 </li>
-                <li className="text-gray-400 text-sm py-1.5 px-4 md:px-0">
+                <li className="theme-text-muted text-sm py-1.5 px-4 md:px-0 font-medium">
                   24h Response Time
                 </li>
               </ul>
@@ -187,13 +199,14 @@ const Footer = () => {
             {isMobile ? (
               <button
                 onClick={() => toggleSection("connect")}
-                className="w-full flex justify-between items-center py-3 px-4 bg-charcoal/50 hover:bg-charcoal/70 rounded-lg transition-colors mb-2"
+                className="w-full flex justify-between items-center py-3 px-4 rounded-lg transition-colors mb-2"
+                style={{ backgroundColor: "var(--theme-bg-subtle)" }}
               >
-                <h3 className="text-white font-semibold text-base">
+                <h3 className="theme-text font-semibold text-base">
                   Quick Connect
                 </h3>
                 <span
-                  className={`transform transition-transform ${
+                  className={`theme-text transform transition-transform ${
                     expandedSection === "connect" ? "rotate-180" : ""
                   }`}
                 >
@@ -201,7 +214,7 @@ const Footer = () => {
                 </span>
               </button>
             ) : (
-              <h3 className="text-white font-semibold mb-4 text-base">
+              <h3 className="theme-text font-semibold mb-4 text-base">
                 Quick Connect
               </h3>
             )}
@@ -212,7 +225,7 @@ const Footer = () => {
                     href="https://wa.me/917487080421?text=Hello%20Shopify%20Dev%20Studio%20%E2%80%93%20I%20would%20like%20to%20connect"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-400 hover:text-beige transition-colors duration-150 text-sm inline-flex items-center gap-3 py-2 px-4 md:px-0 hover:bg-beige/5 md:hover:bg-transparent rounded md:rounded-none font-medium"
+                    className="theme-text-muted hover:text-beige transition-colors duration-150 text-sm inline-flex items-center gap-3 py-2 px-4 md:px-0 hover:bg-beige/5 md:hover:bg-transparent rounded md:rounded-none font-medium"
                   >
                     <svg
                       viewBox="0 0 24 24"
@@ -231,7 +244,7 @@ const Footer = () => {
                     href="https://t.me/prime2357"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-400 hover:text-beige transition-colors duration-150 text-sm inline-flex items-center gap-3 py-2 px-4 md:px-0 hover:bg-beige/5 md:hover:bg-transparent rounded md:rounded-none font-medium"
+                    className="theme-text-muted hover:text-beige transition-colors duration-150 text-sm inline-flex items-center gap-3 py-2 px-4 md:px-0 hover:bg-beige/5 md:hover:bg-transparent rounded md:rounded-none font-medium"
                   >
                     <svg
                       viewBox="0 0 24 24"
@@ -250,7 +263,7 @@ const Footer = () => {
                     href="https://discord.gg/GcfkVXsn"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-400 hover:text-beige transition-colors duration-150 text-sm inline-flex items-center gap-3 py-2 px-4 md:px-0 hover:bg-beige/5 md:hover:bg-transparent rounded md:rounded-none font-medium"
+                    className="theme-text-muted hover:text-beige transition-colors duration-150 text-sm inline-flex items-center gap-3 py-2 px-4 md:px-0 hover:bg-beige/5 md:hover:bg-transparent rounded md:rounded-none font-medium"
                   >
                     <svg
                       viewBox="0 0 24 24"
@@ -264,7 +277,7 @@ const Footer = () => {
                     Discord
                   </a>
                 </li>
-                <li className="text-gray-400 text-sm py-1.5 px-4 md:px-0">
+                <li className="theme-text-muted text-sm py-1.5 px-4 md:px-0 font-medium">
                   Available 7 days/week
                 </li>
               </ul>
@@ -274,7 +287,7 @@ const Footer = () => {
 
         {/* Shopify Partner Badge */}
         <motion.div
-          className="border-t border-beige/10 pt-8 mb-6"
+          className="border-t theme-border pt-8 mb-6"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
@@ -286,7 +299,7 @@ const Footer = () => {
               alt="Official Shopify Partner"
               className="h-16 w-auto object-contain"
             />
-            <p className="text-gray-300 text-xs sm:text-sm font-medium">
+            <p className="theme-text-sec text-xs sm:text-sm font-medium">
               Official Shopify Partner
             </p>
           </div>
@@ -300,7 +313,7 @@ const Footer = () => {
           transition={{ duration: 0.6, delay: 0.35 }}
           viewport={{ once: true }}
         >
-          <p className="text-gray-400 text-xs sm:text-sm">
+          <p className="theme-text-muted text-xs sm:text-sm font-medium">
             {settings.footer.copyright}
           </p>
         </motion.div>
