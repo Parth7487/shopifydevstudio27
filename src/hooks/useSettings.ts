@@ -8,6 +8,8 @@ export interface FooterSettings {
   logo_image?: string;
   favicon?: string;
   social_share_image?: string;
+  seo_title?: string;
+  seo_description?: string;
 }
 
 export interface SocialSettings {
@@ -279,7 +281,9 @@ export const DEFAULT_SETTINGS: SiteSettings = {
     logo_type: "text",
     logo_image: "",
     favicon: "",
-    social_share_image: ""
+    social_share_image: "",
+    seo_title: "",
+    seo_description: ""
   },
   socials: {
     whatsapp: "+917487080421",
@@ -401,6 +405,37 @@ export const useSettings = () => {
         const twitterImage = document.querySelector('meta[name="twitter:image"]');
         if (twitterImage) {
           twitterImage.setAttribute('content', ogImageUrl);
+        }
+      }
+
+      // 3. Update SEO Title if present
+      const title = settings.footer.seo_title;
+      if (title) {
+        document.title = title;
+        const ogTitle = document.querySelector('meta[property="og:title"]');
+        if (ogTitle) {
+          ogTitle.setAttribute('content', title);
+        }
+        const twitterTitle = document.querySelector('meta[name="twitter:title"]');
+        if (twitterTitle) {
+          twitterTitle.setAttribute('content', title);
+        }
+      }
+
+      // 4. Update SEO Description if present
+      const description = settings.footer.seo_description;
+      if (description) {
+        const metaDesc = document.querySelector('meta[name="description"]');
+        if (metaDesc) {
+          metaDesc.setAttribute('content', description);
+        }
+        const ogDesc = document.querySelector('meta[property="og:description"]');
+        if (ogDesc) {
+          ogDesc.setAttribute('content', description);
+        }
+        const twitterDesc = document.querySelector('meta[name="twitter:description"]');
+        if (twitterDesc) {
+          twitterDesc.setAttribute('content', description);
         }
       }
     }

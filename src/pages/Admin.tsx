@@ -821,6 +821,8 @@ const Admin = () => {
   const [logoImg, setLogoImg] = useState("");
   const [faviconImg, setFaviconImg] = useState("");
   const [ogImg, setOgImg] = useState("");
+  const [seoTitle, setSeoTitle] = useState("");
+  const [seoDescription, setSeoDescription] = useState("");
   const [localNav, setLocalNav] = useState<any[]>([]);
   const [localPartners, setLocalPartners] = useState<any>(null);
 
@@ -836,6 +838,8 @@ const Admin = () => {
       setLogoImg(settings.footer.logo_image || "");
       setFaviconImg(settings.footer.favicon || "");
       setOgImg(settings.footer.social_share_image || "");
+      setSeoTitle(settings.footer.seo_title || "");
+      setSeoDescription(settings.footer.seo_description || "");
       setLocalNav(settings.navigation || []);
       setLocalPartners(settings.partners || null);
     }
@@ -871,7 +875,9 @@ const Admin = () => {
       logo_type: logoType,
       logo_image: logoImg,
       favicon: faviconImg,
-      social_share_image: ogImg
+      social_share_image: ogImg,
+      seo_title: seoTitle,
+      seo_description: seoDescription
     });
     setIsSavingSettings(false);
     if (success1 && success2) {
@@ -1570,6 +1576,75 @@ const Admin = () => {
                           onChange={(url) => setOgImg(url)}
                         />
                         <span className="text-[10px] text-gray-500 mt-1 block">Preview image displayed when link is shared on WhatsApp, Telegram, Twitter, etc.</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Search Engine Optimization & Social Sharing */}
+                  <div className="bg-white/[0.02] border border-white/5 rounded-xl p-5 space-y-4">
+                    <h4 className="text-sm font-semibold text-beige tracking-wider uppercase mb-1">Social Sharing & SEO</h4>
+                    
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                      {/* Left: Snippet Preview Card */}
+                      <div className="lg:col-span-4 bg-white/[0.01] border border-white/10 rounded-xl p-4 space-y-3">
+                        <span className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider block">Share Preview</span>
+                        <div className="bg-black/45 border border-white/5 rounded-lg overflow-hidden shadow-xl">
+                          {/* Image preview */}
+                          <div className="aspect-[1.91/1] w-full bg-white/[0.02] relative flex items-center justify-center border-b border-white/5">
+                            {ogImg ? (
+                              <img src={ogImg} alt="Share preview" className="w-full h-full object-cover" />
+                            ) : faviconImg ? (
+                              <img src={faviconImg} alt="Share preview" className="w-12 h-12 object-contain opacity-40" />
+                            ) : (
+                              <span className="text-[10px] text-gray-600">No image uploaded</span>
+                            )}
+                          </div>
+                          {/* Text preview */}
+                          <div className="p-3.5 space-y-1 bg-black/20">
+                            <span className="text-[9px] text-gray-500 block uppercase tracking-wider">shopifydevstudio.com</span>
+                            <h5 className="text-xs font-bold text-white line-clamp-1">
+                              {seoTitle || logoTxt || "Shopify Dev Studio"}
+                            </h5>
+                            <p className="text-[10px] text-gray-400 line-clamp-2 leading-relaxed">
+                              {seoDescription || "Custom Shopify themes, performance optimization, and conversion-focused development."}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Right: Inputs */}
+                      <div className="lg:col-span-8 space-y-4">
+                        <div>
+                          <div className="flex justify-between items-center mb-2">
+                            <label className="text-xs font-semibold text-gray-300 uppercase tracking-wider">Home Page Title</label>
+                            <span className={`text-[10px] ${seoTitle.length > 70 ? "text-red-400" : "text-gray-500"}`}>
+                              {seoTitle.length} of 70 characters used
+                            </span>
+                          </div>
+                          <input
+                            type="text"
+                            value={seoTitle}
+                            onChange={(e) => setSeoTitle(e.target.value)}
+                            placeholder="Shopify Dev Studio | Custom Shopify Theme Development"
+                            className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors"
+                          />
+                        </div>
+
+                        <div>
+                          <div className="flex justify-between items-center mb-2">
+                            <label className="text-xs font-semibold text-gray-300 uppercase tracking-wider">Meta Description</label>
+                            <span className={`text-[10px] ${seoDescription.length > 320 ? "text-red-400" : "text-gray-500"}`}>
+                              {seoDescription.length} of 320 characters used
+                            </span>
+                          </div>
+                          <textarea
+                            value={seoDescription}
+                            onChange={(e) => setSeoDescription(e.target.value)}
+                            rows={3}
+                            placeholder="Custom Shopify themes and speed optimization that convert. We build high-performing storefronts for growing brands."
+                            className="w-full bg-white/5 border border-white/15 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-beige/60 text-sm transition-colors resize-none"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
