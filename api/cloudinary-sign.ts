@@ -2,7 +2,7 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 import crypto from "crypto";
 
 const CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME || "ddu46zaxl";
-const API_KEY = process.env.CLOUDINARY_API_KEY || "586764961315959";
+const API_KEY = process.env.CLOUDINARY_API_KEY || "686764961315939";
 const API_SECRET = process.env.CLOUDINARY_API_SECRET || "dDIY-szQG-i4STaHFCX42Ja2ozk";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
