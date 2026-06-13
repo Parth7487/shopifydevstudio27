@@ -656,11 +656,11 @@ const Work = () => {
       <ElegantNavigation />
 
       {/* Hero Section */}
-      <section className="relative py-20 px-8 bg-black backdrop-blur-sm overflow-hidden border-b border-white/5">
+      <section className="relative py-20 px-8 bg-[var(--theme-bg-subtle)] backdrop-blur-sm overflow-hidden border-b theme-border">
         {/* Glossy reflections */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-white/[0.02] rounded-full filter blur-[64px]"></div>
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-white/[0.015] rounded-full filter blur-[64px]"></div>
+          <div className="absolute top-20 left-10 w-72 h-72 dark:bg-white/[0.02] bg-beige/[0.05] rounded-full filter blur-[64px]"></div>
+          <div className="absolute bottom-20 right-10 w-96 h-96 dark:bg-white/[0.015] bg-beige/[0.04] rounded-full filter blur-[64px]"></div>
         </div>
 
         <div className="max-w-6xl mx-auto text-center relative z-10">
@@ -668,7 +668,7 @@ const Work = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3 }}
-            className="text-5xl md:text-7xl font-bold mb-6"
+            className="text-5xl md:text-7xl font-bold mb-6 theme-text"
           >
             Our <span className="text-beige">Portfolio</span>
           </motion.h1>
@@ -676,7 +676,7 @@ const Work = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3, delay: 0.1 }}
-            className="text-xl text-gray-400 mb-12 max-w-3xl mx-auto"
+            className="text-xl theme-text-sec mb-12 max-w-3xl mx-auto"
           >
             Discover our collection of high-converting Shopify stores that
             combine stunning design with powerful performance optimization.
@@ -686,7 +686,7 @@ const Work = () => {
           <div className="absolute top-4 right-4">
             <button
               onClick={() => (window.location.href = "/admin")}
-              className="opacity-0 hover:opacity-100 transition-opacity duration-300 p-2 text-gray-500 hover:text-beige text-xs bg-black/60 backdrop-blur-md rounded-full border border-white/10"
+              className="opacity-0 hover:opacity-100 transition-opacity duration-300 p-2 theme-text-muted hover:text-beige text-xs bg-[var(--theme-card)]/60 backdrop-blur-md rounded-full border theme-border"
               title="Admin Dashboard - Google Drive Sync"
             >
               <Settings className="w-4 h-4" />
@@ -724,23 +724,23 @@ const Work = () => {
       )}
 
       {/* Search and Filter Section */}
-      <section className="bg-black/95 backdrop-blur-md py-6 sm:py-8 border-y border-white/10 shadow-2xl relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.02] to-transparent"></div>
+      <section className="bg-[var(--theme-bg-subtle)] backdrop-blur-md py-6 sm:py-8 border-y theme-border shadow-2xl relative">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent dark:via-white/[0.02] via-black/[0.01] to-transparent"></div>
         <div className="max-w-[1152px] mx-auto px-4 relative z-10">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6 mb-6 sm:mb-8">
             <div className="flex-1 relative max-w-full sm:max-w-[448px]">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 theme-text-muted" />
               <input
                 type="text"
                 placeholder="Search projects..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full bg-black/80 backdrop-blur-md border border-white/20 rounded-lg py-3 pl-9 sm:pl-10 pr-4 text-sm sm:text-base text-white placeholder-gray-400 focus:outline-none focus:border-beige/50 transition-all duration-300"
+                className="w-full bg-[var(--theme-input-bg)] backdrop-blur-md border theme-border rounded-lg py-3 pl-9 sm:pl-10 pr-4 text-sm sm:text-base theme-text placeholder-[var(--theme-text-muted)] focus:outline-none focus:border-beige/50 transition-all duration-300"
               />
             </div>
             <div className="flex items-center gap-2 self-start sm:self-auto">
               <Filter className="w-4 h-4 sm:w-5 sm:h-5 text-beige" />
-              <span className="text-gray-400 text-xs sm:text-sm">
+              <span className="theme-text-sec text-xs sm:text-sm">
                 Filter by category:
               </span>
             </div>
@@ -753,7 +753,7 @@ const Work = () => {
                 className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-6 py-2 sm:py-3 rounded-lg text-xs sm:text-sm font-medium transition-all duration-300 ${
                   selectedCategory === category.name
                     ? "bg-beige text-charcoal shadow-lg"
-                    : "bg-black/60 backdrop-blur-md text-gray-400 hover:bg-black/80 border border-white/10 hover:border-white/20"
+                    : "theme-card backdrop-blur-md theme-text-sec hover:bg-[var(--theme-card-alt)] border theme-border hover:border-beige/30"
                 }`}
               >
                 <span>{category.name}</span>
@@ -773,8 +773,8 @@ const Work = () => {
       </section>
 
       {/* Portfolio Grid */}
-      <section className="py-8 sm:py-12 lg:py-16 bg-black relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.01] via-transparent to-white/[0.01]"></div>
+      <section className="py-8 sm:py-12 lg:py-16 bg-[var(--theme-bg)] relative">
+        <div className="absolute inset-0 bg-gradient-to-b dark:from-white/[0.01] from-black/[0.005] via-transparent dark:to-white/[0.01] to-black/[0.005]"></div>
         <div className="max-w-[1280px] mx-auto px-4 relative z-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 lg:gap-6">
             {orderedProjects.map((project, index) => (
@@ -790,7 +790,7 @@ const Work = () => {
                   delay: Math.min(index * 0.02, 0.3),
                 }}
                 whileHover={{ y: -2 }}
-                className="group relative rounded-xl sm:rounded-2xl overflow-hidden bg-black/80 border border-white/10 shadow-xl hover:shadow-2xl hover:border-white/20 transition-all duration-300"
+                className="group relative rounded-xl sm:rounded-2xl overflow-hidden theme-card border theme-border shadow-xl hover:shadow-2xl hover:border-beige/40 transition-all duration-300"
                 aria-label={`Open ${project.title}`}
               >
                 {/* Media */}
@@ -835,12 +835,12 @@ const Work = () => {
                 </div>
 
                 {/* Caption row */}
-                <div className="flex items-center gap-2 px-3 py-2 border-t border-white/10 bg-black/70 backdrop-blur-sm">
-                  <span className="text-sm font-medium truncate">
+                <div className="flex items-center gap-2 px-3 py-2 border-t theme-border theme-card-alt backdrop-blur-sm">
+                  <span className="text-sm font-medium truncate theme-text">
                     {project.title}
                   </span>
-                  <span className="text-gray-500">•</span>
-                  <span className="text-xs text-gray-400 truncate">
+                  <span className="theme-text-muted">•</span>
+                  <span className="text-xs theme-text-sec truncate">
                     {project.brand}
                   </span>
                 </div>
@@ -851,10 +851,10 @@ const Work = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-8 text-center bg-black relative overflow-hidden border-t border-white/10">
+      <section className="py-20 px-8 text-center bg-[var(--theme-bg)] relative overflow-hidden border-t theme-border">
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-white/[0.02] rounded-full filter blur-[200px]"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/[0.01] to-transparent"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] dark:bg-white/[0.02] bg-beige/[0.05] rounded-full filter blur-[200px]"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-transparent dark:via-white/[0.01] via-black/[0.005] to-transparent"></div>
         </div>
 
         <div className="max-w-4xl mx-auto relative z-10">
@@ -864,13 +864,13 @@ const Work = () => {
             transition={{ duration: 0.3 }}
             viewport={{ once: true }}
             whileHover={{ scale: 1.01 }}
-            className="bg-black/90 backdrop-blur-md border border-white/20 rounded-2xl p-12 shadow-2xl hover:shadow-3xl hover:border-beige/30 transition-all duration-300"
+            className="theme-card backdrop-blur-md border theme-border rounded-2xl p-12 shadow-2xl hover:shadow-3xl hover:border-beige/30 transition-all duration-300"
           >
-            <h2 className="text-4xl font-bold mb-6">
+            <h2 className="text-4xl font-bold mb-6 theme-text">
               Ready to Create Your{" "}
               <span className="text-beige">Success Story?</span>
             </h2>
-            <p className="text-gray-400 text-lg mb-8 max-w-2xl mx-auto">
+            <p className="theme-text-sec text-lg mb-8 max-w-2xl mx-auto">
               Let's build a store that not only looks amazing but also converts
               visitors into loyal customers. Your competitors won't know what
               hit them.
@@ -907,8 +907,8 @@ const Work = () => {
       </section>
 
       {/* Disclaimer */}
-      <section className="py-4 text-center bg-black/95 border-t border-white/10">
-        <p className="text-[8px] sm:text-[10px] text-gray-500 max-w-3xl mx-auto px-4">
+      <section className="py-4 text-center bg-[var(--theme-bg-subtle)] border-t theme-border">
+        <p className="text-[8px] sm:text-[10px] theme-text-muted max-w-3xl mx-auto px-4">
           Disclaimer: Some showcased websites were not built end‑to‑end by us.
           In certain cases, we contributed select features, optimizations, or
           custom tweaks.
