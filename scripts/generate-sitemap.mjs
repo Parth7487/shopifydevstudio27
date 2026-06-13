@@ -9,7 +9,7 @@ const root = join(__dirname, "..");
 
 function getBaseUrl() {
   const envUrl = process.env.SITE_URL || process.env.VITE_SITE_URL || "";
-  const fallback = "https://shopifystudio.tech";
+  const fallback = "https://www.shopifydevstudio.com";
   try {
     const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
     const fromPkg = pkg?.homepage || "";

@@ -13,12 +13,12 @@ function getBaseUrl() {
   try {
     const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
     const fromPkg = pkg?.homepage || "";
-    return (envUrl || fromPkg || "https://shopifystudio.tech").replace(
+    return (envUrl || fromPkg || "https://www.shopifydevstudio.com").replace(
       /\/$/,
       "",
     );
   } catch {
-    return (envUrl || "https://shopifystudio.tech").replace(/\/$/, "");
+    return (envUrl || "https://www.shopifydevstudio.com").replace(/\/$/, "");
   }
 }
 
