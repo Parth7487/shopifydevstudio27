@@ -808,7 +808,8 @@ const Admin = () => {
   const { testimonials, saveTestimonial, deleteTestimonial, updateTestimonialOrder, loading: testimonialsLoading, refetch: refetchTestimonials } = useTestimonials();
 
   // Sub-tabs under settings
-  const [settingsSubTab, setSettingsSubTab] = useState<"general" | "navigation" | "testimonials" | "system">("general");
+  const [settingsSubTab, setSettingsSubTab] = useState<"general" | "navigation" | "testimonials" | "partners" | "system">("general");
+  const [partnersSubSubTab, setPartnersSubSubTab] = useState<"experts" | "tweets" | "instagram" | "showcases">("experts");
 
   // Local settings form states
   const [waNum, setWaNum] = useState("");
@@ -817,6 +818,7 @@ const Admin = () => {
   const [logoTxt, setLogoTxt] = useState("");
   const [supportMail, setSupportMail] = useState("");
   const [localNav, setLocalNav] = useState<any[]>([]);
+  const [localPartners, setLocalPartners] = useState<any>(null);
 
   // Sync settings states
   React.useEffect(() => {
@@ -827,6 +829,7 @@ const Admin = () => {
       setLogoTxt(settings.footer.logo_text || "");
       setSupportMail(settings.footer.email || "");
       setLocalNav(settings.navigation || []);
+      setLocalPartners(settings.partners || null);
     }
   }, [settings]);
 
@@ -874,6 +877,17 @@ const Admin = () => {
       alert("Navigation menu saved successfully!");
     } else {
       alert("Failed to save navigation menu.");
+    }
+  };
+
+  const handleSavePartners = async () => {
+    setIsSavingSettings(true);
+    const success = await updateSetting("partners", localPartners);
+    setIsSavingSettings(false);
+    if (success) {
+      alert("Partners page content saved successfully!");
+    } else {
+      alert("Failed to save partners content.");
     }
   };
 
@@ -1455,7 +1469,7 @@ const Admin = () => {
                   <h3 className="text-xl font-bold text-white">Site Settings</h3>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  {(["general", "navigation", "testimonials", "system"] as const).map((tab) => (
+                  {(["general", "navigation", "testimonials", "partners", "system"] as const).map((tab) => (
                     <button
                       key={tab}
                       onClick={() => setSettingsSubTab(tab)}
@@ -1814,6 +1828,778 @@ const Admin = () => {
                         No testimonials found. Click "Add Testimonial" to create one.
                       </div>
                     )}
+                  </div>
+                </div>
+              )}
+
+              {settingsSubTab === "partners" && !localPartners && (
+                <div className="text-center py-12 text-gray-500">
+                  <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-beige" />
+                  Loading partners content...
+                </div>
+              )}
+
+              {settingsSubTab === "partners" && localPartners && (
+                <div className="space-y-6">
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-4">
+                    <div>
+                      <h4 className="font-semibold text-white">Partners Page Manager</h4>
+                      <p className="text-gray-400 text-sm">Customize sections of the Verified Partners page.</p>
+                    </div>
+                    
+                    {/* Sub-sub-tabs */}
+                    <div className="flex flex-wrap gap-2">
+                      {(["experts", "tweets", "instagram", "showcases"] as const).map((subTab) => (
+                        <button
+                          key={subTab}
+                          type="button"
+                          onClick={() => setPartnersSubSubTab(subTab)}
+                          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                            partnersSubSubTab === subTab
+                              ? "bg-beige/20 text-beige border border-beige/40"
+                              : "bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white border border-white/5"
+                          }`}
+                        >
+                          {subTab.charAt(0).toUpperCase() + subTab.slice(1)}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* 1. Experts List Editor */}
+                  {partnersSubSubTab === "experts" && (
+                    <div className="space-y-4">
+                      <div className="flex justify-between items-center">
+                        <h5 className="text-sm font-semibold text-beige">Verified Shopify Experts & Leaders</h5>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const newExpert = {
+                              name: "New Expert",
+                              title: "Consultant / Designer",
+                              company: "Ecom Agency",
+                              avatar: "",
+                              verified: true,
+                              hook: "100+ stores built",
+                              achievement: "Ecom Developer Specialist",
+                              comment: "Outstanding technical depth and custom Shopify Plus development capabilities.",
+                              linkedinUrl: "",
+                              website: "",
+                              instagramHandle: "",
+                              twitterHandle: ""
+                            };
+                            setLocalPartners({
+                              ...localPartners,
+                              experts: [...localPartners.experts, newExpert]
+                            });
+                          }}
+                          className="px-2.5 py-1.5 bg-beige/10 hover:bg-beige/25 border border-beige/30 text-beige hover:text-white rounded-lg text-xs font-medium transition-all flex items-center gap-1"
+                        >
+                          <Plus className="w-3.5 h-3.5" /> Add Expert
+                        </button>
+                      </div>
+
+                      <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2">
+                        {localPartners.experts.map((exp: any, index: number) => (
+                          <div key={index} className="bg-black/40 border border-white/10 rounded-xl p-4 space-y-4">
+                            <div className="flex justify-between items-center border-b border-white/5 pb-2">
+                              <span className="text-xs font-bold text-gray-400">Expert #{index + 1}: {exp.name}</span>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  if (confirm("Remove this expert?")) {
+                                    const updated = localPartners.experts.filter((_: any, i: number) => i !== index);
+                                    setLocalPartners({ ...localPartners, experts: updated });
+                                  }
+                                }}
+                                className="p-1 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded transition-colors"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                              <div>
+                                <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Name</label>
+                                <input
+                                  type="text"
+                                  value={exp.name}
+                                  onChange={(e) => {
+                                    const updated = [...localPartners.experts];
+                                    updated[index] = { ...updated[index], name: e.target.value };
+                                    setLocalPartners({ ...localPartners, experts: updated });
+                                  }}
+                                  className="w-full bg-white/5 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Title</label>
+                                <input
+                                  type="text"
+                                  value={exp.title}
+                                  onChange={(e) => {
+                                    const updated = [...localPartners.experts];
+                                    updated[index] = { ...updated[index], title: e.target.value };
+                                    setLocalPartners({ ...localPartners, experts: updated });
+                                  }}
+                                  className="w-full bg-white/5 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Company</label>
+                                <input
+                                  type="text"
+                                  value={exp.company}
+                                  onChange={(e) => {
+                                    const updated = [...localPartners.experts];
+                                    updated[index] = { ...updated[index], company: e.target.value };
+                                    setLocalPartners({ ...localPartners, experts: updated });
+                                  }}
+                                  className="w-full bg-white/5 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none"
+                                />
+                              </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              <div>
+                                <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Avatar Image URL</label>
+                                <input
+                                  type="text"
+                                  value={exp.avatar}
+                                  onChange={(e) => {
+                                    const updated = [...localPartners.experts];
+                                    updated[index] = { ...updated[index], avatar: e.target.value };
+                                    setLocalPartners({ ...localPartners, experts: updated });
+                                  }}
+                                  className="w-full bg-white/5 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none"
+                                />
+                              </div>
+                              <div className="flex items-center pt-4">
+                                <label className="flex items-center gap-2 cursor-pointer select-none">
+                                  <input
+                                    type="checkbox"
+                                    checked={exp.verified}
+                                    onChange={(e) => {
+                                      const updated = [...localPartners.experts];
+                                      updated[index] = { ...updated[index], verified: e.target.checked };
+                                      setLocalPartners({ ...localPartners, experts: updated });
+                                    }}
+                                    className="w-3.5 h-3.5 rounded border-white/15 bg-white/5 text-beige"
+                                  />
+                                  <span className="text-xs text-gray-300">Verified Badge</span>
+                                </label>
+                              </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              <div>
+                                <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Hook / Stats Text</label>
+                                <input
+                                  type="text"
+                                  value={exp.hook}
+                                  onChange={(e) => {
+                                    const updated = [...localPartners.experts];
+                                    updated[index] = { ...updated[index], hook: e.target.value };
+                                    setLocalPartners({ ...localPartners, experts: updated });
+                                  }}
+                                  placeholder="500+ stores optimized"
+                                  className="w-full bg-white/5 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Achievement Text</label>
+                                <input
+                                  type="text"
+                                  value={exp.achievement}
+                                  onChange={(e) => {
+                                    const updated = [...localPartners.experts];
+                                    updated[index] = { ...updated[index], achievement: e.target.value };
+                                    setLocalPartners({ ...localPartners, experts: updated });
+                                  }}
+                                  placeholder="Host of #1 Podcast"
+                                  className="w-full bg-white/5 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none"
+                                />
+                              </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
+                              <div>
+                                <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">LinkedIn URL</label>
+                                <input
+                                  type="text"
+                                  value={exp.linkedinUrl}
+                                  onChange={(e) => {
+                                    const updated = [...localPartners.experts];
+                                    updated[index] = { ...updated[index], linkedinUrl: e.target.value };
+                                    setLocalPartners({ ...localPartners, experts: updated });
+                                  }}
+                                  className="w-full bg-white/5 border border-white/10 rounded px-2 py-1 text-[11px] text-white focus:outline-none"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Website URL</label>
+                                <input
+                                  type="text"
+                                  value={exp.website}
+                                  onChange={(e) => {
+                                    const updated = [...localPartners.experts];
+                                    updated[index] = { ...updated[index], website: e.target.value };
+                                    setLocalPartners({ ...localPartners, experts: updated });
+                                  }}
+                                  className="w-full bg-white/5 border border-white/10 rounded px-2 py-1 text-[11px] text-white focus:outline-none"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Instagram Handle</label>
+                                <input
+                                  type="text"
+                                  value={exp.instagramHandle}
+                                  onChange={(e) => {
+                                    const updated = [...localPartners.experts];
+                                    updated[index] = { ...updated[index], instagramHandle: e.target.value };
+                                    setLocalPartners({ ...localPartners, experts: updated });
+                                  }}
+                                  className="w-full bg-white/5 border border-white/10 rounded px-2 py-1 text-[11px] text-white focus:outline-none"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Twitter Handle</label>
+                                <input
+                                  type="text"
+                                  value={exp.twitterHandle}
+                                  onChange={(e) => {
+                                    const updated = [...localPartners.experts];
+                                    updated[index] = { ...updated[index], twitterHandle: e.target.value };
+                                    setLocalPartners({ ...localPartners, experts: updated });
+                                  }}
+                                  className="w-full bg-white/5 border border-white/10 rounded px-2 py-1 text-[11px] text-white focus:outline-none"
+                                />
+                              </div>
+                            </div>
+
+                            <div>
+                              <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Testimonial Quote / Comment</label>
+                              <textarea
+                                rows={2}
+                                value={exp.comment}
+                                onChange={(e) => {
+                                  const updated = [...localPartners.experts];
+                                  updated[index] = { ...updated[index], comment: e.target.value };
+                                  setLocalPartners({ ...localPartners, experts: updated });
+                                }}
+                                className="w-full bg-white/5 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white resize-none focus:outline-none"
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* 2. Tweets List Editor */}
+                  {partnersSubSubTab === "tweets" && (
+                    <div className="space-y-4">
+                      <div className="flex justify-between items-center">
+                        <h5 className="text-sm font-semibold text-beige">Verified Twitter Mentions</h5>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const newTweet = {
+                              author: "New Expert",
+                              handle: "expert_handle",
+                              avatar: "",
+                              time: "2h",
+                              content: "Outstanding custom Shopify theme development by @shopifydevstudio. Highly recommend! 🚀",
+                              replies: "0",
+                              retweets: "0",
+                              likes: "0"
+                            };
+                            setLocalPartners({
+                              ...localPartners,
+                              tweets: [...localPartners.tweets, newTweet]
+                            });
+                          }}
+                          className="px-2.5 py-1.5 bg-beige/10 hover:bg-beige/25 border border-beige/30 text-beige hover:text-white rounded-lg text-xs font-medium transition-all flex items-center gap-1"
+                        >
+                          <Plus className="w-3.5 h-3.5" /> Add Tweet
+                        </button>
+                      </div>
+
+                      <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2">
+                        {localPartners.tweets.map((tw: any, index: number) => (
+                          <div key={index} className="bg-black/40 border border-white/10 rounded-xl p-4 space-y-3">
+                            <div className="flex justify-between items-center border-b border-white/5 pb-2">
+                              <span className="text-xs font-bold text-gray-400">Tweet #{index + 1} by @{tw.handle}</span>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  if (confirm("Remove this tweet?")) {
+                                    const updated = localPartners.tweets.filter((_: any, i: number) => i !== index);
+                                    setLocalPartners({ ...localPartners, tweets: updated });
+                                  }
+                                }}
+                                className="p-1 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded transition-colors"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                              <div className="col-span-2">
+                                <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Author Name</label>
+                                <input
+                                  type="text"
+                                  value={tw.author}
+                                  onChange={(e) => {
+                                    const updated = [...localPartners.tweets];
+                                    updated[index] = { ...updated[index], author: e.target.value };
+                                    setLocalPartners({ ...localPartners, tweets: updated });
+                                  }}
+                                  className="w-full bg-white/5 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Handle</label>
+                                <input
+                                  type="text"
+                                  value={tw.handle}
+                                  onChange={(e) => {
+                                    const updated = [...localPartners.tweets];
+                                    updated[index] = { ...updated[index], handle: e.target.value };
+                                    setLocalPartners({ ...localPartners, tweets: updated });
+                                  }}
+                                  className="w-full bg-white/5 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Time (e.g. 2h, 1d)</label>
+                                <input
+                                  type="text"
+                                  value={tw.time}
+                                  onChange={(e) => {
+                                    const updated = [...localPartners.tweets];
+                                    updated[index] = { ...updated[index], time: e.target.value };
+                                    setLocalPartners({ ...localPartners, tweets: updated });
+                                  }}
+                                  className="w-full bg-white/5 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none"
+                                />
+                              </div>
+                            </div>
+
+                            <div>
+                              <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Avatar Image URL</label>
+                              <input
+                                type="text"
+                                value={tw.avatar}
+                                onChange={(e) => {
+                                  const updated = [...localPartners.tweets];
+                                  updated[index] = { ...updated[index], avatar: e.target.value };
+                                  setLocalPartners({ ...localPartners, tweets: updated });
+                                }}
+                                className="w-full bg-white/5 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none"
+                              />
+                            </div>
+
+                            <div>
+                              <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Tweet Content</label>
+                              <textarea
+                                rows={3}
+                                value={tw.content}
+                                onChange={(e) => {
+                                  const updated = [...localPartners.tweets];
+                                  updated[index] = { ...updated[index], content: e.target.value };
+                                  setLocalPartners({ ...localPartners, tweets: updated });
+                                }}
+                                className="w-full bg-white/5 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white resize-none focus:outline-none"
+                              />
+                            </div>
+
+                            <div className="grid grid-cols-3 gap-4">
+                              <div>
+                                <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Replies Count</label>
+                                <input
+                                  type="text"
+                                  value={tw.replies}
+                                  onChange={(e) => {
+                                    const updated = [...localPartners.tweets];
+                                    updated[index] = { ...updated[index], replies: e.target.value };
+                                    setLocalPartners({ ...localPartners, tweets: updated });
+                                  }}
+                                  className="w-full bg-white/5 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Retweets Count</label>
+                                <input
+                                  type="text"
+                                  value={tw.retweets}
+                                  onChange={(e) => {
+                                    const updated = [...localPartners.tweets];
+                                    updated[index] = { ...updated[index], retweets: e.target.value };
+                                    setLocalPartners({ ...localPartners, tweets: updated });
+                                  }}
+                                  className="w-full bg-white/5 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Likes Count</label>
+                                <input
+                                  type="text"
+                                  value={tw.likes}
+                                  onChange={(e) => {
+                                    const updated = [...localPartners.tweets];
+                                    updated[index] = { ...updated[index], likes: e.target.value };
+                                    setLocalPartners({ ...localPartners, tweets: updated });
+                                  }}
+                                  className="w-full bg-white/5 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* 3. Instagram Posts Editor */}
+                  {partnersSubSubTab === "instagram" && (
+                    <div className="space-y-4">
+                      <div className="flex justify-between items-center">
+                        <h5 className="text-sm font-semibold text-beige">Instagram Success Stories</h5>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const newInsta = {
+                              username: "@brandname",
+                              comment: "Incredible speed improvements! Page speed 0.7s and conversion rate +150%!",
+                              likes: "1,200",
+                              image: "",
+                              website: "brand.com"
+                            };
+                            setLocalPartners({
+                              ...localPartners,
+                              instagram: [...localPartners.instagram, newInsta]
+                            });
+                          }}
+                          className="px-2.5 py-1.5 bg-beige/10 hover:bg-beige/25 border border-beige/30 text-beige hover:text-white rounded-lg text-xs font-medium transition-all flex items-center gap-1"
+                        >
+                          <Plus className="w-3.5 h-3.5" /> Add Post
+                        </button>
+                      </div>
+
+                      <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2">
+                        {localPartners.instagram.map((ins: any, index: number) => (
+                          <div key={index} className="bg-black/40 border border-white/10 rounded-xl p-4 space-y-3">
+                            <div className="flex justify-between items-center border-b border-white/5 pb-2">
+                              <span className="text-xs font-bold text-gray-400">Post #{index + 1} ({ins.username})</span>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  if (confirm("Remove this Instagram post?")) {
+                                    const updated = localPartners.instagram.filter((_: any, i: number) => i !== index);
+                                    setLocalPartners({ ...localPartners, instagram: updated });
+                                  }
+                                }}
+                                className="p-1 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded transition-colors"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                              <div>
+                                <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Username Handle</label>
+                                <input
+                                  type="text"
+                                  value={ins.username}
+                                  onChange={(e) => {
+                                    const updated = [...localPartners.instagram];
+                                    updated[index] = { ...updated[index], username: e.target.value };
+                                    setLocalPartners({ ...localPartners, instagram: updated });
+                                  }}
+                                  className="w-full bg-white/5 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Website Domain</label>
+                                <input
+                                  type="text"
+                                  value={ins.website}
+                                  onChange={(e) => {
+                                    const updated = [...localPartners.instagram];
+                                    updated[index] = { ...updated[index], website: e.target.value };
+                                    setLocalPartners({ ...localPartners, instagram: updated });
+                                  }}
+                                  className="w-full bg-white/5 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Likes Count</label>
+                                <input
+                                  type="text"
+                                  value={ins.likes}
+                                  onChange={(e) => {
+                                    const updated = [...localPartners.instagram];
+                                    updated[index] = { ...updated[index], likes: e.target.value };
+                                    setLocalPartners({ ...localPartners, instagram: updated });
+                                  }}
+                                  className="w-full bg-white/5 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none"
+                                />
+                              </div>
+                            </div>
+
+                            <div>
+                              <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Instagram Shared Photo URL</label>
+                              <input
+                                type="text"
+                                value={ins.image}
+                                onChange={(e) => {
+                                  const updated = [...localPartners.instagram];
+                                  updated[index] = { ...updated[index], image: e.target.value };
+                                  setLocalPartners({ ...localPartners, instagram: updated });
+                                }}
+                                className="w-full bg-white/5 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none"
+                              />
+                            </div>
+
+                            <div>
+                              <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Post Caption Comment</label>
+                              <textarea
+                                rows={2}
+                                value={ins.comment}
+                                onChange={(e) => {
+                                  const updated = [...localPartners.instagram];
+                                  updated[index] = { ...updated[index], comment: e.target.value };
+                                  setLocalPartners({ ...localPartners, instagram: updated });
+                                }}
+                                className="w-full bg-white/5 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white resize-none focus:outline-none"
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* 4. Case Study Showcases Editor */}
+                  {partnersSubSubTab === "showcases" && (
+                    <div className="space-y-4">
+                      <div className="flex justify-between items-center">
+                        <h5 className="text-sm font-semibold text-beige">Work showcases / Case Studies</h5>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const newShowcase = {
+                              storeName: "New Brand Store",
+                              category: "E-Commerce",
+                              beforeImage: "",
+                              afterImage: "",
+                              improvements: [
+                                "Revenue: +50% growth",
+                                "Speed: Load under 1s"
+                              ],
+                              testimonial: "Outstanding job rebuilding our storefront.",
+                              clientRole: "Founder",
+                              challenge: "Slow load times and bad UX",
+                              solution: "Completely bespoke headless layout design",
+                              websiteUrl: ""
+                            };
+                            setLocalPartners({
+                              ...localPartners,
+                              showcases: [...localPartners.showcases, newShowcase]
+                            });
+                          }}
+                          className="px-2.5 py-1.5 bg-beige/10 hover:bg-beige/25 border border-beige/30 text-beige hover:text-white rounded-lg text-xs font-medium transition-all flex items-center gap-1"
+                        >
+                          <Plus className="w-3.5 h-3.5" /> Add Case Study
+                        </button>
+                      </div>
+
+                      <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2">
+                        {localPartners.showcases.map((sc: any, index: number) => (
+                          <div key={index} className="bg-black/40 border border-white/10 rounded-xl p-4 space-y-3">
+                            <div className="flex justify-between items-center border-b border-white/5 pb-2">
+                              <span className="text-xs font-bold text-gray-400">Showcase #{index + 1} ({sc.storeName})</span>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  if (confirm("Remove this case study showcase?")) {
+                                    const updated = localPartners.showcases.filter((_: any, i: number) => i !== index);
+                                    setLocalPartners({ ...localPartners, showcases: updated });
+                                  }
+                                }}
+                                className="p-1 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded transition-colors"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                              <div>
+                                <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Store Name</label>
+                                <input
+                                  type="text"
+                                  value={sc.storeName}
+                                  onChange={(e) => {
+                                    const updated = [...localPartners.showcases];
+                                    updated[index] = { ...updated[index], storeName: e.target.value };
+                                    setLocalPartners({ ...localPartners, showcases: updated });
+                                  }}
+                                  className="w-full bg-white/5 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Category</label>
+                                <input
+                                  type="text"
+                                  value={sc.category}
+                                  onChange={(e) => {
+                                    const updated = [...localPartners.showcases];
+                                    updated[index] = { ...updated[index], category: e.target.value };
+                                    setLocalPartners({ ...localPartners, showcases: updated });
+                                  }}
+                                  className="w-full bg-white/5 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Website URL</label>
+                                <input
+                                  type="text"
+                                  value={sc.websiteUrl}
+                                  onChange={(e) => {
+                                    const updated = [...localPartners.showcases];
+                                    updated[index] = { ...updated[index], websiteUrl: e.target.value };
+                                    setLocalPartners({ ...localPartners, showcases: updated });
+                                  }}
+                                  className="w-full bg-white/5 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none"
+                                />
+                              </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              <div>
+                                <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Before Image URL</label>
+                                <input
+                                  type="text"
+                                  value={sc.beforeImage}
+                                  onChange={(e) => {
+                                    const updated = [...localPartners.showcases];
+                                    updated[index] = { ...updated[index], beforeImage: e.target.value };
+                                    setLocalPartners({ ...localPartners, showcases: updated });
+                                  }}
+                                  className="w-full bg-white/5 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">After Image URL</label>
+                                <input
+                                  type="text"
+                                  value={sc.afterImage}
+                                  onChange={(e) => {
+                                    const updated = [...localPartners.showcases];
+                                    updated[index] = { ...updated[index], afterImage: e.target.value };
+                                    setLocalPartners({ ...localPartners, showcases: updated });
+                                  }}
+                                  className="w-full bg-white/5 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none"
+                                />
+                              </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              <div>
+                                <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Challenge</label>
+                                <textarea
+                                  rows={2}
+                                  value={sc.challenge}
+                                  onChange={(e) => {
+                                    const updated = [...localPartners.showcases];
+                                    updated[index] = { ...updated[index], challenge: e.target.value };
+                                    setLocalPartners({ ...localPartners, showcases: updated });
+                                  }}
+                                  className="w-full bg-white/5 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white resize-none focus:outline-none"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Solution</label>
+                                <textarea
+                                  rows={2}
+                                  value={sc.solution}
+                                  onChange={(e) => {
+                                    const updated = [...localPartners.showcases];
+                                    updated[index] = { ...updated[index], solution: e.target.value };
+                                    setLocalPartners({ ...localPartners, showcases: updated });
+                                  }}
+                                  className="w-full bg-white/5 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white resize-none focus:outline-none"
+                                />
+                              </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              <div>
+                                <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Testimonial Quote</label>
+                                <textarea
+                                  rows={2}
+                                  value={sc.testimonial}
+                                  onChange={(e) => {
+                                    const updated = [...localPartners.showcases];
+                                    updated[index] = { ...updated[index], testimonial: e.target.value };
+                                    setLocalPartners({ ...localPartners, showcases: updated });
+                                  }}
+                                  className="w-full bg-white/5 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white resize-none focus:outline-none"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Client Role (Author)</label>
+                                <input
+                                  type="text"
+                                  value={sc.clientRole}
+                                  onChange={(e) => {
+                                    const updated = [...localPartners.showcases];
+                                    updated[index] = { ...updated[index], clientRole: e.target.value };
+                                    setLocalPartners({ ...localPartners, showcases: updated });
+                                  }}
+                                  className="w-full bg-white/5 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none"
+                                />
+                              </div>
+                            </div>
+
+                            {/* Improvements List */}
+                            <div>
+                              <label className="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Improvements (comma-separated list)</label>
+                              <input
+                                type="text"
+                                value={(sc.improvements || []).join(", ")}
+                                onChange={(e) => {
+                                  const list = e.target.value.split(",").map(val => val.trim()).filter(Boolean);
+                                  const updated = [...localPartners.showcases];
+                                  updated[index] = { ...updated[index], improvements: list };
+                                  setLocalPartners({ ...localPartners, showcases: updated });
+                                }}
+                                className="w-full bg-white/5 border border-white/10 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none"
+                                placeholder="Revenue: +240%, Bounce rate: 45% -> 12%"
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="flex justify-end pt-4 border-t border-white/10">
+                    <button
+                      type="button"
+                      onClick={handleSavePartners}
+                      disabled={isSavingSettings}
+                      className="px-6 py-2.5 bg-beige text-charcoal font-bold rounded-lg text-sm hover:bg-beige/95 disabled:opacity-50 transition-all shadow-md flex items-center gap-2"
+                    >
+                      {isSavingSettings ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" /> Saving...
+                        </>
+                      ) : (
+                        "Save Partners Content"
+                      )}
+                    </button>
                   </div>
                 </div>
               )}

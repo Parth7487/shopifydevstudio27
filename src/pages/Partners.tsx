@@ -25,6 +25,7 @@ import Footer from "../components/sections/Footer";
 import CalendlyModal from "../components/sections/CalendlyModal";
 import { updatePageMeta } from "../lib/seo-meta";
 import { addBreadcrumbSchema } from "../lib/breadcrumb-schema";
+import { useSettings } from "../hooks/useSettings";
 
 // Sliding carousel component
 const SlidingCarousel = memo(
@@ -199,6 +200,7 @@ const TweetCard = memo(({ tweet }: { tweet: any }) => (
 
 const Partners = memo(() => {
   const [calendlyOpen, setCalendlyOpen] = useState(false);
+  const { settings, loading } = useSettings();
 
   useEffect(() => {
     updatePageMeta({
@@ -216,246 +218,22 @@ const Partners = memo(() => {
       { name: "Partners", url: "https://www.shopifydevstudio.com/partners" },
     ]);
   }, []);
-  // Enhanced Shopify influencers and experts with social links
-  const shopifyExperts = useMemo(
-    () => [
-      {
-        name: "Kurt Elster",
-        title: "Shopify Expert & Podcast Host",
-        company: "Ethercycle",
-        avatar:
-          "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
-        verified: true,
-        hook: "500+ stores optimized • $50M+ revenue generated",
-        achievement: "Host of #1 Shopify Podcast",
-        comment:
-          "Working with this dev team has been a game-changer. Their technical depth in Shopify Plus is unmatched. They optimized our client's store and saw a 340% increase in conversions within 6 weeks.",
-        linkedinUrl: "https://www.linkedin.com/in/kurtelster/",
-        website: "https://ethercycle.com",
-        instagramHandle: "@kurtelster",
-        twitterHandle: "@kurtelster",
-      },
-      {
-        name: "Ezra Firestone",
-        title: "E-commerce Expert & Entrepreneur",
-        company: "Smart Marketer",
-        avatar:
-          "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2F75f1894b3c544e9f81c5cbb0eba318ef?format=webp&width=800",
-        verified: true,
-        hook: "Built 8-figure businesses • 200K+ community",
-        achievement: "Generated $50M+ in sales",
-        comment:
-          "These developers understand e-commerce at a deep level. They rebuilt our entire funnel system and helped us scale. The custom features they built are exactly what we needed to compete with Amazon.",
-        linkedinUrl: "https://www.linkedin.com/in/ezrafirestone/",
-        website: "https://smartmarketer.com",
-        instagramHandle: "@ezrafirestone",
-        twitterHandle: "@ezrafirestone",
-      },
-      {
-        name: "Tanner Larsson",
-        title: "E-commerce Growth Expert",
-        company: "Build Grow Scale",
-        avatar:
-          "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?w=400&h=400&fit=crop&crop=face",
-        verified: true,
-        hook: "100+ brands scaled • $200M+ revenue generated",
-        achievement: "Built multiple 7-figure brands",
-        comment:
-          "I've worked with many dev teams, but this one actually gets e-commerce. They optimized our checkout flow and reduced cart abandonment by 67%.",
-        linkedinUrl: "https://www.linkedin.com/in/tannerlarsson/",
-        website: "https://buildgrowscale.com",
-        instagramHandle: "@tannerlarsson",
-        twitterHandle: "@tannerlarsson",
-      },
-      {
-        name: "Steve Chou",
-        title: "E-commerce Expert & Educator",
-        company: "My Wife Quit Her Job",
-        avatar:
-          "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop&crop=face",
-        verified: true,
-        hook: "7-figure store owner • 50K+ students taught",
-        achievement: "Created $1M+ online course business",
-        comment:
-          "Their Shopify expertise is phenomenal. They migrated our complex multi-variant product system flawlessly and improved our site speed by 85%. Our mobile conversion rate doubled overnight.",
-        linkedinUrl: "https://www.linkedin.com/in/stevechou/",
-        website: "https://mywifequitherjob.com",
-        instagramHandle: "@stevechou",
-        twitterHandle: "@stevechou",
-      },
-      {
-        name: "Franklin Hatchett",
-        title: "Dropshipping Expert & YouTuber",
-        company: "Ecom Elites",
-        avatar:
-          "https://cdn.builder.io/api/v1/image/assets%2Fe3a704dc325d4c328aee5dc050d03764%2Ffac0ba31d91049d095b204d5bb2870bb?format=webp&width=800",
-        verified: true,
-        hook: "1M+ YouTube subscribers • 300+ stores built",
-        achievement: "Generated $25M+ in student sales",
-        comment:
-          "I recommend this dev team to all my students. They built our high-converting store templates that have generated over $10M in sales. Their understanding of dropshipping funnels is incredible.",
-        linkedinUrl: "https://www.linkedin.com/in/franklinhatchett/",
-        website: "https://ecomelites.com",
-        instagramHandle: "@franklinhatchett",
-        twitterHandle: "@franklinhatchett",
-      },
-    ],
-    [],
-  );
 
-  // Tweet mentions from Shopify experts
-  const expertTweets = useMemo(
-    () => [
-      {
-        author: "Kurt Elster",
-        handle: "kurtelster",
-        avatar:
-          "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
-        time: "2h",
-        content:
-          "Just wrapped up an incredible project with @shopifydevstudio. Their technical expertise in Shopify Plus is unmatched. Delivered a 340% conversion increase for our client in just 6 weeks. 🚀 #shopify #ecommerce",
-        replies: "24",
-        retweets: "156",
-        likes: "892",
-      },
-      {
-        author: "Tanner Larsson",
-        handle: "tannerlarsson",
-        avatar:
-          "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?w=400&h=400&fit=crop&crop=face",
-        time: "1d",
-        content:
-          "Checkout flow optimization by @shopifydevstudio reduced our cart abandonment by 67%. That's an extra $180K monthly revenue! If you need Shopify development, these are your people. 🎯 #conversion #shopifyplus",
-        replies: "45",
-        retweets: "189",
-        likes: "756",
-      },
-      {
-        author: "Steve Chou",
-        handle: "stevechou",
-        avatar:
-          "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop&crop=face",
-        time: "2d",
-        content:
-          "@shopifydevstudio migrated our complex product system flawlessly and improved site speed by 85%. Mobile conversions doubled overnight! Their Shopify expertise is phenomenal. Highly recommended! 📱⚡ #shopify #performance",
-        replies: "32",
-        retweets: "142",
-        likes: "634",
-      },
-    ],
-    [],
-  );
+  const shopifyExperts = useMemo(() => {
+    return settings.partners?.experts || [];
+  }, [settings.partners]);
 
-  // Work showcases with realistic improvements
-  const workShowcases = useMemo(
-    () => [
-      {
-        storeName: "Peak Performance",
-        category: "Fitness & Sports",
-        beforeImage:
-          "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop",
-        afterImage:
-          "https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?w=600&h=400&fit=crop",
-        improvements: [
-          "Revenue: +240% in 3 months",
-          "User engagement: +156%",
-          "Search conversion: +89%",
-          "Repeat purchases: +123%",
-        ],
-        testimonial:
-          "Most impactful investment we've made. The custom workout builder feature alone increased AOV by 78%.",
-        clientRole: "Founder & CEO",
-        challenge: "Complex product configurations and poor user flow",
-        solution: "Custom product builder and streamlined checkout process",
-        websiteUrl: "https://peakperformance.com",
-      },
-      {
-        storeName: "Organic Glow",
-        category: "Beauty & Skincare",
-        beforeImage:
-          "https://images.unsplash.com/photo-1556742400-b5c2a5bd1df1?w=600&h=400&fit=crop",
-        afterImage:
-          "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop",
-        improvements: [
-          "Customer lifetime value: +189%",
-          "Bounce rate: 45% → 12%",
-          "Email signups: +234%",
-          "Social shares: +167%",
-        ],
-        testimonial:
-          "They understood our brand vision perfectly. The subscription feature they built drives 60% of our revenue now.",
-        clientRole: "Brand Manager",
-        challenge: "Building customer loyalty and recurring revenue",
-        solution:
-          "Smart subscription system and personalized product recommendations",
-        websiteUrl: "https://organicglow.com",
-      },
-      {
-        storeName: "Tech Gadgets Pro",
-        category: "Electronics & Tech",
-        beforeImage:
-          "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&h=400&fit=crop",
-        afterImage:
-          "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=400&fit=crop",
-        improvements: [
-          "Site speed: 5.2s → 0.9s",
-          "Search functionality: +290% usage",
-          "Cross-sells: +156%",
-          "Customer support tickets: -78%",
-        ],
-        testimonial:
-          "The advanced search and filtering system they built revolutionized our customer experience. Sales doubled within 8 weeks.",
-        clientRole: "E-commerce Manager",
-        challenge: "Large inventory management and product discovery",
-        solution: "AI-powered search and intelligent product filtering system",
-        websiteUrl: "https://techgadgetspro.com",
-      },
-    ],
-    [],
-  );
+  const expertTweets = useMemo(() => {
+    return settings.partners?.tweets || [];
+  }, [settings.partners]);
 
-  // Instagram social proof posts
-  const instagramProofs = useMemo(
-    () => [
-      {
-        username: "@luxefashionstore",
-        comment:
-          "🔥 Sales increased 240% in first month! Best investment ever @shopifydevstudio 💯",
-        likes: "2,847",
-        image:
-          "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=400&fit=crop",
-        website: "luxefashion.com",
-      },
-      {
-        username: "@techgadgetshub",
-        comment:
-          "Mind = BLOWN 🤯 Page loads in 0.8 seconds! Revenue up 180% 📈 @shopifydevstudio",
-        likes: "1,923",
-        image:
-          "https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?w=400&h=400&fit=crop",
-        website: "techgadgetshub.com",
-      },
-      {
-        username: "@organicskincare",
-        comment:
-          "Conversion rate: 1.2% → 4.8% 💚 Custom features are perfect! 🙌 @shopifydevstudio",
-        likes: "3,156",
-        image:
-          "https://images.unsplash.com/photo-1556742400-b5c2a5bd1df1?w=400&h=400&fit=crop",
-        website: "organicskincare.com",
-      },
-      {
-        username: "@fitnessapparel",
-        comment:
-          "GAME CHANGER! 💪 Mobile sales +320%! Customers love it! 🚀 @shopifydevstudio",
-        likes: "4,729",
-        image:
-          "https://images.unsplash.com/photo-1556742101-ae0a2d3c5fd0?w=400&h=400&fit=crop",
-        website: "fitnessapparel.com",
-      },
-    ],
-    [],
-  );
+  const workShowcases = useMemo(() => {
+    return settings.partners?.showcases || [];
+  }, [settings.partners]);
+
+  const instagramProofs = useMemo(() => {
+    return settings.partners?.instagram || [];
+  }, [settings.partners]);
 
   const stats = useMemo(() => [], []);
 
@@ -616,6 +394,100 @@ const Partners = memo(() => {
             </div>
           </div>
         </section>
+
+        {/* Partner Case Studies Section */}
+        {workShowcases.length > 0 && (
+          <section className="px-4 mb-20">
+            <div className="max-w-7xl mx-auto">
+              <AnimatedCard>
+                <h2 className="text-4xl font-bold text-center mb-6 text-beige">
+                  Featured Partner Case Studies
+                </h2>
+                <p className="text-center text-gray-300 mb-12 max-w-3xl mx-auto">
+                  Detailed transformation breakdowns of select high-growth brands we've rebuilt from the ground up.
+                </p>
+              </AnimatedCard>
+
+              <div className="grid grid-cols-1 gap-12">
+                {workShowcases.map((showcase, index) => (
+                  <AnimatedCard key={index} delay={index * 100}>
+                    <div className="bg-gradient-to-br from-charcoal/50 to-graphite/50 rounded-2xl border border-beige/20 p-8 lg:p-12 hover:border-beige/40 transition-colors duration-300">
+                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        {/* Images & Comparison */}
+                        <div className="lg:col-span-5 space-y-4">
+                          <div className="grid grid-cols-2 gap-4">
+                            {showcase.beforeImage && (
+                              <div className="space-y-1">
+                                <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider block text-center">Before Optimization</span>
+                                <div className="aspect-[4/3] rounded-lg overflow-hidden border border-white/15 bg-black/40">
+                                  <img src={showcase.beforeImage} alt={`${showcase.storeName} Before`} className="w-full h-full object-cover filter grayscale opacity-70" loading="lazy" />
+                                </div>
+                              </div>
+                            )}
+                            {showcase.afterImage && (
+                              <div className="space-y-1">
+                                <span className="text-[10px] text-beige font-bold uppercase tracking-wider block text-center">After Studio Rebuild</span>
+                                <div className="aspect-[4/3] rounded-lg overflow-hidden border border-beige/30 bg-black/40">
+                                  <img src={showcase.afterImage} alt={`${showcase.storeName} After`} className="w-full h-full object-cover" loading="lazy" />
+                                </div>
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Improvements tags */}
+                          <div className="flex flex-wrap gap-2 pt-2">
+                            {(showcase.improvements || []).map((imp: string, i: number) => (
+                              <span key={i} className="text-xs bg-beige/10 border border-beige/30 text-beige px-3 py-1 rounded-full font-medium">
+                                {imp}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Content & Transformation Info */}
+                        <div className="lg:col-span-7 space-y-6">
+                          <div className="flex items-start justify-between">
+                            <div>
+                              <span className="text-xs font-semibold text-beige uppercase tracking-wider bg-beige/5 border border-beige/20 px-2.5 py-1 rounded">
+                                {showcase.category}
+                              </span>
+                              <h3 className="text-2xl lg:text-3xl font-bold text-white mt-2 flex items-center gap-2">
+                                {showcase.storeName}
+                                {showcase.websiteUrl && (
+                                  <a href={showcase.websiteUrl} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-beige transition-colors">
+                                    <ExternalLink className="w-5 h-5" />
+                                  </a>
+                                )}
+                              </h3>
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                            <div className="bg-black/25 border border-white/5 rounded-xl p-4">
+                              <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider block mb-1">The Challenge</span>
+                              <p className="text-gray-300 leading-relaxed text-xs">{showcase.challenge}</p>
+                            </div>
+                            <div className="bg-black/25 border border-white/5 rounded-xl p-4">
+                              <span className="text-[10px] font-bold text-beige uppercase tracking-wider block mb-1">The Solution</span>
+                              <p className="text-gray-300 leading-relaxed text-xs">{showcase.solution}</p>
+                            </div>
+                          </div>
+
+                          {showcase.testimonial && (
+                            <div className="bg-beige/5 border-l-2 border-beige p-4 rounded-r-xl">
+                              <p className="text-gray-300 italic text-sm mb-2">"{showcase.testimonial}"</p>
+                              <span className="text-[11px] font-bold text-beige block">— {showcase.clientRole || "Client Partner"}</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </AnimatedCard>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Instagram Social Proof - Enhanced */}
         <section className="px-4 mb-20">
