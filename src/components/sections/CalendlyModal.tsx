@@ -1,4 +1,5 @@
 import { memo, useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSettings } from "../../hooks/useSettings";
 
@@ -28,6 +29,7 @@ const BookingModal = memo(({ open, onClose }: Props) => {
   const telegram = settings.socials.telegram || TELEGRAM_HANDLE;
   const email = settings.footer.email || EMAIL;
 
+  const [mounted, setMounted] = useState(false);
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -37,6 +39,23 @@ const BookingModal = memo(({ open, onClose }: Props) => {
   });
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const nameRef = useRef<HTMLInputElement>(null);
+
+  // Set mounted state
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Lock body scroll when open
+  useEffect(() => {
+    if (open && mounted) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open, mounted]);
 
   // Focus first field when opened
   useEffect(() => {
@@ -78,7 +97,9 @@ const BookingModal = memo(({ open, onClose }: Props) => {
     }
   };
 
-  return (
+  if (!mounted) return null;
+
+  return createPortal(
     <AnimatePresence>
       {open && (
         <motion.div
@@ -89,7 +110,7 @@ const BookingModal = memo(({ open, onClose }: Props) => {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.25 }}
           onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
-          style={{ background: "rgba(0,0,0,0.85)", backdropFilter: "blur(12px)" }}
+          style={{ background: "rgba(10,10,10,0.95)" }}
         >
           <motion.div
             key="booking-card"
@@ -381,7 +402,8 @@ const BookingModal = memo(({ open, onClose }: Props) => {
           </motion.div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 });
 
