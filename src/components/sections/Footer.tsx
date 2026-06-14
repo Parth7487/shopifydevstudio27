@@ -38,11 +38,18 @@ const Footer = () => {
         >
           <div className="flex items-center space-x-3 mb-4">
             {settings.footer.logo_type === "image" && settings.footer.logo_image ? (
-              <img
-                src={settings.footer.logo_image}
-                alt={logoText}
-                className="h-10 w-auto object-contain"
-              />
+              <>
+                <img
+                  src={settings.footer.logo_image}
+                  alt={logoText}
+                  className="h-10 w-auto object-contain"
+                />
+                {settings.footer.logo_text_with_image && (
+                  <span className="theme-text font-semibold text-lg">
+                    {logoText}
+                  </span>
+                )}
+              </>
             ) : (
               <>
                 <div className="w-10 h-10 bg-beige rounded-lg flex items-center justify-center flex-shrink-0">

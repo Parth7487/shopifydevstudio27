@@ -10,6 +10,7 @@ export interface FooterSettings {
   social_share_image?: string;
   seo_title?: string;
   seo_description?: string;
+  logo_text_with_image?: boolean;
 }
 
 export interface SocialSettings {
@@ -283,7 +284,8 @@ export const DEFAULT_SETTINGS: SiteSettings = {
     favicon: "",
     social_share_image: "",
     seo_title: "",
-    seo_description: ""
+    seo_description: "",
+    logo_text_with_image: false
   },
   socials: {
     whatsapp: "+917487080421",

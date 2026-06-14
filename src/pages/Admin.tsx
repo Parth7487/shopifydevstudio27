@@ -823,6 +823,7 @@ const Admin = () => {
   const [ogImg, setOgImg] = useState("");
   const [seoTitle, setSeoTitle] = useState("");
   const [seoDescription, setSeoDescription] = useState("");
+  const [logoTextWithImage, setLogoTextWithImage] = useState(false);
   const [localNav, setLocalNav] = useState<any[]>([]);
   const [localPartners, setLocalPartners] = useState<any>(null);
 
@@ -840,6 +841,7 @@ const Admin = () => {
       setOgImg(settings.footer.social_share_image || "");
       setSeoTitle(settings.footer.seo_title || "");
       setSeoDescription(settings.footer.seo_description || "");
+      setLogoTextWithImage(settings.footer.logo_text_with_image || false);
       setLocalNav(settings.navigation || []);
       setLocalPartners(settings.partners || null);
     }
@@ -877,7 +879,8 @@ const Admin = () => {
       favicon: faviconImg,
       social_share_image: ogImg,
       seo_title: seoTitle,
-      seo_description: seoDescription
+      seo_description: seoDescription,
+      logo_text_with_image: logoTextWithImage
     });
     setIsSavingSettings(false);
     if (success1 && success2) {
@@ -1545,12 +1548,26 @@ const Admin = () => {
                     </div>
 
                     {logoType === "image" && (
-                      <div className="pt-2">
-                        <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Upload Custom Logo Image</label>
-                        <ImageUpload
-                          value={logoImg}
-                          onChange={(url) => setLogoImg(url)}
-                        />
+                      <div className="pt-2 space-y-4">
+                        <div>
+                          <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Upload Custom Logo Image</label>
+                          <ImageUpload
+                            value={logoImg}
+                            onChange={(url) => setLogoImg(url)}
+                          />
+                        </div>
+                        <div className="flex items-center gap-3 bg-white/[0.01] border border-white/5 rounded-lg p-3">
+                          <input
+                            type="checkbox"
+                            id="logoTextWithImage"
+                            checked={logoTextWithImage}
+                            onChange={(e) => setLogoTextWithImage(e.target.checked)}
+                            className="w-4 h-4 rounded border-white/20 bg-white/5 text-beige focus:ring-0 focus:ring-offset-0 cursor-pointer"
+                          />
+                          <label htmlFor="logoTextWithImage" className="text-xs font-medium text-gray-300 cursor-pointer select-none">
+                            Show brand name / logo text next to the logo image
+                          </label>
+                        </div>
                       </div>
                     )}
                   </div>

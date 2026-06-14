@@ -134,11 +134,18 @@ const ElegantNavigation = memo(() => {
               onClick={() => navigate("/")}
             >
               {settings.footer.logo_type === "image" && settings.footer.logo_image ? (
-                <img
-                  src={settings.footer.logo_image}
-                  alt={logoText}
-                  className="h-8 sm:h-9 w-auto object-contain"
-                />
+                <>
+                  <img
+                    src={settings.footer.logo_image}
+                    alt={logoText}
+                    className="h-8 sm:h-9 w-auto object-contain"
+                  />
+                  {settings.footer.logo_text_with_image && (
+                    <span className="theme-text font-medium text-base sm:text-lg tracking-wide">
+                      {logoText}
+                    </span>
+                  )}
+                </>
               ) : (
                 <>
                   <div className="w-8 h-8 sm:w-10 sm:h-10 border border-beige/60 rounded relative flex items-center justify-center">
@@ -308,11 +315,18 @@ const ElegantNavigation = memo(() => {
             >
               <div className="flex items-center space-x-3">
                 {settings.footer.logo_type === "image" && settings.footer.logo_image ? (
-                  <img
-                    src={settings.footer.logo_image}
-                    alt={logoText}
-                    className="h-8 w-auto object-contain"
-                  />
+                  <>
+                    <img
+                      src={settings.footer.logo_image}
+                      alt={logoText}
+                      className="h-8 w-auto object-contain"
+                    />
+                    {settings.footer.logo_text_with_image && (
+                      <span className="theme-text font-medium text-base tracking-wide">
+                        {logoText}
+                      </span>
+                    )}
+                  </>
                 ) : (
                   <>
                     <div className="w-8 h-8 border border-beige/60 rounded relative flex items-center justify-center">
