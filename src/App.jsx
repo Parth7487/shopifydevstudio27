@@ -1,7 +1,9 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { lazy, Suspense, memo } from "react";
+import { AnimatePresence } from "framer-motion";
 import ScrollProgress from "./components/ScrollProgress";
+import PageTransition from "./components/PageTransition";
 
 // Import only critical pages directly for instant loading
 import Index from "./pages/Index";
@@ -46,22 +48,17 @@ const queryClient = new QueryClient({
   },
 });
 
-const App = memo(() => (
-  <QueryClientProvider client={queryClient}>
-    <BrowserRouter
-      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
-    >
-      <Suspense fallback={null}>
-        <ScrollToTop />
-      </Suspense>
-      <ScrollProgress />
-      <Routes>
-        <Route path="/" element={<Index />} />
+const AnimatedRoutes = memo(() => {
+  const location = useLocation();
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<PageTransition><Index /></PageTransition>} />
         <Route
           path="/services"
           element={
             <Suspense fallback={<MinimalLoader />}>
-              <Services />
+              <PageTransition><Services /></PageTransition>
             </Suspense>
           }
         />
@@ -69,7 +66,7 @@ const App = memo(() => (
           path="/process"
           element={
             <Suspense fallback={<MinimalLoader />}>
-              <Process />
+              <PageTransition><Process /></PageTransition>
             </Suspense>
           }
         />
@@ -77,7 +74,7 @@ const App = memo(() => (
           path="/about"
           element={
             <Suspense fallback={<MinimalLoader />}>
-              <About />
+              <PageTransition><About /></PageTransition>
             </Suspense>
           }
         />
@@ -85,7 +82,7 @@ const App = memo(() => (
           path="/work"
           element={
             <Suspense fallback={<MinimalLoader />}>
-              <Work />
+              <PageTransition><Work /></PageTransition>
             </Suspense>
           }
         />
@@ -96,7 +93,7 @@ const App = memo(() => (
           path="/blog"
           element={
             <Suspense fallback={<MinimalLoader />}>
-              <Blog />
+              <PageTransition><Blog /></PageTransition>
             </Suspense>
           }
         />
@@ -104,7 +101,7 @@ const App = memo(() => (
           path="/documentation"
           element={
             <Suspense fallback={<MinimalLoader />}>
-              <Documentation />
+              <PageTransition><Documentation /></PageTransition>
             </Suspense>
           }
         />
@@ -112,7 +109,7 @@ const App = memo(() => (
           path="/support"
           element={
             <Suspense fallback={<MinimalLoader />}>
-              <Support />
+              <PageTransition><Support /></PageTransition>
             </Suspense>
           }
         />
@@ -120,7 +117,7 @@ const App = memo(() => (
           path="/faq"
           element={
             <Suspense fallback={<MinimalLoader />}>
-              <FAQ />
+              <PageTransition><FAQ /></PageTransition>
             </Suspense>
           }
         />
@@ -128,7 +125,7 @@ const App = memo(() => (
           path="/partners"
           element={
             <Suspense fallback={<MinimalLoader />}>
-              <Partners />
+              <PageTransition><Partners /></PageTransition>
             </Suspense>
           }
         />
@@ -136,7 +133,7 @@ const App = memo(() => (
           path="/favicon-export"
           element={
             <Suspense fallback={<MinimalLoader />}>
-              <FaviconExport />
+              <PageTransition><FaviconExport /></PageTransition>
             </Suspense>
           }
         />
@@ -144,7 +141,7 @@ const App = memo(() => (
           path="/admin"
           element={
             <Suspense fallback={<MinimalLoader />}>
-              <Admin />
+              <PageTransition><Admin /></PageTransition>
             </Suspense>
           }
         />
@@ -152,7 +149,7 @@ const App = memo(() => (
           path="/404"
           element={
             <Suspense fallback={<MinimalLoader />}>
-              <NotFound />
+              <PageTransition><NotFound /></PageTransition>
             </Suspense>
           }
         />
@@ -161,11 +158,27 @@ const App = memo(() => (
           path="*"
           element={
             <Suspense fallback={<MinimalLoader />}>
-              <NotFound />
+              <PageTransition><NotFound /></PageTransition>
             </Suspense>
           }
         />
       </Routes>
+    </AnimatePresence>
+  );
+});
+
+AnimatedRoutes.displayName = "AnimatedRoutes";
+
+const App = memo(() => (
+  <QueryClientProvider client={queryClient}>
+    <BrowserRouter
+      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+    >
+      <Suspense fallback={null}>
+        <ScrollToTop />
+      </Suspense>
+      <ScrollProgress />
+      <AnimatedRoutes />
     </BrowserRouter>
   </QueryClientProvider>
 ));

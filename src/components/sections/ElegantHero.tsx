@@ -89,6 +89,32 @@ const ElegantHero = () => {
     damping: 30,
   });
 
+  // Background parallax glow Y transforms
+  const glowY1 = useTransform(scrollYProgress, [0, 1], [0, 150]);
+  const glowY2 = useTransform(scrollYProgress, [0, 1], [0, -150]);
+  const smoothGlowY1 = useSpring(glowY1, { stiffness: 80, damping: 25 });
+  const smoothGlowY2 = useSpring(glowY2, { stiffness: 80, damping: 25 });
+
+  // Staggered reveal variants
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.18,
+        delayChildren: 0.4,
+      }
+    }
+  };
+
+  const wordVariants = {
+    hidden: { y: "115%", opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 1.0, ease: [0.16, 1, 0.3, 1] } // Custom out-expo
+    }
+  };
+
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -142,62 +168,57 @@ const ElegantHero = () => {
 
       {/* Subtle ambient background */}
       <motion.div
-        className="absolute inset-0 opacity-20"
+        className="absolute inset-0 opacity-20 pointer-events-none"
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.1 }}
         transition={{ duration: 4 }}
       >
-        <div
+        <motion.div
           className="absolute top-1/3 left-1/4 w-96 h-96 rounded-full"
           style={{
+            y: smoothGlowY1,
             background:
               "radial-gradient(circle, rgba(230,177,126,0.1) 0%, transparent 70%)",
+            willChange: "transform",
           }}
         />
-        <div
+        <motion.div
           className="absolute bottom-1/3 right-1/4 w-64 h-64 rounded-full"
           style={{
+            y: smoothGlowY2,
             background:
               "radial-gradient(circle, rgba(209,169,122,0.08) 0%, transparent 70%)",
+            willChange: "transform",
           }}
         />
       </motion.div>
 
       <div className="relative z-10 max-w-6xl mx-auto mobile-safe-padding text-center">
         {/* Main headline with elegant reveal */}
-        <motion.div
-          className="mb-8 sm:mb-12"
-          initial={{ opacity: 0, y: 60 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1, delay: 0.5 }}
-        >
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-extrabold leading-[0.9] tracking-tight theme-text mb-6 sm:mb-8">
-            <motion.span
-              className="block"
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.7 }}
-            >
-              We Bring
-            </motion.span>
-            <motion.span
-              className="block text-beige"
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.9 }}
-            >
-              Shopify Dreams
-            </motion.span>
-            <motion.span
-              className="block"
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 1.1 }}
-            >
-              to Life
-            </motion.span>
-          </h1>
-        </motion.div>
+        <div className="mb-8 sm:mb-12 select-none overflow-hidden">
+          <motion.h1
+            variants={containerVariants}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-extrabold leading-[0.9] tracking-tight theme-text mb-6 sm:mb-8"
+          >
+            <span className="block overflow-hidden relative pb-1">
+              <motion.span variants={wordVariants} className="block">
+                We Bring
+              </motion.span>
+            </span>
+            <span className="block overflow-hidden relative pb-1 text-beige">
+              <motion.span variants={wordVariants} className="block">
+                Shopify Dreams
+              </motion.span>
+            </span>
+            <span className="block overflow-hidden relative pb-1">
+              <motion.span variants={wordVariants} className="block">
+                to Life
+              </motion.span>
+            </span>
+          </motion.h1>
+        </div>
 
         {/* Elegant subtitle */}
         <motion.p
