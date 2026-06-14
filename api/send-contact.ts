@@ -189,8 +189,10 @@ ${clientMessage}
     const whatsappPhone = process.env.WHATSAPP_NOTIFICATION_PHONE;
 
     if (whatsappInstanceId && whatsappApiToken && whatsappPhone) {
-      const formattedPhone = whatsappPhone.replace(/\D/g, "");
-      const chatId = `${formattedPhone}@c.us`;
+      // Support group IDs (@g.us), personal numbers (@c.us), or raw phone numbers
+      const chatId = whatsappPhone.includes("@")
+        ? whatsappPhone
+        : `${whatsappPhone.replace(/\D/g, "")}@c.us`;
 
       const textMessage = `
 🔔 *New Lead [${source}]*
