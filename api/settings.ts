@@ -51,11 +51,25 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return res.status(400).json({ error: "Missing required fields (key, value)" });
       }
 
+      // Fetch previous settings for audit logs rollback
+      const prevSetting = await sql`
+        SELECT value FROM site_settings WHERE key = ${newKey}
+      `;
+      const prevValue = prevSetting.length ? prevSetting[0].value : null;
+
       await sql`
         INSERT INTO site_settings (key, value)
         VALUES (${newKey}, ${JSON.stringify(value)})
         ON CONFLICT (key) DO UPDATE
         SET value = ${JSON.stringify(value)}
+      `;
+
+      // Log the settings update action to audit logs
+      const actionName = `Updated ${newKey.charAt(0).toUpperCase() + newKey.slice(1)} Settings`;
+      const descText = `Modified ${newKey} settings inside the admin customization panel.`;
+      await sql`
+        INSERT INTO audit_logs (action, description, category, payload)
+        VALUES (${actionName}, ${descText}, 'admin', ${JSON.stringify({ type: 'settings', key: newKey, value: prevValue })})
       `;
 
       return res.status(200).json({ success: true, message: `Setting '${newKey}' updated` });

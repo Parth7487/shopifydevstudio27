@@ -77,6 +77,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           ${tags}, ${tech}, ${JSON.stringify(metrics)}, ${live_url}, ${featured}, ${has_video}, ${status}, ${images}
         ) RETURNING *
       `;
+
+      // Log project creation to audit logs
+      const actionName = "Created Portfolio Project";
+      const descText = `Created new project "${title}" for brand "${brand}".`;
+      await sql`
+        INSERT INTO audit_logs (action, description, category, payload)
+        VALUES (${actionName}, ${descText}, 'admin', ${JSON.stringify({ type: 'portfolio_create', id: newProject.id })})
+      `;
+
       return res.status(201).json(newProject);
     }
 
@@ -97,6 +106,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         status,
         images
       } = req.body;
+
+      // Fetch the previous project state for rollback
+      const oldProjects = await sql`
+        SELECT * FROM portfolio_projects WHERE id = ${projectId}
+      `;
+      const oldProject = oldProjects.length ? oldProjects[0] : null;
 
       // Use explicit SET for all fields — booleans break with COALESCE (false is treated as NULL)
       const [updatedProject] = await sql`
@@ -122,11 +137,39 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (!updatedProject) {
         return res.status(404).json({ error: "Project not found" });
       }
+
+      // Log project update to audit logs
+      if (oldProject) {
+        const actionName = "Updated Portfolio Project";
+        const descText = `Modified details for project "${updatedProject.title}" (${updatedProject.brand}).`;
+        await sql`
+          INSERT INTO audit_logs (action, description, category, payload)
+          VALUES (${actionName}, ${descText}, 'admin', ${JSON.stringify({ type: 'portfolio_update', id: projectId, value: oldProject })})
+        `;
+      }
+
       return res.status(200).json(updatedProject);
     }
 
     if (req.method === "DELETE" && projectId) {
+      // Fetch the project details before deleting for rollback
+      const oldProjects = await sql`
+        SELECT * FROM portfolio_projects WHERE id = ${projectId}
+      `;
+      const oldProject = oldProjects.length ? oldProjects[0] : null;
+
       await sql`DELETE FROM portfolio_projects WHERE id = ${projectId}`;
+
+      // Log project deletion to audit logs
+      if (oldProject) {
+        const actionName = "Deleted Portfolio Project";
+        const descText = `Removed project "${oldProject.title}" (${oldProject.brand}) from portfolio.`;
+        await sql`
+          INSERT INTO audit_logs (action, description, category, payload)
+          VALUES (${actionName}, ${descText}, 'admin', ${JSON.stringify({ type: 'portfolio_delete', id: projectId, value: oldProject })})
+        `;
+      }
+
       return res.status(200).json({ success: true });
     }
 

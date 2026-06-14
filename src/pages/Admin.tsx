@@ -21,6 +21,9 @@ import {
   ImagePlus,
   X,
   Loader2,
+  History,
+  RotateCcw,
+  ExternalLink,
 } from "lucide-react";
 import {
   DndContext,
@@ -782,6 +785,198 @@ class SmartPointerSensor extends PointerSensor {
   ];
 }
 
+interface LogEntry {
+  id: string;
+  action: string;
+  description: string;
+  category: "admin" | "github";
+  payload?: any;
+  author: string;
+  created_at: string;
+}
+
+const AdminLogs = ({
+  refetchSettings,
+  refetchProjects,
+}: {
+  refetchSettings: () => Promise<any>;
+  refetchProjects: () => Promise<any>;
+}) => {
+  const [logs, setLogs] = useState<LogEntry[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [restoringId, setRestoringId] = useState<string | null>(null);
+
+  const fetchLogs = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/logs");
+      if (!res.ok) throw new Error("Failed to load logs");
+      const data = await res.json();
+      setLogs(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to load logs");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  React.useEffect(() => {
+    fetchLogs();
+  }, [fetchLogs]);
+
+  const handleRestore = async (id: string) => {
+    if (
+      !confirm(
+        "Are you sure you want to restore the system state to this snapshot? This will overwrite the current values."
+      )
+    ) {
+      return;
+    }
+    setRestoringId(id);
+    try {
+      const res = await fetch("/api/logs", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to restore state");
+
+      alert(data.message || "State successfully restored!");
+
+      // Refetch everything
+      await Promise.all([refetchSettings(), refetchProjects()]);
+      await fetchLogs();
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Failed to restore state");
+    } finally {
+      setRestoringId(null);
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex justify-between items-center bg-black/40 p-4 border border-white/5 rounded-xl">
+        <div>
+          <h4 className="font-semibold text-white text-base flex items-center gap-2">
+            <History className="w-5 h-5 text-beige" /> Activity Logs & Version History
+          </h4>
+          <p className="text-gray-400 text-xs mt-1">
+            View changes made via the admin panel (with one-click rollbacks) and recent code updates from GitHub.
+          </p>
+        </div>
+        <button
+          onClick={fetchLogs}
+          disabled={loading}
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-xs font-semibold transition-colors disabled:opacity-50"
+        >
+          {loading ? (
+            <Loader2 className="w-3.5 h-3.5 animate-spin" />
+          ) : (
+            <RotateCcw className="w-3.5 h-3.5" />
+          )}
+          Refresh
+        </button>
+      </div>
+
+      {loading && logs.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-16 space-y-3">
+          <Loader2 className="w-8 h-8 text-beige animate-spin" />
+          <p className="text-xs text-gray-400">Loading audit feed and GitHub commits...</p>
+        </div>
+      ) : error ? (
+        <div className="p-4 bg-red-950/20 border border-red-900/30 text-red-400 rounded-lg text-xs text-center">
+          {error}
+        </div>
+      ) : logs.length === 0 ? (
+        <div className="text-center py-12 text-gray-500 text-xs border border-white/5 rounded-xl bg-white/[0.01]">
+          No activities logged yet.
+        </div>
+      ) : (
+        <div className="border border-white/10 rounded-xl overflow-hidden bg-black/60 backdrop-blur-md">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr className="border-b border-white/10 bg-white/[0.02] text-gray-400 font-semibold uppercase tracking-wider">
+                  <th className="p-4 w-40">Date / Time</th>
+                  <th className="p-4 w-36">Source</th>
+                  <th className="p-4 w-48">Action</th>
+                  <th className="p-4">Detail / Description</th>
+                  <th className="p-4 w-36">Author</th>
+                  <th className="p-4 w-28 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/5">
+                {logs.map((log) => {
+                  const isGitHub = log.category === "github";
+                  const dateStr = new Date(log.created_at).toLocaleString(undefined, {
+                    dateStyle: "medium",
+                    timeStyle: "short",
+                  });
+                  const hasRestorablePayload = log.payload && log.payload.type;
+
+                  return (
+                    <tr key={log.id} className="hover:bg-white/[0.02] transition-colors group">
+                      <td className="p-4 text-gray-400 font-mono whitespace-nowrap">{dateStr}</td>
+                      <td className="p-4 whitespace-nowrap">
+                        {isGitHub ? (
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-blue-950/80 text-blue-400 border border-blue-500/30">
+                            GitHub Commit
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-950/80 text-emerald-400 border border-emerald-500/30">
+                            Admin Settings
+                          </span>
+                        )}
+                      </td>
+                      <td className="p-4 font-semibold text-white whitespace-nowrap truncate max-w-[12rem]">
+                        {log.action}
+                      </td>
+                      <td className="p-4 text-gray-300 font-medium leading-relaxed max-w-sm break-words">
+                        {log.description}
+                      </td>
+                      <td className="p-4 text-gray-400 font-medium whitespace-nowrap">{log.author}</td>
+                      <td className="p-4 text-right whitespace-nowrap">
+                        {isGitHub ? (
+                          <a
+                            href={log.payload?.commitUrl || "#"}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 px-2.5 py-1.5 bg-white/5 hover:bg-white/10 text-white rounded-lg font-semibold transition-all hover:border-white/20 border border-transparent"
+                          >
+                            View Code <ExternalLink className="w-3 h-3" />
+                          </a>
+                        ) : hasRestorablePayload ? (
+                          <button
+                            onClick={() => handleRestore(log.id)}
+                            disabled={restoringId !== null}
+                            className="inline-flex items-center gap-1 px-2.5 py-1.5 bg-beige text-charcoal hover:bg-beige/90 rounded-lg font-bold transition-all disabled:opacity-50 shadow-md"
+                          >
+                            {restoringId === log.id ? (
+                              <Loader2 className="w-3 h-3 animate-spin" />
+                            ) : (
+                              <RotateCcw className="w-3 h-3" />
+                            )}
+                            Revert
+                          </button>
+                        ) : (
+                          <span className="text-gray-600 italic">No snapshot</span>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 // ─── Main Admin Component ─────────────────────────────────────────────────────
 
 const Admin = () => {
@@ -808,7 +1003,7 @@ const Admin = () => {
   const { testimonials, saveTestimonial, deleteTestimonial, updateTestimonialOrder, loading: testimonialsLoading, refetch: refetchTestimonials } = useTestimonials();
 
   // Sub-tabs under settings
-  const [settingsSubTab, setSettingsSubTab] = useState<"general" | "navigation" | "testimonials" | "partners" | "system">("general");
+  const [settingsSubTab, setSettingsSubTab] = useState<"general" | "navigation" | "testimonials" | "partners" | "system" | "logs">("general");
   const [partnersSubSubTab, setPartnersSubSubTab] = useState<"experts" | "tweets" | "instagram" | "showcases">("experts");
 
   // Local settings form states
@@ -1490,7 +1685,7 @@ const Admin = () => {
                   <h3 className="text-xl font-bold text-white">Site Settings</h3>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  {(["general", "navigation", "testimonials", "partners", "system"] as const).map((tab) => (
+                  {(["general", "navigation", "testimonials", "partners", "system", "logs"] as const).map((tab) => (
                     <button
                       key={tab}
                       onClick={() => setSettingsSubTab(tab)}
@@ -2831,6 +3026,11 @@ const Admin = () => {
                     </div>
                   </div>
                 </div>
+              )}
+
+              {/* Logs Sub-tab */}
+              {settingsSubTab === "logs" && (
+                <AdminLogs refetchSettings={refetchSettings} refetchProjects={refetch} />
               )}
             </motion.div>
           )}

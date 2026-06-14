@@ -116,6 +116,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       )
     `;
 
+    // 4. Create audit_logs table
+    await sql`
+      CREATE TABLE IF NOT EXISTS audit_logs (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        action TEXT NOT NULL,
+        description TEXT NOT NULL,
+        category TEXT NOT NULL,
+        payload JSONB,
+        author TEXT DEFAULT 'Admin',
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+
     // 4. Seed testimonials if empty
     const testimonialCount = await sql`SELECT COUNT(*)::integer FROM testimonials`;
     if (testimonialCount[0].count === 0) {
