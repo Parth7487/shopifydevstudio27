@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { useSettings } from "../../hooks/useSettings";
 import { useTheme } from "../../contexts/ThemeContext";
+import BookingModal from "./CalendlyModal";
 
 
 const ElegantNavigation = memo(() => {

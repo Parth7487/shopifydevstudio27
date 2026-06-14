@@ -3,7 +3,6 @@ import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
 import { initInstantLoading } from "./lib/instant-loading";
-import { LanguageProvider } from "./contexts/LanguageContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
 
 // Initialize instant loading optimizations immediately
@@ -22,9 +21,7 @@ if (import.meta.env.DEV) {
   root.render(
     <StrictMode>
       <ThemeProvider>
-        <LanguageProvider>
-          <App />
-        </LanguageProvider>
+        <App />
       </ThemeProvider>
     </StrictMode>,
   );
@@ -33,9 +30,7 @@ if (import.meta.env.DEV) {
   // Skip StrictMode in production for better performance
   root.render(
     <ThemeProvider>
-      <LanguageProvider>
-        <App />
-      </LanguageProvider>
+      <App />
     </ThemeProvider>,
   );
   import("./lib/perf-audit").then((m) => m.runQuickPerfAudit?.());
