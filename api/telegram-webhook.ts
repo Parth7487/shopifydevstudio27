@@ -31,6 +31,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Get the caption (text sent with the photo)
     const caption = message.caption || "";
 
+    // Determine if it is a story post (contains #story, #igstory, or starts with /story)
+    const captionLower = caption.toLowerCase().trim();
+    const isStory =
+      captionLower.includes("#story") ||
+      captionLower.includes("#igstory") ||
+      captionLower.startsWith("/story");
+
+    // Clean up caption by removing story tags/commands for the final post
+    let postCaption = caption;
+    if (isStory) {
+      postCaption = caption
+        .replace(/^\/story\s*/i, "")
+        .replace(/#story/i, "")
+        .replace(/#igstory/i, "")
+        .trim();
+    }
+
     // Step 1: Get file path from Telegram
     const fileInfoRes = await fetch(
       `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getFile?file_id=${fileId}`
@@ -117,7 +134,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           image_url: imageUrl,
-          caption: caption,
+          caption: postCaption,
+          is_story: isStory,
           source: "telegram",
           chat_id: message.chat?.id,
           from: message.from?.username || message.from?.first_name || "unknown",
@@ -138,7 +156,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             body: JSON.stringify({
               chat_id: chatId,
               text: makeRes.ok
-                ? `✅ *Posted to Instagram!*\n\n📸 Photo published successfully${caption ? `\n💬 Caption: _${caption}_` : ""}`
+                ? `✅ *Posted to Instagram!*\n\n📸 Photo published successfully as a *${isStory ? "Story" : "Feed Post"}*${postCaption ? `\n💬 Caption: _${postCaption}_` : ""}`
                 : `❌ Failed to post to Instagram. Please try again.`,
               parse_mode: "Markdown",
             }),
