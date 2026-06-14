@@ -1562,7 +1562,7 @@ const Admin = () => {
                             id="logoTextWithImage"
                             checked={logoTextWithImage}
                             onChange={(e) => setLogoTextWithImage(e.target.checked)}
-                            className="w-4 h-4 rounded border-white/20 bg-white/5 text-beige focus:ring-0 focus:ring-offset-0 cursor-pointer"
+                            className="w-4 h-4 accent-beige cursor-pointer"
                           />
                           <label htmlFor="logoTextWithImage" className="text-xs font-medium text-gray-300 cursor-pointer select-none">
                             Show brand name / logo text next to the logo image
