@@ -4,6 +4,7 @@ import Preloader from "../components/Preloader";
 import ElegantHero from "../components/sections/ElegantHero";
 import Footer from "../components/sections/Footer";
 import { updatePageMeta } from "../lib/seo-meta";
+import ScrollReveal from "../components/ScrollReveal";
 
 
 // Ultra-lightweight lazy loading - only load what's needed
@@ -60,6 +61,7 @@ const Index = memo(() => {
           "Shopify Speed Optimization",
           "Mobile-First Design",
           "Shopify Plus Development",
+          "Knows about e-commerce",
         ],
         serviceType: [
           "Custom Shopify Theme Development",
@@ -126,7 +128,9 @@ const Index = memo(() => {
         {/* Below-the-fold sections - lazy loaded */}
         <section>
           <Suspense fallback={<ComponentLoader />}>
-            <StatsSection />
+            <ScrollReveal>
+              <StatsSection />
+            </ScrollReveal>
           </Suspense>
         </section>
 
@@ -144,25 +148,33 @@ const Index = memo(() => {
 
         <section>
           <Suspense fallback={<ComponentLoader />}>
-            <Process />
+            <ScrollReveal>
+              <Process />
+            </ScrollReveal>
           </Suspense>
         </section>
 
         <section>
           <Suspense fallback={<ComponentLoader />}>
-            <CollaborationSection />
+            <ScrollReveal>
+              <CollaborationSection />
+            </ScrollReveal>
           </Suspense>
         </section>
 
         <section>
           <Suspense fallback={<ComponentLoader />}>
-            <FAQ />
+            <ScrollReveal>
+              <FAQ />
+            </ScrollReveal>
           </Suspense>
         </section>
 
         <section>
           <Suspense fallback={<ComponentLoader />}>
-            <ProblemSolution />
+            <ScrollReveal>
+              <ProblemSolution />
+            </ScrollReveal>
           </Suspense>
         </section>
       </main>

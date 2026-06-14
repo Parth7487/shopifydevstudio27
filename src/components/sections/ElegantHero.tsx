@@ -200,7 +200,7 @@ const ElegantHero = () => {
             variants={containerVariants}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-extrabold leading-[0.9] tracking-tight theme-text mb-6 sm:mb-8"
+            className="fluid-h1 font-extrabold leading-[0.9] tracking-tight theme-text mb-6 sm:mb-8"
           >
             <span className="block overflow-hidden relative pb-1">
               <motion.span variants={wordVariants} className="block">

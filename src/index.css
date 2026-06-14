@@ -12,6 +12,9 @@
   .theme-text       { color: var(--theme-text); }
   .theme-text-sec   { color: var(--theme-text-sec); }
   .theme-text-muted { color: var(--theme-text-muted); }
+  .fluid-h1         { font-size: clamp(2.25rem, 8.5vw, 6.5rem); }
+  .fluid-h2         { font-size: clamp(1.75rem, 5vw, 3.75rem); }
+  .fluid-h3         { font-size: clamp(1.5rem, 3.5vw, 2.5rem); }
 }
 
 
