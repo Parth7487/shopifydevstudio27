@@ -1,4 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
+import crypto from "crypto";
 
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN!;
 const MAKE_WEBHOOK_URL = process.env.MAKE_INSTAGRAM_WEBHOOK_URL!;
@@ -43,10 +44,73 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const filePath = fileInfo.result.file_path;
 
-    // Step 2: Build the public image URL from Telegram CDN
-    const imageUrl = `https://api.telegram.org/file/bot${TELEGRAM_BOT_TOKEN}/${filePath}`;
+    // Step 2: Fetch the image buffer from Telegram CDN
+    const telegramFileUrl = `https://api.telegram.org/file/bot${TELEGRAM_BOT_TOKEN}/${filePath}`;
+    const fileRes = await fetch(telegramFileUrl);
+    if (!fileRes.ok) {
+      console.error("Failed to download file from Telegram:", fileRes.statusText);
+      return res.status(200).json({ ok: true });
+    }
 
-    // Step 3: Send to Make.com webhook → posts to Instagram
+    const arrayBuffer = await fileRes.arrayBuffer();
+    const base64Data = Buffer.from(arrayBuffer).toString("base64");
+    const fileDataUri = `data:image/jpeg;base64,${base64Data}`;
+
+    // Step 3: Upload to Cloudinary to get a public URL
+    const CLOUDINARY_CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME || "ddu46zaxl";
+    const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY || "686764961315939";
+    const CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET || "dDIY-szQG-i4STaHFCX42Ja2ozk";
+
+    const timestamp = Math.round(Date.now() / 1000);
+    const folder = "shopifydevstudio/telegram-uploads";
+    const paramsToSign = `folder=${folder}&timestamp=${timestamp}`;
+    const signature = crypto
+      .createHash("sha256")
+      .update(paramsToSign + CLOUDINARY_API_SECRET)
+      .digest("hex");
+
+    console.log("Uploading Telegram image to Cloudinary...");
+    const cloudinaryUploadRes = await fetch(
+      `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          file: fileDataUri,
+          signature,
+          timestamp,
+          api_key: CLOUDINARY_API_KEY,
+          folder,
+        }),
+      }
+    );
+
+    if (!cloudinaryUploadRes.ok) {
+      const errText = await cloudinaryUploadRes.text();
+      console.error("Cloudinary upload failed:", errText);
+      // Send alert message back to Telegram chat
+      const chatId = message.chat?.id;
+      if (chatId) {
+        await fetch(
+          `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              chat_id: chatId,
+              text: `❌ Failed to process image upload. Please try again.`,
+            }),
+          }
+        );
+      }
+      return res.status(200).json({ ok: true });
+    }
+
+    const cloudinaryData = await cloudinaryUploadRes.json();
+    const imageUrl = cloudinaryData.secure_url;
+    console.log("Cloudinary upload successful, secure url:", imageUrl);
+
+    // Step 4: Send to Make.com webhook → posts to Instagram
     if (MAKE_WEBHOOK_URL) {
       const makeRes = await fetch(MAKE_WEBHOOK_URL, {
         method: "POST",
