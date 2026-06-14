@@ -20,9 +20,19 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission (replace with actual Formspree or backend integration)
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const res = await fetch("/api/send-contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          source: "Footer General Contact Form",
+        }),
+      });
+      if (!res.ok) throw new Error("Submission failed");
+
       setIsSubmitted(true);
       toast({
         title: "Message sent successfully!",

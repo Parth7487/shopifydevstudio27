@@ -44,18 +44,17 @@ const Services = () => {
       setFormError("");
       setSubmitting(true);
       try {
-        const res = await fetch(FORMSPREE_ENDPOINT, {
+        const res = await fetch("/api/send-contact", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Accept: "application/json",
           },
           body: JSON.stringify({
             storeUrl,
             email,
             businessName,
             challenges,
-            consent: "Yes, I agree",
+            source: "Services Free Audit Form",
           }),
         });
 
@@ -69,7 +68,7 @@ const Services = () => {
         } else {
           const data = await res.json();
           setFormError(
-            data?.errors?.[0]?.message ||
+            data?.error ||
               "Something went wrong. Please try WhatsApp instead.",
           );
         }

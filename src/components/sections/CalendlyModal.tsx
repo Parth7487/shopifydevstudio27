@@ -78,10 +78,13 @@ const BookingModal = memo(({ open, onClose }: Props) => {
     e.preventDefault();
     setStatus("sending");
     try {
-      const res = await fetch("https://formspree.io/f/shopifydevstudio", {
+      const res = await fetch("/api/send-contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({ ...form, _subject: `New Booking Request from ${form.name}` }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...form,
+          source: "Consultation Popup Form",
+        }),
       });
       if (res.ok) {
         setStatus("sent");
