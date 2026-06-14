@@ -15,6 +15,9 @@
   .fluid-h1         { font-size: clamp(2.25rem, 8.5vw, 6.5rem); }
   .fluid-h2         { font-size: clamp(1.75rem, 5vw, 3.75rem); }
   .fluid-h3         { font-size: clamp(1.5rem, 3.5vw, 2.5rem); }
+  .mobile-safe-padding {
+    @apply px-5 sm:px-8 lg:px-16;
+  }
 }
 
 
