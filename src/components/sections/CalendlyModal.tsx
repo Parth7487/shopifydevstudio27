@@ -229,9 +229,9 @@ const BookingModal = memo(({ open, onClose }: Props) => {
                   href={CALENDLY_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs theme-text-muted hover:text-[#d4af37] transition-colors flex items-center gap-1.5"
+                  className="inline-flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl text-sm font-bold text-center transition-all duration-200 border border-[#d4af37]/30 hover:border-[#d4af37]/60 text-[#d4af37] bg-[#d4af37]/5 hover:bg-[#d4af37]/10 hover:-translate-y-0.5 shadow-md shadow-[#d4af37]/5"
                 >
-                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
                   Or book directly on Calendly →
                 </a>
               </div>
@@ -333,27 +333,6 @@ const BookingModal = memo(({ open, onClose }: Props) => {
                       </select>
                     </div>
 
-                    {/* Budget */}
-                    <div>
-                      <label className="block text-xs font-medium theme-text-sec mb-1.5">Estimated Budget</label>
-                      <div className="grid grid-cols-3 gap-2">
-                        {["< $2,000", "$2k – $10k", "$10k+"].map((b) => (
-                          <button
-                            key={b}
-                            type="button"
-                            onClick={() => setForm((f) => ({ ...f, budget: b }))}
-                            className="py-2.5 rounded-xl text-xs font-medium transition-all duration-200"
-                            style={{
-                              background: form.budget === b ? "rgba(212,175,55,0.15)" : "var(--theme-input-bg)",
-                              border: form.budget === b ? "1px solid rgba(212,175,55,0.5)" : "1px solid var(--theme-border)",
-                              color: form.budget === b ? "#d4af37" : "var(--theme-text-sec)",
-                            }}
-                          >
-                            {b}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
 
                     {/* Message */}
                     <div>
