@@ -2,8 +2,6 @@ import { useState, useEffect, useCallback, memo } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Sun, Moon } from "lucide-react";
-import BookingModal from "./CalendlyModal";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useSettings } from "../../hooks/useSettings";
 import { useTheme } from "../../contexts/ThemeContext";
 
@@ -201,9 +199,8 @@ const ElegantNavigation = memo(() => {
               ))}
             </div>
 
-            {/* Desktop: Language + Social + Theme toggle + CTA */}
+            {/* Desktop: Social + Theme toggle + CTA */}
             <div className="hidden sm:flex items-center gap-3">
-              <LanguageSwitcher variant="dropdown" />
               <a
                 href={`https://wa.me/${(settings.socials.whatsapp || "").replace(/\D/g, "")}?text=Hello%20Shopify%20Dev%20Studio%20%E2%80%93%20I%20would%20like%20to%20connect`}
                 target="_blank"
@@ -393,10 +390,7 @@ const ElegantNavigation = memo(() => {
                 ))}
               </nav>
 
-              {/* Language Switcher */}
-              <div className="mt-8 mb-6">
-                <LanguageSwitcher variant="inline" className="justify-center" />
-              </div>
+
 
               {/* Mobile CTA */}
               <div className="flex items-center justify-center gap-4">
