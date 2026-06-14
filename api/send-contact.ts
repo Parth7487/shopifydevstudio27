@@ -204,8 +204,10 @@ ${budget ? `💰 *Budget:* ${budget}\n` : ""}
 ${clientMessage}
       `.trim();
 
+      const greenApiBaseUrl = (process.env.GREEN_API_URL || `https://7107.api.greenapi.com`).replace(/\/$/, "");
+
       promises.push(
-        fetch(`https://api.green-api.com/waInstance${whatsappInstanceId}/sendMessage/${whatsappApiToken}`, {
+        fetch(`${greenApiBaseUrl}/waInstance${whatsappInstanceId}/sendMessage/${whatsappApiToken}`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
