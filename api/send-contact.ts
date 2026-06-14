@@ -183,6 +183,44 @@ ${clientMessage}
       );
     }
 
+    // 4. WhatsApp (Green-API) Integration
+    const whatsappInstanceId = process.env.GREEN_API_INSTANCE_ID;
+    const whatsappApiToken = process.env.GREEN_API_API_TOKEN;
+    const whatsappPhone = process.env.WHATSAPP_NOTIFICATION_PHONE;
+
+    if (whatsappInstanceId && whatsappApiToken && whatsappPhone) {
+      const formattedPhone = whatsappPhone.replace(/\D/g, "");
+      const chatId = `${formattedPhone}@c.us`;
+
+      const textMessage = `
+🔔 *New Lead [${source}]*
+
+👤 *Name:* ${clientName}
+📧 *Email:* ${clientEmail}
+🏢 *Company/Store:* ${clientCompany}
+🏷️ *Type:* ${clientProjectType}
+${budget ? `💰 *Budget:* ${budget}\n` : ""}
+💬 *Details:*
+${clientMessage}
+      `.trim();
+
+      promises.push(
+        fetch(`https://api.green-api.com/waInstance${whatsappInstanceId}/sendMessage/${whatsappApiToken}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            chatId: chatId,
+            message: textMessage,
+          }),
+        }).then(async (r) => {
+          if (!r.ok) {
+            const errText = await r.text();
+            throw new Error(`Green-API returned ${r.status}: ${errText}`);
+          }
+        })
+      );
+    }
+
     // Wait for all integration promises to settle
     const results = await Promise.allSettled(promises);
     const failures = results.filter((r) => r.status === "rejected") as PromiseRejectedResult[];
