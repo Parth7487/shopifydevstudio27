@@ -91,7 +91,7 @@ const ElegantNavigation = memo(() => {
     setIsMobileMenuOpen(false);
   }, [location.pathname]);
 
-  const navItems = settings.navigation;
+  const navItems = settings.navigation.filter(item => item.id !== "process" && item.label !== "Process");
 
   const isActiveItem = (itemLabel: string) => {
     if (location.pathname === "/" && itemLabel === "Home") return true;
