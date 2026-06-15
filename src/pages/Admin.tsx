@@ -1019,6 +1019,7 @@ const Admin = () => {
   const [seoTitle, setSeoTitle] = useState("");
   const [seoDescription, setSeoDescription] = useState("");
   const [logoTextWithImage, setLogoTextWithImage] = useState(false);
+  const [enableSplashCursor, setEnableSplashCursor] = useState(false);
   const [localNav, setLocalNav] = useState<any[]>([]);
   const [localPartners, setLocalPartners] = useState<any>(null);
 
@@ -1037,6 +1038,7 @@ const Admin = () => {
       setSeoTitle(settings.footer.seo_title || "");
       setSeoDescription(settings.footer.seo_description || "");
       setLogoTextWithImage(settings.footer.logo_text_with_image || false);
+      setEnableSplashCursor(settings.footer.enable_splash_cursor || false);
       setLocalNav(settings.navigation || []);
       setLocalPartners(settings.partners || null);
     }
@@ -1075,7 +1077,8 @@ const Admin = () => {
       social_share_image: ogImg,
       seo_title: seoTitle,
       seo_description: seoDescription,
-      logo_text_with_image: logoTextWithImage
+      logo_text_with_image: logoTextWithImage,
+      enable_splash_cursor: enableSplashCursor
     });
     setIsSavingSettings(false);
     if (success1 && success2) {
@@ -1861,6 +1864,28 @@ const Admin = () => {
                     </div>
                   </div>
 
+                  {/* Interactivity & Effects */}
+                  <div className="bg-white/[0.02] border border-white/5 rounded-xl p-5 space-y-4">
+                    <h4 className="text-sm font-semibold text-beige tracking-wider uppercase mb-1">Interactivity & Effects</h4>
+                    <div className="flex items-center gap-3 bg-white/[0.01] border border-white/5 rounded-lg p-3">
+                      <input
+                        type="checkbox"
+                        id="enableSplashCursor"
+                        checked={enableSplashCursor}
+                        onChange={(e) => setEnableSplashCursor(e.target.checked)}
+                        className="w-4 h-4 accent-beige cursor-pointer"
+                      />
+                      <div>
+                        <label htmlFor="enableSplashCursor" className="text-xs font-semibold text-gray-200 cursor-pointer select-none">
+                          Enable Banner Fluid Splash Cursor
+                        </label>
+                        <p className="text-[10px] text-gray-500 mt-0.5">
+                          When enabled, a colorful interactive liquid fluid effect will follow the mouse cursor over the home page banner. Optimized for high performance.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  
                   {/* Contact & Copyright Info */}
                   <div className="bg-white/[0.02] border border-white/5 rounded-xl p-5 space-y-4">
                     <h4 className="text-sm font-semibold text-beige tracking-wider uppercase mb-1">Contact & Copyright</h4>

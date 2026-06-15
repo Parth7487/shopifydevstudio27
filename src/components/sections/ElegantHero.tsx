@@ -8,6 +8,8 @@ import {
 } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { useSettings } from "../../hooks/useSettings";
+
 const LazySplashCursor = lazy(() =>
   import("../ui/splash-cursor").then((m) => ({ default: m.SplashCursor })),
 );
@@ -19,6 +21,9 @@ import CalendlyModal from "./CalendlyModal";
 const ElegantHero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+  const { settings } = useSettings();
+  const enableSplashCursor = settings?.footer?.enable_splash_cursor ?? false;
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"],
@@ -140,7 +145,7 @@ const ElegantHero = () => {
 
       {/* Fluid cursor effect with graceful fallback */}
       <div className="absolute inset-0 z-0 gpu-accelerated pointer-events-none">
-        {showCursor && (
+        {enableSplashCursor && showCursor && (
           <Suspense fallback={null}>
             {useLiteCursor ? (
               <LiteSplashCursor
@@ -152,13 +157,13 @@ const ElegantHero = () => {
               />
             ) : (
               <LazySplashCursor
-                SIM_RESOLUTION={96}
-                DYE_RESOLUTION={720}
-                PRESSURE_ITERATIONS={14}
-                DENSITY_DISSIPATION={3.0}
+                SIM_RESOLUTION={64}
+                DYE_RESOLUTION={256}
+                PRESSURE_ITERATIONS={8}
+                DENSITY_DISSIPATION={3.5}
                 VELOCITY_DISSIPATION={2.0}
-                SPLAT_FORCE={3200}
-                SPLAT_RADIUS={0.12}
+                SPLAT_FORCE={3000}
+                SPLAT_RADIUS={0.1}
                 COLOR_UPDATE_SPEED={7}
               />
             )}

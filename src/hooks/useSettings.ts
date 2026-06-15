@@ -11,6 +11,7 @@ export interface FooterSettings {
   seo_title?: string;
   seo_description?: string;
   logo_text_with_image?: boolean;
+  enable_splash_cursor?: boolean;
 }
 
 export interface SocialSettings {
@@ -285,7 +286,8 @@ export const DEFAULT_SETTINGS: SiteSettings = {
     social_share_image: "",
     seo_title: "",
     seo_description: "",
-    logo_text_with_image: false
+    logo_text_with_image: false,
+    enable_splash_cursor: false
   },
   socials: {
     whatsapp: "+917487080421",
