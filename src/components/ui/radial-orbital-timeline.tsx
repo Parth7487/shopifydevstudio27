@@ -103,6 +103,8 @@ export default function RadialOrbitalTimeline({
           rotationAngleRef.current = targetAngleRef.current;
           updatePositions();
           targetAngleRef.current = null;
+          // Centering animation finished! Trigger a re-render to update the card position to the centered state
+          setExpandedItems(prev => ({ ...prev }));
         }
       }
       animId = requestAnimationFrame(tick);
@@ -171,6 +173,22 @@ export default function RadialOrbitalTimeline({
     // Normalize target angle
     while (target < 0) target += 360;
     targetAngleRef.current = target;
+  };
+
+  const calculateNodePosition = (index: number, total: number) => {
+    const angle = ((index / total) * 360 + rotationAngleRef.current) % 360;
+    const radian = (angle * Math.PI) / 180;
+
+    const x = radius * Math.cos(radian);
+    const y = radius * Math.sin(radian);
+
+    const zIndex = Math.round(100 + 50 * Math.cos(radian));
+    const opacity = Math.max(
+      0.5,
+      Math.min(1, 0.5 + 0.5 * ((1 + Math.sin(radian)) / 2))
+    );
+
+    return { x, y, angle, zIndex, opacity };
   };
 
   const getRelatedItems = (itemId: number): number[] => {
@@ -358,7 +376,7 @@ export default function RadialOrbitalTimeline({
               <div
                 key={item.id}
                 ref={(el) => (nodeRefs.current[item.id] = el)}
-                className="absolute transition-all duration-700 cursor-pointer flex items-center justify-center timeline-node will-change-transform"
+                className="absolute transition-opacity duration-500 cursor-pointer flex items-center justify-center timeline-node will-change-transform"
                 style={nodeStyle}
                 onClick={(e) => {
                   e.stopPropagation();
