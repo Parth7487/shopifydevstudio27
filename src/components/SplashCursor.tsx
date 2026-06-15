@@ -111,7 +111,6 @@ function SplashCursor({
     }
 
     function handleTouchMove(e: TouchEvent) {
-      e.preventDefault();
       const rect = canvas.getBoundingClientRect();
       const touch = e.touches[0];
       const x = touch.clientX - rect.left;
@@ -134,7 +133,7 @@ function SplashCursor({
     // Event listeners
     window.addEventListener("resize", resizeCanvas);
     document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("touchmove", handleTouchMove, { passive: false });
+    document.addEventListener("touchmove", handleTouchMove, { passive: true });
 
     return () => {
       window.removeEventListener("resize", resizeCanvas);
