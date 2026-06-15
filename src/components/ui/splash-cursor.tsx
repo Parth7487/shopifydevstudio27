@@ -34,7 +34,7 @@ function SplashCursor({
       this.deltaY = 0;
       this.down = false;
       this.moved = false;
-      this.color = [0, 0, 0];
+      this.color = { r: 0.1, g: 0.1, b: 0.1 };
     }
 
     let config = {
@@ -791,6 +791,16 @@ function SplashCursor({
     initFramebuffers();
     let lastUpdateTime = Date.now();
     let colorUpdateTimer = 0.0;
+    let isLoopRunning = false;
+    let idleFrames = 0;
+
+    function startLoop() {
+      if (!isLoopRunning) {
+        isLoopRunning = true;
+        lastUpdateTime = Date.now();
+        requestAnimationFrame(updateFrame);
+      }
+    }
 
     function updateFrame() {
       const dt = calcDeltaTime();
@@ -799,6 +809,20 @@ function SplashCursor({
       applyInputs();
       step(dt);
       render(null);
+
+      const anyActive = pointers.some(p => p.moved || p.down);
+      if (!anyActive) {
+        idleFrames++;
+      } else {
+        idleFrames = 0;
+      }
+
+      if (idleFrames > 120) { // Halt after 2 seconds of inactivity
+        isLoopRunning = false;
+        idleFrames = 0;
+        return;
+      }
+
       requestAnimationFrame(updateFrame);
     }
 
@@ -1161,6 +1185,7 @@ function SplashCursor({
       let posY = scaleByPixelRatio(e.clientY);
       updatePointerDownData(pointer, -1, posX, posY);
       clickSplat(pointer);
+      startLoop();
     });
 
     document.body.addEventListener(
@@ -1170,7 +1195,7 @@ function SplashCursor({
         let posX = scaleByPixelRatio(e.clientX);
         let posY = scaleByPixelRatio(e.clientY);
         let color = generateColor();
-        updateFrame(); // start animation loop
+        startLoop();
         updatePointerMoveData(pointer, posX, posY, color);
         document.body.removeEventListener("mousemove", handleFirstMouseMove);
       },
@@ -1182,6 +1207,7 @@ function SplashCursor({
       let posY = scaleByPixelRatio(e.clientY);
       let color = pointer.color;
       updatePointerMoveData(pointer, posX, posY, color);
+      startLoop();
     });
 
     document.body.addEventListener(
@@ -1192,7 +1218,7 @@ function SplashCursor({
         for (let i = 0; i < touches.length; i++) {
           let posX = scaleByPixelRatio(touches[i].clientX);
           let posY = scaleByPixelRatio(touches[i].clientY);
-          updateFrame(); // start animation loop
+          startLoop();
           updatePointerDownData(pointer, touches[i].identifier, posX, posY);
         }
         document.body.removeEventListener("touchstart", handleFirstTouchStart);
@@ -1207,6 +1233,7 @@ function SplashCursor({
         let posY = scaleByPixelRatio(touches[i].clientY);
         updatePointerDownData(pointer, touches[i].identifier, posX, posY);
       }
+      startLoop();
     });
 
     window.addEventListener(
@@ -1219,6 +1246,7 @@ function SplashCursor({
           let posY = scaleByPixelRatio(touches[i].clientY);
           updatePointerMoveData(pointer, posX, posY, pointer.color);
         }
+        startLoop();
       },
       false,
     );
@@ -1229,9 +1257,9 @@ function SplashCursor({
       for (let i = 0; i < touches.length; i++) {
         updatePointerUpData(pointer);
       }
+      startLoop();
     });
 
-    updateFrame();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     SIM_RESOLUTION,
@@ -1251,8 +1279,8 @@ function SplashCursor({
   ]);
 
   return (
-    <div className="fixed top-0 left-0 z-50 pointer-events-none">
-      <canvas ref={canvasRef} id="fluid" className="w-screen h-screen" />
+    <div className="fixed top-0 left-0 w-full h-full z-50 pointer-events-none">
+      <canvas ref={canvasRef} id="fluid" className="w-full h-full" />
     </div>
   );
 }
