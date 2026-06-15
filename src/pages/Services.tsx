@@ -327,8 +327,7 @@ const Services = () => {
       {/* Navigation */}
       <ElegantNavigation />
 
-      {/* Hero Section */}
-      <section className="py-16 sm:py-20 lg:py-24 mobile-safe-padding text-center pb-3.5">
+      <section className="pt-16 pb-1 sm:pt-18 sm:pb-2 lg:pt-20 lg:pb-3 mobile-safe-padding text-center">
         <div className="max-w-4xl mx-auto w-full">
           <motion.h1
             initial="hidden"
@@ -352,7 +351,7 @@ const Services = () => {
       </section>
 
       {/* Services Introduction Section */}
-      <section className="py-12 px-8">
+      <section className="pt-4 pb-6 px-8 sm:pt-6 sm:pb-8">
         <div className="max-w-4xl mx-auto text-center mb-16">
           <motion.h2
             initial="hidden"
@@ -377,7 +376,7 @@ const Services = () => {
       </section>
 
       {/* Services Grid */}
-      <section className="py-12 sm:py-16 relative pb-7.5">
+      <section className="pt-4 pb-12 sm:pt-6 sm:pb-16 relative pb-7.5">
         {/* Design Playground Background */}
         <DesignPlayground />
 
