@@ -41,6 +41,7 @@ export default function RadialOrbitalTimeline({
 
   // Dynamic responsive width
   const [containerWidth, setContainerWidth] = useState<number>(800);
+  const [isInView, setIsInView] = useState<boolean>(false);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -49,6 +50,18 @@ export default function RadialOrbitalTimeline({
         setContainerWidth(entry.contentRect.width);
       }
     });
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.05 }
+    );
     observer.observe(containerRef.current);
     return () => observer.disconnect();
   }, []);
@@ -83,6 +96,7 @@ export default function RadialOrbitalTimeline({
 
   // Run the direct-DOM animation loop
   useEffect(() => {
+    if (!isInView) return;
     let animId: number;
     
     const tick = () => {
@@ -112,7 +126,7 @@ export default function RadialOrbitalTimeline({
     
     animId = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(animId);
-  }, [autoRotate, radius]);
+  }, [autoRotate, radius, isInView]);
 
   // Initial layout calculation
   useEffect(() => {
@@ -321,7 +335,7 @@ export default function RadialOrbitalTimeline({
 
   return (
     <div
-      className={`w-full flex flex-col items-center bg-black/45 backdrop-blur-md border-y border-beige/10 overflow-hidden relative select-none ${
+      className={`w-full flex flex-col items-center bg-[#0B0B0C]/90 border-y border-beige/10 overflow-hidden relative select-none ${
         isMobile ? "h-auto pt-6" : "h-[650px] justify-center"
       }`}
       ref={containerRef}
@@ -344,7 +358,7 @@ export default function RadialOrbitalTimeline({
               className="absolute w-20 h-20 sm:w-24 sm:h-24 rounded-full border border-beige/10 animate-ping opacity-35"
               style={{ animationDelay: "0.5s" }}
             ></div>
-            <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-black/80 backdrop-blur-md border border-beige/20 flex items-center justify-center">
+            <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-black/95 border border-beige/20 flex items-center justify-center">
               <Zap size={10} className="text-beige animate-pulse" />
             </div>
           </div>
