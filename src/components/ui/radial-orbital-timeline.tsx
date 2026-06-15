@@ -390,7 +390,7 @@ export default function RadialOrbitalTimeline({
               <div
                 key={item.id}
                 ref={(el) => (nodeRefs.current[item.id] = el)}
-                className="absolute transition-opacity duration-500 cursor-pointer flex items-center justify-center timeline-node will-change-transform"
+                className="absolute cursor-pointer flex items-center justify-center timeline-node will-change-transform"
                 style={nodeStyle}
                 onClick={(e) => {
                   e.stopPropagation();

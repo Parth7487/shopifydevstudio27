@@ -157,13 +157,13 @@ const ElegantHero = () => {
               />
             ) : (
               <LazySplashCursor
-                SIM_RESOLUTION={64}
-                DYE_RESOLUTION={256}
-                PRESSURE_ITERATIONS={8}
-                DENSITY_DISSIPATION={3.5}
+                SIM_RESOLUTION={128}
+                DYE_RESOLUTION={512}
+                PRESSURE_ITERATIONS={16}
+                DENSITY_DISSIPATION={2.5}
                 VELOCITY_DISSIPATION={2.0}
-                SPLAT_FORCE={3000}
-                SPLAT_RADIUS={0.1}
+                SPLAT_FORCE={6000}
+                SPLAT_RADIUS={0.25}
                 COLOR_UPDATE_SPEED={7}
               />
             )}

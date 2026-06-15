@@ -47,6 +47,12 @@ export default defineConfig({
   server: {
     host: "::",
     port: 8080,
+    proxy: {
+      "/api": {
+        target: "https://www.shopifydevstudio.com",
+        changeOrigin: true,
+      },
+    },
   },
   esbuild: {
     legalComments: "none",

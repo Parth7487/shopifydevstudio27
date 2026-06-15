@@ -792,9 +792,10 @@ function SplashCursor({
     let lastUpdateTime = Date.now();
     let colorUpdateTimer = 0.0;
     let isLoopRunning = false;
-    let idleFrames = 0;
+    let lastInteractionTime = Date.now();
 
     function startLoop() {
+      lastInteractionTime = Date.now();
       if (!isLoopRunning) {
         isLoopRunning = true;
         lastUpdateTime = Date.now();
@@ -804,22 +805,17 @@ function SplashCursor({
 
     function updateFrame() {
       const dt = calcDeltaTime();
-      if (resizeCanvas()) initFramebuffers();
+      if (resizeCanvas()) {
+        initFramebuffers();
+      }
       updateColors(dt);
       applyInputs();
       step(dt);
       render(null);
 
-      const anyActive = pointers.some(p => p.moved || p.down);
-      if (!anyActive) {
-        idleFrames++;
-      } else {
-        idleFrames = 0;
-      }
-
-      if (idleFrames > 120) { // Halt after 2 seconds of inactivity
+      // Halt after 2 seconds of inactivity
+      if (Date.now() - lastInteractionTime > 2000) {
         isLoopRunning = false;
-        idleFrames = 0;
         return;
       }
 
@@ -1098,9 +1094,9 @@ function SplashCursor({
 
     function generateColor() {
       let c = HSVtoRGB(Math.random(), 1.0, 1.0);
-      c.r *= 0.15;
-      c.g *= 0.15;
-      c.b *= 0.15;
+      c.r *= 0.8;
+      c.g *= 0.8;
+      c.b *= 0.8;
       return c;
     }
 
