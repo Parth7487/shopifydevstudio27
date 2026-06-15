@@ -343,7 +343,7 @@ const Services = () => {
             initial="hidden"
             animate="visible"
             variants={titleVariants}
-            className="text-gray-400 responsive-text-base leading-relaxed mb-6 sm:mb-8"
+            className="theme-text-sec responsive-text-base leading-relaxed mb-6 sm:mb-8"
           >
             We build bespoke storefronts, custom apps, and secure AI integrations engineered from scratch. 
             Say goodbye to bloated templates, monthly app fees, and slow checkout speeds.
@@ -368,7 +368,7 @@ const Services = () => {
             whileInView="visible"
             variants={titleVariants}
             viewport={{ once: true }}
-            className="text-gray-400 text-lg leading-relaxed max-w-3xl mx-auto"
+            className="theme-text-sec text-lg leading-relaxed max-w-3xl mx-auto"
           >
             From custom Liquid theme development and headless WebGL models to lossless migrations 
             and organic social scaling, we handle the complex technical details so you can focus on growth.
@@ -398,19 +398,19 @@ const Services = () => {
                     scale: 1.02,
                     transition: { duration: 0.3 },
                   }}
-                  className="bg-gradient-to-br from-graphite/50 to-charcoal/30 border border-beige/10 rounded-xl sm:rounded-2xl p-6 sm:p-8 hover:border-beige/20 transition-all duration-300 flex flex-col justify-between"
+                  className="theme-card border border-[var(--theme-border)] rounded-xl sm:rounded-2xl p-6 sm:p-8 hover:border-beige/40 transition-all duration-300 flex flex-col justify-between"
                 >
                   <div>
                     <div className="flex items-center mb-4 sm:mb-6">
                       <div className="w-10 h-10 sm:w-12 sm:h-12 bg-beige/20 rounded-lg flex items-center justify-center mr-3 sm:mr-4">
                         <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-beige" />
                       </div>
-                      <h3 className="responsive-text-base font-bold">
+                      <h3 className="responsive-text-base font-bold theme-text">
                         {service.title}
                       </h3>
                     </div>
 
-                    <p className="text-gray-400 text-sm leading-relaxed mb-6">
+                    <p className="theme-text-sec text-sm leading-relaxed mb-6">
                       {service.description}
                     </p>
                   </div>
@@ -422,7 +422,7 @@ const Services = () => {
                         className="flex items-start gap-2 sm:gap-3"
                       >
                         <div className="w-1.5 h-1.5 bg-beige rounded-full flex-shrink-0 mt-1.5 sm:mt-2" />
-                        <span className="text-gray-300 text-xs sm:text-sm">
+                        <span className="theme-text-sec text-xs sm:text-sm">
                           {feature}
                         </span>
                       </li>
@@ -436,7 +436,7 @@ const Services = () => {
       </section>
 
       {/* Complete Liquid Design Solutions Section */}
-      <section className="bg-charcoal py-24 px-8 relative">
+      <section className="theme-bg-subtle py-24 px-8 relative border-t border-[var(--theme-border)]">
         {/* Design Playground Background */}
         <DesignPlayground />
 
@@ -456,12 +456,12 @@ const Services = () => {
 
             <motion.div
               variants={itemVariants}
-              className="bg-beige/10 border border-beige/20 rounded-2xl p-8 mb-8"
+              className="bg-beige/10 border border-beige/25 rounded-2xl p-8 mb-8"
             >
               <h3 className="text-beige text-2xl font-bold leading-8 mb-4">
                 "Zero Downtime. 100% Code Ownership."
               </h3>
-              <p className="text-gray-400 text-lg leading-relaxed">
+              <p className="theme-text-sec text-lg leading-relaxed">
                 <span>We develop exclusively on </span>
                 <span className="text-beige font-semibold">
                   private developer staging themes
@@ -475,7 +475,7 @@ const Services = () => {
 
             <motion.div
               variants={itemVariants}
-              className="text-gray-400 text-lg leading-relaxed space-y-6"
+              className="theme-text-sec text-lg leading-relaxed space-y-6"
             >
               <p>
                 Think of your favorite physical luxury boutique. The moment a customer walks in, 
@@ -509,7 +509,7 @@ const Services = () => {
       </section>
 
       {/* Sentinel Client Dashboard Callout */}
-      <section className="bg-gradient-to-r from-beige/5 to-charcoal py-24 px-8 relative border-t border-beige/10">
+      <section className="bg-gradient-to-r from-beige/5 to-[var(--theme-bg-subtle)] py-24 px-8 relative border-t border-[var(--theme-border)]">
         <div className="max-w-4xl mx-auto px-8 w-full text-center relative z-10">
           <motion.div
             initial="hidden"
@@ -526,12 +526,12 @@ const Services = () => {
 
             <motion.div
               variants={itemVariants}
-              className="bg-charcoal border border-beige/15 rounded-2xl p-8 mb-8"
+              className="theme-card border border-[var(--theme-border)] rounded-2xl p-8 mb-8"
             >
               <h3 className="text-beige text-2xl font-bold leading-8 mb-4">
                 Monitor Progress, Upload Assets & Keep Track
               </h3>
-              <p className="text-gray-400 text-lg leading-relaxed">
+              <p className="theme-text-sec text-lg leading-relaxed">
                 Every project comes with a private, secure administrative dashboard. Monitor development roadmaps in real-time, upload design assets/Figma guides directly to the staging environment, review Git logs, and message your Solutions Architect directly.
               </p>
             </motion.div>
@@ -540,12 +540,12 @@ const Services = () => {
       </section>
 
       {/* Contact Form Section */}
-      <section className="bg-gradient-to-r from-beige/10 to-beige/5 py-24 px-8 relative border-t border-beige/10">
+      <section className="bg-gradient-to-r from-beige/10 to-beige/5 py-24 px-8 relative border-t border-[var(--theme-border)]">
         {/* Design Playground Background */}
         <DesignPlayground />
 
         <div className="max-w-4xl mx-auto px-8 w-full relative z-10">
-          <div className="bg-graphite border border-beige/20 rounded-2xl p-8">
+          <div className="theme-card border border-[var(--theme-border)] rounded-2xl p-8 shadow-sm">
             {submitted ? (
               <div className="text-center py-10">
                 <div className="w-16 h-16 bg-beige/20 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -554,7 +554,7 @@ const Services = () => {
                   </svg>
                 </div>
                 <h3 className="text-beige text-2xl font-bold mb-2">Request Received!</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">
+                <p className="theme-text-sec text-sm leading-relaxed">
                   We'll analyze your store and send detailed recommendations within 24-26 hours.
                 </p>
                 <button
@@ -569,7 +569,7 @@ const Services = () => {
                 <div>
                   <label
                     htmlFor="storeUrl"
-                    className="block text-sm font-medium leading-5 mb-2"
+                    className="block text-sm font-medium leading-5 mb-2 theme-text"
                   >
                     Your Store URL *
                   </label>
@@ -580,7 +580,7 @@ const Services = () => {
                     required
                     value={storeUrl}
                     onChange={(e) => setStoreUrl(e.target.value)}
-                    className="w-full bg-charcoal border border-black rounded-lg px-4 py-3 text-white transition-colors duration-150 focus:border-beige focus:outline-none"
+                    className="w-full bg-[var(--theme-input-bg)] border border-[var(--theme-border)] rounded-lg px-4 py-3 theme-text transition-colors duration-150 focus:border-beige focus:outline-none"
                   />
                 </div>
 
@@ -588,7 +588,7 @@ const Services = () => {
                   <div>
                     <label
                       htmlFor="email"
-                      className="block text-sm font-medium leading-5 mb-2"
+                      className="block text-sm font-medium leading-5 mb-2 theme-text"
                     >
                       Email Address *
                     </label>
@@ -599,13 +599,13 @@ const Services = () => {
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full bg-charcoal border border-black rounded-lg px-4 py-3 text-white transition-colors duration-150 focus:border-beige focus:outline-none"
+                      className="w-full bg-[var(--theme-input-bg)] border border-[var(--theme-border)] rounded-lg px-4 py-3 theme-text transition-colors duration-150 focus:border-beige focus:outline-none"
                     />
                   </div>
                   <div>
                     <label
                       htmlFor="businessName"
-                      className="block text-sm font-medium leading-5 mb-2"
+                      className="block text-sm font-medium leading-5 mb-2 theme-text"
                     >
                       Business Name
                     </label>
@@ -615,7 +615,7 @@ const Services = () => {
                       placeholder="Your Business"
                       value={businessName}
                       onChange={(e) => setBusinessName(e.target.value)}
-                      className="w-full bg-charcoal border border-black rounded-lg px-4 py-3 text-white transition-colors duration-150 focus:border-beige focus:outline-none"
+                      className="w-full bg-[var(--theme-input-bg)] border border-[var(--theme-border)] rounded-lg px-4 py-3 theme-text transition-colors duration-150 focus:border-beige focus:outline-none"
                     />
                   </div>
                 </div>
@@ -623,7 +623,7 @@ const Services = () => {
                 <div className="mt-6">
                   <label
                     htmlFor="currentChallenges"
-                    className="block text-sm font-medium leading-5 mb-2"
+                    className="block text-sm font-medium leading-5 mb-2 theme-text"
                   >
                     What challenges are you facing? (Optional)
                   </label>
@@ -633,7 +633,7 @@ const Services = () => {
                     placeholder="Tell us about your app subscription costs, mobile speed bottlenecks, custom feature requirements, or migration concerns."
                     value={challenges}
                     onChange={(e) => setChallenges(e.target.value)}
-                    className="w-full bg-charcoal border border-black rounded-lg px-4 py-3 text-white resize-none transition-colors duration-150 focus:border-beige focus:outline-none"
+                    className="w-full bg-[var(--theme-input-bg)] border border-[var(--theme-border)] rounded-lg px-4 py-3 theme-text resize-none transition-colors duration-150 focus:border-beige focus:outline-none"
                   />
                 </div>
 
@@ -643,11 +643,11 @@ const Services = () => {
                     id="consent"
                     checked={consent}
                     onChange={(e) => setConsent(e.target.checked)}
-                    className="w-4 h-4 mt-1 bg-charcoal border-none text-beige rounded focus:ring-beige"
+                    className="w-4 h-4 mt-1 bg-[var(--theme-input-bg)] border-none text-beige rounded focus:ring-beige"
                   />
                   <label
                     htmlFor="consent"
-                    className="text-gray-400 text-sm leading-5"
+                    className="theme-text-sec text-sm leading-5"
                   >
                     I agree to receive a detailed analysis of my store and
                     follow-up communications about optimization opportunities.
@@ -678,7 +678,7 @@ const Services = () => {
               </form>
             )}
 
-            <div className="bg-beige/10 border border-beige/20 rounded-xl p-6 mt-8">
+            <div className="bg-beige/10 border border-beige/25 rounded-xl p-6 mt-8">
               <h3 className="text-beige font-bold mb-3">Your Free Visual Blueprint Details:</h3>
               <ul className="text-sm leading-5 space-y-2">
                 {[
@@ -691,7 +691,7 @@ const Services = () => {
                 ].map((item, index) => (
                   <li key={index} className="flex items-center gap-3">
                     <div className="w-1.5 h-1.5 bg-beige rounded-full flex-shrink-0" />
-                    <span className="text-gray-400">{item}</span>
+                    <span className="theme-text-sec">{item}</span>
                   </li>
                 ))}
               </ul>
@@ -699,7 +699,7 @@ const Services = () => {
           </div>
 
           <div className="mt-8 text-center">
-            <p className="text-gray-400 text-sm leading-5">
+            <p className="theme-text-sec text-sm leading-5">
               <span className="text-beige font-semibold">The 24-26 Hour Blueprint Clock:</span>{" "}
               Provide your store URL and details above. Within 24-26 hours, we'll deliver a custom mobile performance audit and visual mockup showing how we'll solve your bottlenecks natively. No obligations.
             </p>
@@ -714,12 +714,12 @@ const Services = () => {
             initial="hidden"
             animate="visible"
             variants={titleVariants}
-            className="bg-gradient-to-r from-beige/10 to-clay/10 border border-beige/20 rounded-2xl p-12"
+            className="bg-gradient-to-r from-beige/10 to-clay/10 border border-[var(--theme-border)] rounded-2xl p-12"
           >
             <h2 className="text-4xl font-bold mb-6">
               Ready to Dominate Your Market?
             </h2>
-            <p className="text-gray-400 text-lg mb-8 max-w-2xl mx-auto">
+            <p className="theme-text-sec text-lg mb-8 max-w-2xl mx-auto">
               Let's discuss how our staging-first process can help you create a
               high-converting, native Shopify storefront that drives real results.
             </p>
