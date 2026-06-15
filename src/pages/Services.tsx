@@ -19,11 +19,13 @@ import ElegantNavigation from "../components/sections/ElegantNavigation";
 import Footer from "../components/sections/Footer";
 import DesignPlayground from "../components/sections/DesignPlayground";
 import { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import CalendlyModal from "../components/sections/CalendlyModal";
 import { updatePageMeta } from "../lib/seo-meta";
 import { addBreadcrumbSchema } from "../lib/breadcrumb-schema";
 
 const Services = () => {
+  const navigate = useNavigate();
   const [calendlyOpen, setCalendlyOpen] = useState(false);
 
   // Form state
