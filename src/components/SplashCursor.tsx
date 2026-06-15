@@ -110,15 +110,56 @@ function SplashCursor({
       }
     }
 
-    function handleTouchMove(e: TouchEvent) {
-      const rect = canvas.getBoundingClientRect();
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let isScrolling = false;
+    let lastTouchTime = 0;
+
+    function handleTouchStart(e: TouchEvent) {
+      if (!e.touches || e.touches.length === 0) return;
       const touch = e.touches[0];
+      touchStartX = touch.clientX;
+      touchStartY = touch.clientY;
+      isScrolling = false;
+
+      const rect = canvas.getBoundingClientRect();
       const x = touch.clientX - rect.left;
       const y = touch.clientY - rect.top;
 
       if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
-        addParticle(x, y, 1.5);
+        addParticle(x, y, 1.2);
       }
+    }
+
+    function handleTouchMove(e: TouchEvent) {
+      if (isScrolling || !e.touches || e.touches.length === 0) return;
+
+      const touch = e.touches[0];
+      const deltaX = Math.abs(touch.clientX - touchStartX);
+      const deltaY = Math.abs(touch.clientY - touchStartY);
+
+      // If vertical movement is dominant and meets scroll threshold, mark as scrolling
+      if (deltaY > 10 && deltaY > deltaX * 1.5) {
+        isScrolling = true;
+        return;
+      }
+
+      // Throttle particle addition to prevent main-thread layout thrashing
+      const now = Date.now();
+      if (now - lastTouchTime < 40) return; // ~25fps throttling for touch moves
+      lastTouchTime = now;
+
+      const rect = canvas.getBoundingClientRect();
+      const x = touch.clientX - rect.left;
+      const y = touch.clientY - rect.top;
+
+      if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+        addParticle(x, y, 0.8); // Slightly reduced force for throttled moves
+      }
+    }
+
+    function handleTouchEnd() {
+      isScrolling = false;
     }
 
     // Initialize
@@ -133,12 +174,18 @@ function SplashCursor({
     // Event listeners
     window.addEventListener("resize", resizeCanvas);
     document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("touchstart", handleTouchStart, { passive: true });
     document.addEventListener("touchmove", handleTouchMove, { passive: true });
+    document.addEventListener("touchend", handleTouchEnd, { passive: true });
+    document.addEventListener("touchcancel", handleTouchEnd, { passive: true });
 
     return () => {
       window.removeEventListener("resize", resizeCanvas);
       document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("touchstart", handleTouchStart);
       document.removeEventListener("touchmove", handleTouchMove);
+      document.removeEventListener("touchend", handleTouchEnd);
+      document.removeEventListener("touchcancel", handleTouchEnd);
       if (animationId) {
         cancelAnimationFrame(animationId);
       }
