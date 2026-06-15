@@ -3,9 +3,17 @@ import {
   Palette,
   Zap,
   Brain,
+  Search,
+  RefreshCw,
+  Globe,
+  Camera,
+  Code,
+  Layers,
+  Box,
+  Sparkles,
+  BarChart3,
+  Monitor,
   Shield,
-  TrendingUp,
-  Smartphone,
 } from "lucide-react";
 import ElegantNavigation from "../components/sections/ElegantNavigation";
 import Footer from "../components/sections/Footer";
@@ -14,12 +22,6 @@ import { useState, useEffect, useCallback } from "react";
 import CalendlyModal from "../components/sections/CalendlyModal";
 import { updatePageMeta } from "../lib/seo-meta";
 import { addBreadcrumbSchema } from "../lib/breadcrumb-schema";
-
-// ─── Formspree endpoint ────────────────────────────────────────────────────
-// 1. Go to https://formspree.io  →  sign up free with shopifydevstudioo@gmail.com
-// 2. Create New Form  →  copy the Form ID (looks like "abcdefgh")
-// 3. Replace FORMSPREE_ID below with your ID
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/xwpovpla";
 
 const Services = () => {
   const [calendlyOpen, setCalendlyOpen] = useState(false);
@@ -85,12 +87,12 @@ const Services = () => {
 
   useEffect(() => {
     updatePageMeta({
-      title: "Custom Shopify Services & Theme Development | Shopify Dev Studio",
+      title: "Shopify Solutions Architect & Custom Theme Development | Shopify Dev Studio",
       description:
-        "Expert Shopify services including custom theme design, conversion optimization, performance enhancement, and mobile-first development. Trusted by top e-commerce brands.",
-      ogTitle: "Shopify Theme Development & Optimization Services",
+        "Premium custom Shopify theme development. Eliminate the 'App Tax' with native Liquid, build secure AI database integrations (MCP), and optimize for generative AI search. Get a free 24-hour visual blueprint.",
+      ogTitle: "Shopify Solutions Architect & Custom Theme Engineering",
       ogDescription:
-        "Professional Shopify services for custom themes, speed optimization, and conversion-focused development.",
+        "Eliminate app fees with native Liquid code, build custom AI/MCP dashboards, and scale your storefront globally.",
       url: "https://www.shopifydevstudio.com/services",
     });
 
@@ -102,9 +104,9 @@ const Services = () => {
     const schemaMarkup = {
       "@context": "https://schema.org",
       "@type": "Service",
-      name: "Shopify Development Services",
+      name: "Shopify Solutions Architect & Brand Domination Suite",
       description:
-        "Custom Shopify theme design, conversion optimization, and performance enhancement services",
+        "Full-service Shopify solutions including custom Liquid development, private app creation, 3D WebGL models, editorial product photography, lossless SEO migrations, and high-ROI ads management.",
       provider: {
         "@type": "Organization",
         name: "Shopify Dev Studio",
@@ -112,10 +114,19 @@ const Services = () => {
       },
       areaServed: "Worldwide",
       serviceType: [
-        "Theme Design",
-        "Conversion Optimization",
-        "Performance Enhancement",
-        "Mobile Development",
+        "App-Killer Protocol (TCO & Speed Optimization)",
+        "Bespoke Anti-Template Theme Engineering",
+        "Custom Shopify App & API Development",
+        "High-Conversion Editorial Photography & UGC",
+        "Enterprise Variant Catalog Management (13,000+ variants)",
+        "WebGL & 3D Interactive Product Models",
+        "Lossless Migrations from Any Host",
+        "Private Client Asset & Progress Dashboard",
+        "SEO, GEO & AEO Domination Solutions",
+        "Complete Brand Story, Logos & Packaging Design",
+        "Social Media & Ad Account Scaling",
+        "Alternative Platform Engineering (Framer, Webflow, WooCommerce)",
+        "Ongoing Support & E-Commerce Store Management (Retainer)"
       ],
     };
 
@@ -128,65 +139,138 @@ const Services = () => {
       document.head.appendChild(script);
     }
   }, []);
+
   const services = [
     {
       icon: Palette,
-      title: "Custom Theme Design",
+      title: "Bespoke 'Anti-Template' Theme Engineering",
+      description: "100% custom-coded storefronts using clean Liquid and CSS. No slow templates, page builders, or buggy AI-generated code.",
       features: [
-        "Brand-specific design language",
-        "Custom UI/UX components",
-        "Mobile-first responsive design",
-        "Brand consistency across pages",
-      ],
-    },
-    {
-      icon: TrendingUp,
-      title: "Conversion Optimization",
-      features: [
-        "A/B testing implementation",
-        "Checkout flow optimization",
-        "User journey optimization",
-        "Psychological trigger integration",
+        "Unique designs tailored to your brand story",
+        "Interactive swatches, quick-add & visual slide-outs",
+        "Fully responsive layouts optimized for all screens",
+        "Staging-first deployment with Shopify CLI & version control",
       ],
     },
     {
       icon: Zap,
-      title: "Performance Enhancement",
+      title: "The 'App-Killer' Protocol",
+      description: "We hardcode cart drawers, size guides, custom filters, and bundling engines natively to eliminate slow 3rd-party subscription apps.",
       features: [
-        "Speed optimization (0.5-1s load times)",
-        "Image and asset compression",
-        "Code minification and bundling",
-        "CDN integration and caching",
+        "Saves $1,200 - $4,800/year in app fees",
+        "Removes heavy JavaScript script bloat",
+        "Boosts mobile Lighthouse speed scores to 90+",
+        "One-time setup with lifetime code ownership",
       ],
     },
     {
-      icon: Brain,
-      title: "Psychology Integration",
+      icon: Code,
+      title: "Custom Shopify App & API Development",
+      description: "Secure private or public Shopify applications to handle complex workflows, custom discounts, and internal ERP syncing.",
       features: [
-        "Color psychology application",
-        "Social proof integration",
-        "Urgency and scarcity tactics",
-        "Trust signal placement",
+        "Private database and API integration",
+        "Custom Shopify webhooks for real-time syncing",
+        "Enterprise-standard security compliance",
+        "Scalable architectures on dedicated servers",
       ],
     },
     {
-      icon: Smartphone,
-      title: "Mobile-First Development",
+      icon: Camera,
+      title: "Product Photography, Staging & UGC Sourcing",
+      description: "High-end product photography, professional styling/staging, and lifestyle UGC content that converts casual browsers into buyers.",
       features: [
-        "Progressive Web App features",
-        "Touch-optimized interactions",
-        "Mobile payment integration",
-        "Progressive Web App features",
+        "Staging & editing for clothing, accessories & hardware",
+        "Compressed, high-resolution WebP web-optimized assets",
+        "Sourcing and vetting of creators and models",
+        "Consistent brand aesthetic across all pages",
+      ],
+    },
+    {
+      icon: Layers,
+      title: "Enterprise Variant Catalog Management",
+      description: "Organize and upload massive product databases of up to 13,000+ variants cleanly without breaching API limits.",
+      features: [
+        "Custom AJAX variant selector grids",
+        "Year/Make/Model automotive & parts search integrations",
+        "Bulk CSV schema mapping and upload workflows",
+        "Bypasses default Shopify catalog limits",
+      ],
+    },
+    {
+      icon: Box,
+      title: "WebGL & 3D Interactive Product Models",
+      description: "WebGL viewer integrations on your Product Details Page (PDP) to show premium product dimensions, materials, and textures.",
+      features: [
+        "AR/VR-ready interactive 3D product models",
+        "360-degree rotation and close-up zoom detail",
+        "Reduced product returns by up to 40%",
+        "Increased buyer engagement and conversion rates",
+      ],
+    },
+    {
+      icon: RefreshCw,
+      title: "Lossless Migrations from Any Hosting Provider",
+      description: "Safe transitions to Shopify Plus or Standard from WooCommerce, Magento, Squarespace, Webflow, or custom backends.",
+      features: [
+        "100% preservation of SEO metadata and rankings",
+        "Flawless customer profile, product & history transfers",
+        "Scheduled midnight cutovers for zero downtime",
+        "Comprehensive redirects mapping & link checking",
+      ],
+    },
+    {
+      icon: Search,
+      title: "SEO, GEO & AEO Search Domination",
+      description: "A 3-tier approach covering classic search engine indexing, generative engine optimization, and direct answer optimizations.",
+      features: [
+        "Dynamic Product, Article & structured FAQ schemas",
+        "Content structured to be scraped & cited by AI searches",
+        "Google Universal Commerce Protocol integration",
+        "Featured snippets and voice search optimization",
+      ],
+    },
+    {
+      icon: Sparkles,
+      title: "Brand Story, Logos & Packaging Development",
+      description: "Complete visual identity design from scratch, establishing your brand theory and designing custom physical packaging structures.",
+      features: [
+        "Bespoke logo marks and corporate typography kits",
+        "Brand style guide books defining your tone of voice",
+        "Custom unboxing experience & packaging structural designs",
+        "Distinct market positioning strategies",
+      ],
+    },
+    {
+      icon: BarChart3,
+      title: "Ad Account Scaling & Organic Social Management",
+      description: "Scale your acquisition funnels across Google, Meta, and TikTok, alongside organic Instagram & Facebook page management. We create brand-aligned social content matching your store's visual DNA to build high-intent organic engagement.",
+      features: [
+        "Meta, Google, and TikTok ad account daily optimization",
+        "Organic Instagram & Facebook page & content management",
+        "Brand-aligned social creative matching your store's visual DNA",
+        "Landing page CRO loops aligned with ad creatives",
+      ],
+    },
+    {
+      icon: Monitor,
+      title: "Multi-Platform Alternative Development",
+      description: "Professional development for custom web requirements across alternative web environments (Framer, Webflow, WooCommerce).",
+      features: [
+        "High-fidelity Framer pages with custom motion design",
+        "Complex Webflow CMS structures & UI templates",
+        "Scalable self-hosted WooCommerce storefront solutions",
+        "Custom cross-platform backend API connections",
       ],
     },
     {
       icon: Shield,
-      title: "Ongoing Support",
+      title: "Ongoing Support & E-Commerce Store Management (Retainer)",
+      description: "Consistent, on-demand support retainers where we act as your dedicated Shopify and website manager. Send us a message, and we deploy updates immediately.",
       features: [
-        "Zero data loss guarantee",
-        "SEO preservation",
-        "URL structure maintenance",
-        "Post-migration optimization",
+        "On-demand storefront tweaks, banners & navigation menu updates",
+        "Uploading new collections, product images & managing layouts",
+        "Consistent daily support channel to keep your site bug-free",
+        "Fast-response communication via Slack, WhatsApp or Telegram",
       ],
     },
   ];
@@ -196,8 +280,8 @@ const Services = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
+        staggerChildren: 0.05,
+        delayChildren: 0.1,
       },
     },
   };
@@ -208,7 +292,7 @@ const Services = () => {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.6,
+        duration: 0.5,
         ease: "easeOut",
       },
     },
@@ -252,8 +336,8 @@ const Services = () => {
             variants={titleVariants}
             className="responsive-text-4xl font-bold tracking-tight leading-tight mb-4 sm:mb-6"
           >
-            <span>Transform Your </span>
-            <span className="text-beige">Shopify Store</span>
+            <span>High-Performance Shopify Engineering </span>
+            <span className="text-beige">& Solutions Architecture</span>
           </motion.h1>
           <motion.p
             initial="hidden"
@@ -261,15 +345,14 @@ const Services = () => {
             variants={titleVariants}
             className="text-gray-400 responsive-text-base leading-relaxed mb-6 sm:mb-8"
           >
-            Your online store is your digital storefront. Make it impossible for
-            customers to ignore with our comprehensive Shopify customization
-            services.
+            We build bespoke storefronts, custom apps, and secure AI integrations engineered from scratch. 
+            Say goodbye to bloated templates, monthly app fees, and slow checkout speeds.
           </motion.p>
         </div>
       </section>
 
       {/* Services Introduction Section */}
-      <section className="py-16 px-8">
+      <section className="py-12 px-8">
         <div className="max-w-4xl mx-auto text-center mb-16">
           <motion.h2
             initial="hidden"
@@ -278,7 +361,7 @@ const Services = () => {
             viewport={{ once: true }}
             className="text-4xl font-bold tracking-tight leading-tight mb-6"
           >
-            Complete Shopify Solutions
+            Enterprise-Grade E-Commerce Development & Systems Integration
           </motion.h2>
           <motion.p
             initial="hidden"
@@ -287,9 +370,8 @@ const Services = () => {
             viewport={{ once: true }}
             className="text-gray-400 text-lg leading-relaxed max-w-3xl mx-auto"
           >
-            From design to development, optimization to ongoing support - we
-            handle every aspect of your Shopify store to ensure it outperforms
-            the competition.
+            From custom Liquid theme development and headless WebGL models to lossless migrations 
+            and organic social scaling, we handle the complex technical details so you can focus on growth.
           </motion.p>
         </div>
       </section>
@@ -316,15 +398,21 @@ const Services = () => {
                     scale: 1.02,
                     transition: { duration: 0.3 },
                   }}
-                  className="bg-gradient-to-br from-graphite/50 to-charcoal/30 border border-beige/10 rounded-xl sm:rounded-2xl p-6 sm:p-8 hover:border-beige/20 transition-all duration-300"
+                  className="bg-gradient-to-br from-graphite/50 to-charcoal/30 border border-beige/10 rounded-xl sm:rounded-2xl p-6 sm:p-8 hover:border-beige/20 transition-all duration-300 flex flex-col justify-between"
                 >
-                  <div className="flex items-center mb-4 sm:mb-6">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-beige/20 rounded-lg flex items-center justify-center mr-3 sm:mr-4">
-                      <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-beige" />
+                  <div>
+                    <div className="flex items-center mb-4 sm:mb-6">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-beige/20 rounded-lg flex items-center justify-center mr-3 sm:mr-4">
+                        <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-beige" />
+                      </div>
+                      <h3 className="responsive-text-base font-bold">
+                        {service.title}
+                      </h3>
                     </div>
-                    <h3 className="responsive-text-base font-bold">
-                      {service.title}
-                    </h3>
+
+                    <p className="text-gray-400 text-sm leading-relaxed mb-6">
+                      {service.description}
+                    </p>
                   </div>
 
                   <ul className="space-y-2 sm:space-y-3">
@@ -363,7 +451,7 @@ const Services = () => {
               variants={titleVariants}
               className="text-4xl font-bold tracking-tight leading-tight mb-8"
             >
-              Complete Liquid Design Solutions
+              Our Staging-First & Secure Development Protocol
             </motion.h2>
 
             <motion.div
@@ -371,18 +459,16 @@ const Services = () => {
               className="bg-beige/10 border border-beige/20 rounded-2xl p-8 mb-8"
             >
               <h3 className="text-beige text-2xl font-bold leading-8 mb-4">
-                "You Imagine, We Create"
+                "Zero Downtime. 100% Code Ownership."
               </h3>
               <p className="text-gray-400 text-lg leading-relaxed">
-                <span>We provide </span>
+                <span>We develop exclusively on </span>
                 <span className="text-beige font-semibold">
-                  complete Liquid designs
+                  private developer staging themes
                 </span>
                 <span>
                   {" "}
-                  that are fully customizable to meet your exact needs. Think of
-                  it like investing in premium furniture for a new store - your
-                  online presence deserves the same attention and investment.
+                  using the Shopify CLI and version control via GitHub. You own 100% of the code from Day 1, and your active storefront customers experience zero downtime or glitches.
                 </span>
               </p>
             </motion.div>
@@ -392,33 +478,61 @@ const Services = () => {
               className="text-gray-400 text-lg leading-relaxed space-y-6"
             >
               <p>
-                Think of your favorite physical store. The moment you walk in,
-                everything from the lighting to the layout influences your mood
-                and buying decisions. Your Shopify store works the same way.
+                Think of your favorite physical luxury boutique. The moment a customer walks in, 
+                everything from the layout to the custom details guides their buying decisions. 
+                Your digital storefront works exactly the same way.
               </p>
 
               <p>
                 <span>
-                  When customers visit your online store, they judge your
-                  business within{" "}
+                  When clients visit your online store, they form an impression within{" "}
                 </span>
                 <span className="text-beige font-semibold">0.05 seconds</span>
                 <span>
-                  . The colors, animations, and overall design either build
-                  trust or send them to your competitors.
+                  . Generic builder themes, buggy plugins, and slow load times actively send 
+                  them to your competitors.
                 </span>
               </p>
 
               <p>
-                We don't just make stores look pretty - we craft psychological
-                experiences that turn browsers into buyers. Every color choice,
-                every animation, every layout decision is based on proven
-                conversion psychology.
+                We don't just build beautiful storefronts—we engineer premium, secure, and 
+                conversion-optimized architectures. Every Liquid block and custom integration 
+                we write is designed to maximize speed and your bottom-line profitability.
               </p>
 
               <p className="text-beige text-xl font-semibold leading-7">
-                Don't neglect your online presence - it reaches the entire
-                world, while your physical store serves just one location.
+                Don't let an expensive, slow stack cap your brand's growth potential.
+              </p>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Sentinel Client Dashboard Callout */}
+      <section className="bg-gradient-to-r from-beige/5 to-charcoal py-24 px-8 relative border-t border-beige/10">
+        <div className="max-w-4xl mx-auto px-8 w-full text-center relative z-10">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            variants={containerVariants}
+            viewport={{ once: true }}
+          >
+            <motion.h2
+              variants={titleVariants}
+              className="text-4xl font-bold tracking-tight leading-tight mb-8"
+            >
+              The "Sentinel" Client Portal
+            </motion.h2>
+
+            <motion.div
+              variants={itemVariants}
+              className="bg-charcoal border border-beige/15 rounded-2xl p-8 mb-8"
+            >
+              <h3 className="text-beige text-2xl font-bold leading-8 mb-4">
+                Monitor Progress, Upload Assets & Keep Track
+              </h3>
+              <p className="text-gray-400 text-lg leading-relaxed">
+                Every project comes with a private, secure administrative dashboard. Monitor development roadmaps in real-time, upload design assets/Figma guides directly to the staging environment, review Git logs, and message your Solutions Architect directly.
               </p>
             </motion.div>
           </motion.div>
@@ -426,13 +540,13 @@ const Services = () => {
       </section>
 
       {/* Contact Form Section */}
-      <section className="bg-gradient-to-r from-beige/10 to-beige/5 py-24 px-8 relative">
+      <section className="bg-gradient-to-r from-beige/10 to-beige/5 py-24 px-8 relative border-t border-beige/10">
         {/* Design Playground Background */}
         <DesignPlayground />
 
         <div className="max-w-4xl mx-auto px-8 w-full relative z-10">
           <div className="bg-graphite border border-beige/20 rounded-2xl p-8">
-{submitted ? (
+            {submitted ? (
               <div className="text-center py-10">
                 <div className="w-16 h-16 bg-beige/20 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg className="w-8 h-8 text-beige" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -441,7 +555,7 @@ const Services = () => {
                 </div>
                 <h3 className="text-beige text-2xl font-bold mb-2">Request Received!</h3>
                 <p className="text-gray-400 text-sm leading-relaxed">
-                  We'll analyze your store and send detailed recommendations within 24 hours.
+                  We'll analyze your store and send detailed recommendations within 24-26 hours.
                 </p>
                 <button
                   onClick={() => setSubmitted(false)}
@@ -516,7 +630,7 @@ const Services = () => {
                   <textarea
                     id="currentChallenges"
                     rows={4}
-                    placeholder="Tell us about your current conversion rate, loading issues, mobile problems, etc."
+                    placeholder="Tell us about your app subscription costs, mobile speed bottlenecks, custom feature requirements, or migration concerns."
                     value={challenges}
                     onChange={(e) => setChallenges(e.target.value)}
                     className="w-full bg-charcoal border border-black rounded-lg px-4 py-3 text-white resize-none transition-colors duration-150 focus:border-beige focus:outline-none"
@@ -565,15 +679,15 @@ const Services = () => {
             )}
 
             <div className="bg-beige/10 border border-beige/20 rounded-xl p-6 mt-8">
-              <h3 className="text-beige font-bold mb-3">What You'll Get:</h3>
+              <h3 className="text-beige font-bold mb-3">Your Free Visual Blueprint Details:</h3>
               <ul className="text-sm leading-5 space-y-2">
                 {[
-                  "Performance audit (speed, mobile, SEO)",
-                  "Conversion optimization opportunities",
-                  "Design and UX improvement suggestions",
-                  "Technical issues identification",
-                  "Competitive analysis insights",
-                  "Priority action plan",
+                  "Mobile Page Speed & App-Tax Audit",
+                  "Visual Architecture Sketch (Figma mockup or Loom walkthrough)",
+                  "Custom Liquid implementation recommendations",
+                  "Estimated annual app fee savings calculation",
+                  "Conversion rate bottleneck identification",
+                  "Staging-first project deployment plan",
                 ].map((item, index) => (
                   <li key={index} className="flex items-center gap-3">
                     <div className="w-1.5 h-1.5 bg-beige rounded-full flex-shrink-0" />
@@ -586,10 +700,8 @@ const Services = () => {
 
           <div className="mt-8 text-center">
             <p className="text-gray-400 text-sm leading-5">
-              <span className="text-beige font-semibold">Fast Response:</span>{" "}
-              We'll analyze your store and send detailed recommendations within
-              24 hours. No obligations, just valuable insights to help your
-              business grow.
+              <span className="text-beige font-semibold">The 24-26 Hour Blueprint Clock:</span>{" "}
+              Provide your store URL and details above. Within 24-26 hours, we'll deliver a custom mobile performance audit and visual mockup showing how we'll solve your bottlenecks natively. No obligations.
             </p>
           </div>
         </div>
@@ -605,12 +717,11 @@ const Services = () => {
             className="bg-gradient-to-r from-beige/10 to-clay/10 border border-beige/20 rounded-2xl p-12"
           >
             <h2 className="text-4xl font-bold mb-6">
-              Ready to Transform Your Store?
+              Ready to Dominate Your Market?
             </h2>
             <p className="text-gray-400 text-lg mb-8 max-w-2xl mx-auto">
-              Let's discuss how our proven process can help you create a
-              high-converting Shopify store that drives real results for your
-              business.
+              Let's discuss how our staging-first process can help you create a
+              high-converting, native Shopify storefront that drives real results.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
