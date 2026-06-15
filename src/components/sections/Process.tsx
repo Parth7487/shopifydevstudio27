@@ -71,20 +71,20 @@ const Process = () => {
   ];
 
   return (
-    <section className="py-24 px-4 sm:px-8" style={{ background: "linear-gradient(to bottom, var(--theme-bg-subtle), var(--theme-bg))" }}>
-      <div className="max-w-6xl mx-auto">
+    <section className="py-24 px-4 sm:px-8 lg:px-12" style={{ background: "linear-gradient(to bottom, var(--theme-bg-subtle), var(--theme-bg))" }}>
+      <div className="w-full max-w-none mx-auto">
         <motion.div
           ref={titleRef.ref}
           initial="hidden"
           animate={titleRef.controls}
           variants={scrollRevealVariants}
-          className="text-center mb-16"
+          className="text-center mb-16 max-w-3xl mx-auto"
         >
           <h2 className="text-5xl sm:text-6xl font-bold theme-text mb-6 leading-tight">
             <span>Our Proven </span>
             <span className="text-beige">Process</span>
           </h2>
-          <p className="theme-text-sec text-lg sm:text-xl leading-7 max-w-3xl mx-auto">
+          <p className="theme-text-sec text-lg sm:text-xl leading-7">
             Explore our interactive timeline map detailing how we transition from strategic discovery to high-performance launch.
           </p>
         </motion.div>
@@ -94,7 +94,7 @@ const Process = () => {
           initial="hidden"
           animate={timelineRef.controls}
           variants={scrollRevealVariants}
-          className="w-full"
+          className="w-full animate-in fade-in-50 duration-700"
         >
           <RadialOrbitalTimeline timelineData={processSteps} />
         </motion.div>
