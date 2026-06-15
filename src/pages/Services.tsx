@@ -738,12 +738,12 @@ const Services = () => {
               >
                 Start Your Project
               </button>
-              <a
-                href="/#work"
+              <button
+                onClick={() => navigate("/work")}
                 className="px-8 py-4 border border-beige text-beige font-semibold rounded-lg hover:bg-beige/10 transition-colors duration-200"
               >
                 View Our Work
-              </a>
+              </button>
             </div>
           </motion.div>
         </div>
