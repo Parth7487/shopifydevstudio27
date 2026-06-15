@@ -27,13 +27,17 @@ export default function RadialOrbitalTimeline({
   const [expandedItems, setExpandedItems] = useState<Record<number, boolean>>(
     {}
   );
-  const [rotationAngle, setRotationAngle] = useState<number>(0);
   const [autoRotate, setAutoRotate] = useState<boolean>(true);
   const [pulseEffect, setPulseEffect] = useState<Record<number, boolean>>({});
   const [activeNodeId, setActiveNodeId] = useState<number | null>(null);
+  
   const containerRef = useRef<HTMLDivElement>(null);
   const orbitRef = useRef<HTMLDivElement>(null);
   const nodeRefs = useRef<Record<number, HTMLDivElement | null>>({});
+
+  // Performance Optimization: Use refs for animation to bypass React re-renders
+  const rotationAngleRef = useRef<number>(0);
+  const targetAngleRef = useRef<number | null>(null);
 
   // Dynamic responsive width
   const [containerWidth, setContainerWidth] = useState<number>(800);
@@ -51,6 +55,67 @@ export default function RadialOrbitalTimeline({
 
   const isMobile = containerWidth < 640;
   const radius = isMobile ? 105 : containerWidth < 768 ? 140 : 200;
+
+  const updatePositions = () => {
+    timelineData.forEach((item, index) => {
+      const nodeEl = nodeRefs.current[item.id];
+      if (!nodeEl) return;
+      
+      const angle = ((index / timelineData.length) * 360 + rotationAngleRef.current) % 360;
+      const radian = (angle * Math.PI) / 180;
+      
+      const x = radius * Math.cos(radian);
+      const y = radius * Math.sin(radian);
+      
+      // Update DOM styles directly for maximum rendering performance (60fps+)
+      nodeEl.style.transform = `translate(${x}px, ${y}px)`;
+      
+      const zIndex = Math.round(100 + 50 * Math.cos(radian));
+      const opacity = Math.max(
+        0.5,
+        Math.min(1, 0.5 + 0.5 * ((1 + Math.sin(radian)) / 2))
+      );
+      
+      nodeEl.style.zIndex = String(zIndex);
+      nodeEl.style.opacity = String(opacity);
+    });
+  };
+
+  // Run the direct-DOM animation loop
+  useEffect(() => {
+    let animId: number;
+    
+    const tick = () => {
+      if (autoRotate) {
+        rotationAngleRef.current = (rotationAngleRef.current + 0.15) % 360;
+        updatePositions();
+      } else if (targetAngleRef.current !== null) {
+        let diff = targetAngleRef.current - rotationAngleRef.current;
+        
+        // Shortest path interpolation
+        while (diff < -180) diff += 360;
+        while (diff > 180) diff -= 360;
+        
+        if (Math.abs(diff) > 0.05) {
+          rotationAngleRef.current = (rotationAngleRef.current + diff * 0.08) % 360;
+          updatePositions();
+        } else {
+          rotationAngleRef.current = targetAngleRef.current;
+          updatePositions();
+          targetAngleRef.current = null;
+        }
+      }
+      animId = requestAnimationFrame(tick);
+    };
+    
+    animId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(animId);
+  }, [autoRotate, radius]);
+
+  // Initial layout calculation
+  useEffect(() => {
+    updatePositions();
+  }, [radius]);
 
   const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (
@@ -98,49 +163,14 @@ export default function RadialOrbitalTimeline({
     });
   };
 
-  useEffect(() => {
-    let rotationTimer: any;
-
-    if (autoRotate) {
-      rotationTimer = setInterval(() => {
-        setRotationAngle((prev) => {
-          const newAngle = (prev + 0.2) % 360;
-          return Number(newAngle.toFixed(3));
-        });
-      }, 50);
-    }
-
-    return () => {
-      if (rotationTimer) {
-        clearInterval(rotationTimer);
-      }
-    };
-  }, [autoRotate]);
-
   const centerViewOnNode = (nodeId: number) => {
-    if (!nodeRefs.current[nodeId]) return;
-
     const nodeIndex = timelineData.findIndex((item) => item.id === nodeId);
     const totalNodes = timelineData.length;
-    const targetAngle = (nodeIndex / totalNodes) * 360;
-
-    setRotationAngle(270 - targetAngle);
-  };
-
-  const calculateNodePosition = (index: number, total: number) => {
-    const angle = ((index / total) * 360 + rotationAngle) % 360;
-    const radian = (angle * Math.PI) / 180;
-
-    const x = radius * Math.cos(radian);
-    const y = radius * Math.sin(radian);
-
-    const zIndex = Math.round(100 + 50 * Math.cos(radian));
-    const opacity = Math.max(
-      0.5,
-      Math.min(1, 0.5 + 0.5 * ((1 + Math.sin(radian)) / 2))
-    );
-
-    return { x, y, angle, zIndex, opacity };
+    let target = (270 - (nodeIndex / totalNodes) * 360) % 360;
+    
+    // Normalize target angle
+    while (target < 0) target += 360;
+    targetAngleRef.current = target;
   };
 
   const getRelatedItems = (itemId: number): number[] => {
@@ -273,17 +303,12 @@ export default function RadialOrbitalTimeline({
 
   return (
     <div
-      className={`w-full flex flex-col items-center bg-black/40 backdrop-blur-md rounded-3xl border border-beige/10 overflow-hidden relative select-none ${
+      className={`w-full flex flex-col items-center bg-black/45 backdrop-blur-md border-y border-beige/10 overflow-hidden relative select-none ${
         isMobile ? "h-auto pt-6" : "h-[650px] justify-center"
       }`}
       ref={containerRef}
       onClick={handleContainerClick}
     >
-      <div className="absolute top-6 left-6 text-left pointer-events-none z-10 hidden sm:block">
-        <p className="text-xs text-beige uppercase tracking-widest font-bold mb-1">Interactive System Map</p>
-        <h4 className="text-sm text-gray-400 font-medium">Click nodes to pause & inspect phases</h4>
-      </div>
-
       <div className={`relative w-full max-w-4xl flex items-center justify-center ${
         isMobile ? "h-[320px]" : "h-full"
       }`}>
@@ -324,9 +349,7 @@ export default function RadialOrbitalTimeline({
             const Icon = item.icon;
 
             const nodeStyle = {
-              transform: `translate(${position.x}px, ${position.y}px)`,
               zIndex: isExpanded ? 200 : position.zIndex,
-              opacity: isExpanded ? 1 : position.opacity,
             };
 
             const cardConfig = getCardClassNameAndIndicator(position.x);
@@ -335,7 +358,7 @@ export default function RadialOrbitalTimeline({
               <div
                 key={item.id}
                 ref={(el) => (nodeRefs.current[item.id] = el)}
-                className="absolute transition-all duration-700 cursor-pointer flex items-center justify-center timeline-node"
+                className="absolute transition-all duration-700 cursor-pointer flex items-center justify-center timeline-node will-change-transform"
                 style={nodeStyle}
                 onClick={(e) => {
                   e.stopPropagation();

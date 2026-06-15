@@ -71,14 +71,14 @@ const Process = () => {
   ];
 
   return (
-    <section className="py-24 px-4 sm:px-8 lg:px-12" style={{ background: "linear-gradient(to bottom, var(--theme-bg-subtle), var(--theme-bg))" }}>
+    <section className="py-24 px-0 w-full overflow-hidden" style={{ background: "linear-gradient(to bottom, var(--theme-bg-subtle), var(--theme-bg))" }}>
       <div className="w-full max-w-none mx-auto">
         <motion.div
           ref={titleRef.ref}
           initial="hidden"
           animate={titleRef.controls}
           variants={scrollRevealVariants}
-          className="text-center mb-16 max-w-3xl mx-auto"
+          className="text-center mb-16 max-w-3xl mx-auto px-4 sm:px-8"
         >
           <h2 className="text-5xl sm:text-6xl font-bold theme-text mb-6 leading-tight">
             <span>Our Proven </span>
