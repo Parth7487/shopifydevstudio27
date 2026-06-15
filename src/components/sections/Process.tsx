@@ -1,115 +1,77 @@
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
-import {
-  useScrollReveal,
-  scrollRevealVariants,
-  staggerContainerVariants,
-  fadeInUpVariants,
-} from "../../hooks/use-scroll-reveal";
+import { useScrollReveal, scrollRevealVariants } from "../../hooks/use-scroll-reveal";
+import { Search, Paintbrush, Terminal, CheckSquare, Rocket } from "lucide-react";
+import RadialOrbitalTimeline from "../ui/radial-orbital-timeline";
 
 const Process = () => {
   const titleRef = useScrollReveal();
-  const stepsRef = useScrollReveal();
-  const [isMobile, setIsMobile] = useState(false);
-  const [hoveredStep, setHoveredStep] = useState<number | null>(null);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
+  const timelineRef = useScrollReveal();
 
   const processSteps = [
     {
-      number: "01",
+      id: 1,
       title: "Deep Dive Discovery",
-      description:
+      date: "1-2 weeks",
+      content:
         "We analyze your brand, competitors, and target psychology to create a conversion-focused strategy.",
-      timeline: "1-2 weeks",
+      category: "Phase 1",
+      icon: Search,
+      relatedIds: [2],
+      status: "completed" as const,
+      energy: 80,
     },
     {
-      number: "02",
+      id: 2,
       title: "Psychology-First Design",
-      description:
+      date: "2-3 weeks",
+      content:
         "Custom designs that leverage color psychology, social proof, and urgency to drive purchases.",
-      timeline: "2-3 weeks",
+      category: "Phase 2",
+      icon: Paintbrush,
+      relatedIds: [1, 3],
+      status: "completed" as const,
+      energy: 90,
     },
     {
-      number: "03",
+      id: 3,
       title: "Performance Development",
-      description:
+      date: "3-4 weeks",
+      content:
         "Code optimization, speed enhancement, and mobile-first development for maximum conversions.",
-      timeline: "3-4 weeks",
+      category: "Phase 3",
+      icon: Terminal,
+      relatedIds: [2, 4],
+      status: "in-progress" as const,
+      energy: 95,
     },
     {
-      number: "04",
+      id: 4,
       title: "Conversion Testing",
-      description:
+      date: "1 week",
+      content:
         "A/B testing every element to ensure maximum revenue per visitor before launch.",
-      timeline: "1 week",
+      category: "Phase 4",
+      icon: CheckSquare,
+      relatedIds: [3, 5],
+      status: "pending" as const,
+      energy: 85,
     },
     {
-      number: "05",
+      id: 5,
       title: "Launch & Optimize",
-      description:
+      date: "Ongoing",
+      content:
         "Seamless launch with ongoing optimization to continuously improve performance.",
-      timeline: "Ongoing",
+      category: "Phase 5",
+      icon: Rocket,
+      relatedIds: [4],
+      status: "pending" as const,
+      energy: 75,
     },
   ];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.3,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const stepVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, scale: 0.9 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  const titleVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut",
-      },
-    },
-  };
-
   return (
-    <section className="py-24 px-8" style={{ background: "linear-gradient(to bottom, var(--theme-bg-subtle), var(--theme-bg))" }}>
+    <section className="py-24 px-4 sm:px-8" style={{ background: "linear-gradient(to bottom, var(--theme-bg-subtle), var(--theme-bg))" }}>
       <div className="max-w-6xl mx-auto">
         <motion.div
           ref={titleRef.ref}
@@ -118,87 +80,24 @@ const Process = () => {
           variants={scrollRevealVariants}
           className="text-center mb-16"
         >
-          <h2 className="text-6xl font-bold theme-text mb-6 leading-tight">
+          <h2 className="text-5xl sm:text-6xl font-bold theme-text mb-6 leading-tight">
             <span>Our Proven </span>
             <span className="text-beige">Process</span>
           </h2>
-          <p className="theme-text-sec text-xl leading-7 max-w-3xl mx-auto">
-            From strategy to launch, every step is designed for maximum impact
+          <p className="theme-text-sec text-lg sm:text-xl leading-7 max-w-3xl mx-auto">
+            Explore our interactive timeline map detailing how we transition from strategic discovery to high-performance launch.
           </p>
         </motion.div>
 
-        <div className="relative">
-          {/* Vertical Timeline Line */}
-          <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-beige via-beige/50 to-beige transform -translate-x-1/2 hidden md:block" />
-
-          <motion.div
-            ref={stepsRef.ref}
-            initial="hidden"
-            animate={stepsRef.controls}
-            variants={staggerContainerVariants}
-          >
-            {processSteps.map((step, index) => (
-              <motion.div
-                key={index}
-                variants={fadeInUpVariants}
-                whileHover={{ scale: 1.02, y: -5 }}
-                className={`flex items-center gap-16 ${
-                  index % 2 === 1 ? "md:flex-row-reverse" : ""
-                } ${index > 0 ? "mt-16" : ""}`}
-              >
-                {/* Content Card */}
-                <div className="flex-1">
-                  <motion.div
-                    variants={cardVariants}
-                    whileHover={{
-                      scale: 1.02,
-                      transition: { duration: 0.3 },
-                    }}
-                    className="theme-card border theme-border rounded-2xl p-8 shadow-xl"
-                  >
-                    <div className="flex items-center mb-4">
-                      <span
-                        className="block text-beige text-3xl font-bold leading-9 mr-4"
-                        style={{
-                          textShadow: `0 0 ${10 + index * 2}px rgba(230, 177, 126, ${0.5 + index * 0.1})`,
-                        }}
-                      >
-                        {step.number}
-                      </span>
-                      <h3 className="theme-text text-2xl font-bold leading-8">
-                        {step.title}
-                      </h3>
-                    </div>
-                    <p className="theme-text-sec leading-relaxed mb-4">
-                      {step.description}
-                    </p>
-                    <div className="flex items-center">
-                      <span className="text-beige text-sm font-medium">
-                        <span>Timeline: </span>
-                        <span>{step.timeline}</span>
-                      </span>
-                    </div>
-                  </motion.div>
-                </div>
-
-                {/* Timeline Dot */}
-                <div className="relative hidden md:block">
-                  <motion.div
-                    variants={cardVariants}
-                    className="w-4 h-4 bg-beige border-2 rounded-full"
-                    style={{
-                      borderColor: "var(--theme-bg)",
-                      boxShadow: `0 0 ${15 + index * 3}px rgba(230, 177, 126, ${0.4 + index * 0.1})`,
-                    }}
-                  />
-                </div>
-
-                {/* Spacer for alternating layout */}
-                <div className="flex-1 hidden md:block" />
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
+        <motion.div
+          ref={timelineRef.ref}
+          initial="hidden"
+          animate={timelineRef.controls}
+          variants={scrollRevealVariants}
+          className="w-full"
+        >
+          <RadialOrbitalTimeline timelineData={processSteps} />
+        </motion.div>
       </div>
     </section>
   );

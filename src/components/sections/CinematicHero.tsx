@@ -284,7 +284,7 @@ const CinematicHero = () => {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 1, delay: 0.6 }}
           >
-            <h1 className="text-6xl md:text-8xl lg:text-[7rem] font-bold leading-[1.1] sm:leading-[1.15] tracking-tight">
+            <h1 className="text-6xl md:text-8xl lg:text-[7rem] font-bold leading-[0.9] tracking-tight">
               <motion.span
                 className="block theme-text mb-2"
                 initial={{ opacity: 0, y: 30 }}

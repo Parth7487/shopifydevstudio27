@@ -428,10 +428,10 @@ const About = () => {
                 Get in Touch
               </button>
               <a
-                href="/services"
+                href="/process"
                 className="px-8 py-4 border border-beige text-beige font-semibold rounded-lg hover:bg-beige/10 transition-colors duration-200"
               >
-                View Our Services
+                View Our Process
               </a>
             </div>
           </motion.div>
