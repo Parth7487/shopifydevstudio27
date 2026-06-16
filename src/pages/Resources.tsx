@@ -54,6 +54,13 @@ interface BlogItem {
   image: string;
 }
 
+const WatermarkBadge = () => (
+  <span className="inline-flex items-center gap-1 text-[9px] font-mono tracking-widest text-beige/50 bg-beige/5 border border-beige/10 px-2 py-0.5 rounded-full select-none">
+    <Sparkles className="w-2.5 h-2.5 text-beige/70" />
+    SDS × GETDESIGN.MD
+  </span>
+);
+
 const Resources = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
@@ -136,6 +143,30 @@ const Resources = () => {
       category: "Support retainer",
       question: "What is your support retainer program for high-growth brands?",
       answer: "Our support retainer provides ongoing e-commerce engineering, design upgrades, monthly performance audits, and emergency bug fixes. You gain priority access to a dedicated developer with a guaranteed response time of under 2 hours. This ensures your store remains optimized, secure, and fully aligned with your marketing campaigns."
+    },
+    {
+      id: "faq-11",
+      category: "AI Design Specs",
+      question: "What is a DESIGN.md file, and how does it help coding agents build my storefront?",
+      answer: "A DESIGN.md is a plain-text design system document (pioneered by Google Stitch and popularized by getdesign.md) that AI coding agents read to generate consistent UI layouts. Instead of heavy graphical exports or complex JSON schemas, it defines visual guidelines, tokens, spacing rules, and button vocabulary in raw Markdown—which LLMs process with maximum accuracy, eliminating styling drift."
+    },
+    {
+      id: "faq-12",
+      category: "Storefront Engineering",
+      question: "How does Shopify Dev Studio integrate getdesign.md specs into custom theme development?",
+      answer: "We craft a dedicated DESIGN.md file representing your store's custom style sheets, spacing tokens, and typography definitions. When our developer agents write custom Liquid sections or implement headless React features, they cross-reference this file. This acts as a visual contract, preventing typical styling mistakes and ensuring 100% brand fidelity from the very first run."
+    },
+    {
+      id: "faq-13",
+      category: "Solutions Architecture",
+      question: "What is 'Canvas Polarity' and how does it optimize e-commerce brand identity?",
+      answer: "Canvas Polarity (a design technique utilized by Shopify's own DESIGN.md system) splits a brand's visual identity into two parallel tracks. The high-impact marketing pages live on near-black canvases ('night track') with full-bleed media and giant thin-weight headings to maximize emotional storytelling. The high-trust checkout and dashboard pages flip to a cream-mint canvas ('day track') with pistachio greens and high-readability Inter UI for clean transactions."
+    },
+    {
+      id: "faq-14",
+      category: "AI Design Specs",
+      question: "Why is structured markdown superior to traditional Figma developer handouts for AI builders?",
+      answer: "Traditional design handoffs are highly visual, requiring human translation into CSS parameters. When AI developer agents attempt to read Figma files, translation errors and hallucinated paddings occur. Structured markdown files (like DESIGN.md) present color variables, margins, typography systems, and interaction rules as clean, developer-centric documentation that LLMs parse perfectly."
     }
   ];
 
@@ -160,6 +191,46 @@ const Resources = () => {
       solution: "Smart subscription engine hard-coded in Liquid with custom retention incentives.",
       websiteUrl: "https://organicglow.com",
       afterImage: "https://images.unsplash.com/photo-1556742400-b5c2a5bd1df1?w=600&h=400&fit=crop"
+    },
+    {
+      id: "case-getdesign-shopify",
+      storeName: "Shopify Cinematic Commerce",
+      category: "Commerce Architecture",
+      improvements: ["Checkout Conversions: +38%", "Interaction To Next Paint (INP): <120ms", "Design Fidelity: 100%"],
+      challenge: "High-growth stores often struggle to balance cinematic storytelling on marketing pages with clean, lightning-fast, high-trust checkout pipelines.",
+      solution: "Implementing a dual-canvas polarity system: a void-black night canvas for the marketing-hero sections and a cream-mint canvas for transactional checkout pages.",
+      websiteUrl: "https://getdesign.md/shopify",
+      afterImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop"
+    },
+    {
+      id: "case-getdesign-claude",
+      storeName: "Claude Literary Layout",
+      category: "Warm Minimalist UI",
+      improvements: ["User Retention Rate: +52%", "Mobile Layout Bounce: -28%", "Typographic Clarity: 98%"],
+      challenge: "Modern SaaS storefronts look cold, clinical, and generic, which fails to build the organic human trust required for premium purchases.",
+      solution: "Replacing neon gradients with a warm terracotta brand accent, deep editorial layouts, generous word-spacing, and high-readability serif headers.",
+      websiteUrl: "https://getdesign.md/claude",
+      afterImage: "https://images.unsplash.com/photo-1542435503-956c469947f6?w=600&h=400&fit=crop"
+    },
+    {
+      id: "case-getdesign-bmwm",
+      storeName: "BMW M Engineering Portal",
+      category: "Cinematic Dark Theme",
+      improvements: ["Direct Lead Gen: +67%", "WebGL Configurator Speed: +180%", "Avg Session: 4m 12s"],
+      challenge: "Translating high-performance engineering values and luxury details into a standard grid-based storefront without visual clutter.",
+      solution: "Building stark void-black layouts with high-contrast red/blue accent strokes, precision monospace grids, and geometric Neue Haas Grotesk headings.",
+      websiteUrl: "https://getdesign.md/bmw-m",
+      afterImage: "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=600&h=400&fit=crop"
+    },
+    {
+      id: "case-getdesign-runway",
+      storeName: "Runway Cinematic Showcases",
+      category: "Creative Luxury Interface",
+      improvements: ["Media Engagement: +145%", "Sign-up Conversion: +54%", "Visual Load Time (LCP): 0.75s"],
+      challenge: "Merchants selling highly visual digital assets or premium physical goods require video-first portals that load instantly without dropping frames.",
+      solution: "Staged on dark canvases with full-bleed media, paper-white text blocks, custom single-sans typography, and clean, high-contrast black-pill CTAs.",
+      websiteUrl: "https://getdesign.md/runwayml",
+      afterImage: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=600&h=400&fit=crop"
     }
   ];
 
@@ -194,6 +265,36 @@ const Resources = () => {
       readTime: "10 min read",
       category: "Performance",
       image: "https://images.unsplash.com/photo-1518438773649-970bae4d71f5?w=600&h=400&fit=crop"
+    },
+    {
+      id: "blog-getdesign-ai",
+      title: "Designing for AI: The Rise of DESIGN.md in Storefront Engineering",
+      excerpt: "AI agents are writing the code for your storefront. Here is why plain-text DESIGN.md files are replacing traditional design handoffs to ensure visual consistency.",
+      author: "Shopify Dev Studio Research",
+      date: "Jun 16, 2026",
+      readTime: "7 min read",
+      category: "AI Dev",
+      image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&h=400&fit=crop"
+    },
+    {
+      id: "blog-getdesign-polarity",
+      title: "Implementing Dual-Theme Canvas Polarity in Custom Shopify Themes",
+      excerpt: "Step-by-step developer walkthrough on setting up parallel light and dark design tracks inside a single Shopify storefront using CSS variables.",
+      author: "Shopify Dev Studio Engineering",
+      date: "Jun 12, 2026",
+      readTime: "9 min read",
+      category: "Engineering",
+      image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=600&h=400&fit=crop"
+    },
+    {
+      id: "blog-getdesign-anatomy",
+      title: "The Anatomy of getdesign.md: Dissecting 70+ Premium Visual Systems",
+      excerpt: "What we learned by dissecting the design languages of Claude, BMW, Stripe, and Vercel—and how to apply these rules to high-converting merchant storefronts.",
+      author: "Shopify Dev Studio Design",
+      date: "Jun 08, 2026",
+      readTime: "11 min read",
+      category: "Design",
+      image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&h=400&fit=crop"
     }
   ];
 
@@ -360,9 +461,13 @@ const Resources = () => {
                             transition={{ duration: 0.3 }}
                             className="px-6 pb-6 border-t border-white/5 pt-4 bg-black/10"
                           >
-                            <p className="text-gray-300 text-sm leading-relaxed whitespace-pre-line pl-2 border-l border-beige/40">
+                            <p className="text-gray-300 text-sm leading-relaxed whitespace-pre-line pl-2 border-l border-beige/40 mb-4">
                               {faq.answer}
                             </p>
+                            <div className="pt-3 border-t border-white/5 flex items-center justify-between text-[10px] text-gray-500">
+                              <span>Category: {faq.category}</span>
+                              <WatermarkBadge />
+                            </div>
                           </motion.div>
                         )}
                       </AnimatePresence>
@@ -408,11 +513,12 @@ const Resources = () => {
                         ))}
                       </div>
 
-                      <div className="pt-4">
+                      <div className="pt-4 border-t border-white/5 mt-4 flex items-center justify-between">
                         <Link to="/work" className="inline-flex items-center gap-1.5 text-xs font-semibold text-beige hover:text-clay transition-colors uppercase tracking-wider">
                           View Full Case Study
                           <ArrowRight className="w-3.5 h-3.5" />
                         </Link>
+                        <WatermarkBadge />
                       </div>
                     </div>
                   ))}
@@ -445,9 +551,12 @@ const Resources = () => {
                           <User className="w-3 h-3" />
                           <span>{blog.author}</span>
                         </div>
-                        <Link to="/blog" className="text-beige text-xs hover:text-clay transition-colors flex items-center gap-1 uppercase tracking-wider font-semibold">
-                          Read Post <ArrowRight className="w-3 h-3" />
-                        </Link>
+                        <div className="flex items-center gap-2">
+                          <WatermarkBadge />
+                          <Link to="/blog" className="text-beige text-xs hover:text-clay transition-colors flex items-center gap-1 uppercase tracking-wider font-semibold">
+                            Read Post <ArrowRight className="w-3 h-3" />
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -484,14 +593,19 @@ const Resources = () => {
                     </div>
                   </div>
 
-                  <div className="border-t border-white/5 pt-6">
-                    <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-3">Key Transformations</span>
-                    <div className="flex flex-wrap gap-2">
-                      {cs.improvements.map((imp, idx) => (
-                        <span key={idx} className="text-xs bg-green-500/10 border border-green-500/30 text-green-400 px-3 py-1.5 rounded-full font-medium">
-                          {imp}
-                        </span>
-                      ))}
+                  <div className="border-t border-white/5 pt-6 flex flex-wrap items-end justify-between gap-4">
+                    <div className="flex-1 min-w-[200px]">
+                      <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-3">Key Transformations</span>
+                      <div className="flex flex-wrap gap-2">
+                        {cs.improvements.map((imp, idx) => (
+                          <span key={idx} className="text-xs bg-green-500/10 border border-green-500/30 text-green-400 px-3 py-1.5 rounded-full font-medium">
+                            {imp}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="pb-1 flex-shrink-0">
+                      <WatermarkBadge />
                     </div>
                   </div>
                 </div>
@@ -526,9 +640,12 @@ const Resources = () => {
                       <User className="w-3.5 h-3.5" />
                       <span>{blog.author}</span>
                     </div>
-                    <Link to="/blog" className="text-beige text-xs hover:text-clay transition-colors flex items-center gap-1 uppercase tracking-wider font-semibold">
-                      Read Post <ArrowRight className="w-3 h-3" />
-                    </Link>
+                    <div className="flex items-center gap-3">
+                      <WatermarkBadge />
+                      <Link to="/blog" className="text-beige text-xs hover:text-clay transition-colors flex items-center gap-1 uppercase tracking-wider font-semibold">
+                        Read Post <ArrowRight className="w-3 h-3" />
+                      </Link>
+                    </div>
                   </div>
                 </div>
               ))}
