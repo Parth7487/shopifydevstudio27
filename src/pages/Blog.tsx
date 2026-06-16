@@ -138,7 +138,7 @@ const Blog = () => {
   return (
     <div className="min-h-screen" style={{ backgroundColor: "var(--theme-bg)", color: "var(--theme-text)" }}>
       {/* Hero Section */}
-      <section className="pt-24 pb-12 sm:pt-28 sm:pb-16 lg:pt-32 lg:pb-24 px-4 sm:px-6 lg:px-8">
+      <section className="pt-32 pb-12 sm:pt-36 sm:pb-16 lg:pt-40 lg:pb-24 px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
           animate="visible"
@@ -398,7 +398,7 @@ const Blog = () => {
         >
           <motion.div
             variants={fadeInUpVariants}
-            className="bg-gradient-to-r from-beige/10 to-clay/10 border border-beige/20 rounded-2xl p-8"
+            className="bg-gradient-to-r from-beige/10 to-clay/10 border border-beige/20 rounded-2xl p-6 sm:p-8"
           >
             <motion.h2
               variants={fadeInUpVariants}

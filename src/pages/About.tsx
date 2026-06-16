@@ -246,16 +246,16 @@ const About = () => {
       </section>
 
       {/* Team Section */}
-      <section className="py-16 px-8">
+      <section className="py-16 px-4 sm:px-8">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial="hidden"
             animate="visible"
             variants={itemVariants}
-            className="bg-gradient-to-r from-beige/10 to-clay/10 border border-beige/20 rounded-2xl p-12"
+            className="bg-gradient-to-r from-beige/10 to-clay/10 border border-beige/20 rounded-2xl p-6 sm:p-12"
           >
-            <h2 className="text-4xl font-bold mb-6">Ready to Work Together?</h2>
-            <p className="text-gray-400 text-lg mb-8 max-w-2xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6">Ready to Work Together?</h2>
+            <p className="text-gray-400 text-base sm:text-lg mb-8 max-w-2xl mx-auto">
               We'd love to learn about your business and explore how we can help
               you achieve your e-commerce goals. Let's start a conversation.
             </p>
@@ -271,13 +271,13 @@ const About = () => {
                     window.location.hash = "#contact";
                   }
                 }}
-                className="px-8 py-4 bg-beige text-black font-semibold rounded-lg hover:bg-beige/90 transition-colors duration-200"
+                className="px-8 py-3.5 bg-beige text-black font-semibold rounded-lg hover:bg-beige/90 transition-colors duration-200 text-sm sm:text-base"
               >
                 Get in Touch
               </button>
               <a
                 href="/process"
-                className="px-8 py-4 border border-beige text-beige font-semibold rounded-lg hover:bg-beige/10 transition-colors duration-200"
+                className="px-8 py-3.5 border border-beige text-beige font-semibold rounded-lg hover:bg-beige/10 transition-colors duration-200 text-sm sm:text-base"
               >
                 View Our Process
               </a>

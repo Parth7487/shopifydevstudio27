@@ -318,7 +318,7 @@ const FAQ = () => {
         >
           <motion.div
             variants={fadeInUpVariants}
-            className="bg-gradient-to-r from-beige/10 to-clay/10 border border-beige/20 rounded-2xl p-8"
+            className="bg-gradient-to-r from-beige/10 to-clay/10 border border-beige/20 rounded-2xl p-6 sm:p-8"
           >
             <motion.h2
               variants={fadeInUpVariants}
