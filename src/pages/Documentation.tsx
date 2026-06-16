@@ -9,8 +9,6 @@ import {
   Users,
   ChevronRight,
 } from "lucide-react";
-import ElegantNavigation from "../components/sections/ElegantNavigation";
-import Footer from "../components/sections/Footer";
 import CalendlyModal from "../components/sections/CalendlyModal";
 import {
   fadeInUpVariants,
@@ -168,8 +166,6 @@ const Documentation = () => {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "var(--theme-bg)", color: "var(--theme-text)" }}>
-      <ElegantNavigation />
-
       {/* Hero Section */}
       <section className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -537,7 +533,6 @@ const Documentation = () => {
         </div>
       </section>
 
-      <Footer />
       <CalendlyModal
         open={
           calendlyOpen && Boolean((import.meta as any).env?.VITE_CALENDLY_URL)

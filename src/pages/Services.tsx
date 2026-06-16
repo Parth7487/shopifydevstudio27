@@ -15,8 +15,6 @@ import {
   Monitor,
   Shield,
 } from "lucide-react";
-import ElegantNavigation from "../components/sections/ElegantNavigation";
-import Footer from "../components/sections/Footer";
 import DesignPlayground from "../components/sections/DesignPlayground";
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
@@ -327,8 +325,6 @@ const Services = () => {
   return (
     <div className="min-h-screen" style={{ backgroundColor: "var(--theme-bg)", color: "var(--theme-text)" }}>
       {/* Navigation */}
-      <ElegantNavigation />
-
       <section className="pt-16 pb-1 sm:pt-18 sm:pb-2 lg:pt-20 lg:pb-3 mobile-safe-padding text-center">
         <div className="max-w-4xl mx-auto w-full">
           <motion.h1
@@ -753,7 +749,6 @@ const Services = () => {
 
 
       {/* Footer */}
-      <Footer />
       <CalendlyModal
         open={calendlyOpen}
         onClose={() => setCalendlyOpen(false)}

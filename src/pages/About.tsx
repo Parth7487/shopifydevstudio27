@@ -2,8 +2,6 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import CalendlyModal from "../components/sections/CalendlyModal";
 import { Award, Users, Target, Heart, Calendar, ShieldCheck, Lock, Shield } from "lucide-react";
-import ElegantNavigation from "../components/sections/ElegantNavigation";
-import Footer from "../components/sections/Footer";
 import { updatePageMeta } from "../lib/seo-meta";
 import { addBreadcrumbSchema } from "../lib/breadcrumb-schema";
 import DisplayCards from "../components/ui/display-cards";
@@ -122,8 +120,6 @@ const About = () => {
   return (
     <div className="min-h-screen" style={{ backgroundColor: "var(--theme-bg)", color: "var(--theme-text)" }}>
       {/* Navigation */}
-      <ElegantNavigation />
-
       {/* Header Section */}
       <section className="py-24 px-8 text-center">
         <div className="max-w-4xl mx-auto px-8 w-full">
@@ -438,7 +434,6 @@ const About = () => {
       </section>
 
       {/* Footer */}
-      <Footer />
       <CalendlyModal
         open={
           calendlyOpen && Boolean((import.meta as any).env?.VITE_CALENDLY_URL)

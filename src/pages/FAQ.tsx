@@ -9,8 +9,6 @@ import {
   Shield,
   Users,
 } from "lucide-react";
-import ElegantNavigation from "../components/sections/ElegantNavigation";
-import Footer from "../components/sections/Footer";
 import {
   fadeInUpVariants,
   staggerContainerVariants,
@@ -177,8 +175,6 @@ const FAQ = () => {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "var(--theme-bg)", color: "var(--theme-text)" }}>
-      <ElegantNavigation />
-
       {/* Hero Section */}
       <section className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -349,8 +345,7 @@ const FAQ = () => {
         </motion.div>
       </section>
 
-      <Footer />
-    </div>
+      </div>
   );
 };
 

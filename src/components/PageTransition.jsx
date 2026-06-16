@@ -2,15 +2,24 @@ import { motion } from "framer-motion";
 import { memo } from "react";
 
 const pageVariants = {
-  initial: { opacity: 0, y: 15 },
-  animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -15 }
+  initial: { 
+    x: "100%", 
+    opacity: 0.9 
+  },
+  animate: { 
+    x: 0, 
+    opacity: 1 
+  },
+  exit: { 
+    x: "-100%", 
+    opacity: 0.9 
+  }
 };
 
 const pageTransition = {
   type: "tween",
-  ease: "easeInOut",
-  duration: 0.25
+  ease: [0.16, 1, 0.3, 1], // Premium easeOutExpo curve for smooth deceleration
+  duration: 0.55
 };
 
 const PageTransition = memo(({ children }) => (
@@ -20,7 +29,7 @@ const PageTransition = memo(({ children }) => (
     exit="exit"
     variants={pageVariants}
     transition={pageTransition}
-    className="w-full min-h-screen"
+    className="w-full min-h-screen overflow-x-hidden"
   >
     {children}
   </motion.div>
@@ -29,3 +38,4 @@ const PageTransition = memo(({ children }) => (
 PageTransition.displayName = "PageTransition";
 
 export default PageTransition;
+

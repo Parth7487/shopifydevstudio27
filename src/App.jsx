@@ -4,6 +4,8 @@ import { lazy, Suspense, memo, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
 import ScrollProgress from "./components/ScrollProgress";
 import PageTransition from "./components/PageTransition";
+import ElegantNavigation from "./components/sections/ElegantNavigation";
+import Footer from "./components/sections/Footer";
 
 // Import only critical pages directly for instant loading
 import Index from "./pages/Index";
@@ -58,128 +60,135 @@ const queryClient = new QueryClient({
 
 const AnimatedRoutes = memo(() => {
   const location = useLocation();
+  const showLayout = !location.pathname.startsWith("/admin");
   return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<PageTransition><Index /></PageTransition>} />
-        <Route
-          path="/services"
-          element={
-            <Suspense fallback={<MinimalLoader />}>
-              <PageTransition><Services /></PageTransition>
-            </Suspense>
-          }
-        />
-        <Route
-          path="/process"
-          element={
-            <Suspense fallback={<MinimalLoader />}>
-              <PageTransition><Process /></PageTransition>
-            </Suspense>
-          }
-        />
-        <Route
-          path="/about"
-          element={
-            <Suspense fallback={<MinimalLoader />}>
-              <PageTransition><About /></PageTransition>
-            </Suspense>
-          }
-        />
-        <Route
-          path="/work"
-          element={
-            <Suspense fallback={<MinimalLoader />}>
-              <PageTransition><Work /></PageTransition>
-            </Suspense>
-          }
-        />
-        {/* Redirect old Work2 routes to new Work page */}
-        <Route path="/work2" element={<Navigate to="/work" replace />} />
-        <Route path="/Work2" element={<Navigate to="/work" replace />} />
-        <Route
-          path="/blog"
-          element={
-            <Suspense fallback={<MinimalLoader />}>
-              <PageTransition><Blog /></PageTransition>
-            </Suspense>
-          }
-        />
-        <Route
-          path="/documentation"
-          element={
-            <Suspense fallback={<MinimalLoader />}>
-              <PageTransition><Documentation /></PageTransition>
-            </Suspense>
-          }
-        />
-        <Route
-          path="/support"
-          element={
-            <Suspense fallback={<MinimalLoader />}>
-              <PageTransition><Support /></PageTransition>
-            </Suspense>
-          }
-        />
-        <Route
-          path="/faq"
-          element={
-            <Suspense fallback={<MinimalLoader />}>
-              <PageTransition><FAQ /></PageTransition>
-            </Suspense>
-          }
-        />
-        <Route
-          path="/partners"
-          element={
-            <Suspense fallback={<MinimalLoader />}>
-              <PageTransition><Partners /></PageTransition>
-            </Suspense>
-          }
-        />
-        <Route
-          path="/resources"
-          element={
-            <Suspense fallback={<MinimalLoader />}>
-              <PageTransition><Resources /></PageTransition>
-            </Suspense>
-          }
-        />
-        <Route
-          path="/favicon-export"
-          element={
-            <Suspense fallback={<MinimalLoader />}>
-              <PageTransition><FaviconExport /></PageTransition>
-            </Suspense>
-          }
-        />
-        <Route
-          path="/admin"
-          element={
-            <Suspense fallback={<MinimalLoader />}>
-              <PageTransition><Admin /></PageTransition>
-            </Suspense>
-          }
-        />
-        <Route
-          path="/404"
-          element={
-            <Suspense fallback={<MinimalLoader />}>
-              <PageTransition><NotFound /></PageTransition>
-            </Suspense>
-          }
-        />
-        <Route path="/NotFound" element={<Navigate to="/404" replace />} />
-        <Route
-          path="*"
-          element={
-            <Suspense fallback={<MinimalLoader />}>
-              <PageTransition><NotFound /></PageTransition>
-            </Suspense>
-          }
-        />
-      </Routes>
-    </AnimatePresence>
+    <div className="min-h-screen relative flex flex-col justify-between" style={{ backgroundColor: "var(--theme-bg)", color: "var(--theme-text)" }}>
+      {showLayout && <ElegantNavigation />}
+      <main className="flex-grow">
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<PageTransition><Index /></PageTransition>} />
+            <Route
+              path="/services"
+              element={
+                <Suspense fallback={<MinimalLoader />}>
+                  <PageTransition><Services /></PageTransition>
+                </Suspense>
+              }
+            />
+            <Route
+              path="/process"
+              element={
+                <Suspense fallback={<MinimalLoader />}>
+                  <PageTransition><Process /></PageTransition>
+                </Suspense>
+              }
+            />
+            <Route
+              path="/about"
+              element={
+                <Suspense fallback={<MinimalLoader />}>
+                  <PageTransition><About /></PageTransition>
+                </Suspense>
+              }
+            />
+            <Route
+              path="/work"
+              element={
+                <Suspense fallback={<MinimalLoader />}>
+                  <PageTransition><Work /></PageTransition>
+                </Suspense>
+              }
+            />
+            {/* Redirect old Work2 routes to new Work page */}
+            <Route path="/work2" element={<Navigate to="/work" replace />} />
+            <Route path="/Work2" element={<Navigate to="/work" replace />} />
+            <Route
+              path="/blog"
+              element={
+                <Suspense fallback={<MinimalLoader />}>
+                  <PageTransition><Blog /></PageTransition>
+                </Suspense>
+              }
+            />
+            <Route
+              path="/documentation"
+              element={
+                <Suspense fallback={<MinimalLoader />}>
+                  <PageTransition><Documentation /></PageTransition>
+                </Suspense>
+              }
+            />
+            <Route
+              path="/support"
+              element={
+                <Suspense fallback={<MinimalLoader />}>
+                  <PageTransition><Support /></PageTransition>
+                </Suspense>
+              }
+            />
+            <Route
+              path="/faq"
+              element={
+                <Suspense fallback={<MinimalLoader />}>
+                  <PageTransition><FAQ /></PageTransition>
+                </Suspense>
+              }
+            />
+            <Route
+              path="/partners"
+              element={
+                <Suspense fallback={<MinimalLoader />}>
+                  <PageTransition><Partners /></PageTransition>
+                </Suspense>
+              }
+            />
+            <Route
+              path="/resources"
+              element={
+                <Suspense fallback={<MinimalLoader />}>
+                  <PageTransition><Resources /></PageTransition>
+                </Suspense>
+              }
+            />
+            <Route
+              path="/favicon-export"
+              element={
+                <Suspense fallback={<MinimalLoader />}>
+                  <PageTransition><FaviconExport /></PageTransition>
+                </Suspense>
+              }
+            />
+            <Route
+              path="/admin"
+              element={
+                <Suspense fallback={<MinimalLoader />}>
+                  <PageTransition><Admin /></PageTransition>
+                </Suspense>
+              }
+            />
+            <Route
+              path="/404"
+              element={
+                <Suspense fallback={<MinimalLoader />}>
+                  <PageTransition><NotFound /></PageTransition>
+                </Suspense>
+              }
+            />
+            <Route path="/NotFound" element={<Navigate to="/404" replace />} />
+            <Route
+              path="*"
+              element={
+                <Suspense fallback={<MinimalLoader />}>
+                  <PageTransition><NotFound /></PageTransition>
+                </Suspense>
+              }
+            />
+          </Routes>
+        </AnimatePresence>
+      </main>
+      {showLayout && <Footer />}
+    </div>
   );
 });
 

@@ -14,8 +14,6 @@ import {
   Loader2,
 } from "lucide-react";
 import { useProjects } from "../hooks/useProjects";
-import ElegantNavigation from "../components/sections/ElegantNavigation";
-import Footer from "../components/sections/Footer";
 import OptimizedImage from "../components/OptimizedImage";
 import CalendlyModal from "../components/sections/CalendlyModal";
 import { updatePageMeta } from "../lib/seo-meta";
@@ -653,8 +651,6 @@ const Work = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/20 pointer-events-none"></div>
       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.01] to-transparent pointer-events-none"></div>
 
-      <ElegantNavigation />
-
       {/* Hero Section */}
       <section className="relative py-20 px-8 bg-[var(--theme-bg-subtle)] backdrop-blur-sm overflow-hidden border-b theme-border">
         {/* Glossy reflections */}
@@ -915,7 +911,6 @@ const Work = () => {
         </p>
       </section>
 
-      <Footer />
       <CalendlyModal
         open={
           calendlyOpen && Boolean((import.meta as any).env?.VITE_CALENDLY_URL)

@@ -21,8 +21,6 @@ import {
   Heart,
   Repeat2,
 } from "lucide-react";
-import ElegantNavigation from "../components/sections/ElegantNavigation";
-import Footer from "../components/sections/Footer";
 import CalendlyModal from "../components/sections/CalendlyModal";
 import { updatePageMeta } from "../lib/seo-meta";
 import { addBreadcrumbSchema } from "../lib/breadcrumb-schema";
@@ -242,8 +240,6 @@ const Partners = memo(() => {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "var(--theme-bg)", color: "var(--theme-text)" }}>
-      <ElegantNavigation />
-
       <main className="pt-24 pb-20">
         {/* Header */}
         <section className="px-4 mb-20">
@@ -716,7 +712,6 @@ const Partners = memo(() => {
         </section>
       </main>
 
-      <Footer />
       <CalendlyModal
         open={
           calendlyOpen && Boolean((import.meta as any).env?.VITE_CALENDLY_URL)

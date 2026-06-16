@@ -220,15 +220,15 @@ const Footer = () => {
 
         {/* Massive Typography Logo */}
         <motion.div
-          className="w-full border-t theme-border pt-12 mt-12 mb-6 text-center select-none overflow-hidden"
+          className="w-full border-t theme-border pt-12 mt-12 mb-6 text-center select-none overflow-visible px-4 py-2"
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 0.25, scale: 1 }}
           whileHover={{ opacity: 0.8 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-[7.5vw] md:text-[5.5rem] font-black tracking-[0.25em] leading-none uppercase text-beige font-sans">
-            SHOPIFYDEVSTUDIO
+          <h2 className="text-[11vw] font-serif italic font-semibold leading-none tracking-tighter text-beige/20 dark:text-white/15">
+            Shopifydevstudio
           </h2>
         </motion.div>
 

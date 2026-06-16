@@ -1,7 +1,5 @@
 import { motion } from "framer-motion";
 import { Calendar, User, ArrowRight, Tag } from "lucide-react";
-import ElegantNavigation from "../components/sections/ElegantNavigation";
-import Footer from "../components/sections/Footer";
 import { useEffect } from "react";
 import {
   fadeInUpVariants,
@@ -139,8 +137,6 @@ const Blog = () => {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "var(--theme-bg)", color: "var(--theme-text)" }}>
-      <ElegantNavigation />
-
       {/* Hero Section */}
       <section className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -434,8 +430,7 @@ const Blog = () => {
         </motion.div>
       </section>
 
-      <Footer />
-    </div>
+      </div>
   );
 };
 

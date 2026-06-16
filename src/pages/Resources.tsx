@@ -18,8 +18,6 @@ import {
   Lock,
   Boxes
 } from "lucide-react";
-import ElegantNavigation from "../components/sections/ElegantNavigation";
-import Footer from "../components/sections/Footer";
 import OptimizedImage from "../components/OptimizedImage";
 import { updatePageMeta } from "../lib/seo-meta";
 import { addBreadcrumbSchema } from "../lib/breadcrumb-schema";
@@ -344,8 +342,6 @@ const Resources = () => {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "var(--theme-bg)", color: "var(--theme-text)" }}>
-      <ElegantNavigation />
-
       {/* Hero Header */}
       <section className="pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="text-center space-y-6">
@@ -655,8 +651,7 @@ const Resources = () => {
         </div>
       </main>
 
-      <Footer />
-    </div>
+      </div>
   );
 };
 

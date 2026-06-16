@@ -1,8 +1,6 @@
 import { memo, lazy, Suspense, useEffect, useState, useCallback } from "react";
-import ElegantNavigation from "../components/sections/ElegantNavigation";
 import Preloader from "../components/Preloader";
 import ElegantHero from "../components/sections/ElegantHero";
-import Footer from "../components/sections/Footer";
 import { updatePageMeta } from "../lib/seo-meta";
 import ScrollReveal from "../components/ScrollReveal";
 
@@ -116,8 +114,6 @@ const Index = memo(() => {
       {showPreloader && <Preloader onComplete={handlePreloaderComplete} />}
 
       {/* Navigation - critical above-the-fold */}
-      <ElegantNavigation />
-
       {/* Main content */}
       <main>
         {/* Hero Section - critical path, loads immediately */}
@@ -180,8 +176,7 @@ const Index = memo(() => {
       </main>
 
       {/* Footer */}
-      <Footer />
-    </div>
+      </div>
   );
 });
 
