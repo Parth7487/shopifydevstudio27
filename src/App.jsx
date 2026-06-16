@@ -65,7 +65,7 @@ const AnimatedRoutes = memo(() => {
     <div className="min-h-screen relative flex flex-col justify-between" style={{ backgroundColor: "var(--theme-bg)", color: "var(--theme-text)" }}>
       {showLayout && <ElegantNavigation />}
       <main className="flex-grow">
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="sync">
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<PageTransition><Index /></PageTransition>} />
             <Route
