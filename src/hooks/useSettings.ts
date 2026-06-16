@@ -304,10 +304,19 @@ export const DEFAULT_SETTINGS: SiteSettings = {
   partners: DEFAULT_PARTNERS
 };
 
-// In-memory cache for instant loads
+// In-memory cache for instant loads within same session
+const STORAGE_KEY = "shopifydevstudio_settings_v1";
 let cachedSettings: SiteSettings | null = null;
 let cacheTimestamp = 0;
 const CACHE_DURATION = 30000; // 30 seconds
+
+// On module init, hydrate from localStorage so first render is always correct
+try {
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (stored) {
+    cachedSettings = JSON.parse(stored) as SiteSettings;
+  }
+} catch (_) { /* localStorage unavailable (private mode etc.) */ }
 
 export const useSettings = () => {
   const [settings, setSettings] = useState<SiteSettings>(cachedSettings || DEFAULT_SETTINGS);
@@ -344,6 +353,8 @@ export const useSettings = () => {
       setSettings(mergedSettings);
       cachedSettings = mergedSettings;
       cacheTimestamp = Date.now();
+      // Persist to localStorage so next page load shows correct value instantly
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(mergedSettings)); } catch (_) {}
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load settings");
       // Fallback is already set as default state
@@ -369,6 +380,8 @@ export const useSettings = () => {
         const next = { ...prev, [key]: value };
         cachedSettings = next;
         cacheTimestamp = Date.now();
+        // Persist updated value to localStorage immediately so refresh shows it right away
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(next)); } catch (_) {}
         return next;
       });
 
