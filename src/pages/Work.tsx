@@ -652,7 +652,7 @@ const Work = () => {
       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.01] to-transparent pointer-events-none"></div>
 
       {/* Hero Section */}
-      <section className="relative py-20 px-8 bg-[var(--theme-bg-subtle)] backdrop-blur-sm overflow-hidden border-b theme-border">
+      <section className="relative py-12 sm:py-20 px-4 sm:px-8 bg-[var(--theme-bg-subtle)] backdrop-blur-sm overflow-hidden border-b theme-border">
         {/* Glossy reflections */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-20 left-10 w-72 h-72 dark:bg-white/[0.02] bg-beige/[0.05] rounded-full filter blur-[64px]"></div>
@@ -664,7 +664,7 @@ const Work = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3 }}
-            className="text-5xl md:text-7xl font-bold mb-6 theme-text"
+            className="text-4xl sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-6 theme-text"
           >
             Our <span className="text-beige">Portfolio</span>
           </motion.h1>
@@ -672,7 +672,7 @@ const Work = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3, delay: 0.1 }}
-            className="text-xl theme-text-sec mb-12 max-w-3xl mx-auto"
+            className="text-base sm:text-lg md:text-xl theme-text-sec mb-6 sm:mb-12 max-w-3xl mx-auto leading-relaxed"
           >
             Discover our collection of high-converting Shopify stores that
             combine stunning design with powerful performance optimization.
@@ -860,18 +860,18 @@ const Work = () => {
             transition={{ duration: 0.3 }}
             viewport={{ once: true }}
             whileHover={{ scale: 1.01 }}
-            className="theme-card backdrop-blur-md border theme-border rounded-2xl p-12 shadow-2xl hover:shadow-3xl hover:border-beige/30 transition-all duration-300"
+            className="theme-card backdrop-blur-md border theme-border rounded-xl sm:rounded-2xl p-6 sm:p-12 shadow-2xl hover:shadow-3xl hover:border-beige/30 transition-all duration-300"
           >
-            <h2 className="text-4xl font-bold mb-6 theme-text">
+            <h2 className="text-2xl sm:text-4xl font-bold mb-4 sm:mb-6 theme-text">
               Ready to Create Your{" "}
               <span className="text-beige">Success Story?</span>
             </h2>
-            <p className="theme-text-sec text-lg mb-8 max-w-2xl mx-auto">
+            <p className="theme-text-sec text-sm sm:text-lg mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed">
               Let's build a store that not only looks amazing but also converts
               visitors into loyal customers. Your competitors won't know what
               hit them.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
               <motion.a
                 href={"/#contact"}
                 onClick={(e) => {
@@ -885,7 +885,7 @@ const Work = () => {
                 }}
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-beige text-black font-semibold rounded-lg hover:bg-beige/90 transition-all duration-300 shadow-lg"
+                className="px-6 py-3 sm:px-8 sm:py-4 bg-beige text-black font-semibold rounded-lg hover:bg-beige/90 transition-all duration-300 text-sm sm:text-base shadow-lg"
               >
                 Start Your Project
               </motion.a>
@@ -893,7 +893,7 @@ const Work = () => {
                 href="/services"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 border border-beige text-beige font-semibold rounded-lg hover:border-beige/80 transition-all duration-300"
+                className="px-6 py-3 sm:px-8 sm:py-4 border border-beige text-beige font-semibold rounded-lg hover:border-beige/80 transition-all duration-300 text-sm sm:text-base"
               >
                 Free Store Analysis
               </motion.a>

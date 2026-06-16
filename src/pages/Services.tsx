@@ -325,13 +325,13 @@ const Services = () => {
   return (
     <div className="min-h-screen" style={{ backgroundColor: "var(--theme-bg)", color: "var(--theme-text)" }}>
       {/* Navigation */}
-      <section className="pt-16 pb-1 sm:pt-18 sm:pb-2 lg:pt-20 lg:pb-3 mobile-safe-padding text-center">
+      <section className="pt-24 pb-1 sm:pt-28 sm:pb-2 lg:pt-32 lg:pb-3 mobile-safe-padding text-center">
         <div className="max-w-4xl mx-auto w-full">
           <motion.h1
             initial="hidden"
             animate="visible"
             variants={titleVariants}
-            className="responsive-text-4xl font-bold tracking-tight leading-tight mb-4 sm:mb-6"
+            className="text-3xl sm:text-5xl lg:text-7xl font-bold tracking-tight leading-tight mb-4 sm:mb-6"
           >
             <span>High-Performance Shopify Engineering </span>
             <span className="text-beige">& Solutions Architecture</span>
@@ -340,7 +340,7 @@ const Services = () => {
             initial="hidden"
             animate="visible"
             variants={titleVariants}
-            className="theme-text-sec responsive-text-base leading-relaxed mb-6 sm:mb-8"
+            className="theme-text-sec text-base sm:text-lg lg:text-xl leading-relaxed mb-6 sm:mb-8"
           >
             We build bespoke storefronts, custom apps, and secure AI integrations engineered from scratch. 
             Say goodbye to bloated templates, monthly app fees, and slow checkout speeds.
@@ -433,11 +433,11 @@ const Services = () => {
       </section>
 
       {/* Complete Liquid Design Solutions Section */}
-      <section className="theme-bg-subtle py-24 px-8 relative border-t border-[var(--theme-border)]">
+      <section className="theme-bg-subtle py-16 sm:py-24 px-4 sm:px-8 relative border-t border-[var(--theme-border)]">
         {/* Design Playground Background */}
         <DesignPlayground />
 
-        <div className="max-w-4xl mx-auto px-8 w-full text-center relative z-10">
+        <div className="max-w-4xl mx-auto w-full text-center relative z-10">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -446,19 +446,19 @@ const Services = () => {
           >
             <motion.h2
               variants={titleVariants}
-              className="text-4xl font-bold tracking-tight leading-tight mb-8"
+              className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight leading-tight mb-6 sm:mb-8"
             >
               Our Staging-First & Secure Development Protocol
             </motion.h2>
 
             <motion.div
               variants={itemVariants}
-              className="bg-beige/10 border border-beige/25 rounded-2xl p-8 mb-8"
+              className="bg-beige/10 border border-beige/25 rounded-2xl p-5 sm:p-8 mb-6 sm:mb-8"
             >
-              <h3 className="text-beige text-2xl font-bold leading-8 mb-4">
+              <h3 className="text-beige text-lg sm:text-xl md:text-2xl font-bold leading-snug mb-3 sm:mb-4">
                 "Zero Downtime. 100% Code Ownership."
               </h3>
-              <p className="theme-text-sec text-lg leading-relaxed">
+              <p className="theme-text-sec text-sm sm:text-base md:text-lg leading-relaxed">
                 <span>We develop exclusively on </span>
                 <span className="text-beige font-semibold">
                   private developer staging themes
@@ -472,7 +472,7 @@ const Services = () => {
 
             <motion.div
               variants={itemVariants}
-              className="theme-text-sec text-lg leading-relaxed space-y-6"
+              className="theme-text-sec text-sm sm:text-base md:text-lg leading-relaxed space-y-4 sm:space-y-6"
             >
               <p>
                 Think of your favorite physical luxury boutique. The moment a customer walks in, 
@@ -497,7 +497,7 @@ const Services = () => {
                 we write is designed to maximize speed and your bottom-line profitability.
               </p>
 
-              <p className="text-beige text-xl font-semibold leading-7">
+              <p className="text-beige text-base sm:text-lg md:text-xl font-semibold leading-normal">
                 Don't let an expensive, slow stack cap your brand's growth potential.
               </p>
             </motion.div>
@@ -506,8 +506,8 @@ const Services = () => {
       </section>
 
       {/* Sentinel Client Dashboard Callout */}
-      <section className="bg-gradient-to-r from-beige/5 to-[var(--theme-bg-subtle)] py-24 px-8 relative border-t border-[var(--theme-border)]">
-        <div className="max-w-4xl mx-auto px-8 w-full text-center relative z-10">
+      <section className="bg-gradient-to-r from-beige/5 to-[var(--theme-bg-subtle)] py-16 sm:py-24 px-4 sm:px-8 relative border-t border-[var(--theme-border)]">
+        <div className="max-w-4xl mx-auto w-full text-center relative z-10">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -516,19 +516,19 @@ const Services = () => {
           >
             <motion.h2
               variants={titleVariants}
-              className="text-4xl font-bold tracking-tight leading-tight mb-8"
+              className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight leading-tight mb-6 sm:mb-8"
             >
               The "Sentinel" Client Portal
             </motion.h2>
 
             <motion.div
               variants={itemVariants}
-              className="theme-card border border-[var(--theme-border)] rounded-2xl p-8 mb-8"
+              className="theme-card border border-[var(--theme-border)] rounded-xl sm:rounded-2xl p-5 sm:p-8 mb-6 sm:mb-8"
             >
-              <h3 className="text-beige text-2xl font-bold leading-8 mb-4">
+              <h3 className="text-beige text-lg sm:text-xl md:text-2xl font-bold leading-snug mb-3 sm:mb-4">
                 Monitor Progress, Upload Assets & Keep Track
               </h3>
-              <p className="theme-text-sec text-lg leading-relaxed">
+              <p className="theme-text-sec text-sm sm:text-base md:text-lg leading-relaxed">
                 Every project comes with a private, secure administrative dashboard. Monitor development roadmaps in real-time, upload design assets/Figma guides directly to the staging environment, review Git logs, and message your Solutions Architect directly.
               </p>
             </motion.div>

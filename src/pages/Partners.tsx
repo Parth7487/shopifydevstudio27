@@ -253,11 +253,11 @@ const Partners = memo(() => {
             </Link>
 
             <AnimatedCard>
-              <div className="text-center mb-16">
-                <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-beige to-clay bg-clip-text text-transparent">
+              <div className="text-center mb-10 sm:mb-16">
+                <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-beige to-clay bg-clip-text text-transparent">
                   Our Verified Partners
                 </h1>
-                <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                <p className="text-base sm:text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
                   We collaborate with the world's most respected e-commerce
                   experts and business leaders. Real partnerships. Real results.
                   Real social proof with verifiable links and handles.
@@ -268,13 +268,13 @@ const Partners = memo(() => {
         </section>
 
         {/* Expert Tweets Section */}
-        <section className="px-4 mb-20">
+        <section className="px-4 mb-16 sm:mb-20">
           <div className="max-w-7xl mx-auto">
             <AnimatedCard>
-              <h2 className="text-4xl font-bold text-center mb-6 text-beige">
+              <h2 className="text-2xl sm:text-4xl font-bold text-center mb-4 sm:mb-6 text-beige">
                 What Industry Leaders Say on Twitter
               </h2>
-              <p className="text-center text-gray-300 mb-12 max-w-3xl mx-auto">
+              <p className="text-center text-sm sm:text-base text-gray-300 mb-8 sm:mb-12 max-w-3xl mx-auto">
                 Real tweets from verified Shopify experts mentioning our work
                 and results.
               </p>
@@ -289,13 +289,13 @@ const Partners = memo(() => {
         </section>
 
         {/* Shopify Experts - Enhanced with Social Links */}
-        <section className="px-4 mb-20">
+        <section className="px-4 mb-16 sm:mb-20">
           <div className="max-w-7xl mx-auto">
             <AnimatedCard>
-              <h2 className="text-4xl font-bold text-center mb-6 text-beige">
+              <h2 className="text-2xl sm:text-4xl font-bold text-center mb-4 sm:mb-6 text-beige">
                 Verified Shopify Experts & E-commerce Leaders
               </h2>
-              <p className="text-center text-gray-300 mb-12 max-w-3xl mx-auto">
+              <p className="text-center text-sm sm:text-base text-gray-300 mb-8 sm:mb-12 max-w-3xl mx-auto">
                 Industry titans with verified social profiles who trust our
                 development capabilities.
               </p>
@@ -304,25 +304,25 @@ const Partners = memo(() => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {shopifyExperts.map((expert, index) => (
                 <AnimatedCard key={index} delay={index * 150}>
-                  <div className="bg-gradient-to-br from-charcoal/50 to-graphite/50 rounded-2xl border border-beige/20 p-8 hover:border-beige/40 transition-colors duration-300">
-                    <div className="flex items-start gap-6 mb-6">
-                      <div className="relative">
+                  <div className="bg-gradient-to-br from-charcoal/50 to-graphite/50 rounded-2xl border border-beige/20 p-5 sm:p-8 hover:border-beige/40 transition-colors duration-300">
+                    <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6 mb-6">
+                      <div className="relative shrink-0">
                         <OptimizedImage
                           src={expert.avatar}
                           alt={expert.name}
-                          className="w-20 h-20 rounded-full object-cover border-2 border-beige/30"
+                          className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover border-2 border-beige/30"
                           loading="lazy"
                           width={80}
                           height={80}
                         />
                         {expert.verified && (
-                          <div className="absolute -bottom-1 -right-1 w-7 h-7 bg-blue-500 rounded-full flex items-center justify-center">
-                            <Verified className="w-4 h-4 text-white" />
+                          <div className="absolute -bottom-1 -right-1 w-6 h-6 sm:w-7 sm:h-7 bg-blue-500 rounded-full flex items-center justify-center">
+                            <Verified className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
                           </div>
                         )}
                       </div>
 
-                      <div className="flex-1">
+                      <div className="flex-1 min-w-0">
                         <h3 className="text-xl font-bold text-white mb-1">
                           {expert.name}
                         </h3>
@@ -348,12 +348,12 @@ const Partners = memo(() => {
                         </div>
 
                         {/* Social Links */}
-                        <div className="flex gap-3 mb-4">
+                        <div className="flex flex-wrap gap-x-4 gap-y-2.5 mb-4 max-w-full">
                           <a
                             href={expert.linkedinUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-1 text-blue-400 hover:text-blue-300 transition-colors text-xs"
+                            className="flex items-center gap-1 text-blue-400 hover:text-blue-300 transition-colors text-xs whitespace-nowrap"
                           >
                             <Linkedin className="w-4 h-4" />
                             <span>LinkedIn</span>
@@ -362,19 +362,23 @@ const Partners = memo(() => {
                             href={expert.website}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-1 text-gray-400 hover:text-gray-300 transition-colors text-xs"
+                            className="flex items-center gap-1 text-gray-400 hover:text-gray-300 transition-colors text-xs whitespace-nowrap"
                           >
                             <Globe className="w-4 h-4" />
                             <span>Website</span>
                           </a>
-                          <span className="text-pink-400 text-xs flex items-center gap-1">
-                            <Instagram className="w-4 h-4" />
-                            {expert.instagramHandle}
-                          </span>
-                          <span className="text-blue-400 text-xs flex items-center gap-1">
-                            <Twitter className="w-4 h-4" />
-                            {expert.twitterHandle}
-                          </span>
+                          {expert.instagramHandle && (
+                            <span className="text-pink-400 text-xs flex items-center gap-1 whitespace-nowrap">
+                              <Instagram className="w-4 h-4" />
+                              {expert.instagramHandle}
+                            </span>
+                          )}
+                          {expert.twitterHandle && (
+                            <span className="text-blue-400 text-xs flex items-center gap-1 whitespace-nowrap">
+                              <Twitter className="w-4 h-4" />
+                              {expert.twitterHandle}
+                            </span>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -400,7 +404,7 @@ const Partners = memo(() => {
         <section className="px-4 mb-20">
           <div className="max-w-7xl mx-auto">
             <AnimatedCard>
-              <div className="bg-gradient-to-br from-[#14a800]/10 via-charcoal/80 to-graphite/40 rounded-3xl border border-[#14a800]/30 p-8 lg:p-12 shadow-2xl relative overflow-hidden">
+              <div className="bg-gradient-to-br from-[#14a800]/10 via-charcoal/80 to-graphite/40 rounded-3xl border border-[#14a800]/30 p-5 sm:p-8 lg:p-12 shadow-2xl relative overflow-hidden">
                 {/* Decorative glow */}
                 <div className="absolute -top-24 -right-24 w-48 h-48 rounded-full bg-[#14a800]/20 blur-3xl pointer-events-none" />
                 
@@ -409,15 +413,15 @@ const Partners = memo(() => {
                   <div className="lg:col-span-5 space-y-6">
                     <div className="flex items-center gap-3">
                       {/* Upwork stylized brand label */}
-                      <span className="text-2xl font-black tracking-tight text-[#14a800] bg-white px-3 py-1 rounded">
+                      <span className="text-xl sm:text-2xl font-black tracking-tight text-[#14a800] bg-white px-3 py-1 rounded">
                         upwork
                       </span>
-                      <span className="text-xs font-semibold bg-[#14a800]/20 border border-[#14a800]/40 text-[#14a800] px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                      <span className="text-[10px] sm:text-xs font-semibold bg-[#14a800]/20 border border-[#14a800]/40 text-[#14a800] px-2.5 py-0.5 rounded-full uppercase tracking-wider">
                         Verified Profile
                       </span>
                     </div>
 
-                    <h2 className="text-3xl lg:text-4xl font-extrabold text-white leading-tight">
+                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-tight">
                       Top Rated Shopify Developer <span className="text-beige">Track Record</span>
                     </h2>
 
@@ -524,10 +528,10 @@ const Partners = memo(() => {
 
 
         {/* Instagram Social Proof - Enhanced */}
-        <section className="px-4 mb-20">
+        <section className="px-4 mb-16 sm:mb-20">
           <div className="max-w-7xl mx-auto">
             <AnimatedCard>
-              <h2 className="text-4xl font-bold text-center mb-12 text-beige">
+              <h2 className="text-2xl sm:text-4xl font-bold text-center mb-6 sm:mb-12 text-beige">
                 Client Success Stories on Instagram
               </h2>
             </AnimatedCard>
@@ -583,16 +587,16 @@ const Partners = memo(() => {
         <section className="px-4">
           <div className="max-w-4xl mx-auto text-center">
             <AnimatedCard>
-              <div className="bg-gradient-to-br from-charcoal/50 to-graphite/50 rounded-2xl border border-beige/20 p-12">
-                <h3 className="text-3xl font-bold text-white mb-4">
+              <div className="bg-gradient-to-br from-charcoal/50 to-graphite/50 rounded-2xl border border-beige/20 p-6 sm:p-12">
+                <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4">
                   Join Our Network of Success
                 </h3>
-                <p className="text-gray-300 mb-8 text-lg">
+                <p className="text-gray-300 mb-8 text-sm sm:text-lg leading-relaxed">
                   Ready to work with the same team trusted by industry leaders?
                   Let's create your success story and get you featured alongside
                   these experts.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                   <button
                     onClick={() => {
                       const url = (import.meta as any).env
@@ -603,13 +607,13 @@ const Partners = memo(() => {
                         window.location.hash = "#contact";
                       }
                     }}
-                    className="bg-gradient-to-r from-beige to-clay text-black font-semibold px-10 py-4 rounded-full hover:scale-105 transition-transform duration-300 text-lg"
+                    className="bg-gradient-to-r from-beige to-clay text-black font-semibold px-6 py-3 sm:px-10 sm:py-4 rounded-full hover:scale-105 transition-transform duration-300 text-sm sm:text-lg"
                   >
                     Start Your Project Today
                   </button>
                   <Link
                     to="/work"
-                    className="border border-beige/40 text-beige font-semibold px-10 py-4 rounded-full hover:bg-beige/10 transition-colors duration-300 text-lg"
+                    className="border border-beige/40 text-beige font-semibold px-6 py-3 sm:px-10 sm:py-4 rounded-full hover:bg-beige/10 transition-colors duration-300 text-sm sm:text-lg"
                   >
                     View Our Portfolio
                   </Link>
