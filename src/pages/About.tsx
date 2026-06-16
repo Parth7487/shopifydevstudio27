@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import CalendlyModal from "../components/sections/CalendlyModal";
-import { Users, Target, Heart, Calendar } from "lucide-react";
+import { Users, Target, Heart, Calendar, Award } from "lucide-react";
 import { updatePageMeta } from "../lib/seo-meta";
 import { addBreadcrumbSchema } from "../lib/breadcrumb-schema";
 
