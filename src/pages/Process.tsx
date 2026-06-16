@@ -231,13 +231,13 @@ const Process = () => {
     <div className="min-h-screen" style={{ backgroundColor: "var(--theme-bg)", color: "var(--theme-text)" }}>
       {/* Navigation */}
       {/* Header Section */}
-      <section className="py-24 px-8 text-center">
-        <div className="max-w-4xl mx-auto px-8 w-full">
+      <section className="pt-32 pb-16 px-4 sm:px-8 text-center">
+        <div className="max-w-4xl mx-auto w-full">
           <motion.h1
             initial="hidden"
             animate="visible"
             variants={titleVariants}
-            className="text-6xl font-bold tracking-tight leading-tight mb-6"
+            className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-tight mb-6"
           >
             <span>Our Proven </span>
             <span className="text-beige">Process</span>
@@ -246,7 +246,7 @@ const Process = () => {
             initial="hidden"
             animate="visible"
             variants={titleVariants}
-            className="text-gray-400 text-xl leading-relaxed mb-8"
+            className="text-gray-400 text-base sm:text-lg md:text-xl leading-relaxed mb-8"
           >
             From strategy to launch to ongoing optimization - every step is
             designed for maximum impact. See exactly how we transform your
@@ -256,12 +256,12 @@ const Process = () => {
       </section>
 
       {/* Detailed Process Section */}
-      <section className="py-24 px-8">
-        <div className="max-w-6xl mx-auto px-8 w-full">
+      <section className="py-16 sm:py-24 px-4 sm:px-8">
+        <div className="max-w-6xl mx-auto w-full">
           <div className="relative">
             {/* Vertical Timeline Line */}
             <div
-              className="absolute left-8 top-0 w-px h-full min-h-full bg-beige opacity-80"
+              className="absolute left-4 sm:left-8 top-0 w-px h-full min-h-full bg-beige opacity-80"
               style={{
                 background:
                   "linear-gradient(to bottom, rgb(230, 177, 126), rgba(230, 177, 126, 0.5), rgb(230, 177, 126))",
@@ -281,38 +281,38 @@ const Process = () => {
                   <motion.div
                     key={index}
                     variants={phaseVariants}
-                    className={`relative ${index > 0 ? "mt-16" : ""}`}
+                    className={`relative ${index > 0 ? "mt-12 sm:mt-16" : ""}`}
                   >
                     {/* Timeline Dot */}
                     <div
-                      className="absolute left-6 w-4 h-4 bg-beige rounded-full"
+                      className="absolute left-2.5 sm:left-6 w-3 h-3 sm:w-4 sm:h-4 bg-beige rounded-full"
                       style={{
                         boxShadow: `0 0 ${15 + index * 3}px rgba(230, 177, 126, ${0.4 + index * 0.1})`,
                       }}
                     />
 
                     {/* Content Card */}
-                    <div className="ml-20 bg-graphite border border-charcoal rounded-2xl p-8 transition-all duration-300">
+                    <div className="ml-10 sm:ml-20 bg-graphite border border-charcoal rounded-2xl p-5 sm:p-8 transition-all duration-300">
                       <div className="grid md:grid-cols-3 gap-8">
                         {/* Phase Header */}
                         <div className="md:col-span-1">
                           <div className="flex items-center gap-4 mb-4">
-                            <div className="flex items-center justify-center w-12 h-12 bg-beige/20 rounded-lg">
+                            <div className="flex items-center justify-center w-12 h-12 bg-beige/20 rounded-lg flex-shrink-0">
                               <IconComponent className="w-6 h-6 text-beige" />
                             </div>
                             <div>
-                              <div className="text-beige text-sm font-medium leading-5">
+                              <div className="text-beige text-xs sm:text-sm font-medium leading-5">
                                 {phase.phase}
                               </div>
-                              <h3 className="text-xl font-bold leading-7">
+                              <h3 className="text-lg sm:text-xl font-bold leading-7">
                                 {phase.title}
                               </h3>
                             </div>
                           </div>
-                          <div className="text-beige font-medium mb-4">
+                          <div className="text-beige text-xs sm:text-sm font-medium mb-4">
                             {phase.timeline}
                           </div>
-                          <p className="text-gray-400 leading-relaxed">
+                          <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
                             {phase.description}
                           </p>
                         </div>
@@ -321,7 +321,7 @@ const Process = () => {
                         <div className="md:col-span-2 grid md:grid-cols-2 gap-6">
                           {/* Key Activities */}
                           <div>
-                            <h4 className="font-semibold mb-3">
+                            <h4 className="font-semibold text-sm sm:text-base mb-3">
                               Key Activities
                             </h4>
                             <ul>
@@ -331,7 +331,7 @@ const Process = () => {
                                   className="flex items-start gap-3 mb-2"
                                 >
                                   <div className="w-1.5 h-1.5 bg-beige rounded-full flex-shrink-0 mt-2" />
-                                  <span className="text-gray-400 text-sm leading-5">
+                                  <span className="text-gray-400 text-xs sm:text-sm leading-5">
                                     {activity}
                                   </span>
                                 </li>
@@ -341,7 +341,7 @@ const Process = () => {
 
                           {/* Deliverables */}
                           <div>
-                            <h4 className="font-semibold mb-3">Deliverables</h4>
+                            <h4 className="font-semibold text-sm sm:text-base mb-3">Deliverables</h4>
                             <ul>
                               {phase.deliverables.map(
                                 (deliverable, delIndex) => (
@@ -350,7 +350,7 @@ const Process = () => {
                                     className="flex items-start gap-3 mb-2"
                                   >
                                     <div className="w-1.5 h-1.5 bg-green-400 rounded-full flex-shrink-0 mt-2" />
-                                    <span className="text-gray-400 text-sm leading-5">
+                                    <span className="text-gray-400 text-xs sm:text-sm leading-5">
                                       {deliverable}
                                     </span>
                                   </li>

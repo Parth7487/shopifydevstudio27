@@ -357,7 +357,7 @@ const Resources = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tight leading-none text-white"
+            className="text-3xl sm:text-5xl md:text-7xl font-black tracking-tight leading-none text-white"
           >
             Resources & <span className="text-beige">FAQ Center</span>
           </motion.h1>
@@ -365,7 +365,7 @@ const Resources = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-gray-400 text-lg sm:text-xl max-w-3xl mx-auto font-light leading-relaxed"
+            className="text-gray-400 text-base sm:text-lg md:text-xl max-w-3xl mx-auto font-light leading-relaxed"
           >
             Answers to your e-commerce design, custom Liquid engineering, and conversion rate questions—coupled with verified blueprints.
           </motion.p>
@@ -431,10 +431,10 @@ const Resources = () => {
                     >
                       <button
                         onClick={() => setOpenFAQ(openFAQ === faq.id ? null : faq.id)}
-                        className="w-full p-6 text-left flex items-center justify-between gap-4"
+                        className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4"
                       >
-                        <div className="flex items-start gap-3 flex-1">
-                          <span className="bg-beige/10 text-beige text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full mt-1 flex-shrink-0">
+                        <div className="flex flex-col sm:flex-row items-start gap-2 sm:gap-3 flex-1">
+                          <span className="bg-beige/10 text-beige text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full flex-shrink-0">
                             {faq.category}
                           </span>
                           <h3 className="text-sm sm:text-base font-bold text-white leading-snug">

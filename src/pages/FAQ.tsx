@@ -176,7 +176,7 @@ const FAQ = () => {
   return (
     <div className="min-h-screen" style={{ backgroundColor: "var(--theme-bg)", color: "var(--theme-text)" }}>
       {/* Hero Section */}
-      <section className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8">
+      <section className="pt-32 pb-16 sm:pb-20 md:pb-24 px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
           animate="visible"
@@ -192,7 +192,7 @@ const FAQ = () => {
           </motion.h1>
           <motion.p
             variants={fadeInUpVariants}
-            className="text-gray-400 text-lg sm:text-xl leading-relaxed max-w-3xl mx-auto mb-8"
+            className="text-gray-400 text-base sm:text-lg md:text-xl leading-relaxed max-w-3xl mx-auto mb-8"
           >
             Find quick answers to common questions about our Shopify development
             services, processes, and support options.
@@ -268,18 +268,18 @@ const FAQ = () => {
                   >
                     <button
                       onClick={() => toggleFAQ(faq.id)}
-                      className="w-full p-6 text-left flex items-center justify-between"
+                      className="w-full p-5 sm:p-6 text-left flex items-center justify-between"
                     >
-                      <div className="flex items-start gap-4 flex-1">
-                        <span className="bg-beige/10 text-beige text-xs px-2 py-1 rounded-full mt-1">
+                      <div className="flex flex-col sm:flex-row items-start gap-2 sm:gap-4 flex-1">
+                        <span className="bg-beige/10 text-beige text-xs px-2 py-0.5 rounded-full flex-shrink-0">
                           {faq.category}
                         </span>
-                        <h3 className="text-lg font-semibold text-white group-hover:text-beige transition-colors">
+                        <h3 className="text-sm sm:text-base md:text-lg font-semibold text-white group-hover:text-beige transition-colors">
                           {faq.question}
                         </h3>
                       </div>
                       <ChevronDown
-                        className={`w-5 h-5 text-beige transition-transform duration-200 ${
+                        className={`w-5 h-5 text-beige transition-transform duration-200 flex-shrink-0 ${
                           openFAQ === faq.id ? "rotate-180" : ""
                         }`}
                       />
