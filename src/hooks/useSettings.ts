@@ -326,7 +326,7 @@ export const useSettings = () => {
       setLoading(!cachedSettings);
       setError(null);
 
-      const response = await fetch("/api/settings");
+      const response = await fetch(`/api/settings?t=${Date.now()}`);
       if (!response.ok) {
         throw new Error(`Failed to fetch settings: ${response.status} ${response.statusText}`);
       }
@@ -364,13 +364,17 @@ export const useSettings = () => {
         throw new Error(`Failed to update setting: ${response.status} ${response.statusText}`);
       }
 
-      // Update local state and cache
+      // Update local state and cache immediately
       setSettings(prev => {
         const next = { ...prev, [key]: value };
         cachedSettings = next;
         cacheTimestamp = Date.now();
         return next;
       });
+
+      // Bust cache and re-fetch from DB to confirm what was actually saved
+      cacheTimestamp = 0;
+      await fetchSettings(true);
 
       return true;
     } catch (err) {

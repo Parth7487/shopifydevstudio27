@@ -21,7 +21,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     if (req.method === "GET") {
-      res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=600");
+      res.setHeader("Cache-Control", "no-store, must-revalidate");
       if (key) {
         const setting = await sql`
           SELECT * FROM site_settings 
