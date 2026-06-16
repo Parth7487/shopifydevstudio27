@@ -46,6 +46,8 @@ const CollaborationSection = memo(() => {
                   <img
                     src={collab.image}
                     alt={collab.name}
+                    width="80"
+                    height="80"
                     className="w-20 h-20 rounded-full object-cover border-2 border-beige/30"
                     loading="lazy"
                   />

@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import CalendlyModal from "../components/sections/CalendlyModal";
-import { Award, Users, Target, Heart, Calendar, ShieldCheck, Lock, Shield } from "lucide-react";
+import { Users, Target, Heart, Calendar } from "lucide-react";
 import { updatePageMeta } from "../lib/seo-meta";
 import { addBreadcrumbSchema } from "../lib/breadcrumb-schema";
-import DisplayCards from "../components/ui/display-cards";
+
 
 const About = () => {
   const [calendlyOpen, setCalendlyOpen] = useState(false);
@@ -224,154 +224,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* Security & Compliance Section */}
-      <section className="py-24 px-8 overflow-hidden">
-        <div className="max-w-4xl mx-auto px-8 w-full">
-          <div className="text-center">
-            <motion.h2
-              initial="hidden"
-              whileInView="visible"
-              variants={titleVariants}
-              viewport={{ once: true }}
-              className="text-4xl font-bold tracking-tight leading-tight mb-8"
-            >
-              Security & Compliance
-            </motion.h2>
-            <div className="flex justify-center max-w-lg mx-auto py-6">
-              <DisplayCards
-                cards={[
-                  {
-                    title: "GDPR Compliant",
-                    description: "All our stores meet international privacy and data protection standards.",
-                    date: "Privacy Standard",
-                    icon: <ShieldCheck className="size-5 text-green-400" />,
-                    iconClassName: "bg-green-500/10",
-                    className: "[grid-area:stack] hover:-translate-y-8 before:absolute before:w-[100%] before:rounded-xl before:h-[100%] before:content-[''] before:bg-charcoal/30 grayscale hover:grayscale-0 before:transition-opacity before:duration-700 hover:before:opacity-0 before:left-0 before:top-0 z-[30]",
-                  },
-                  {
-                    title: "PCI Compliant",
-                    description: "Secure payment processing that meets industry standards for safety.",
-                    date: "Payment Secure",
-                    icon: <Lock className="size-5 text-blue-400" />,
-                    iconClassName: "bg-blue-500/10",
-                    className: "[grid-area:stack] translate-x-6 translate-y-4 sm:translate-x-12 sm:translate-y-6 hover:-translate-y-4 before:absolute before:w-[100%] before:rounded-xl before:h-[100%] before:content-[''] before:bg-charcoal/30 grayscale hover:grayscale-0 before:transition-opacity before:duration-700 hover:before:opacity-0 before:left-0 before:top-0 z-[20]",
-                  },
-                  {
-                    title: "SSL Secure",
-                    description: "Enterprise-grade SSL certificates for maximum security and trust.",
-                    date: "Encrypted Link",
-                    icon: <Shield className="size-5 text-purple-400" />,
-                    iconClassName: "bg-purple-500/10",
-                    className: "[grid-area:stack] translate-x-12 translate-y-8 sm:translate-x-24 sm:translate-y-12 hover:-translate-y-4 z-[10]",
-                  },
-                ]}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Quality Assurance Section */}
-      <section className="bg-charcoal py-24 px-8">
-        <div className="max-w-6xl mx-auto px-8 w-full">
-          <div className="text-center mb-16">
-            <motion.h2
-              initial="hidden"
-              whileInView="visible"
-              variants={titleVariants}
-              viewport={{ once: true }}
-              className="text-4xl font-bold tracking-tight leading-tight mb-6"
-            >
-              Quality Assurance
-            </motion.h2>
-            <motion.p
-              initial="hidden"
-              whileInView="visible"
-              variants={titleVariants}
-              viewport={{ once: true }}
-              className="text-gray-400 text-lg leading-relaxed max-w-3xl mx-auto"
-            >
-              Every project follows our rigorous quality standards to ensure
-              exceptional results.
-            </motion.p>
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <div className="flex items-start gap-4">
-                <div className="flex items-center justify-center bg-beige rounded-full w-6 h-6 flex-shrink-0 mt-1">
-                  <div className="bg-black rounded-full w-2 h-2"></div>
-                </div>
-                <div>
-                  <h3 className="font-bold mb-2">Code Review Process</h3>
-                  <p className="text-gray-400 leading-relaxed">
-                    Every line of code is reviewed by senior developers before
-                    deployment.
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4 mt-6">
-                <div className="flex items-center justify-center bg-beige rounded-full w-6 h-6 flex-shrink-0 mt-1">
-                  <div className="bg-black rounded-full w-2 h-2"></div>
-                </div>
-                <div>
-                  <h3 className="font-bold mb-2">Performance Testing</h3>
-                  <p className="text-gray-400 leading-relaxed">
-                    Comprehensive testing across devices and browsers to ensure
-                    optimal performance.
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4 mt-6">
-                <div className="flex items-center justify-center bg-beige rounded-full w-6 h-6 flex-shrink-0 mt-1">
-                  <div className="bg-black rounded-full w-2 h-2"></div>
-                </div>
-                <div>
-                  <h3 className="font-bold mb-2">Security Audits</h3>
-                  <p className="text-gray-400 leading-relaxed">
-                    Regular security assessments to protect your store and
-                    customer data.
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4 mt-6">
-                <div className="flex items-center justify-center bg-beige rounded-full w-6 h-6 flex-shrink-0 mt-1">
-                  <div className="bg-black rounded-full w-2 h-2"></div>
-                </div>
-                <div>
-                  <h3 className="font-bold mb-2">Accessibility Compliance</h3>
-                  <p className="text-gray-400 leading-relaxed">
-                    WCAG 2.1 AA compliance ensuring your store is accessible to
-                    all users.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="bg-black border border-graphite rounded-2xl p-8">
-              <h3 className="text-beige text-2xl font-bold leading-8 mb-4">
-                Our Promise
-              </h3>
-              <div>
-                <div className="flex items-center justify-between">
-                  <span className="text-gray-400">Code Quality Score:</span>
-                  <span className="text-green-400 font-bold">A+</span>
-                </div>
-                <div className="flex items-center justify-between mt-4">
-                  <span className="text-gray-400">Performance Grade:</span>
-                  <span className="text-green-400 font-bold">95+</span>
-                </div>
-                <div className="flex items-center justify-between mt-4">
-                  <span className="text-gray-400">Security Rating:</span>
-                  <span className="text-green-400 font-bold">Excellent</span>
-                </div>
-                <div className="flex items-center justify-between mt-4">
-                  <span className="text-gray-400">Client Satisfaction:</span>
-                  <span className="text-green-400 font-bold">98%</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Stats Section */}
       <section className="py-16 px-8">

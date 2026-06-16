@@ -11,8 +11,8 @@ const Footer = () => {
   const logoInitial = logoText.trim().charAt(0);
 
   return (
-    <footer className="theme-card border-t theme-border py-12 sm:py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+    <footer className="theme-card border-t theme-border py-12 sm:py-16 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 overflow-hidden">
         {/* Logo and Description */}
         <motion.div
           className="mb-12 pb-8 border-b theme-border"
@@ -28,7 +28,9 @@ const Footer = () => {
                   <img
                     src={settings.footer.logo_image}
                     alt={logoText}
-                    className="h-10 w-auto object-contain"
+                    width="40"
+                    height="40"
+                    className="h-10 w-10 object-contain"
                   />
                   {settings.footer.logo_text_with_image && (
                     <span className="theme-text font-semibold text-lg">
@@ -219,18 +221,27 @@ const Footer = () => {
         </div>
 
         {/* Massive Typography Logo */}
-        <motion.div
-          className="w-full border-t theme-border pt-12 mt-12 mb-6 text-center select-none overflow-visible px-4 py-2"
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 0.25, scale: 1 }}
-          whileHover={{ opacity: 0.8 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+        <div
+          className="w-full border-t theme-border pt-10 mt-12 mb-6 overflow-hidden"
+          style={{ maxWidth: "100%" }}
         >
-          <h2 className="text-[11vw] font-serif italic font-semibold leading-none tracking-tighter text-beige/20 dark:text-white/15">
+          <motion.h2
+            className="font-serif italic font-semibold leading-none tracking-tighter text-beige/20 dark:text-white/15 text-center block w-full"
+            style={{
+              fontSize: "clamp(1.5rem, 5.5vw, 6rem)",
+              maxWidth: "100%",
+              overflow: "hidden",
+              textOverflow: "clip",
+            }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 0.25 }}
+            whileHover={{ opacity: 0.75 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
             Shopifydevstudio
-          </h2>
-        </motion.div>
+          </motion.h2>
+        </div>
 
         {/* Shopify Partner Badge */}
         <motion.div
@@ -244,6 +255,8 @@ const Footer = () => {
             <img
               src="https://cdn.builder.io/api/v1/image/assets%2F1673ec9568f943219a669aac87827a9f%2Fc80e013180444130bfd67d372b56eb41?format=webp&width=800"
               alt="Official Shopify Partner"
+              width="150"
+              height="64"
               className="h-16 w-auto object-contain"
             />
             <p className="theme-text-sec text-xs sm:text-sm font-medium">

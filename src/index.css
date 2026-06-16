@@ -229,8 +229,8 @@
   }
 }
 
-/* Minimal transitions for performance */
-* {
+/* Minimal transitions for performance - apply to common interactive elements rather than universally */
+a, button, input, select, textarea, [role="button"] {
   transition:
     color 0.15s ease,
     background-color 0.15s ease;
@@ -270,21 +270,9 @@
 
 /* Mobile performance optimizations */
 @media (max-width: 768px) {
-  /* Reduce animation complexity on mobile */
-  * {
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-  }
-
-  /* Disable heavy animations on mobile */
-  section,
-  .motion-safe {
-    will-change: auto !important;
-  }
-
   /* Optimize image rendering */
   img {
-    image-rendering: crisp-edges;
+    image-rendering: auto;
   }
 
   /* Disable box shadows on mobile for better performance */
@@ -292,10 +280,5 @@
   .shadow-lg,
   .shadow-xl {
     box-shadow: none !important;
-  }
-
-  /* Optimize transitions on mobile */
-  * {
-    transition-duration: 0.08s !important;
   }
 }

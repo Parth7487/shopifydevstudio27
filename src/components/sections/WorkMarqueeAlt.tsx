@@ -140,6 +140,8 @@ const WorkMarqueeAlt = memo(() => {
                   <OptimizedImage
                     src={item.image}
                     alt={item.brand}
+                    width={800}
+                    height={500}
                     className="w-full h-full object-cover transition-opacity duration-300"
                     placeholder={false}
                   />
@@ -147,6 +149,8 @@ const WorkMarqueeAlt = memo(() => {
                     <OptimizedImage
                       src={item.hover}
                       alt={`${item.brand} hover`}
+                      width={800}
+                      height={500}
                       className="w-full h-full object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                       placeholder={false}
                     />
@@ -178,6 +182,8 @@ const WorkMarqueeAlt = memo(() => {
                   <OptimizedImage
                     src={item.image}
                     alt={item.brand}
+                    width={800}
+                    height={500}
                     className="w-full h-full object-cover transition-opacity duration-300"
                     placeholder={false}
                   />
@@ -185,6 +191,8 @@ const WorkMarqueeAlt = memo(() => {
                     <OptimizedImage
                       src={item.hover}
                       alt={`${item.brand} hover`}
+                      width={800}
+                      height={500}
                       className="w-full h-full object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                       placeholder={false}
                     />
