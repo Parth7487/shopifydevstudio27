@@ -331,7 +331,7 @@ const Services = () => {
             initial="hidden"
             animate="visible"
             variants={titleVariants}
-            className="text-3xl sm:text-5xl lg:text-7xl font-bold tracking-tight leading-tight mb-4 sm:mb-6"
+            className="text-2xl sm:text-5xl lg:text-7xl font-bold tracking-tight leading-tight mb-4 sm:mb-6"
           >
             <span>High-Performance Shopify Engineering </span>
             <span className="text-beige">& Solutions Architecture</span>
@@ -340,7 +340,7 @@ const Services = () => {
             initial="hidden"
             animate="visible"
             variants={titleVariants}
-            className="theme-text-sec text-base sm:text-lg lg:text-xl leading-relaxed mb-6 sm:mb-8"
+            className="theme-text-sec text-sm sm:text-lg lg:text-xl leading-relaxed mb-6 sm:mb-8"
           >
             We build bespoke storefronts, custom apps, and secure AI integrations engineered from scratch. 
             Say goodbye to bloated templates, monthly app fees, and slow checkout speeds.
@@ -356,7 +356,7 @@ const Services = () => {
             whileInView="visible"
             variants={titleVariants}
             viewport={{ once: true }}
-            className="text-4xl font-bold tracking-tight leading-tight mb-6"
+            className="text-xl sm:text-3xl lg:text-4xl font-bold tracking-tight leading-tight mb-6"
           >
             Enterprise-Grade E-Commerce Development & Systems Integration
           </motion.h2>
@@ -365,7 +365,7 @@ const Services = () => {
             whileInView="visible"
             variants={titleVariants}
             viewport={{ once: true }}
-            className="theme-text-sec text-lg leading-relaxed max-w-3xl mx-auto"
+            className="theme-text-sec text-base sm:text-lg leading-relaxed max-w-3xl mx-auto"
           >
             From custom Liquid theme development and headless WebGL models to lossless migrations 
             and organic social scaling, we handle the complex technical details so you can focus on growth.
@@ -537,12 +537,12 @@ const Services = () => {
       </section>
 
       {/* Contact Form Section */}
-      <section className="bg-gradient-to-r from-beige/10 to-beige/5 py-24 px-8 relative border-t border-[var(--theme-border)]">
+      <section className="bg-gradient-to-r from-beige/10 to-beige/5 py-16 sm:py-24 px-4 sm:px-8 relative border-t border-[var(--theme-border)]">
         {/* Design Playground Background */}
         <DesignPlayground />
 
-        <div className="max-w-4xl mx-auto px-8 w-full relative z-10">
-          <div className="theme-card border border-[var(--theme-border)] rounded-2xl p-8 shadow-sm">
+        <div className="max-w-4xl mx-auto w-full relative z-10">
+          <div className="theme-card border border-[var(--theme-border)] rounded-2xl p-5 sm:p-8 shadow-sm">
             {submitted ? (
               <div className="text-center py-10">
                 <div className="w-16 h-16 bg-beige/20 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -705,18 +705,18 @@ const Services = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 px-8 text-center">
+      <section className="py-16 sm:py-24 px-4 sm:px-8 text-center">
         <div className="max-w-4xl mx-auto">
           <motion.div
             initial="hidden"
             animate="visible"
             variants={titleVariants}
-            className="bg-gradient-to-r from-beige/10 to-clay/10 border border-[var(--theme-border)] rounded-2xl p-12"
+            className="bg-gradient-to-r from-beige/10 to-clay/10 border border-[var(--theme-border)] rounded-2xl p-6 sm:p-12"
           >
-            <h2 className="text-4xl font-bold mb-6">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6">
               Ready to Dominate Your Market?
             </h2>
-            <p className="theme-text-sec text-lg mb-8 max-w-2xl mx-auto">
+            <p className="theme-text-sec text-base sm:text-lg mb-8 max-w-2xl mx-auto">
               Let's discuss how our staging-first process can help you create a
               high-converting, native Shopify storefront that drives real results.
             </p>
@@ -732,13 +732,13 @@ const Services = () => {
                     window.location.hash = "#contact";
                   }
                 }}
-                className="px-8 py-4 bg-beige text-black font-semibold rounded-lg hover:bg-beige/90 transition-colors duration-200"
+                className="px-8 py-3.5 bg-beige text-black font-semibold rounded-lg hover:bg-beige/90 transition-colors duration-200 text-sm sm:text-base"
               >
                 Start Your Project
               </button>
               <button
                 onClick={() => navigate("/work")}
-                className="px-8 py-4 border border-beige text-beige font-semibold rounded-lg hover:bg-beige/10 transition-colors duration-200"
+                className="px-8 py-3.5 border border-beige text-beige font-semibold rounded-lg hover:bg-beige/10 transition-colors duration-200 text-sm sm:text-base"
               >
                 View Our Work
               </button>

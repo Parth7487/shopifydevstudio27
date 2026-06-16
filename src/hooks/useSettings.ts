@@ -195,28 +195,28 @@ export const DEFAULT_PARTNERS: PartnersContent = {
       username: "@luxefashionstore",
       comment: "🔥 Sales increased 240% in first month! Best investment ever @shopifydevstudio 💯",
       likes: "2,847",
-      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=400&fit=crop",
+      image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&crop=face",
       website: "luxefashion.com"
     },
     {
       username: "@techgadgetshub",
       comment: "Mind = BLOWN 🤯 Page loads in 0.8 seconds! Revenue up 180% 📈 @shopifydevstudio",
       likes: "1,923",
-      image: "https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?w=400&h=400&fit=crop",
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
       website: "techgadgetshub.com"
     },
     {
       username: "@organicskincare",
       comment: "Conversion rate: 1.2% → 4.8% 💚 Custom features are perfect! 🙌 @shopifydevstudio",
       likes: "3,156",
-      image: "https://images.unsplash.com/photo-1556742400-b5c2a5bd1df1?w=400&h=400&fit=crop",
+      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face",
       website: "organicskincare.com"
     },
     {
       username: "@fitnessapparel",
       comment: "GAME CHANGER! 💪 Mobile sales +320%! Customers love it! 🚀 @shopifydevstudio",
       likes: "4,729",
-      image: "https://images.unsplash.com/photo-1556742101-ae0a2d3c5fd0?w=400&h=400&fit=crop",
+      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
       website: "fitnessapparel.com"
     }
   ],

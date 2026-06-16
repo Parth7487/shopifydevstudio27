@@ -73,10 +73,10 @@ const ProblemSolution = () => {
           variants={titleVariants}
           className="text-center mb-16"
         >
-          <h2 className="text-6xl font-bold theme-text mb-6 leading-tight">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold theme-text mb-6 leading-tight">
             The $10,000 Question
           </h2>
-          <p className="theme-text-sec text-xl leading-7 max-w-3xl mx-auto">
+          <p className="theme-text-sec text-base sm:text-lg md:text-xl leading-7 max-w-3xl mx-auto">
             Why do some Shopify stores make millions while others struggle to
             make their first sale?
           </p>

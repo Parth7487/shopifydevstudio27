@@ -58,10 +58,10 @@ const OptimizedImage = ({
   if (hasError) {
     return (
       <div
-        className={`bg-gray-800 flex items-center justify-center text-gray-400 text-sm ${className}`}
+        className={`bg-zinc-800 flex items-center justify-center text-beige/80 text-xs font-semibold select-none ${className}`}
         style={{ width: width || "100%", height: height || "auto" }}
       >
-        Failed to load image
+        {alt ? alt.substring(0, 2).toUpperCase() : "IMG"}
       </div>
     );
   }
