@@ -146,9 +146,9 @@ const About = () => {
       </section>
 
       {/* Founder Story Section */}
-      <section className="bg-charcoal py-24 px-8">
-        <div className="max-w-6xl mx-auto px-8 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <section className="bg-charcoal py-16 sm:py-24 px-4 sm:px-8">
+        <div className="max-w-6xl mx-auto w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -158,7 +158,7 @@ const About = () => {
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight leading-tight mb-6">
                 Our Story Started with Frustration
               </h2>
-              <div className="text-gray-400 leading-relaxed space-y-6">
+              <div className="text-gray-400 text-sm sm:text-base leading-relaxed space-y-6">
                 <p>
                   Three years ago, our founder was running his own e-commerce
                   business. Despite having great products, the generic Shopify
@@ -194,19 +194,19 @@ const About = () => {
               viewport={{ once: true }}
               className="relative"
             >
-              <div className="bg-gradient-to-br from-beige/20 to-beige/5 border border-beige/20 rounded-2xl p-8">
-                <div className="bg-graphite rounded-xl p-6">
-                  <h3 className="text-beige text-xl font-bold leading-7 mb-4">
+              <div className="bg-gradient-to-br from-beige/20 to-beige/5 border border-beige/20 rounded-2xl p-4 sm:p-8">
+                <div className="bg-graphite rounded-xl p-4 sm:p-6">
+                  <h3 className="text-beige text-lg sm:text-xl font-bold leading-7 mb-4">
                     The Moment Everything Changed
                   </h3>
-                  <div className="text-sm leading-5 space-y-3">
-                    <div className="flex justify-between">
+                  <div className="text-xs sm:text-sm leading-5 space-y-3">
+                    <div className="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-4">
                       <span className="text-gray-400">Before redesign:</span>
-                      <span className="text-red-400">1.2% conversion rate</span>
+                      <span className="text-red-400 font-medium">1.2% conversion rate</span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-4">
                       <span className="text-gray-400">After redesign:</span>
-                      <span className="text-green-400">
+                      <span className="text-green-400 font-medium">
                         6.1% conversion rate
                       </span>
                     </div>
@@ -214,9 +214,9 @@ const About = () => {
                 </div>
               </div>
               {/* Animated decoration elements */}
-              <div className="absolute -top-4 -right-4 w-8 h-8 bg-beige/30 rounded-full animate-pulse"></div>
+              <div className="absolute -top-2 -right-2 w-6 h-6 sm:-top-4 sm:-right-4 sm:w-8 sm:h-8 bg-beige/30 rounded-full animate-pulse"></div>
               <div
-                className="absolute -bottom-4 -left-4 w-6 h-6 bg-beige/20 rounded-full animate-pulse"
+                className="absolute -bottom-2 -left-2 w-5 h-5 sm:-bottom-4 sm:-left-4 sm:w-6 sm:h-6 bg-beige/20 rounded-full animate-pulse"
                 style={{ animationDelay: "1s" }}
               ></div>
             </motion.div>
