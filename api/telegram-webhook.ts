@@ -71,7 +71,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const fileInfoRes = await fetchWithTimeout(
         `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getFile?file_id=${fileId}`,
         {},
-        7000
+        25000
       );
       fileInfo = await fileInfoRes.json();
     } catch (err: any) {
@@ -132,7 +132,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     console.log(`Downloading file from Telegram CDN: ${filePath}...`);
     let fileRes;
     try {
-      fileRes = await fetchWithTimeout(telegramFileUrl, {}, 10000);
+      fileRes = await fetchWithTimeout(telegramFileUrl, {}, 20000);
     } catch (err: any) {
       console.error("Failed to download file from Telegram CDN:", err.message || err);
       return res.status(200).json({ ok: true });
