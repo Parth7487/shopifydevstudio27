@@ -18,6 +18,7 @@ const Support = lazy(() => import("./pages/Support"));
 const FAQ = lazy(() => import("./pages/FAQ"));
 const Work = lazy(() => import("./pages/Work"));
 const Partners = lazy(() => import("./pages/Partners"));
+const Resources = lazy(() => import("./pages/Resources"));
 const Admin = lazy(() => import("./pages/Admin"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const FaviconExport = lazy(() => import("./pages/FaviconExport"));
@@ -137,6 +138,14 @@ const AnimatedRoutes = memo(() => {
           }
         />
         <Route
+          path="/resources"
+          element={
+            <Suspense fallback={<MinimalLoader />}>
+              <PageTransition><Resources /></PageTransition>
+            </Suspense>
+          }
+        />
+        <Route
           path="/favicon-export"
           element={
             <Suspense fallback={<MinimalLoader />}>
@@ -185,6 +194,7 @@ const App = memo(() => {
       import("./pages/About");
       import("./pages/Work");
       import("./pages/Partners");
+      import("./pages/Resources");
     }, 2000); // 2 second delay to avoid impacting initial page load performance
     return () => clearTimeout(timer);
   }, []);

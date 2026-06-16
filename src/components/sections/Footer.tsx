@@ -99,10 +99,10 @@ const Footer = () => {
               </li>
               <li>
                 <button
-                  onClick={() => navigate("/faq")}
+                  onClick={() => navigate("/resources")}
                   className="theme-text-muted hover:text-beige transition-all duration-200 text-sm cursor-pointer font-medium block w-full text-left py-3 hover:pl-1"
                 >
-                  FAQ
+                  Resources Hub
                 </button>
               </li>
             </ul>
