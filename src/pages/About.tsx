@@ -121,7 +121,7 @@ const About = () => {
     <div className="min-h-screen" style={{ backgroundColor: "var(--theme-bg)", color: "var(--theme-text)" }}>
       {/* Navigation */}
       {/* Header Section */}
-      <section className="pt-24 pb-12 sm:pt-28 sm:pb-16 lg:pt-32 lg:pb-24 px-4 sm:px-8 text-center">
+      <section className="pt-32 pb-12 sm:pt-36 sm:pb-16 lg:pt-40 lg:pb-24 px-4 sm:px-8 text-center">
         <div className="max-w-4xl mx-auto w-full">
           <motion.h1
             initial="hidden"
@@ -155,7 +155,7 @@ const About = () => {
               variants={itemVariants}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl font-bold tracking-tight leading-tight mb-6">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight leading-tight mb-6">
                 Our Story Started with Frustration
               </h2>
               <div className="text-gray-400 leading-relaxed space-y-6">

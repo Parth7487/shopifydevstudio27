@@ -240,7 +240,7 @@ const Partners = memo(() => {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "var(--theme-bg)", color: "var(--theme-text)" }}>
-      <main className="pt-24 pb-20">
+      <main className="pt-32 pb-20 sm:pt-36">
         {/* Header */}
         <section className="px-4 mb-20">
           <div className="max-w-7xl mx-auto">

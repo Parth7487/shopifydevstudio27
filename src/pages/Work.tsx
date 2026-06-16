@@ -652,7 +652,7 @@ const Work = () => {
       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.01] to-transparent pointer-events-none"></div>
 
       {/* Hero Section */}
-      <section className="relative py-12 sm:py-20 px-4 sm:px-8 bg-[var(--theme-bg-subtle)] backdrop-blur-sm overflow-hidden border-b theme-border">
+      <section className="relative pt-32 pb-12 sm:py-20 px-4 sm:px-8 bg-[var(--theme-bg-subtle)] backdrop-blur-sm overflow-hidden border-b theme-border">
         {/* Glossy reflections */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-20 left-10 w-72 h-72 dark:bg-white/[0.02] bg-beige/[0.05] rounded-full filter blur-[64px]"></div>
