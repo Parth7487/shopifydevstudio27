@@ -188,6 +188,8 @@ const ElegantNavigation = memo(() => {
               <img
                 src={settings.footer.logo_image}
                 alt={logoText}
+                width="32"
+                height="32"
                 className="h-8 w-auto object-contain transition-all duration-300"
               />
             ) : (
@@ -278,6 +280,7 @@ const ElegantNavigation = memo(() => {
                     : "border-black/5 bg-white/50 text-[#1a1a1a] hover:bg-black/5"
               }`}
               title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+              aria-label={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
               id="theme-toggler"
             >
               {isDark ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
@@ -395,8 +398,9 @@ const ElegantNavigation = memo(() => {
                       : "border-black/10 bg-white/50 text-[#1a1a1a] hover:bg-black hover:text-white"
                   }`}
                   id="mobile-hamburguer-btn"
+                  aria-label="Toggle mobile navigation menu"
                 >
-                  {isMobileMenuOpen ? <X className="w-3.5 h-3.5" /> : <Menu className="w-3.5 h-3.5" />}
+                  {isMobileMenuOpen ? <X width="14" height="14" /> : <Menu width="14" height="14" />}
                 </motion.button>
               )}
             </AnimatePresence>

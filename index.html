@@ -59,16 +59,32 @@
     <!-- Performance optimizations -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-    <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="preconnect" href="https://cdn.builder.io" />
-    <link rel="preconnect" href="https://player.vimeo.com" />
+    <link 
+      rel="preload" 
+      as="style" 
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" 
+    />
+    <link 
+      rel="stylesheet" 
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" 
+      media="print" 
+      onload="this.media='all'" 
+    />
+    <noscript>
+      <link 
+        rel="stylesheet" 
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" 
+      />
+    </noscript>
+
+    <!-- DNS Prefetching (Lighter than preconnect to avoid socket contention) -->
+    <link rel="dns-prefetch" href="https://images.unsplash.com" />
+    <link rel="dns-prefetch" href="https://cdn.builder.io" />
+    <link rel="dns-prefetch" href="https://player.vimeo.com" />
     <link rel="dns-prefetch" href="https://i.vimeocdn.com" />
-    <link rel="preconnect" href="https://calendly.com" crossorigin />
+    <link rel="dns-prefetch" href="https://calendly.com" />
     <link rel="dns-prefetch" href="https://supabase.co" />
     <link rel="dns-prefetch" href="https://supabase.io" />
-
-    <!-- Critical resource hints -->
 
     <!-- Mobile and Safari optimizations -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -86,7 +102,7 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
 
-    <!-- Structured Data -->
+    <!-- Structured Data for SEO / AI Search (AIO) Optimization -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -103,16 +119,56 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Organization",
+        "@type": "ProfessionalService",
         "name": "Shopify Dev Studio",
+        "alternateName": "Shopifydevstudio",
         "url": "https://www.shopifydevstudio.com/",
         "logo": "https://www.shopifydevstudio.com/favicon.svg",
         "image": "https://www.shopifydevstudio.com/og-image.png",
         "foundingDate": "2023",
+        "founder": {
+          "@type": "Person",
+          "name": "Parth Patel",
+          "jobTitle": "Lead Shopify Solutions Architect & E-commerce Developer"
+        },
+        "priceRange": "$$$",
+        "telephone": "+1800SHOPDEV",
         "areaServed": "Worldwide",
-        "description": "Expert Shopify developers specializing in custom theme design, conversion rate optimization, and performance enhancement for e-commerce brands worldwide.",
-        "knowsAbout": ["Shopify Development", "E-commerce", "Liquid Templating", "Conversion Rate Optimization", "Theme Design"],
-        "sameAs": []
+        "description": "Expert Shopify theme development agency specializing in custom theme design, liquid template engineering, conversion rate optimization (CRO), and speed enhancement.",
+        "knowsAbout": [
+          "Shopify Development",
+          "E-commerce Web Design",
+          "Shopify Speed Optimization",
+          "Liquid Templating",
+          "Conversion Rate Optimization",
+          "Headless Shopify storefronts"
+        ],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Shopify Development Services",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Custom Shopify Theme Design",
+                "description": "High-conversion modular layouts and bespoke UI designed from scratch in Figma."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Shopify Speed Optimization & Audits",
+                "description": "Reducing Largest Contentful Paint (LCP) and eliminating render-blocking assets."
+              }
+            }
+          ]
+        },
+        "sameAs": [
+          "https://github.com/Parth7487",
+          "https://www.shopifydevstudio.com"
+        ]
       }
     </script>
     <!-- Google tag (gtag.js) -->
