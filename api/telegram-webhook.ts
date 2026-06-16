@@ -4,6 +4,22 @@ import crypto from "crypto";
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN!;
 const MAKE_WEBHOOK_URL = process.env.MAKE_INSTAGRAM_WEBHOOK_URL!;
 
+async function fetchWithTimeout(url: string, options: RequestInit = {}, timeoutMs: number = 8000) {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const response = await fetch(url, {
+      ...options,
+      signal: controller.signal as any,
+    });
+    clearTimeout(id);
+    return response;
+  } catch (error) {
+    clearTimeout(id);
+    throw error;
+  }
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Only accept POST from Telegram
   if (req.method !== "POST") {
@@ -48,24 +64,82 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         .trim();
     }
 
-    // Step 1: Get file path from Telegram
-    const fileInfoRes = await fetch(
-      `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getFile?file_id=${fileId}`
-    );
-    const fileInfo = await fileInfoRes.json();
+    // Step 1: Get file path from Telegram with timeout
+    console.log(`Getting file path from Telegram Bot API for file_id: ${fileId}...`);
+    let fileInfo;
+    try {
+      const fileInfoRes = await fetchWithTimeout(
+        `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getFile?file_id=${fileId}`,
+        {},
+        7000
+      );
+      fileInfo = await fileInfoRes.json();
+    } catch (err: any) {
+      console.error("Telegram getFile request timed out or failed:", err.message || err);
+      // Try to notify the user if possible
+      const chatId = message.chat?.id;
+      if (chatId) {
+        try {
+          await fetchWithTimeout(
+            `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                chat_id: chatId,
+                text: `⚠️ *Telegram API Timeout*\n\nTelegram's servers took too long to return the photo metadata. Please try uploading the image again.`,
+                parse_mode: "Markdown",
+              }),
+            },
+            4000
+          );
+        } catch (msgErr) {
+          console.error("Failed to send timeout alert message to Telegram:", msgErr);
+        }
+      }
+      return res.status(200).json({ ok: true });
+    }
 
     if (!fileInfo.ok || !fileInfo.result?.file_path) {
-      console.error("Failed to get file info:", fileInfo);
+      console.error("Failed to get file info from Telegram response:", fileInfo);
+      const chatId = message.chat?.id;
+      if (chatId) {
+        try {
+          await fetchWithTimeout(
+            `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                chat_id: chatId,
+                text: `❌ *Telegram API Error*\n\nTelegram returned an error: _${fileInfo.description || "Gateway Timeout"}_. Please try sending the image again.`,
+                parse_mode: "Markdown",
+              }),
+            },
+            4000
+          );
+        } catch (msgErr) {
+          console.error("Failed to send error alert message to Telegram:", msgErr);
+        }
+      }
       return res.status(200).json({ ok: true });
     }
 
     const filePath = fileInfo.result.file_path;
 
-    // Step 2: Fetch the image buffer from Telegram CDN
+    // Step 2: Fetch the image buffer from Telegram CDN with timeout
     const telegramFileUrl = `https://api.telegram.org/file/bot${TELEGRAM_BOT_TOKEN}/${filePath}`;
-    const fileRes = await fetch(telegramFileUrl);
+    console.log(`Downloading file from Telegram CDN: ${filePath}...`);
+    let fileRes;
+    try {
+      fileRes = await fetchWithTimeout(telegramFileUrl, {}, 10000);
+    } catch (err: any) {
+      console.error("Failed to download file from Telegram CDN:", err.message || err);
+      return res.status(200).json({ ok: true });
+    }
+
     if (!fileRes.ok) {
-      console.error("Failed to download file from Telegram:", fileRes.statusText);
+      console.error("Failed to download file from Telegram CDN. Status:", fileRes.statusText);
       return res.status(200).json({ ok: true });
     }
 
@@ -87,20 +161,27 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       .digest("hex");
 
     console.log("Uploading Telegram image to Cloudinary...");
-    const cloudinaryUploadRes = await fetch(
-      `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          file: fileDataUri,
-          signature,
-          timestamp,
-          api_key: CLOUDINARY_API_KEY,
-          folder,
-        }),
-      }
-    );
+    let cloudinaryUploadRes;
+    try {
+      cloudinaryUploadRes = await fetchWithTimeout(
+        `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            file: fileDataUri,
+            signature,
+            timestamp,
+            api_key: CLOUDINARY_API_KEY,
+            folder,
+          }),
+        },
+        12000
+      );
+    } catch (err: any) {
+      console.error("Cloudinary upload request timed out or failed:", err.message || err);
+      return res.status(200).json({ ok: true });
+    }
 
     if (!cloudinaryUploadRes.ok) {
       const errText = await cloudinaryUploadRes.text();
@@ -108,17 +189,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       // Send alert message back to Telegram chat
       const chatId = message.chat?.id;
       if (chatId) {
-        await fetch(
-          `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              chat_id: chatId,
-              text: `❌ Failed to process image upload. Please try again.`,
-            }),
-          }
-        );
+        try {
+          await fetchWithTimeout(
+            `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                chat_id: chatId,
+                text: `❌ Failed to process image upload to Cloudinary. Please try again.`,
+              }),
+            },
+            4000
+          );
+        } catch (msgErr) {
+          console.error("Failed to send Cloudinary failure message to Telegram:", msgErr);
+        }
       }
       return res.status(200).json({ ok: true });
     }
@@ -142,18 +228,29 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // Step 4: Send to Make.com webhook → posts to Instagram
     if (MAKE_WEBHOOK_URL) {
-      const makeRes = await fetch(MAKE_WEBHOOK_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          image_url: imageUrl,
-          caption: postCaption,
-          is_story: isStory,
-          source: "telegram",
-          chat_id: message.chat?.id,
-          from: message.from?.username || message.from?.first_name || "unknown",
-        }),
-      });
+      console.log("Sending payload to Make.com webhook...");
+      let makeRes;
+      try {
+        makeRes = await fetchWithTimeout(
+          MAKE_WEBHOOK_URL,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              image_url: imageUrl,
+              caption: postCaption,
+              is_story: isStory,
+              source: "telegram",
+              chat_id: message.chat?.id,
+              from: message.from?.username || message.from?.first_name || "unknown",
+            }),
+          },
+          12000
+        );
+      } catch (err: any) {
+        console.error("Make.com webhook request timed out or failed:", err.message || err);
+        return res.status(200).json({ ok: true });
+      }
 
       const makeBody = await makeRes.text();
       console.log(`Make.com response: ${makeRes.status} — ${makeBody}`);
@@ -161,20 +258,25 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       // Send confirmation back to Telegram chat
       const chatId = message.chat?.id;
       if (chatId) {
-        await fetch(
-          `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              chat_id: chatId,
-              text: makeRes.ok
-                ? `✅ *Posted to Instagram!*\n\n📸 Photo published successfully as a *${isStory ? "Story" : "Feed Post"}*${postCaption ? `\n💬 Caption: _${postCaption}_` : ""}`
-                : `❌ Failed to post to Instagram. Please try again.`,
-              parse_mode: "Markdown",
-            }),
-          }
-        );
+        try {
+          await fetchWithTimeout(
+            `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                chat_id: chatId,
+                text: makeRes.ok
+                  ? `✅ *Posted to Instagram!*\n\n📸 Photo published successfully as a *${isStory ? "Story" : "Feed Post"}*${postCaption ? `\n💬 Caption: _${postCaption}_` : ""}`
+                  : `❌ Failed to post to Instagram. Please try again.`,
+                parse_mode: "Markdown",
+              }),
+            },
+            5000
+          );
+        } catch (msgErr) {
+          console.error("Failed to send status update to Telegram:", msgErr);
+        }
       }
     }
 
@@ -184,3 +286,4 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(200).json({ ok: true }); // Always return 200 to Telegram
   }
 }
+
