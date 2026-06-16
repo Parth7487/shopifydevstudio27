@@ -124,8 +124,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const cloudinaryData = await cloudinaryUploadRes.json();
-    const imageUrl = cloudinaryData.secure_url;
+    let imageUrl = cloudinaryData.secure_url;
     console.log("Cloudinary upload successful, secure url:", imageUrl);
+
+    // Instagram feed posts require an aspect ratio between 4:5 (0.8) and 1.91:1 (1.91).
+    // If the image is outside this range and is NOT a story, we automatically pad it
+    // to a 1:1 square on a black background via Cloudinary transformations.
+    const width = cloudinaryData.width;
+    const height = cloudinaryData.height;
+    if (width && height && !isStory) {
+      const aspectRatio = width / height;
+      if (aspectRatio < 0.8 || aspectRatio > 1.91) {
+        imageUrl = imageUrl.replace("/upload/", "/upload/c_pad,ar_1:1,b_black/");
+        console.log(`Image aspect ratio (${aspectRatio.toFixed(2)}) is outside Instagram's feed limits (0.8 - 1.91). Applied Cloudinary square padding:`, imageUrl);
+      }
+    }
 
     // Step 4: Send to Make.com webhook → posts to Instagram
     if (MAKE_WEBHOOK_URL) {
