@@ -41,8 +41,8 @@ const CollaborationSection = memo(() => {
               key={index}
               className="theme-card backdrop-blur-sm border theme-border rounded-2xl p-8 hover:border-beige/40 transition-colors duration-300"
             >
-              <div className="flex items-start gap-6">
-                <div className="relative">
+              <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-6">
+                <div className="relative shrink-0">
                   <img
                     src={collab.image}
                     alt={collab.name}
