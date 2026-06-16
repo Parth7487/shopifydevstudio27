@@ -117,7 +117,7 @@ const BookingModal = memo(({ open, onClose }: Props) => {
         >
           <motion.div
             key="booking-card"
-            className="relative w-full max-w-4xl max-h-[92vh] overflow-hidden rounded-2xl flex flex-col lg:flex-row"
+            className="relative w-full max-w-4xl max-h-[90vh] lg:max-h-[92vh] overflow-y-auto lg:overflow-hidden rounded-2xl flex flex-col lg:flex-row"
             initial={{ opacity: 0, scale: 0.92, y: 24 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.92, y: 24 }}
@@ -150,8 +150,8 @@ const BookingModal = memo(({ open, onClose }: Props) => {
 
             {/* ─── LEFT PANEL ─── */}
             <div
-              className="lg:w-2/5 p-8 lg:p-10 flex flex-col justify-between shrink-0"
-              style={{ background: "linear-gradient(160deg, rgba(212,175,55,0.06) 0%, transparent 60%)", borderRight: "1px solid var(--theme-border)" }}
+              className="w-full lg:w-2/5 p-6 sm:p-8 lg:p-10 flex flex-col justify-between shrink-0 border-b lg:border-b-0 lg:border-r border-[var(--theme-border)]"
+              style={{ background: "linear-gradient(160deg, rgba(212,175,55,0.06) 0%, transparent 60%)" }}
             >
               <div>
                 {/* Badge */}
@@ -241,7 +241,7 @@ const BookingModal = memo(({ open, onClose }: Props) => {
             </div>
 
             {/* ─── RIGHT PANEL: FORM ─── */}
-            <div className="flex-1 p-8 lg:p-10 overflow-y-auto">
+            <div className="flex-1 p-6 sm:p-8 lg:p-10 overflow-visible lg:overflow-y-auto pb-12 sm:pb-16 lg:pb-10">
               <AnimatePresence mode="wait">
                 {status === "sent" ? (
                   <motion.div
