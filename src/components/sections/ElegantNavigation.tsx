@@ -411,7 +411,7 @@ const ElegantNavigation = memo(() => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className={`absolute top-20 left-4 right-4 border rounded-3xl p-4 shadow-2xl flex flex-col gap-2 z-40 md:hidden backdrop-blur-2xl ${
+              className={`absolute top-20 left-4 right-4 border rounded-3xl p-4 shadow-2xl flex flex-col gap-2 z-40 md:hidden backdrop-blur-2xl pointer-events-auto ${
                 isDark
                   ? "bg-[#121212]/95 border-white/10 text-white"
                   : "bg-white/95 border-black/10 text-[#1a1a1a]"
