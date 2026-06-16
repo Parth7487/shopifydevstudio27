@@ -111,22 +111,14 @@ const ElegantNavigation = memo(() => {
 
   return (
     <>
-      <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
-            ? "backdrop-blur-sm border-b"
-            : "bg-transparent border-transparent"
-        }`}
-        style={
-          isScrolled
-            ? {
-                backgroundColor: "var(--theme-nav-bg)",
-                borderColor: "var(--theme-nav-border)",
-              }
-            : undefined
-        }
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 lg:py-4">
+      <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl transition-all duration-300">
+        <nav
+          className="backdrop-blur-md border rounded-full px-4 py-2 sm:px-6 shadow-xl transition-all duration-300"
+          style={{
+            backgroundColor: "var(--theme-nav-bg)",
+            borderColor: "var(--theme-nav-border)",
+          }}
+        >
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div
@@ -148,7 +140,7 @@ const ElegantNavigation = memo(() => {
                 </>
               ) : (
                 <>
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 border border-beige/60 rounded relative flex items-center justify-center">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 border border-beige/60 rounded-full relative flex items-center justify-center bg-black/40">
                     <span className="text-beige font-medium text-xs sm:text-sm">
                       {logoInitial}
                     </span>
@@ -186,40 +178,37 @@ const ElegantNavigation = memo(() => {
             </div>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-8 xl:space-x-12">
+            <div className="hidden lg:flex items-center space-x-2 bg-black/25 px-2 py-1 rounded-full border border-beige/10">
               {navItems.map((item) => (
                 <button
                   key={item.id}
                   onMouseEnter={() => preloadRoute(item.label)}
                   onFocus={() => preloadRoute(item.label)}
                   onClick={() => handleNavigation(item.id, item.label)}
-                  className={`relative text-sm font-medium tracking-wide transition-colors duration-200 ${
+                  className={`relative text-xs font-semibold tracking-wider uppercase transition-all duration-300 px-4 py-1.5 rounded-full ${
                     isActiveItem(item.label)
-                      ? "text-beige"
-                      : "theme-text-muted hover:text-beige"
+                      ? "bg-beige text-black shadow-sm font-bold"
+                      : "theme-text-muted hover:text-beige hover:bg-beige/5"
                   }`}
                 >
                   {item.label}
-                  {isActiveItem(item.label) && (
-                    <div className="absolute bottom-[-6px] left-0 right-0 h-px bg-beige" />
-                  )}
                 </button>
               ))}
             </div>
 
             {/* Desktop: Social + Theme toggle + CTA */}
-            <div className="hidden sm:flex items-center gap-3">
+            <div className="hidden sm:flex items-center gap-2">
               <a
                 href={`https://wa.me/${(settings.socials.whatsapp || "").replace(/\D/g, "")}?text=Hello%20Shopify%20Dev%20Studio%20%E2%80%93%20I%20would%20like%20to%20connect`}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="WhatsApp chat"
-                className="text-beige/80 hover:text-beige transition-colors p-2 rounded-lg border border-beige/20 hover:border-beige/40"
+                className="text-beige/80 hover:text-beige transition-colors p-2 rounded-full border border-beige/20 hover:border-beige/40 bg-black/25"
               >
                 <svg
                   viewBox="0 0 24 24"
-                  width="20"
-                  height="20"
+                  width="18"
+                  height="18"
                   fill="currentColor"
                   aria-hidden="true"
                 >
@@ -231,12 +220,12 @@ const ElegantNavigation = memo(() => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Telegram chat"
-                className="text-beige/80 hover:text-beige transition-colors p-2 rounded-lg border border-beige/20 hover:border-beige/40"
+                className="text-beige/80 hover:text-beige transition-colors p-2 rounded-full border border-beige/20 hover:border-beige/40 bg-black/25"
               >
                 <svg
                   viewBox="0 0 24 24"
-                  width="20"
-                  height="20"
+                  width="18"
+                  height="18"
                   fill="currentColor"
                   aria-hidden="true"
                 >
@@ -250,51 +239,64 @@ const ElegantNavigation = memo(() => {
                 onClick={toggleTheme}
                 aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
                 title={isDark ? "Light mode" : "Dark mode"}
-                className="relative p-2 rounded-lg border border-beige/20 hover:border-beige/40 text-beige/80 hover:text-beige transition-all duration-300 overflow-hidden group"
+                className="relative p-2 rounded-full border border-beige/20 hover:border-beige/40 text-beige/80 hover:text-beige transition-all duration-300 overflow-hidden group bg-black/25"
               >
                 <span
                   className={`block transition-all duration-300 ${
                     isDark
                       ? "opacity-100 rotate-0 scale-100"
-                      : "opacity-0 rotate-90 scale-75 absolute inset-0 m-auto w-5 h-5"
+                      : "opacity-0 rotate-90 scale-75 absolute inset-0 m-auto w-4 h-4"
                   }`}
                 >
-                  <Sun className="w-5 h-5" />
+                  <Sun className="w-4 h-4" />
                 </span>
                 <span
                   className={`block transition-all duration-300 ${
                     !isDark
                       ? "opacity-100 rotate-0 scale-100"
-                      : "opacity-0 -rotate-90 scale-75 absolute inset-0 m-auto w-5 h-5"
+                      : "opacity-0 -rotate-90 scale-75 absolute inset-0 m-auto w-4 h-4"
                   }`}
                 >
-                  <Moon className="w-5 h-5" />
+                  <Moon className="w-4 h-4" />
                 </span>
               </button>
 
               <Button
                 onClick={() => setCalendlyOpen(true)}
-                className="elegant-button px-4 lg:px-6 py-2 text-xs lg:text-sm font-medium tracking-wide rounded transition-all duration-200"
+                className="elegant-button px-4 py-1.5 text-xs font-semibold tracking-wider uppercase rounded-full transition-all duration-200 shadow-sm"
               >
-                <span className="hidden md:inline">Start the Conversation</span>
-                <span className="md:hidden">Contact</span>
+                <span>Contact</span>
               </Button>
             </div>
 
-            {/* Mobile menu button */}
-            <button
-              className="lg:hidden theme-text-muted hover:text-beige transition-colors duration-200 p-2"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
-              {isMobileMenuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
-            </button>
+            {/* Mobile Actions: Theme toggle + Menu button */}
+            <div className="flex items-center gap-1.5 lg:hidden">
+              <button
+                onClick={toggleTheme}
+                aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+                className="p-2 rounded-full border border-beige/20 text-beige/80 hover:text-beige hover:border-beige/40 bg-black/25 transition-all duration-300"
+              >
+                {isDark ? (
+                  <Sun className="w-4 h-4" />
+                ) : (
+                  <Moon className="w-4 h-4" />
+                )}
+              </button>
+              
+              <button
+                className="theme-text-muted hover:text-beige transition-colors duration-200 p-2 rounded-full hover:bg-beige/5"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              >
+                {isMobileMenuOpen ? (
+                  <X className="w-6 h-6" />
+                ) : (
+                  <Menu className="w-6 h-6" />
+                )}
+              </button>
+            </div>
           </div>
-        </div>
-      </nav>
+        </nav>
+      </div>
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
@@ -309,81 +311,6 @@ const ElegantNavigation = memo(() => {
             className="relative flex flex-col h-full border-l border-beige/10 overflow-y-auto"
             style={{ backgroundColor: "var(--theme-bg)" }}
           >
-            {/* Mobile menu header */}
-            <div
-              className="flex items-center justify-between p-5 border-b border-beige/20"
-            >
-              <div className="flex items-center space-x-3">
-                {settings.footer.logo_type === "image" && settings.footer.logo_image ? (
-                  <>
-                    <img
-                      src={settings.footer.logo_image}
-                      alt={logoText}
-                      className="h-8 w-auto object-contain"
-                    />
-                    {settings.footer.logo_text_with_image && (
-                      <span className="theme-text font-medium text-base tracking-wide">
-                        {logoText}
-                      </span>
-                    )}
-                  </>
-                ) : (
-                  <>
-                    <div className="w-8 h-8 border border-beige/60 rounded relative flex items-center justify-center">
-                      <span className="text-beige font-medium text-xs">{logoInitial}</span>
-                      <svg
-                        className="absolute -top-2 left-1/2 -translate-x-1/2 text-beige w-6 h-4 pointer-events-none"
-                        viewBox="0 0 24 14"
-                        fill="none"
-                        aria-hidden="true"
-                      >
-                        <path
-                          d="M3 11 A9 9 0 0 1 21 11"
-                          stroke="currentColor"
-                          strokeWidth="2.5"
-                          strokeLinecap="round"
-                        />
-                        <path
-                          d="M6 11 v3"
-                          stroke="currentColor"
-                          strokeWidth="2.5"
-                          strokeLinecap="round"
-                        />
-                        <path
-                          d="M18 11 v3"
-                          stroke="currentColor"
-                          strokeWidth="2.5"
-                          strokeLinecap="round"
-                        />
-                      </svg>
-                    </div>
-                    <span className="theme-text font-medium text-base tracking-wide">
-                      {logoText}
-                    </span>
-                  </>
-                )}
-              </div>
-              <div className="flex items-center gap-2">
-                {/* Theme toggle in mobile header */}
-                <button
-                  onClick={toggleTheme}
-                  aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-                  className="p-2 rounded-lg border border-beige/20 text-beige/80 hover:text-beige hover:border-beige/40 transition-all duration-300"
-                >
-                  {isDark ? (
-                    <Sun className="w-5 h-5" />
-                  ) : (
-                    <Moon className="w-5 h-5" />
-                  )}
-                </button>
-                <button
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="theme-text-muted hover:text-beige transition-colors p-2"
-                >
-                  <X className="w-6 h-6" />
-                </button>
-              </div>
-            </div>
 
             {/* Mobile navigation */}
             <div className="flex-1 flex flex-col justify-start pt-8 px-6 pb-20">
