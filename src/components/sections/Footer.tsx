@@ -221,18 +221,10 @@ const Footer = () => {
         </div>
 
         {/* Massive Typography Logo */}
-        <div
-          className="w-full border-t theme-border pt-10 mt-12 mb-6 overflow-hidden"
-          style={{ maxWidth: "100%" }}
-        >
+        <div className="w-full border-t theme-border pt-10 mt-12 mb-6">
           <motion.h2
             className="font-serif italic font-semibold leading-none tracking-tighter text-beige/20 dark:text-white/15 text-center block w-full"
-            style={{
-              fontSize: "clamp(1.5rem, 5.5vw, 6rem)",
-              maxWidth: "100%",
-              overflow: "hidden",
-              textOverflow: "clip",
-            }}
+            style={{ fontSize: "clamp(1.5rem, 5vw, 7.5rem)" }}
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 0.25 }}
             whileHover={{ opacity: 0.75 }}
