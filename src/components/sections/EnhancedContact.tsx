@@ -31,8 +31,6 @@ const EnhancedContact = () => {
     try {
       const payload = {
         ...formData,
-        budget: selectedBudget,
-        projectType: selectedProjectType,
       };
 
       const response = await fetch("/api/send-contact", {
