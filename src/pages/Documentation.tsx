@@ -167,7 +167,7 @@ const Documentation = () => {
   return (
     <div className="min-h-screen" style={{ backgroundColor: "var(--theme-bg)", color: "var(--theme-text)" }}>
       {/* Hero Section */}
-      <section className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8">
+      <section className="pt-24 pb-12 sm:pt-28 sm:pb-16 lg:pt-32 lg:pb-24 px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
           animate="visible"
@@ -176,14 +176,14 @@ const Documentation = () => {
         >
           <motion.h1
             variants={fadeInUpVariants}
-            className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-tight mb-6"
+            className="text-3xl sm:text-5xl lg:text-7xl font-bold tracking-tight leading-tight mb-4 sm:mb-6"
           >
             <span>Complete&nbsp;</span>
             <span className="text-beige">Documentation</span>
           </motion.h1>
           <motion.p
             variants={fadeInUpVariants}
-            className="text-gray-400 text-lg sm:text-xl leading-relaxed max-w-3xl mx-auto mb-8"
+            className="theme-text-sec text-base sm:text-lg lg:text-xl leading-relaxed max-w-3xl mx-auto mb-8"
           >
             <span
               style={{

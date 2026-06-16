@@ -121,13 +121,13 @@ const About = () => {
     <div className="min-h-screen" style={{ backgroundColor: "var(--theme-bg)", color: "var(--theme-text)" }}>
       {/* Navigation */}
       {/* Header Section */}
-      <section className="py-24 px-8 text-center">
-        <div className="max-w-4xl mx-auto px-8 w-full">
+      <section className="pt-24 pb-12 sm:pt-28 sm:pb-16 lg:pt-32 lg:pb-24 px-4 sm:px-8 text-center">
+        <div className="max-w-4xl mx-auto w-full">
           <motion.h1
             initial="hidden"
             animate="visible"
             variants={titleVariants}
-            className="text-6xl font-bold tracking-tight leading-tight mb-6"
+            className="text-3xl sm:text-5xl lg:text-7xl font-bold tracking-tight leading-tight mb-4 sm:mb-6"
           >
             <span>We Believe Your Store Should Be </span>
             <span className="text-beige">Unforgettable</span>
@@ -136,7 +136,7 @@ const About = () => {
             initial="hidden"
             animate="visible"
             variants={titleVariants}
-            className="text-gray-400 text-xl leading-relaxed mb-8"
+            className="theme-text-sec text-base sm:text-lg lg:text-xl leading-relaxed mb-6 sm:mb-8"
           >
             Just like walking into an incredible physical store leaves a lasting
             impression, your Shopify store should make customers stop, stare,
