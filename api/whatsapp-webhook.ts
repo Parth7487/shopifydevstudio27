@@ -54,17 +54,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const senderChatId = senderData.chatId;
     const senderId = senderData.sender;
 
-    // Security Gate: Only allow messages sent by the owner (917487080421) or sent within the authorized group chat
+    // Security Gate: Only allow messages sent by the owner (917487080421) or within authorized chats/groups
     const ownerId = "917487080421@c.us";
-    const authorizedGroupChatId = "120363370537372285@g.us";
+    const authorizedChats = [
+      "120363370537372285@g.us", // Authorized group
+      "919152014668@c.us"        // BookMyShow
+    ];
 
     const isFromOwner = senderId === ownerId || senderChatId === ownerId;
-    const isFromAuthorizedGroup = senderChatId === authorizedGroupChatId;
+    const isAuthorizedChat = authorizedChats.includes(senderChatId);
 
-    if (!isFromOwner && !isFromAuthorizedGroup) {
+    if (!isFromOwner && !isAuthorizedChat) {
       console.log(`Ignoring webhook request from unauthorized sender: ${senderId} in chat: ${senderChatId}`);
       return res.status(200).json({ ok: true });
     }
+
 
 
 
