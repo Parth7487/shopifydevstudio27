@@ -33,9 +33,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const webhookData = req.body;
+    const typeWebhook = webhookData?.typeWebhook;
     
-    // Check if it's an incoming message notification
-    if (webhookData?.typeWebhook !== "incomingMessageReceived") {
+    // Check if it's an incoming or outgoing message notification
+    if (
+      typeWebhook !== "incomingMessageReceived" &&
+      typeWebhook !== "outgoingMessageReceived" &&
+      typeWebhook !== "outgoingAPIMessageReceived"
+    ) {
       return res.status(200).json({ ok: true });
     }
 
@@ -46,13 +51,26 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(200).json({ ok: true });
     }
 
+    const senderChatId = senderData.chatId;
+
+    // Only process outgoing messages if they are sent to self (chat with self) or the group chat
+    const selfChatId = "917487080421@c.us";
+    if (
+      (typeWebhook === "outgoingMessageReceived" || typeWebhook === "outgoingAPIMessageReceived") &&
+      senderChatId !== selfChatId &&
+      senderChatId !== "120363424757396313@g.us"
+    ) {
+      console.log(`Ignoring outgoing webhook from ${senderChatId} (not self or group chat)`);
+      return res.status(200).json({ ok: true });
+    }
+
+
     // Only process image messages
     if (messageData.typeMessage !== "imageMessage" || !messageData.fileMessageData) {
       return res.status(200).json({ ok: true });
     }
 
     const { downloadUrl, caption = "" } = messageData.fileMessageData;
-    const senderChatId = senderData.chatId;
 
     if (!downloadUrl) {
       console.error("No downloadUrl found in fileMessageData");
