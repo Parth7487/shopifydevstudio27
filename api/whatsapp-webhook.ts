@@ -23,10 +23,13 @@ async function fetchWithTimeout(url: string, options: RequestInit = {}, timeoutM
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  console.log("Received Green-API webhook request:", req.method, JSON.stringify(req.body));
+
   // Return 200 immediately to OPTIONS/GET/other checks
   if (req.method !== "POST") {
     return res.status(200).json({ ok: true });
   }
+
 
   try {
     const webhookData = req.body;
