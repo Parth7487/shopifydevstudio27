@@ -52,17 +52,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const senderChatId = senderData.chatId;
+    const senderId = senderData.sender;
 
-    // Only process outgoing messages if they are sent to self (chat with self) or the group chat
-    const selfChatId = "917487080421@c.us";
-    if (
-      (typeWebhook === "outgoingMessageReceived" || typeWebhook === "outgoingAPIMessageReceived") &&
-      senderChatId !== selfChatId &&
-      senderChatId !== "120363424757396313@g.us"
-    ) {
-      console.log(`Ignoring outgoing webhook from ${senderChatId} (not self or group chat)`);
+    // Security Gate: Only allow messages sent by the owner (917487080421) or sent within the authorized group chat
+    const ownerId = "917487080421@c.us";
+    const authorizedGroupChatId = "120363424757396313@g.us";
+
+    const isFromOwner = senderId === ownerId || senderChatId === ownerId;
+    const isFromAuthorizedGroup = senderChatId === authorizedGroupChatId;
+
+    if (!isFromOwner && !isFromAuthorizedGroup) {
+      console.log(`Ignoring webhook request from unauthorized sender: ${senderId} in chat: ${senderChatId}`);
       return res.status(200).json({ ok: true });
     }
+
 
 
     // Only process image messages
