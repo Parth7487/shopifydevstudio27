@@ -56,7 +56,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // Security Gate: Only allow messages sent by the owner (917487080421) or sent within the authorized group chat
     const ownerId = "917487080421@c.us";
-    const authorizedGroupChatId = "120363424757396313@g.us";
+    const authorizedGroupChatId = "120363370537372285@g.us";
 
     const isFromOwner = senderId === ownerId || senderChatId === ownerId;
     const isFromAuthorizedGroup = senderChatId === authorizedGroupChatId;
