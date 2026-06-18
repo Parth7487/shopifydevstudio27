@@ -160,9 +160,10 @@ const Services = () => {
     {
       icon: Zap,
       title: "The 'App-Killer' Protocol",
-      description: "We hardcode cart drawers, size guides, custom filters, and bundling engines natively to eliminate slow 3rd-party subscription apps.",
+      description: "We hardcode cart drawers, size guides, custom filters, and native bundling engines using Shopify's modern Cart Transform API & Bundles API to eliminate slow 3rd-party subscription apps.",
       features: [
         "Saves $1,200 - $4,800/year in app fees",
+        "Bypasses default 100-variant limits securely",
         "Removes heavy JavaScript script bloat",
         "Boosts mobile Lighthouse speed scores to 90+",
         "One-time setup with lifetime code ownership",
@@ -230,6 +231,7 @@ const Services = () => {
       features: [
         "100% preservation of SEO metadata and rankings",
         "Flawless customer profile, product & history transfers",
+        "Recharge/Bold to native Shopify Subscriptions token migrations",
         "Scheduled midnight cutovers for zero downtime",
         "Comprehensive redirects mapping & link checking",
       ],
