@@ -1,0 +1,667 @@
+=== Initial State (Closed) ===
+[
+  {
+    "index": 0,
+    "top": 790.7042236328125,
+    "left": 518.21142578125,
+    "width": 427.8282470703125,
+    "height": 555.2381591796875,
+    "transform": "matrix(1, 0, 0, 1, 0, 0)",
+    "children": [
+      {
+        "className": "page-side book-cover book-cover-front",
+        "top": 790.7042236328125,
+        "left": 518.21142578125,
+        "width": 427.8282470703125,
+        "height": 555.2381591796875,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "none"
+      },
+      {
+        "className": "page-side book-cover book-cover-back page-leaf-back page-left",
+        "top": 790.7042236328125,
+        "left": 518.21142578125,
+        "width": 427.8282470703125,
+        "height": 555.2381591796875,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "matrix3d(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1)"
+      }
+    ]
+  },
+  {
+    "index": 1,
+    "top": 790.7042236328125,
+    "left": 518.21142578125,
+    "width": 427.8282470703125,
+    "height": 555.2381591796875,
+    "transform": "matrix(1, 0, 0, 1, 0, 0)",
+    "children": [
+      {
+        "className": "page-side light-page",
+        "top": 790.7042236328125,
+        "left": 518.21142578125,
+        "width": 427.8282470703125,
+        "height": 555.2381591796875,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "none"
+      },
+      {
+        "className": "page-side light-page page-leaf-back page-left",
+        "top": 790.7042236328125,
+        "left": 518.21142578125,
+        "width": 427.8282470703125,
+        "height": 555.2381591796875,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "matrix3d(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1)"
+      }
+    ]
+  },
+  {
+    "index": 2,
+    "top": 790.7042236328125,
+    "left": 518.21142578125,
+    "width": 427.8282470703125,
+    "height": 555.2381591796875,
+    "transform": "matrix(1, 0, 0, 1, 0, 0)",
+    "children": [
+      {
+        "className": "page-side light-page",
+        "top": 790.7042236328125,
+        "left": 518.21142578125,
+        "width": 427.8282470703125,
+        "height": 555.2381591796875,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "none"
+      },
+      {
+        "className": "page-side light-page page-leaf-back page-left",
+        "top": 790.7042236328125,
+        "left": 518.21142578125,
+        "width": 427.8282470703125,
+        "height": 555.2381591796875,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "matrix3d(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1)"
+      }
+    ]
+  },
+  {
+    "index": 3,
+    "top": 790.7042236328125,
+    "left": 518.21142578125,
+    "width": 427.8282470703125,
+    "height": 555.2381591796875,
+    "transform": "matrix(1, 0, 0, 1, 0, 0)",
+    "children": [
+      {
+        "className": "page-side light-page",
+        "top": 790.7042236328125,
+        "left": 518.21142578125,
+        "width": 427.8282470703125,
+        "height": 555.2381591796875,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "none"
+      },
+      {
+        "className": "page-side light-page page-leaf-back page-left",
+        "top": 790.7042236328125,
+        "left": 518.21142578125,
+        "width": 427.8282470703125,
+        "height": 555.2381591796875,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "matrix3d(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1)"
+      }
+    ]
+  },
+  {
+    "index": 4,
+    "top": 790.7042236328125,
+    "left": 518.21142578125,
+    "width": 427.8282470703125,
+    "height": 555.2381591796875,
+    "transform": "matrix(1, 0, 0, 1, 0, 0)",
+    "children": [
+      {
+        "className": "page-side light-page",
+        "top": 790.7042236328125,
+        "left": 518.21142578125,
+        "width": 427.8282470703125,
+        "height": 555.2381591796875,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "none"
+      },
+      {
+        "className": "page-side light-page page-leaf-back page-left",
+        "top": 790.7042236328125,
+        "left": 518.21142578125,
+        "width": 427.8282470703125,
+        "height": 555.2381591796875,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "matrix3d(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1)"
+      }
+    ]
+  },
+  {
+    "index": 5,
+    "top": 790.7042236328125,
+    "left": 518.21142578125,
+    "width": 427.8282470703125,
+    "height": 555.2381591796875,
+    "transform": "matrix(1, 0, 0, 1, 0, 0)",
+    "children": [
+      {
+        "className": "page-side light-page",
+        "top": 790.7042236328125,
+        "left": 518.21142578125,
+        "width": 427.8282470703125,
+        "height": 555.2381591796875,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "none"
+      },
+      {
+        "className": "page-side light-page page-leaf-back page-left",
+        "top": 790.7042236328125,
+        "left": 518.21142578125,
+        "width": 427.8282470703125,
+        "height": 555.2381591796875,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "matrix3d(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1)"
+      }
+    ]
+  },
+  {
+    "index": 6,
+    "top": 790.7042236328125,
+    "left": 518.21142578125,
+    "width": 427.8282470703125,
+    "height": 555.2381591796875,
+    "transform": "matrix(1, 0, 0, 1, 0, 0)",
+    "children": [
+      {
+        "className": "page-side light-page",
+        "top": 790.7042236328125,
+        "left": 518.21142578125,
+        "width": 427.8282470703125,
+        "height": 555.2381591796875,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "none"
+      },
+      {
+        "className": "page-side light-page page-leaf-back page-left",
+        "top": 790.7042236328125,
+        "left": 518.21142578125,
+        "width": 427.8282470703125,
+        "height": 555.2381591796875,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "matrix3d(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1)"
+      }
+    ]
+  },
+  {
+    "index": 7,
+    "top": 790.7042236328125,
+    "left": 518.21142578125,
+    "width": 427.8282470703125,
+    "height": 555.2381591796875,
+    "transform": "matrix(1, 0, 0, 1, 0, 0)",
+    "children": [
+      {
+        "className": "page-side light-page",
+        "top": 790.7042236328125,
+        "left": 518.21142578125,
+        "width": 427.8282470703125,
+        "height": 555.2381591796875,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "none"
+      },
+      {
+        "className": "page-side light-page page-leaf-back page-left",
+        "top": 790.7042236328125,
+        "left": 518.21142578125,
+        "width": 427.8282470703125,
+        "height": 555.2381591796875,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "matrix3d(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1)"
+      }
+    ]
+  },
+  {
+    "index": 8,
+    "top": 790.7042236328125,
+    "left": 518.21142578125,
+    "width": 427.8282470703125,
+    "height": 555.2381591796875,
+    "transform": "matrix(1, 0, 0, 1, 0, 0)",
+    "children": [
+      {
+        "className": "page-side light-page",
+        "top": 790.7042236328125,
+        "left": 518.21142578125,
+        "width": 427.8282470703125,
+        "height": 555.2381591796875,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "none"
+      },
+      {
+        "className": "page-side light-page page-leaf-back page-left",
+        "top": 790.7042236328125,
+        "left": 518.21142578125,
+        "width": 427.8282470703125,
+        "height": 555.2381591796875,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "matrix3d(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1)"
+      }
+    ]
+  },
+  {
+    "index": 9,
+    "top": 790.7042236328125,
+    "left": 518.21142578125,
+    "width": 427.8282470703125,
+    "height": 555.2381591796875,
+    "transform": "matrix(1, 0, 0, 1, 0, 0)",
+    "children": [
+      {
+        "className": "page-side light-page",
+        "top": 790.7042236328125,
+        "left": 518.21142578125,
+        "width": 427.8282470703125,
+        "height": 555.2381591796875,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "none"
+      },
+      {
+        "className": "page-side light-page page-leaf-back page-left",
+        "top": 790.7042236328125,
+        "left": 518.21142578125,
+        "width": 427.8282470703125,
+        "height": 555.2381591796875,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "matrix3d(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1)"
+      }
+    ]
+  },
+  {
+    "index": 10,
+    "top": 790.7042236328125,
+    "left": 518.21142578125,
+    "width": 427.8282470703125,
+    "height": 555.2381591796875,
+    "transform": "matrix(1, 0, 0, 1, 0, 0)",
+    "children": [
+      {
+        "className": "page-side book-cover book-cover-back",
+        "top": 790.7042236328125,
+        "left": 518.21142578125,
+        "width": 427.8282470703125,
+        "height": 555.2381591796875,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "none"
+      },
+      {
+        "className": "page-side book-cover book-cover-front page-leaf-back page-left",
+        "top": 790.7042236328125,
+        "left": 518.21142578125,
+        "width": 427.8282470703125,
+        "height": 555.2381591796875,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "matrix3d(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1)"
+      }
+    ]
+  }
+]
+Opening book...
+=== Opened State (Spread 1) ===
+[
+  {
+    "index": 0,
+    "top": 117.03422546386719,
+    "left": 236.42098999023438,
+    "width": 403.5790100097656,
+    "height": 502.8507080078125,
+    "transform": "matrix3d(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1)",
+    "children": [
+      {
+        "className": "page-side book-cover book-cover-front",
+        "top": 117.03422546386719,
+        "left": 236.42098999023438,
+        "width": 403.5790100097656,
+        "height": 502.8507080078125,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "none"
+      },
+      {
+        "className": "page-side book-cover book-cover-back page-leaf-back page-left",
+        "top": 117.03422546386719,
+        "left": 236.42098999023438,
+        "width": 403.5790100097656,
+        "height": 502.8507080078125,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "matrix3d(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1)"
+      }
+    ]
+  },
+  {
+    "index": 1,
+    "top": 117.03422546386719,
+    "left": 640,
+    "width": 403.5791015625,
+    "height": 502.8507080078125,
+    "transform": "matrix(1, 0, 0, 1, 0, 0)",
+    "children": [
+      {
+        "className": "page-side light-page",
+        "top": 117.03422546386719,
+        "left": 640,
+        "width": 403.5791015625,
+        "height": 502.8507080078125,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "none"
+      },
+      {
+        "className": "page-side light-page page-leaf-back page-left",
+        "top": 117.03422546386719,
+        "left": 640,
+        "width": 403.5791015625,
+        "height": 502.8507080078125,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "matrix3d(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1)"
+      }
+    ]
+  },
+  {
+    "index": 2,
+    "top": 117.03422546386719,
+    "left": 640,
+    "width": 403.5791015625,
+    "height": 502.8507080078125,
+    "transform": "matrix(1, 0, 0, 1, 0, 0)",
+    "children": [
+      {
+        "className": "page-side light-page",
+        "top": 117.03422546386719,
+        "left": 640,
+        "width": 403.5791015625,
+        "height": 502.8507080078125,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "none"
+      },
+      {
+        "className": "page-side light-page page-leaf-back page-left",
+        "top": 117.03422546386719,
+        "left": 640,
+        "width": 403.5791015625,
+        "height": 502.8507080078125,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "matrix3d(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1)"
+      }
+    ]
+  },
+  {
+    "index": 3,
+    "top": 117.03422546386719,
+    "left": 640,
+    "width": 403.5791015625,
+    "height": 502.8507080078125,
+    "transform": "matrix(1, 0, 0, 1, 0, 0)",
+    "children": [
+      {
+        "className": "page-side light-page",
+        "top": 117.03422546386719,
+        "left": 640,
+        "width": 403.5791015625,
+        "height": 502.8507080078125,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "none"
+      },
+      {
+        "className": "page-side light-page page-leaf-back page-left",
+        "top": 117.03422546386719,
+        "left": 640,
+        "width": 403.5791015625,
+        "height": 502.8507080078125,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "matrix3d(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1)"
+      }
+    ]
+  },
+  {
+    "index": 4,
+    "top": 117.03422546386719,
+    "left": 640,
+    "width": 403.5791015625,
+    "height": 502.8507080078125,
+    "transform": "matrix(1, 0, 0, 1, 0, 0)",
+    "children": [
+      {
+        "className": "page-side light-page",
+        "top": 117.03422546386719,
+        "left": 640,
+        "width": 403.5791015625,
+        "height": 502.8507080078125,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "none"
+      },
+      {
+        "className": "page-side light-page page-leaf-back page-left",
+        "top": 117.03422546386719,
+        "left": 640,
+        "width": 403.5791015625,
+        "height": 502.8507080078125,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "matrix3d(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1)"
+      }
+    ]
+  },
+  {
+    "index": 5,
+    "top": 117.03422546386719,
+    "left": 640,
+    "width": 403.5791015625,
+    "height": 502.8507080078125,
+    "transform": "matrix(1, 0, 0, 1, 0, 0)",
+    "children": [
+      {
+        "className": "page-side light-page",
+        "top": 117.03422546386719,
+        "left": 640,
+        "width": 403.5791015625,
+        "height": 502.8507080078125,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "none"
+      },
+      {
+        "className": "page-side light-page page-leaf-back page-left",
+        "top": 117.03422546386719,
+        "left": 640,
+        "width": 403.5791015625,
+        "height": 502.8507080078125,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "matrix3d(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1)"
+      }
+    ]
+  },
+  {
+    "index": 6,
+    "top": 117.03422546386719,
+    "left": 640,
+    "width": 403.5791015625,
+    "height": 502.8507080078125,
+    "transform": "matrix(1, 0, 0, 1, 0, 0)",
+    "children": [
+      {
+        "className": "page-side light-page",
+        "top": 117.03422546386719,
+        "left": 640,
+        "width": 403.5791015625,
+        "height": 502.8507080078125,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "none"
+      },
+      {
+        "className": "page-side light-page page-leaf-back page-left",
+        "top": 117.03422546386719,
+        "left": 640,
+        "width": 403.5791015625,
+        "height": 502.8507080078125,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "matrix3d(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1)"
+      }
+    ]
+  },
+  {
+    "index": 7,
+    "top": 117.03422546386719,
+    "left": 640,
+    "width": 403.5791015625,
+    "height": 502.8507080078125,
+    "transform": "matrix(1, 0, 0, 1, 0, 0)",
+    "children": [
+      {
+        "className": "page-side light-page",
+        "top": 117.03422546386719,
+        "left": 640,
+        "width": 403.5791015625,
+        "height": 502.8507080078125,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "none"
+      },
+      {
+        "className": "page-side light-page page-leaf-back page-left",
+        "top": 117.03422546386719,
+        "left": 640,
+        "width": 403.5791015625,
+        "height": 502.8507080078125,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "matrix3d(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1)"
+      }
+    ]
+  },
+  {
+    "index": 8,
+    "top": 117.03422546386719,
+    "left": 640,
+    "width": 403.5791015625,
+    "height": 502.8507080078125,
+    "transform": "matrix(1, 0, 0, 1, 0, 0)",
+    "children": [
+      {
+        "className": "page-side light-page",
+        "top": 117.03422546386719,
+        "left": 640,
+        "width": 403.5791015625,
+        "height": 502.8507080078125,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "none"
+      },
+      {
+        "className": "page-side light-page page-leaf-back page-left",
+        "top": 117.03422546386719,
+        "left": 640,
+        "width": 403.5791015625,
+        "height": 502.8507080078125,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "matrix3d(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1)"
+      }
+    ]
+  },
+  {
+    "index": 9,
+    "top": 117.03422546386719,
+    "left": 640,
+    "width": 403.5791015625,
+    "height": 502.8507080078125,
+    "transform": "matrix(1, 0, 0, 1, 0, 0)",
+    "children": [
+      {
+        "className": "page-side light-page",
+        "top": 117.03422546386719,
+        "left": 640,
+        "width": 403.5791015625,
+        "height": 502.8507080078125,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "none"
+      },
+      {
+        "className": "page-side light-page page-leaf-back page-left",
+        "top": 117.03422546386719,
+        "left": 640,
+        "width": 403.5791015625,
+        "height": 502.8507080078125,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "matrix3d(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1)"
+      }
+    ]
+  },
+  {
+    "index": 10,
+    "top": 117.03422546386719,
+    "left": 640,
+    "width": 403.5791015625,
+    "height": 502.8507080078125,
+    "transform": "matrix(1, 0, 0, 1, 0, 0)",
+    "children": [
+      {
+        "className": "page-side book-cover book-cover-back",
+        "top": 117.03422546386719,
+        "left": 640,
+        "width": 403.5791015625,
+        "height": 502.8507080078125,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "none"
+      },
+      {
+        "className": "page-side book-cover book-cover-front page-leaf-back page-left",
+        "top": 117.03422546386719,
+        "left": 640,
+        "width": 403.5791015625,
+        "height": 502.8507080078125,
+        "position": "absolute",
+        "display": "flex",
+        "transform": "matrix3d(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1)"
+      }
+    ]
+  }
+]

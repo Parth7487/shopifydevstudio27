@@ -1,22 +1,5 @@
 import { motion } from "framer-motion";
-import {
-  Palette,
-  Zap,
-  Brain,
-  Search,
-  RefreshCw,
-  Globe,
-  Camera,
-  Code,
-  Layers,
-  Box,
-  Sparkles,
-  BarChart3,
-  Monitor,
-  Shield,
-  ShieldAlert,
-  Activity,
-} from "lucide-react";
+import { BookFlip } from "../components/sections/BookFlip";
 import DesignPlayground from "../components/sections/DesignPlayground";
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
@@ -28,25 +11,26 @@ const Services = () => {
   const navigate = useNavigate();
   const [calendlyOpen, setCalendlyOpen] = useState(false);
 
-  // Form state
-  const [storeUrl, setStoreUrl] = useState("");
-  const [email, setEmail] = useState("");
-  const [businessName, setBusinessName] = useState("");
-  const [challenges, setChallenges] = useState("");
-  const [consent, setConsent] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [formError, setFormError] = useState("");
+  // Unified form state for BookFlip
+  const [formState, setFormState] = useState({
+    storeUrl: "",
+    email: "",
+    businessName: "",
+    challenges: "",
+    consent: false,
+    submitting: false,
+    submitted: false,
+    formError: "",
+  });
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
-      if (!consent) {
-        setFormError("Please check the consent box to continue.");
+      if (!formState.consent) {
+        setFormState((prev) => ({ ...prev, formError: "Please check the consent box to continue." }));
         return;
       }
-      setFormError("");
-      setSubmitting(true);
+      setFormState((prev) => ({ ...prev, formError: "", submitting: true }));
       try {
         const res = await fetch("/api/send-contact", {
           method: "POST",
@@ -54,37 +38,42 @@ const Services = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            storeUrl,
-            email,
-            businessName,
-            challenges,
+            storeUrl: formState.storeUrl,
+            email: formState.email,
+            businessName: formState.businessName,
+            challenges: formState.challenges,
             source: "Services Free Audit Form",
           }),
         });
 
         if (res.ok) {
-          setSubmitted(true);
-          setStoreUrl("");
-          setEmail("");
-          setBusinessName("");
-          setChallenges("");
-          setConsent(false);
+          setFormState((prev) => ({
+            ...prev,
+            submitted: true,
+            storeUrl: "",
+            email: "",
+            businessName: "",
+            challenges: "",
+            consent: false,
+            submitting: false,
+          }));
         } else {
           const data = await res.json();
-          setFormError(
-            data?.error ||
-              "Something went wrong. Please try WhatsApp instead.",
-          );
+          setFormState((prev) => ({
+            ...prev,
+            submitting: false,
+            formError: data?.error || "Something went wrong. Please try WhatsApp instead.",
+          }));
         }
       } catch {
-        setFormError(
-          "Network error. Please reach us directly on WhatsApp or email.",
-        );
-      } finally {
-        setSubmitting(false);
+        setFormState((prev) => ({
+          ...prev,
+          submitting: false,
+          formError: "Network error. Please reach us directly on WhatsApp or email.",
+        }));
       }
     },
-    [storeUrl, email, businessName, challenges, consent],
+    [formState],
   );
 
   useEffect(() => {
@@ -145,176 +134,6 @@ const Services = () => {
     }
   }, []);
 
-  const services = [
-    {
-      icon: Palette,
-      title: "Bespoke 'Anti-Template' Theme Engineering",
-      description: "100% custom-coded storefronts using clean Liquid and CSS. No slow templates, page builders, or buggy AI-generated code.",
-      features: [
-        "Unique designs tailored to your brand story",
-        "Interactive swatches, quick-add & visual slide-outs",
-        "Fully responsive layouts optimized for all screens",
-        "Staging-first deployment with Shopify CLI & version control",
-      ],
-    },
-    {
-      icon: Zap,
-      title: "The 'App-Killer' Protocol",
-      description: "We hardcode cart drawers, size guides, custom filters, and native bundling engines using Shopify's modern Cart Transform API & Bundles API to eliminate slow 3rd-party subscription apps.",
-      features: [
-        "Saves $1,200 - $4,800/year in app fees",
-        "Bypasses default 100-variant limits securely",
-        "Removes heavy JavaScript script bloat",
-        "Boosts mobile Lighthouse speed scores to 90+",
-        "One-time setup with lifetime code ownership",
-      ],
-    },
-    {
-      icon: Code,
-      title: "Custom Shopify App & API Development",
-      description: "Secure private or public Shopify applications to handle complex workflows, custom discounts, and internal ERP syncing.",
-      features: [
-        "Private database and API integration",
-        "Custom Shopify webhooks for real-time syncing",
-        "Enterprise-standard security compliance",
-        "Scalable architectures on dedicated servers",
-      ],
-    },
-    {
-      icon: Globe,
-      title: "Bespoke Headless Storefronts (Hydrogen & Oxygen)",
-      description: "Next-generation decoupled stores using React, Remix, and Shopify’s Hydrogen framework, deployed on global Oxygen edge hosting.",
-      features: [
-        "Sub-second page loads and zero layout shifts (CLS)",
-        "Complete creative design freedom away from Liquid constraints",
-        "Edge-cached content delivery via global Oxygen CDN",
-        "Unified Shopify checkout, payment & inventory integration",
-      ],
-    },
-    {
-      icon: Camera,
-      title: "Product Photography, Staging & UGC Sourcing",
-      description: "High-end product photography, professional styling/staging, and lifestyle UGC content that converts casual browsers into buyers.",
-      features: [
-        "Staging & editing for clothing, accessories & hardware",
-        "Compressed, high-resolution WebP web-optimized assets",
-        "Sourcing and vetting of creators and models",
-        "Consistent brand aesthetic across all pages",
-      ],
-    },
-    {
-      icon: Layers,
-      title: "Enterprise Variant Catalog Management",
-      description: "Organize and upload massive product databases of up to 13,000+ variants cleanly without breaching API limits.",
-      features: [
-        "Custom AJAX variant selector grids",
-        "Year/Make/Model automotive & parts search integrations",
-        "Bulk CSV schema mapping and upload workflows",
-        "Bypasses default Shopify catalog limits",
-      ],
-    },
-    {
-      icon: Box,
-      title: "WebGL & 3D Interactive Product Models",
-      description: "WebGL viewer integrations on your Product Details Page (PDP) to show premium product dimensions, materials, and textures.",
-      features: [
-        "AR/VR-ready interactive 3D product models",
-        "360-degree rotation and close-up zoom detail",
-        "Reduced product returns by up to 40%",
-        "Increased buyer engagement and conversion rates",
-      ],
-    },
-    {
-      icon: RefreshCw,
-      title: "Lossless Migrations from Any Hosting Provider",
-      description: "Safe transitions to Shopify Plus or Standard from WooCommerce, Magento, Squarespace, Webflow, or custom backends.",
-      features: [
-        "100% preservation of SEO metadata and rankings",
-        "Flawless customer profile, product & history transfers",
-        "Recharge/Bold to native Shopify Subscriptions token migrations",
-        "Scheduled midnight cutovers for zero downtime",
-        "Comprehensive redirects mapping & link checking",
-      ],
-    },
-    {
-      icon: Search,
-      title: "SEO, GEO & AEO Search Domination",
-      description: "A 3-tier approach covering classic search engine indexing, generative engine optimization, and direct answer optimizations.",
-      features: [
-        "Dynamic Product, Article & structured FAQ schemas",
-        "Content structured to be scraped & cited by AI searches",
-        "Google Universal Commerce Protocol integration",
-        "Featured snippets and voice search optimization",
-      ],
-    },
-    {
-      icon: Sparkles,
-      title: "Brand Story, Logos & Packaging Development",
-      description: "Complete visual identity design from scratch, establishing your brand theory and designing custom physical packaging structures.",
-      features: [
-        "Bespoke logo marks and corporate typography kits",
-        "Brand style guide books defining your tone of voice",
-        "Custom unboxing experience & packaging structural designs",
-        "Distinct market positioning strategies",
-      ],
-    },
-    {
-      icon: BarChart3,
-      title: "Ad Account Scaling & Organic Social Management",
-      description: "Scale your acquisition funnels across Google, Meta, and TikTok, alongside organic Instagram & Facebook page management. We create brand-aligned social content matching your store's visual DNA to build high-intent organic engagement.",
-      features: [
-        "Meta, Google, and TikTok ad account daily optimization",
-        "Organic Instagram & Facebook page & content management",
-        "Brand-aligned social creative matching your store's visual DNA",
-        "Landing page CRO loops aligned with ad creatives",
-      ],
-    },
-    {
-      icon: Monitor,
-      title: "Multi-Platform Alternative Development",
-      description: "Professional development for custom web requirements across alternative web environments (Framer, Webflow, WooCommerce).",
-      features: [
-        "High-fidelity Framer pages with custom motion design",
-        "Complex Webflow CMS structures & UI templates",
-        "Scalable self-hosted WooCommerce storefront solutions",
-        "Custom cross-platform backend API connections",
-      ],
-    },
-    {
-      icon: ShieldAlert,
-      title: "Checkout Extensibility & Functions Migration",
-      description: "Seamlessly transition from checkout.liquid to Shopify Checkout Extensibility and replace legacy Shopify Scripts with robust, custom-built Shopify Functions before the 2026 deprecation deadlines.",
-      features: [
-        "Lossless migration of your checkout custom fields and visual styles",
-        "Custom Shopify Functions for advanced discount, shipping, and payment rules",
-        "Zero-downtime integration verifying existing checkout flows",
-        "Ensures full compliance with Shopify's latest API standards",
-      ],
-    },
-    {
-      icon: Activity,
-      title: "Server-Side Tracking & Attribution (GA4 & CAPI)",
-      description: "Bypass checkout sandbox limitations and browser-based ad blocking. We construct server-side Google Tag Manager pipelines and Meta Conversions API (CAPI) integrations for 100% data fidelity.",
-      features: [
-        "100% accurate ad attribution tracking for Facebook, TikTok & Google Ads",
-        "Server-to-server Conversions API (CAPI) workflow deployment",
-        "Google Analytics 4 (GA4) server-side profiling",
-        "Reduces page-weight by removing heavy client-side tracking scripts",
-      ],
-    },
-    {
-      icon: Shield,
-      title: "Ongoing Support & E-Commerce Store Management (Retainer)",
-      description: "Consistent, on-demand support retainers where we act as your dedicated Shopify and website manager. Send us a message, and we deploy updates immediately.",
-      features: [
-        "On-demand storefront tweaks, banners & navigation menu updates",
-        "Uploading new collections, product images & managing layouts",
-        "Consistent daily support channel to keep your site bug-free",
-        "Fast-response communication via Slack, WhatsApp or Telegram",
-      ],
-    },
-  ];
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -322,18 +141,6 @@ const Services = () => {
       transition: {
         staggerChildren: 0.05,
         delayChildren: 0.1,
-      },
-    },
-  };
-
-  const serviceVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut",
       },
     },
   };
@@ -390,7 +197,7 @@ const Services = () => {
 
       {/* Services Introduction Section */}
       <section className="pt-4 pb-6 px-8 sm:pt-6 sm:pb-8">
-        <div className="max-w-4xl mx-auto text-center mb-16">
+        <div className="max-w-4xl mx-auto text-center mb-4">
           <motion.h2
             initial="hidden"
             whileInView="visible"
@@ -413,62 +220,15 @@ const Services = () => {
         </div>
       </section>
 
-      {/* Services Grid */}
-      <section className="pt-4 pb-12 sm:pt-6 sm:pb-16 relative pb-7.5">
-        {/* Design Playground Background */}
+      {/* 3D Book Flip Component */}
+      <section className="pt-4 pb-12 sm:pt-6 sm:pb-16 relative">
         <DesignPlayground />
-
         <div className="max-w-7xl mx-auto mobile-safe-padding relative z-10">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={containerVariants}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
-          >
-            {services.map((service, index) => {
-              const IconComponent = service.icon;
-              return (
-                <motion.div
-                  key={index}
-                  variants={serviceVariants}
-                  whileHover={{
-                    scale: 1.02,
-                    transition: { duration: 0.3 },
-                  }}
-                  className="theme-card border border-[var(--theme-border)] rounded-xl sm:rounded-2xl p-6 sm:p-8 hover:border-beige/40 transition-all duration-300 flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="flex items-center mb-4 sm:mb-6">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-beige/20 rounded-lg flex items-center justify-center mr-3 sm:mr-4">
-                        <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-beige" />
-                      </div>
-                      <h3 className="responsive-text-base font-bold theme-text">
-                        {service.title}
-                      </h3>
-                    </div>
-
-                    <p className="theme-text-sec text-sm leading-relaxed mb-6">
-                      {service.description}
-                    </p>
-                  </div>
-
-                  <ul className="space-y-2 sm:space-y-3">
-                    {service.features.map((feature, featureIndex) => (
-                      <li
-                        key={featureIndex}
-                        className="flex items-start gap-2 sm:gap-3"
-                      >
-                        <div className="w-1.5 h-1.5 bg-beige rounded-full flex-shrink-0 mt-1.5 sm:mt-2" />
-                        <span className="theme-text-sec text-xs sm:text-sm">
-                          {feature}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
-              );
-            })}
-          </motion.div>
+          <BookFlip 
+            onFormSubmit={handleSubmit}
+            formState={formState}
+            setFormState={setFormState}
+          />
         </div>
       </section>
 
@@ -573,174 +333,6 @@ const Services = () => {
               </p>
             </motion.div>
           </motion.div>
-        </div>
-      </section>
-
-      {/* Contact Form Section */}
-      <section className="bg-gradient-to-r from-beige/10 to-beige/5 py-16 sm:py-24 px-4 sm:px-8 relative border-t border-[var(--theme-border)]">
-        {/* Design Playground Background */}
-        <DesignPlayground />
-
-        <div className="max-w-4xl mx-auto w-full relative z-10">
-          <div className="theme-card border border-[var(--theme-border)] rounded-2xl p-5 sm:p-8 shadow-sm">
-            {submitted ? (
-              <div className="text-center py-10">
-                <div className="w-16 h-16 bg-beige/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-beige" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <h3 className="text-beige text-2xl font-bold mb-2">Request Received!</h3>
-                <p className="theme-text-sec text-sm leading-relaxed">
-                  We'll analyze your store and send detailed recommendations within 24-26 hours.
-                </p>
-                <button
-                  onClick={() => setSubmitted(false)}
-                  className="mt-6 text-beige underline text-sm hover:text-beige/80 transition-colors"
-                >
-                  Submit another request
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit}>
-                <div>
-                  <label
-                    htmlFor="storeUrl"
-                    className="block text-sm font-medium leading-5 mb-2 theme-text"
-                  >
-                    Your Store URL *
-                  </label>
-                  <input
-                    type="url"
-                    id="storeUrl"
-                    placeholder="https://yourstore.com"
-                    required
-                    value={storeUrl}
-                    onChange={(e) => setStoreUrl(e.target.value)}
-                    className="w-full bg-[var(--theme-input-bg)] border border-[var(--theme-border)] rounded-lg px-4 py-3 theme-text transition-colors duration-150 focus:border-beige focus:outline-none"
-                  />
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-4 mt-6">
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="block text-sm font-medium leading-5 mb-2 theme-text"
-                    >
-                      Email Address *
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      placeholder="your@email.com"
-                      required
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="w-full bg-[var(--theme-input-bg)] border border-[var(--theme-border)] rounded-lg px-4 py-3 theme-text transition-colors duration-150 focus:border-beige focus:outline-none"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="businessName"
-                      className="block text-sm font-medium leading-5 mb-2 theme-text"
-                    >
-                      Business Name
-                    </label>
-                    <input
-                      type="text"
-                      id="businessName"
-                      placeholder="Your Business"
-                      value={businessName}
-                      onChange={(e) => setBusinessName(e.target.value)}
-                      className="w-full bg-[var(--theme-input-bg)] border border-[var(--theme-border)] rounded-lg px-4 py-3 theme-text transition-colors duration-150 focus:border-beige focus:outline-none"
-                    />
-                  </div>
-                </div>
-
-                <div className="mt-6">
-                  <label
-                    htmlFor="currentChallenges"
-                    className="block text-sm font-medium leading-5 mb-2 theme-text"
-                  >
-                    What challenges are you facing? (Optional)
-                  </label>
-                  <textarea
-                    id="currentChallenges"
-                    rows={4}
-                    placeholder="Tell us about your app subscription costs, mobile speed bottlenecks, custom feature requirements, or migration concerns."
-                    value={challenges}
-                    onChange={(e) => setChallenges(e.target.value)}
-                    className="w-full bg-[var(--theme-input-bg)] border border-[var(--theme-border)] rounded-lg px-4 py-3 theme-text resize-none transition-colors duration-150 focus:border-beige focus:outline-none"
-                  />
-                </div>
-
-                <div className="flex items-start gap-3 mt-6">
-                  <input
-                    type="checkbox"
-                    id="consent"
-                    checked={consent}
-                    onChange={(e) => setConsent(e.target.checked)}
-                    className="w-4 h-4 mt-1 bg-[var(--theme-input-bg)] border-none text-beige rounded focus:ring-beige"
-                  />
-                  <label
-                    htmlFor="consent"
-                    className="theme-text-sec text-sm leading-5"
-                  >
-                    I agree to receive a detailed analysis of my store and
-                    follow-up communications about optimization opportunities.
-                  </label>
-                </div>
-
-                {formError && (
-                  <p className="text-red-400 text-sm mt-3">{formError}</p>
-                )}
-
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="w-full bg-beige text-black font-medium text-lg leading-7 py-4 px-8 rounded-lg mt-6 hover:bg-beige/90 transition-colors duration-150 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                >
-                  {submitting ? (
-                    <>
-                      <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
-                      </svg>
-                      Sending...
-                    </>
-                  ) : (
-                    "Get Free Analysis"
-                  )}
-                </button>
-              </form>
-            )}
-
-            <div className="bg-beige/10 border border-beige/25 rounded-xl p-6 mt-8">
-              <h3 className="text-beige font-bold mb-3">Your Free Visual Blueprint Details:</h3>
-              <ul className="text-sm leading-5 space-y-2">
-                {[
-                  "Mobile Page Speed & App-Tax Audit",
-                  "Visual Architecture Sketch (Figma mockup or Loom walkthrough)",
-                  "Custom Liquid implementation recommendations",
-                  "Estimated annual app fee savings calculation",
-                  "Conversion rate bottleneck identification",
-                  "Staging-first project deployment plan",
-                ].map((item, index) => (
-                  <li key={index} className="flex items-center gap-3">
-                    <div className="w-1.5 h-1.5 bg-beige rounded-full flex-shrink-0" />
-                    <span className="theme-text-sec">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          <div className="mt-8 text-center">
-            <p className="theme-text-sec text-sm leading-5">
-              <span className="text-beige font-semibold">The 24-26 Hour Blueprint Clock:</span>{" "}
-              Provide your store URL and details above. Within 24-26 hours, we'll deliver a custom mobile performance audit and visual mockup showing how we'll solve your bottlenecks natively. No obligations.
-            </p>
-          </div>
         </div>
       </section>
 
