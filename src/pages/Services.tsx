@@ -14,6 +14,8 @@ import {
   BarChart3,
   Monitor,
   Shield,
+  ShieldAlert,
+  Activity,
 } from "lucide-react";
 import DesignPlayground from "../components/sections/DesignPlayground";
 import { useState, useEffect, useCallback } from "react";
@@ -118,6 +120,8 @@ const Services = () => {
         "Bespoke Anti-Template Theme Engineering",
         "Bespoke Headless Storefronts (Hydrogen & Oxygen)",
         "Custom Shopify App & API Development",
+        "Checkout Extensibility & Functions Migration",
+        "Server-Side Tracking & Attribution (GA4 & CAPI)",
         "High-Conversion Editorial Photography & UGC",
         "Enterprise Variant Catalog Management (13,000+ variants)",
         "WebGL & 3D Interactive Product Models",
@@ -272,6 +276,28 @@ const Services = () => {
         "Complex Webflow CMS structures & UI templates",
         "Scalable self-hosted WooCommerce storefront solutions",
         "Custom cross-platform backend API connections",
+      ],
+    },
+    {
+      icon: ShieldAlert,
+      title: "Checkout Extensibility & Functions Migration",
+      description: "Seamlessly transition from checkout.liquid to Shopify Checkout Extensibility and replace legacy Shopify Scripts with robust, custom-built Shopify Functions before the 2026 deprecation deadlines.",
+      features: [
+        "Lossless migration of your checkout custom fields and visual styles",
+        "Custom Shopify Functions for advanced discount, shipping, and payment rules",
+        "Zero-downtime integration verifying existing checkout flows",
+        "Ensures full compliance with Shopify's latest API standards",
+      ],
+    },
+    {
+      icon: Activity,
+      title: "Server-Side Tracking & Attribution (GA4 & CAPI)",
+      description: "Bypass checkout sandbox limitations and browser-based ad blocking. We construct server-side Google Tag Manager pipelines and Meta Conversions API (CAPI) integrations for 100% data fidelity.",
+      features: [
+        "100% accurate ad attribution tracking for Facebook, TikTok & Google Ads",
+        "Server-to-server Conversions API (CAPI) workflow deployment",
+        "Google Analytics 4 (GA4) server-side profiling",
+        "Reduces page-weight by removing heavy client-side tracking scripts",
       ],
     },
     {
