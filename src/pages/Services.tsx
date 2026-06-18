@@ -25,6 +25,7 @@ import { addBreadcrumbSchema } from "../lib/breadcrumb-schema";
 const Services = () => {
   const navigate = useNavigate();
   const [calendlyOpen, setCalendlyOpen] = useState(false);
+  const [activeIdx, setActiveIdx] = useState(0);
 
   // Form state
   const [storeUrl, setStoreUrl] = useState("");
@@ -385,62 +386,93 @@ const Services = () => {
         </div>
       </section>
 
-      {/* Services Grid */}
+      {/* Services Split-Scroll (Organimo-inspired) */}
       <section className="pt-4 pb-12 sm:pt-6 sm:pb-16 relative pb-7.5">
-        {/* Design Playground Background */}
         <DesignPlayground />
 
         <div className="max-w-7xl mx-auto mobile-safe-padding relative z-10">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={containerVariants}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
-          >
-            {services.map((service, index) => {
-              const IconComponent = service.icon;
-              return (
-                <motion.div
-                  key={index}
-                  variants={serviceVariants}
-                  whileHover={{
-                    scale: 1.02,
-                    transition: { duration: 0.3 },
-                  }}
-                  className="theme-card border border-[var(--theme-border)] rounded-xl sm:rounded-2xl p-6 sm:p-8 hover:border-beige/40 transition-all duration-300 flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="flex items-center mb-4 sm:mb-6">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-beige/20 rounded-lg flex items-center justify-center mr-3 sm:mr-4">
-                        <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-beige" />
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+            
+            {/* Sticky Left Column: Interactive Visuals */}
+            <div className="lg:col-span-5 sticky top-28 h-[400px] lg:h-[500px] hidden lg:flex items-center justify-center">
+              <motion.div
+                key={activeIdx}
+                initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
+                animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                exit={{ opacity: 0, scale: 0.8, rotate: 10 }}
+                transition={{ type: "spring", stiffness: 120, damping: 15 }}
+                className="w-full max-w-[350px] aspect-square theme-card border border-beige/20 rounded-3xl p-8 flex flex-col items-center justify-center bg-black/40 backdrop-blur-xl relative overflow-hidden shadow-2xl"
+              >
+                {/* Background glow matching theme accent */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-beige/5 to-transparent pointer-events-none" />
+                <div className="w-24 h-24 bg-beige/10 border border-beige/25 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+                  {(() => {
+                    const Icon = services[activeIdx]?.icon;
+                    return Icon ? <Icon className="w-12 h-12 text-beige" /> : null;
+                  })()}
+                </div>
+                <h4 className="text-xl font-bold theme-text text-center font-serif italic mb-3">
+                  {services[activeIdx]?.title}
+                </h4>
+                <p className="theme-text-sec text-xs text-center leading-relaxed max-w-[260px]">
+                  {services[activeIdx]?.description}
+                </p>
+              </motion.div>
+            </div>
+
+            {/* Scrolling Right Column: Service Cards */}
+            <div className="lg:col-span-7 space-y-8 lg:space-y-12">
+              {services.map((service, index) => {
+                const IconComponent = service.icon;
+                const isActive = activeIdx === index;
+                return (
+                  <motion.div
+                    key={index}
+                    initial="hidden"
+                    whileInView="visible"
+                    onViewportEnter={() => setActiveIdx(index)}
+                    viewport={{ amount: 0.5, margin: "-10% 0px -40% 0px" }}
+                    variants={serviceVariants}
+                    className={`theme-card border rounded-2xl p-6 sm:p-8 transition-all duration-300 flex flex-col justify-between ${
+                      isActive 
+                        ? "border-beige/50 bg-beige/[0.02] shadow-xl" 
+                        : "border-[var(--theme-border)] hover:border-beige/30"
+                    }`}
+                  >
+                    <div>
+                      <div className="flex items-center mb-4 sm:mb-6">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-beige/20 rounded-lg flex items-center justify-center mr-3 sm:mr-4">
+                          <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-beige" />
+                        </div>
+                        <h3 className="responsive-text-base font-bold theme-text font-serif italic">
+                          {service.title}
+                        </h3>
                       </div>
-                      <h3 className="responsive-text-base font-bold theme-text">
-                        {service.title}
-                      </h3>
+
+                      <p className="theme-text-sec text-sm leading-relaxed mb-6">
+                        {service.description}
+                      </p>
                     </div>
 
-                    <p className="theme-text-sec text-sm leading-relaxed mb-6">
-                      {service.description}
-                    </p>
-                  </div>
+                    <ul className="space-y-2 sm:space-y-3">
+                      {service.features.map((feature, featureIndex) => (
+                        <li
+                          key={featureIndex}
+                          className="flex items-start gap-2 sm:gap-3"
+                        >
+                          <div className="w-1.5 h-1.5 bg-beige rounded-full flex-shrink-0 mt-1.5 sm:mt-2" />
+                          <span className="theme-text-sec text-xs sm:text-sm">
+                            {feature}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </motion.div>
+                );
+              })}
+            </div>
 
-                  <ul className="space-y-2 sm:space-y-3">
-                    {service.features.map((feature, featureIndex) => (
-                      <li
-                        key={featureIndex}
-                        className="flex items-start gap-2 sm:gap-3"
-                      >
-                        <div className="w-1.5 h-1.5 bg-beige rounded-full flex-shrink-0 mt-1.5 sm:mt-2" />
-                        <span className="theme-text-sec text-xs sm:text-sm">
-                          {feature}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
-              );
-            })}
-          </motion.div>
+          </div>
         </div>
       </section>
 
