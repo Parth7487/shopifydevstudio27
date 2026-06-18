@@ -6,6 +6,7 @@ const ProblemSolution = () => {
     "Slow loading speeds that kill 40% of potential sales",
     "Poor mobile experience losing 60% of traffic",
     "No psychological triggers to drive purchase decisions",
+    "Bloated third-party apps charging massive subscription fees and slowing down your site speed",
   ];
 
   const solutions = [
@@ -13,6 +14,7 @@ const ProblemSolution = () => {
     "Lightning-fast performance optimized for conversions",
     "Mobile-first design that captures every customer",
     "Psychology-based UX that converts visitors into buyers",
+    "Custom native features hardcoded directly into your Shopify theme to eliminate app fees entirely",
   ];
 
   const containerVariants = {

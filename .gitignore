@@ -112,3 +112,7 @@ Thumbs.db
 # Local development
 .env.local
 .env*
+
+# Playwright
+playwright-report/
+test-results/

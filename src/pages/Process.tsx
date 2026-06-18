@@ -154,14 +154,14 @@ const Process = () => {
       title: "Strategic Launch",
       timeline: "1 week",
       description:
-        "A carefully orchestrated launch that minimizes downtime and maximizes impact. We monitor everything to ensure a smooth transition.",
+        "A carefully orchestrated launch that minimizes downtime and maximizes impact. We specialize in lossless migrations from Magento, WooCommerce, BigCommerce, or Webflow to Shopify Plus.",
       icon: Rocket,
       activities: [
         "Staging environment setup",
-        "Data migration and verification",
+        "Lossless data migration (WooCommerce/Magento/BigCommerce)",
+        "SEO ranking preservation and URL redirect mapping",
         "Launch timing coordination",
-        "Real-time monitoring",
-        "Immediate optimization",
+        "Real-time post-launch monitoring",
       ],
       deliverables: [
         "Live, optimized store",

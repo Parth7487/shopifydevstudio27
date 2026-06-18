@@ -116,6 +116,7 @@ const Services = () => {
       serviceType: [
         "App-Killer Protocol (TCO & Speed Optimization)",
         "Bespoke Anti-Template Theme Engineering",
+        "Bespoke Headless Storefronts (Hydrogen & Oxygen)",
         "Custom Shopify App & API Development",
         "High-Conversion Editorial Photography & UGC",
         "Enterprise Variant Catalog Management (13,000+ variants)",
@@ -172,6 +173,17 @@ const Services = () => {
         "Custom Shopify webhooks for real-time syncing",
         "Enterprise-standard security compliance",
         "Scalable architectures on dedicated servers",
+      ],
+    },
+    {
+      icon: Globe,
+      title: "Bespoke Headless Storefronts (Hydrogen & Oxygen)",
+      description: "Next-generation decoupled stores using React, Remix, and Shopify’s Hydrogen framework, deployed on global Oxygen edge hosting.",
+      features: [
+        "Sub-second page loads and zero layout shifts (CLS)",
+        "Complete creative design freedom away from Liquid constraints",
+        "Edge-cached content delivery via global Oxygen CDN",
+        "Unified Shopify checkout, payment & inventory integration",
       ],
     },
     {
