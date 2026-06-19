@@ -24,8 +24,11 @@ import "./BookFlip.css";
 interface ServiceItem {
   icon: React.ComponentType<any>;
   title: string;
+  subtitle: string;
   description: string;
   features: string[];
+  price: string;
+  subBadges: string[];
 }
 
 interface BookFlipProps {
@@ -47,6 +50,9 @@ const SERVICES_DATA: ServiceItem[] = [
   {
     icon: Palette,
     title: "Bespoke 'Anti-Template' Theme Engineering",
+    subtitle: "CUSTOM SHOPIFY SYNTHESIS",
+    price: "$12,000",
+    subBadges: ["CUSTOM SHOPIFY SYNTHESIS", "ZERO LAYOUT SHIFTS & SUPERFAST LOAD SPEED"],
     description: "100% custom-coded storefronts using clean Liquid and CSS. No slow templates, page builders, or buggy AI-generated code.",
     features: [
       "Unique designs tailored to your brand story",
@@ -58,7 +64,10 @@ const SERVICES_DATA: ServiceItem[] = [
   {
     icon: Zap,
     title: "The 'App-Killer' Protocol",
-    description: "We hardcode cart drawers, size guides, custom filters, and native bundling engines using Shopify's modern Cart Transform API & Bundles API to eliminate slow 3rd-party subscription apps.",
+    subtitle: "NATIVE FUNCTION INJECTION",
+    price: "$4,500",
+    subBadges: ["NATIVE FUNCTION INJECTION", "ONE-TIME SETUP WITH LIFETIME CODE OWNERSHIP"],
+    description: "We replace bloated 3rd-party subscription apps (like cart drawers, size guides, custom filters, and product add-ons) with native, lightweight Liquid and CSS.",
     features: [
       "Saves $1,200 - $4,800/year in app fees",
       "Bypasses default 100-variant limits securely",
@@ -70,7 +79,10 @@ const SERVICES_DATA: ServiceItem[] = [
   {
     icon: Code,
     title: "Custom Shopify App & API Development",
-    description: "Secure private or public Shopify applications to handle complex workflows, custom discounts, and internal ERP syncing.",
+    subtitle: "PRIVATE API INTEGRATION",
+    price: "$8,000",
+    subBadges: ["PRIVATE API INTEGRATION", "PERFECT FOR ERP & GLOBAL CRM PIPELINES"],
+    description: "We build custom private or public Shopify applications to handle proprietary business logic and integrations.",
     features: [
       "Private database and API integration",
       "Custom Shopify webhooks for real-time syncing",
@@ -81,7 +93,10 @@ const SERVICES_DATA: ServiceItem[] = [
   {
     icon: Globe,
     title: "Bespoke Headless Storefronts (Hydrogen & Oxygen)",
-    description: "Next-generation decoupled stores using React, Remix, and Shopify’s Hydrogen framework, deployed on global Oxygen edge hosting.",
+    subtitle: "DECOUPLED REACT ARCHITECTURE",
+    price: "$15,000",
+    subBadges: ["DECOUPLED REACT ARCHITECTURE", "ULTIMATE PERFORMANCE FOR HIGH-VOLUME LEADERS"],
+    description: "Next-generation decoupled stores using React, Remix, and Shopify's Hydrogen framework, deployed on global Oxygen edge hosting.",
     features: [
       "Sub-second page loads and zero layout shifts (CLS)",
       "Complete creative design freedom away from Liquid constraints",
@@ -91,8 +106,11 @@ const SERVICES_DATA: ServiceItem[] = [
   },
   {
     icon: Camera,
-    title: "Product Photography & UGC Sourcing",
-    description: "High-end product photography, professional styling/staging, and lifestyle UGC content that converts casual browsers into buyers.",
+    title: "Product Photography, Staging & UGC Sourcing",
+    subtitle: "HIGH-FIDELITY ASSETS DELIVERY",
+    price: "$3,500",
+    subBadges: ["HIGH-FIDELITY ASSETS DELIVERY", "EDITORIAL STAGING & CONTENT SOURCING"],
+    description: "Full-suite editorial product photography, professional styling, lifestyle UGC model sourcing, and high-fidelity post-production editing.",
     features: [
       "Staging & editing for clothing, accessories & hardware",
       "Compressed, high-resolution WebP web-optimized assets",
@@ -101,20 +119,12 @@ const SERVICES_DATA: ServiceItem[] = [
     ],
   },
   {
-    icon: Layers,
-    title: "Enterprise Variant Catalog Management",
-    description: "Organize and upload massive product databases of up to 13,000+ variants cleanly without breaching API limits.",
-    features: [
-      "Custom AJAX variant selector grids",
-      "Year/Make/Model automotive & parts search integrations",
-      "Bulk CSV schema mapping and upload workflows",
-      "Bypasses default Shopify catalog limits",
-    ],
-  },
-  {
     icon: Box,
-    title: "WebGL & 3D Interactive Product Models",
-    description: "WebGL viewer integrations on your Product Details Page (PDP) to show premium product dimensions, materials, and textures.",
+    title: "WebGL & 3D Interactive Product Modeling",
+    subtitle: "INTERACTIVE VIEWPORT RENDER",
+    price: "$6,000",
+    subBadges: ["INTERACTIVE VIEWPORT RENDER", "AR/VR-READY WEBGL DESIGN"],
+    description: "We create web-ready 3D product models and integrate WebGL viewers directly on your Product Details Page (PDP).",
     features: [
       "AR/VR-ready interactive 3D product models",
       "360-degree rotation and close-up zoom detail",
@@ -123,31 +133,12 @@ const SERVICES_DATA: ServiceItem[] = [
     ],
   },
   {
-    icon: RefreshCw,
-    title: "Lossless Migrations from Any Host",
-    description: "Safe transitions to Shopify Plus or Standard from WooCommerce, Magento, Squarespace, Webflow, or custom backends.",
-    features: [
-      "100% preservation of SEO metadata and rankings",
-      "Flawless customer profile, product & history transfers",
-      "Recharge/Bold to native Shopify Subscriptions token migrations",
-      "Scheduled midnight cutovers for zero downtime",
-    ],
-  },
-  {
-    icon: Search,
-    title: "SEO, GEO & AEO Search Domination",
-    description: "A 3-tier approach covering classic search engine indexing, generative engine optimization, and direct answer optimizations.",
-    features: [
-      "Dynamic Product, Article & structured FAQ schemas",
-      "Content structured to be scraped & cited by AI searches",
-      "Google Universal Commerce Protocol integration",
-      "Featured snippets and voice search optimization",
-    ],
-  },
-  {
     icon: Sparkles,
-    title: "Brand Story, Logos & Packaging Development",
-    description: "Complete visual identity design from scratch, establishing your brand theory and designing custom physical packaging structures.",
+    title: "Brand Identity, Storytelling & Packaging Development",
+    subtitle: "CREATIVE IDENTITY & THEORY",
+    price: "$7,500",
+    subBadges: ["CREATIVE IDENTITY & THEORY", "BESPOKE VISUAL DESIGN & PACKAGING"],
+    description: "We design your complete brand theory, design premium logos, outline your brand style books, and design custom unboxing packaging.",
     features: [
       "Bespoke logo marks and corporate typography kits",
       "Brand style guide books defining your tone of voice",
@@ -156,9 +147,40 @@ const SERVICES_DATA: ServiceItem[] = [
     ],
   },
   {
+    icon: Layers,
+    title: "Enterprise Variant Catalog Management",
+    subtitle: "HEAVY DIRECTORY SCHEMA",
+    price: "$5,000",
+    subBadges: ["HEAVY DIRECTORY SCHEMA", "BULLSEYE SEO INDEXING FOR LARGER INVENTORIES"],
+    description: "Custom-coded AJAX selector interfaces capable of organizing and managing massive directories of up to 13,000+ variants.",
+    features: [
+      "Custom AJAX variant selector grids",
+      "Year/Make/Model automotive & parts search integrations",
+      "Bulk CSV schema mapping and upload workflows",
+      "Bypasses default Shopify catalog limits",
+    ],
+  },
+  {
+    icon: Search,
+    title: "Complete Search Domination (SEO, GEO & AEO)",
+    subtitle: "SEMANTIC KNOWLEDGE SCHEMA",
+    price: "$3,000",
+    subBadges: ["SEMANTIC KNOWLEDGE SCHEMA", "GENERATIVE ENGINE OPTIMIZATION"],
+    description: "A 3-tier approach covering classic search engine indexing (SEO), generative engine optimization (GEO), and direct answer optimizations (AEO).",
+    features: [
+      "Dynamic Product, Article & structured FAQ schemas",
+      "Content structured to be scraped & cited by AI searches",
+      "Google Universal Commerce Protocol integration",
+      "Featured snippets and voice search optimization",
+    ],
+  },
+  {
     icon: BarChart3,
-    title: "Ad Account Scaling & Organic Social",
-    description: "Scale your acquisition funnels across Google, Meta, and TikTok, alongside organic Instagram & Facebook page management.",
+    title: "Ad Account Scaling & Organic Social Management",
+    subtitle: "ACQUISITION FUNNEL ENGINEERING",
+    price: "$4,500/mo",
+    subBadges: ["ACQUISITION FUNNEL ENGINEERING", "HIGH-INTENT SOCIAL ACQUISITION"],
+    description: "Scale paid acquisition across Google, Meta, and TikTok, alongside organic Instagram & Facebook page management.",
     features: [
       "Meta, Google, and TikTok ad account daily optimization",
       "Organic Instagram & Facebook page & content management",
@@ -167,41 +189,25 @@ const SERVICES_DATA: ServiceItem[] = [
     ],
   },
   {
-    icon: Monitor,
-    title: "Multi-Platform Alternative Development",
-    description: "Professional development for custom web requirements across alternative web environments (Framer, Webflow, WooCommerce).",
+    icon: RefreshCw,
+    title: "Lossless Migrations from Any Hosting Provider",
+    subtitle: "SOVEREIGN DATABASE RELOCATION",
+    price: "$4,000",
+    subBadges: ["SOVEREIGN DATABASE RELOCATION", "ZERO DOWNTIME TRANSITION GUARANTEE"],
+    description: "Data-safe, lossless migrations from WooCommerce, Magento, Squarespace, Webflow, or custom CMS databases.",
     features: [
-      "High-fidelity Framer pages with custom motion design",
-      "Complex Webflow CMS structures & UI templates",
-      "Scalable self-hosted WooCommerce storefront solutions",
-      "Custom cross-platform backend API connections",
-    ],
-  },
-  {
-    icon: ShieldAlert,
-    title: "Checkout Extensibility & Functions Migration",
-    description: "Seamlessly transition from checkout.liquid to Shopify Checkout Extensibility and replace legacy Shopify Scripts with custom Shopify Functions.",
-    features: [
-      "Lossless migration of your checkout custom fields and styles",
-      "Custom Shopify Functions for advanced discount & shipping rules",
-      "Zero-downtime integration verifying existing checkout flows",
-      "Ensures full compliance with Shopify's latest standards",
-    ],
-  },
-  {
-    icon: Activity,
-    title: "Server-Side Tracking & Attribution (GA4 & CAPI)",
-    description: "Bypass checkout sandbox limitations and browser-based ad blocking. We deploy server-side GTM pipelines for 100% data fidelity.",
-    features: [
-      "100% accurate ad attribution tracking for Meta, TikTok & Google",
-      "Server-to-server Conversions API (CAPI) workflow deployment",
-      "Google Analytics 4 (GA4) server-side profiling",
-      "Reduces page-weight by removing client-side scripts",
+      "100% preservation of SEO metadata and rankings",
+      "Flawless customer profile, product & history transfers",
+      "Recharge/Bold to native Shopify Subscriptions token migrations",
+      "Scheduled midnight cutovers for zero downtime",
     ],
   },
   {
     icon: Shield,
-    title: "Ongoing Support & Store Retainers",
+    title: "Ongoing Support & E-Commerce Store Management (Retainer)",
+    subtitle: "DEDICATED MANAGED SERVICES",
+    price: "$2,500/mo",
+    subBadges: ["DEDICATED MANAGED SERVICES", "FAST-RESPONSE CODE MAINTENANCE"],
     description: "Consistent, on-demand support retainers where we act as your dedicated Shopify and website manager. We deploy updates immediately.",
     features: [
       "On-demand storefront tweaks, banners & navigation menu updates",
@@ -212,9 +218,15 @@ const SERVICES_DATA: ServiceItem[] = [
   }
 ];
 
+/* Compute the page number a service appears on inside the book */
+const getServicePage = (idx: number): string => {
+  const page = 3 + Math.floor(idx / 2);
+  return String(page).padStart(2, '0');
+};
+
 export const BookFlip: React.FC<BookFlipProps> = ({ onFormSubmit, formState, setFormState }) => {
   const [currentPage, setCurrentPage] = useState(0);
-  const totalLeafs = 10; 
+  const totalLeafs = 6; 
 
   // Drag physics states
   const [draggingLeafIndex, setDraggingLeafIndex] = useState<number | null>(null);
@@ -233,7 +245,7 @@ export const BookFlip: React.FC<BookFlipProps> = ({ onFormSubmit, formState, set
     if (draggingLeafIndex === index) return 100;
     if (flippingLeaf?.index === index) return 90;
     if (index === 0) return currentPage > 0 ? 10 : 30;
-    if (index === 10) return currentPage > 10 ? 30 : 10;
+    if (index === 5) return currentPage > 5 ? 30 : 10;
     return index < currentPage ? 10 + index : 30 - index;
   };
 
@@ -254,7 +266,7 @@ export const BookFlip: React.FC<BookFlipProps> = ({ onFormSubmit, formState, set
       
       const timer = setTimeout(() => {
         setFlippingLeaf(null);
-      }, 1200); // matches the 1.2s animation duration
+      }, 1200);
       
       return () => clearTimeout(timer);
     }
@@ -284,7 +296,7 @@ export const BookFlip: React.FC<BookFlipProps> = ({ onFormSubmit, formState, set
     const handleMouseUp = () => {
       if (draggingLeafIndex === null) return;
 
-      const threshold = 100; // Drag threshold to flip page
+      const threshold = 100;
       if (dragDirection === "forward" && dragOffset < -threshold) {
         wasDraggingRef.current = true;
         setCurrentPage(prev => Math.min(totalLeafs, prev + 1));
@@ -378,30 +390,9 @@ export const BookFlip: React.FC<BookFlipProps> = ({ onFormSubmit, formState, set
 
   return (
     <div className="w-full">
-      {/* 3D Book Layout for Desktop / Tablet Landscape */}
+      {/* ═══════ 3D Book Layout – Desktop / Tablet Landscape ═══════ */}
       <div className="hidden md:block">
         <div className="book-viewport">
-          
-          {/* Elegant Floating Navigation Buttons */}
-          {currentPage > 0 && (
-            <button 
-              onClick={prevSpread} 
-              className="absolute left-10 lg:left-24 z-50 p-4 rounded-full border border-beige/40 bg-black/60 text-beige hover:bg-beige hover:text-black transition-all duration-300 shadow-lg"
-              aria-label="Previous Page"
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </button>
-          )}
-
-          {currentPage < totalLeafs && (
-            <button 
-              onClick={nextSpread} 
-              className="absolute right-10 lg:right-24 z-50 p-4 rounded-full border border-beige/40 bg-black/60 text-beige hover:bg-beige hover:text-black transition-all duration-300 shadow-lg"
-              aria-label="Next Page"
-            >
-              <ChevronRight className="w-6 h-6" />
-            </button>
-          )}
 
           <div className={`book-wrapper ${currentPage === 0 ? "closed" : "open"}`}>
             
@@ -413,11 +404,19 @@ export const BookFlip: React.FC<BookFlipProps> = ({ onFormSubmit, formState, set
               transform: currentPage === 0 ? "translateX(-50%) translateZ(-4px) rotateZ(-0.5deg)" : "translateX(-50%) translateZ(4px) rotateZ(1deg) scaleY(0.96)"
             }}></div>
 
+            {/* Spine gold dots */}
+            {currentPage > 0 && (
+              <>
+                <div className="spine-dot" style={{ left: '50%', top: '-2px', transform: 'translateX(-50%)' }} />
+                <div className="spine-dot" style={{ left: '50%', bottom: '-2px', transform: 'translateX(-50%)' }} />
+              </>
+            )}
+
             {/* Thickness / Edge effects */}
             {currentPage > 0 && <div className="book-thickness-left"></div>}
             {currentPage < totalLeafs && <div className="book-thickness-right"></div>}
 
-            {/* ─── LEAF 0: FRONT COVER ─── */}
+            {/* ─── LEAF 0: FRONT COVER & INDEX ─── */}
             <div 
               className={`page-leaf ${draggingLeafIndex === 0 ? "dragging" : ""} ${getFlippingClass(0)}`}
               style={{
@@ -429,7 +428,7 @@ export const BookFlip: React.FC<BookFlipProps> = ({ onFormSubmit, formState, set
               onMouseDown={(e) => startDrag(e, 0, "forward")}
               onTouchStart={(e) => startDrag(e, 0, "forward")}
             >
-              {/* Cover Front (Right page when book is closed) */}
+              {/* Cover Front */}
               <div className="page-side book-cover book-cover-front" style={{ pointerEvents: (isLeafInteractive(0) && !isLeafFlipped(0)) ? "auto" : "none" }}>
                 <div className="cover-gold-trim">
                   <div className="w-16 h-16 rounded-full bg-beige/10 flex items-center justify-center border border-beige/35 mb-4 shadow-inner">
@@ -449,17 +448,31 @@ export const BookFlip: React.FC<BookFlipProps> = ({ onFormSubmit, formState, set
                 </div>
               </div>
 
-              {/* Cover Inside Left (Left page when cover is flipped open) */}
-              <div className="page-side book-cover book-cover-back page-leaf-back page-left" style={{ pointerEvents: (isLeafInteractive(0) && isLeafFlipped(0)) ? "auto" : "none" }}>
-                <div className="cover-gold-trim opacity-60">
-                  <p className="text-beige/70 italic text-sm text-center px-8">
-                    "Crafting ultra-performance digital boutique storefronts with absolute code integrity and robust architecture."
-                  </p>
+              {/* Cover Inside Left (Index Page) */}
+              <div className="page-side light-page page-leaf-back page-left" style={{ pointerEvents: (isLeafInteractive(0) && isLeafFlipped(0)) ? "auto" : "none" }}>
+                <div className="page-spine-shadow-left"></div>
+                <div className="flex flex-col justify-between h-full">
+                  <div>
+                    <h2 className="text-4xl font-black tracking-tight text-[#e8dfd2] font-serif mb-1" style={{ fontFamily: "'Georgia', serif" }}>INDEX</h2>
+                    <p className="text-[11px] font-bold uppercase tracking-[3px] text-beige mb-1">Selected Services</p>
+                    <p className="text-[8px] uppercase tracking-[2px] text-[#6a5d4e] mb-6">Designing with Purpose, Crafting with Passion.</p>
+                    <p className="text-[10px] text-[#8a7d6e] leading-relaxed mb-4 text-justify">
+                      A journey through our architectural Shopify and cloud database evolution, each service representing a unique story and a distinct performance challenge. From the first speed benchmarks to the final production live deployments, every customized module reflects our dedication to not only solving merchant performance bottlenecks but also creating highly tailored, exquisite storefront architectures.
+                    </p>
+                    <p className="text-[10px] text-[#8a7d6e] leading-relaxed text-justify">
+                      As you explore these capabilities, we invite you to look beyond superficial templates and discover the complex core choreography, serverless synchronizations, and custom asset extractions that define our signature of digital commerce. Each page holds a piece of our engineering journey—where the art of high-end branding meets the strict science of high-throughput conversion.
+                    </p>
+                  </div>
+                  <div className="page-corner-peel-left"></div>
+                  <div className="page-footer pt-3">
+                    <span className="footer-left-text">III</span>
+                    <span className="footer-right-text">PORTFOLIO VOLUME II</span>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* ─── LEAF 1: WELCOME & INTRO SPREAD ─── */}
+            {/* ─── LEAF 1: TOC & CATEGORY I LEFT ─── */}
             <div 
               className={`page-leaf ${draggingLeafIndex === 1 ? "dragging" : ""} ${getFlippingClass(1)}`}
               style={{
@@ -469,229 +482,260 @@ export const BookFlip: React.FC<BookFlipProps> = ({ onFormSubmit, formState, set
                 pointerEvents: "none"
               }}
               onMouseDown={(e) => {
-                if (currentPage > 1) {
-                  startDrag(e, 1, "backward");
-                } else {
-                  startDrag(e, 1, "forward");
-                }
+                if (currentPage > 1) { startDrag(e, 1, "backward"); }
+                else { startDrag(e, 1, "forward"); }
               }}
               onTouchStart={(e) => {
-                if (currentPage > 1) {
-                  startDrag(e, 1, "backward");
-                } else {
-                  startDrag(e, 1, "forward");
-                }
+                if (currentPage > 1) { startDrag(e, 1, "backward"); }
+                else { startDrag(e, 1, "forward"); }
               }}
             >
-              {/* Front side (Right page when unflipped): Page 1 (Intro) */}
-              <div className="page-side light-page" style={{ pointerEvents: (isLeafInteractive(1) && !isLeafFlipped(1)) ? "auto" : "none" }}>
+              {/* Table of Contents (Front of Leaf 1) */}
+              <div className="page-side light-page" style={{ pointerEvents: (isLeafInteractive(1) && !isLeafFlipped(1)) ? "auto" : "none", padding: '20px 24px' }}>
                 <div className="page-spine-shadow-right"></div>
                 <div className="flex flex-col justify-between h-full">
                   <div>
-                    <span className="text-[10px] uppercase tracking-wider text-beige font-semibold">01 / Introduction</span>
-                    <h2 className="text-2xl font-bold mt-2 mb-4 font-serif text-charcoal">Architectural Philosophy</h2>
-                    <p className="text-xs text-charcoal/80 leading-relaxed mb-4">
-                      Welcome to the premium Shopify Solutions Architect catalog. Each section in this ledger outlines a custom-coded system built natively for Shopify's Modern architecture.
-                    </p>
-                    <p className="text-xs text-charcoal/80 leading-relaxed">
-                      We avoid heavy builder templates and bloated plug-ins, returning full speed, security, and checkout extensibility control to elite merchants.
-                    </p>
+                    {/* Header */}
+                    <div className="flex justify-between items-start mb-3">
+                      <div>
+                        <h2 className="text-[17px] font-bold italic text-[#e8dfd2]" style={{ fontFamily: "'Georgia', serif" }}>Shopify Dev Studio</h2>
+                        <p className="text-[6.5px] uppercase tracking-[2px] text-[#6a5d4e] mt-0.5">Signature Services Catalog & Guide</p>
+                      </div>
+                      <div className="border border-beige/40 rounded-full px-3 py-1 flex-shrink-0">
+                        <span className="text-[7px] text-beige uppercase tracking-wider font-semibold">Est. 2026</span>
+                      </div>
+                    </div>
+
+                    {/* Service Index List */}
+                    <div className="mt-2">
+                      {SERVICES_DATA.map((service, idx) => (
+                        <div key={idx} className="toc-entry">
+                          <div className="toc-dot" />
+                          <span className="toc-number">{String(idx + 1).padStart(2, '0')}</span>
+                          <div className="toc-info">
+                            <div className="toc-title">{service.title}</div>
+                            <div className="toc-subtitle">{service.subtitle}</div>
+                          </div>
+                          <span className="toc-page">Page {getServicePage(idx)}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                   <div className="page-corner-peel"></div>
-                  <div className="border-t border-charcoal/10 pt-4">
-                    <span className="text-[10px] text-charcoal/40 font-mono">PAGE 1</span>
+                  <div className="page-footer pt-3">
+                    <span className="footer-left-text">SHOPIFY CUSTOM INDEX</span>
+                    <span className="footer-right-text">IV</span>
                   </div>
                 </div>
               </div>
 
-              {/* Back side (Left page when flipped): Page 2 (Table of Contents) */}
+              {/* Category I Left Page (Back of Leaf 1, Page 3) */}
               <div className="page-side light-page page-leaf-back page-left" style={{ pointerEvents: (isLeafInteractive(1) && isLeafFlipped(1)) ? "auto" : "none" }}>
                 <div className="page-spine-shadow-left"></div>
                 <div className="flex flex-col justify-between h-full">
                   <div>
-                    <span className="text-[10px] uppercase tracking-wider text-beige font-semibold">02 / Index</span>
-                    <h2 className="text-2xl font-bold mt-2 mb-4 font-serif text-charcoal">Table of Contents</h2>
-                    <ul className="space-y-1.5 text-xs text-charcoal/70">
-                      <li><strong>Sec I:</strong> Anti-Template Themes & App-Killer (Page 3)</li>
-                      <li><strong>Sec II:</strong> App Dev & Headless (Page 5)</li>
-                      <li><strong>Sec III:</strong> Photography & Catalog Management (Page 7)</li>
-                      <li><strong>Sec IV:</strong> WebGL 3D & Migration Suite (Page 9)</li>
-                      <li><strong>Sec V:</strong> Search Engine Domination & Branding (Page 11)</li>
-                      <li><strong>Sec VI:</strong> Acquisition & Custom Integrations (Page 13)</li>
-                      <li><strong>Sec VII:</strong> Checkout Extensibility & Server GA4 (Page 15)</li>
-                      <li><strong>Sec VIII:</strong> Ongoing Retainers & Blueprint (Page 17)</li>
-                    </ul>
+                    <div className="page-header mb-4">
+                      <span className="header-category">I. LES INTERFACES PRIMORDIALES</span>
+                      <span className="header-page">PAGE 03</span>
+                    </div>
+
+                    <div className="services-container space-y-6">
+                      {renderServiceCard(SERVICES_DATA[0])}
+                      {renderServiceCard(SERVICES_DATA[1])}
+                    </div>
                   </div>
                   <div className="page-corner-peel-left"></div>
-                  <div className="border-t border-charcoal/10 pt-4 flex justify-between">
-                    <span className="text-[10px] text-charcoal/40 font-mono">PAGE 2</span>
+                  <div className="page-footer pt-3">
+                    <span className="footer-left-text">PREMIUM CURATED OPTIONS</span>
+                    <span className="footer-right-text">VOL. II | DIGITAL STAGING</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* ─── DYNAMIC SPREADS FOR SERVICES (S1 - S7) ─── */}
-            {[0, 1, 2, 3, 4, 5, 6].map((spreadIndex) => {
-              const s1 = SERVICES_DATA[spreadIndex * 2];
-              const s2 = SERVICES_DATA[spreadIndex * 2 + 1];
-              const leafIndex = spreadIndex + 2; 
-
-              return (
-                <div 
-                  key={spreadIndex}
-                  className={`page-leaf ${draggingLeafIndex === leafIndex ? "dragging" : ""} ${getFlippingClass(leafIndex)}`}
-                  style={{
-                    transform: `rotateY(${getLeafRotation(leafIndex)}deg)`,
-                    zIndex: getLeafZIndex(leafIndex),
-                    transition: draggingLeafIndex === leafIndex ? "none" : "transform 1.2s cubic-bezier(0.25, 1, 0.3, 1)",
-                    pointerEvents: "none"
-                  }}
-                  onMouseDown={(e) => {
-                    if (currentPage > leafIndex) {
-                      startDrag(e, leafIndex, "backward");
-                    } else {
-                      startDrag(e, leafIndex, "forward");
-                    }
-                  }}
-                  onTouchStart={(e) => {
-                    if (currentPage > leafIndex) {
-                      startDrag(e, leafIndex, "backward");
-                    } else {
-                      startDrag(e, leafIndex, "forward");
-                    }
-                  }}
-                >
-                  {/* Front side (Right page when unflipped): Service 2k-1 */}
-                  <div className="page-side light-page" style={{ pointerEvents: (isLeafInteractive(leafIndex) && !isLeafFlipped(leafIndex)) ? "auto" : "none" }}>
-                    <div className="page-spine-shadow-right"></div>
-                    <div className="flex flex-col justify-between h-full">
-                      <div>
-                        <div className="flex items-center gap-3 mb-3">
-                          <div className="w-8 h-8 rounded bg-beige/15 flex items-center justify-center border border-beige/20">
-                            {s1 && <s1.icon className="w-4.5 h-4.5 text-beige" />}
-                          </div>
-                          <span className="text-[10px] uppercase tracking-wider text-beige font-semibold">Service Option {spreadIndex * 2 + 1}</span>
-                        </div>
-                        <h3 className="text-xl font-bold font-serif text-charcoal mb-2 leading-tight">{s1?.title}</h3>
-                        <p className="text-xs text-charcoal/80 leading-relaxed mb-4">{s1?.description}</p>
-                        
-                        <ul className="space-y-1.5">
-                          {s1?.features.map((feat, fi) => (
-                            <li key={fi} className="flex items-start gap-2">
-                              <div className="w-1 h-1 bg-beige rounded-full mt-1.5 flex-shrink-0" />
-                              <span className="text-[10px] text-charcoal/70 leading-snug">{feat}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      <div className="page-corner-peel"></div>
-                      <div className="border-t border-charcoal/10 pt-4">
-                        <span className="text-[10px] text-charcoal/40 font-mono">PAGE {leafIndex * 2 - 1}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Back side (Left page when flipped): Service 2k */}
-                  <div className="page-side light-page page-leaf-back page-left" style={{ pointerEvents: (isLeafInteractive(leafIndex) && isLeafFlipped(leafIndex)) ? "auto" : "none" }}>
-                    <div className="page-spine-shadow-left"></div>
-                    <div className="flex flex-col justify-between h-full">
-                      <div>
-                        {s2 ? (
-                          <>
-                            <div className="flex items-center gap-3 mb-3">
-                              <div className="w-8 h-8 rounded bg-beige/15 flex items-center justify-center border border-beige/20">
-                                <s2.icon className="w-4.5 h-4.5 text-beige" />
-                              </div>
-                              <span className="text-[10px] uppercase tracking-wider text-beige font-semibold">Service Option {spreadIndex * 2 + 2}</span>
-                            </div>
-                            <h3 className="text-xl font-bold font-serif text-charcoal mb-2 leading-tight">{s2.title}</h3>
-                            <p className="text-xs text-charcoal/80 leading-relaxed mb-4">{s2.description}</p>
-                            
-                            <ul className="space-y-1.5">
-                              {s2.features.map((feat, fi) => (
-                                <li key={fi} className="flex items-start gap-2">
-                                  <div className="w-1 h-1 bg-beige rounded-full mt-1.5 flex-shrink-0" />
-                                  <span className="text-[10px] text-charcoal/70 leading-snug">{feat}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </>
-                        ) : (
-                          <div className="flex flex-col items-center justify-center h-full pt-16">
-                            <span className="text-charcoal/30 italic text-sm">Services Ledger</span>
-                          </div>
-                        )}
-                      </div>
-                      <div className="page-corner-peel-left"></div>
-                      <div className="border-t border-charcoal/10 pt-4">
-                        <span className="text-[10px] text-charcoal/40 font-mono">PAGE {leafIndex * 2}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-
-            {/* ─── LEAF 9: SERVICE 15 & FREE AUDIT FORM ─── */}
+            {/* ─── LEAF 2: CATEGORY I RIGHT & CATEGORY II LEFT ─── */}
             <div 
-              className={`page-leaf ${draggingLeafIndex === 9 ? "dragging" : ""} ${getFlippingClass(9)}`}
+              className={`page-leaf ${draggingLeafIndex === 2 ? "dragging" : ""} ${getFlippingClass(2)}`}
               style={{
-                transform: `rotateY(${getLeafRotation(9)}deg)`,
-                zIndex: getLeafZIndex(9),
-                transition: draggingLeafIndex === 9 ? "none" : "transform 1.2s cubic-bezier(0.25, 1, 0.3, 1)",
+                transform: `rotateY(${getLeafRotation(2)}deg)`,
+                zIndex: getLeafZIndex(2),
+                transition: draggingLeafIndex === 2 ? "none" : "transform 1.2s cubic-bezier(0.25, 1, 0.3, 1)",
                 pointerEvents: "none"
               }}
               onMouseDown={(e) => {
-                if (currentPage > 9) {
-                  startDrag(e, 9, "backward");
-                } else {
-                  startDrag(e, 9, "forward");
-                }
+                if (currentPage > 2) { startDrag(e, 2, "backward"); }
+                else { startDrag(e, 2, "forward"); }
               }}
               onTouchStart={(e) => {
-                if (currentPage > 9) {
-                  startDrag(e, 9, "backward");
-                } else {
-                  startDrag(e, 9, "forward");
-                }
+                if (currentPage > 2) { startDrag(e, 2, "backward"); }
+                else { startDrag(e, 2, "forward"); }
               }}
             >
-              {/* Front side (Right page when unflipped): Service 15 */}
-              <div className="page-side light-page" style={{ pointerEvents: (isLeafInteractive(9) && !isLeafFlipped(9)) ? "auto" : "none" }}>
+              {/* Category I Right Page (Front of Leaf 2, Page 4) */}
+              <div className="page-side light-page" style={{ pointerEvents: (isLeafInteractive(2) && !isLeafFlipped(2)) ? "auto" : "none" }}>
                 <div className="page-spine-shadow-right"></div>
                 <div className="flex flex-col justify-between h-full">
                   <div>
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-8 h-8 rounded bg-beige/15 flex items-center justify-center border border-beige/20">
-                        <Shield className="w-4.5 h-4.5 text-beige" />
-                      </div>
-                      <span className="text-[10px] uppercase tracking-wider text-beige font-semibold">Service Option 15</span>
+                    <div className="page-header mb-4">
+                      <span className="header-category">I. LES INTERFACES PRIMORDIALES</span>
+                      <span className="header-page">PAGE 04</span>
                     </div>
-                    <h3 className="text-xl font-bold font-serif text-charcoal mb-2 leading-tight">{SERVICES_DATA[14].title}</h3>
-                    <p className="text-xs text-charcoal/80 leading-relaxed mb-4">{SERVICES_DATA[14].description}</p>
-                    <ul className="space-y-1.5">
-                      {SERVICES_DATA[14].features.map((feat, fi) => (
-                        <li key={fi} className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-beige rounded-full mt-1.5 flex-shrink-0" />
-                          <span className="text-[10px] text-charcoal/70 leading-snug">{feat}</span>
-                        </li>
-                      ))}
-                    </ul>
+
+                    <div className="services-container space-y-6">
+                      {renderServiceCard(SERVICES_DATA[2])}
+                      {renderServiceCard(SERVICES_DATA[3])}
+                    </div>
                   </div>
                   <div className="page-corner-peel"></div>
-                  <div className="border-t border-charcoal/10 pt-4">
-                    <span className="text-[10px] text-charcoal/40 font-mono">PAGE 17</span>
+                  <div className="page-footer pt-3">
+                    <span className="footer-left-text">CURATED BY SHOPIFY DEV STUDIO</span>
+                    <span className="footer-right-text">VOL. III | ADVANCED SCALE</span>
                   </div>
                 </div>
               </div>
 
-              {/* Back side (Left page when flipped): Free Audit Form */}
-              <div className="page-side light-page page-leaf-back page-left" style={{ pointerEvents: (isLeafInteractive(9) && isLeafFlipped(9)) ? "auto" : "none" }}>
+              {/* Category II Left Page (Back of Leaf 2, Page 5) */}
+              <div className="page-side light-page page-leaf-back page-left" style={{ pointerEvents: (isLeafInteractive(2) && isLeafFlipped(2)) ? "auto" : "none" }}>
                 <div className="page-spine-shadow-left"></div>
                 <div className="flex flex-col justify-between h-full">
                   <div>
+                    <div className="page-header mb-4">
+                      <span className="header-category">II. L'ART ET LA MATIÈRE</span>
+                      <span className="header-page">PAGE 05</span>
+                    </div>
+
+                    <div className="services-container space-y-6">
+                      {renderServiceCard(SERVICES_DATA[4])}
+                      {renderServiceCard(SERVICES_DATA[5])}
+                    </div>
+                  </div>
+                  <div className="page-corner-peel-left"></div>
+                  <div className="page-footer pt-3">
+                    <span className="footer-left-text">PREMIUM CURATED OPTIONS</span>
+                    <span className="footer-right-text">VOL. II | DIGITAL STAGING</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* ─── LEAF 3: CATEGORY II RIGHT & CATEGORY III LEFT ─── */}
+            <div 
+              className={`page-leaf ${draggingLeafIndex === 3 ? "dragging" : ""} ${getFlippingClass(3)}`}
+              style={{
+                transform: `rotateY(${getLeafRotation(3)}deg)`,
+                zIndex: getLeafZIndex(3),
+                transition: draggingLeafIndex === 3 ? "none" : "transform 1.2s cubic-bezier(0.25, 1, 0.3, 1)",
+                pointerEvents: "none"
+              }}
+              onMouseDown={(e) => {
+                if (currentPage > 3) { startDrag(e, 3, "backward"); }
+                else { startDrag(e, 3, "forward"); }
+              }}
+              onTouchStart={(e) => {
+                if (currentPage > 3) { startDrag(e, 3, "backward"); }
+                else { startDrag(e, 3, "forward"); }
+              }}
+            >
+              {/* Category II Right Page (Front of Leaf 3, Page 6) */}
+              <div className="page-side light-page" style={{ pointerEvents: (isLeafInteractive(3) && !isLeafFlipped(3)) ? "auto" : "none" }}>
+                <div className="page-spine-shadow-right"></div>
+                <div className="flex flex-col justify-between h-full">
+                  <div>
+                    <div className="page-header mb-4">
+                      <span className="header-category">II. L'ART ET LA MATIÈRE</span>
+                      <span className="header-page">PAGE 06</span>
+                    </div>
+
+                    <div className="services-container space-y-6">
+                      {renderServiceCard(SERVICES_DATA[6])}
+                      {renderServiceCard(SERVICES_DATA[7])}
+                    </div>
+                  </div>
+                  <div className="page-corner-peel"></div>
+                  <div className="page-footer pt-3">
+                    <span className="footer-left-text">CURATED BY SHOPIFY DEV STUDIO</span>
+                    <span className="footer-right-text">VOL. III | ADVANCED SCALE</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Category III Left Page (Back of Leaf 3, Page 7) */}
+              <div className="page-side light-page page-leaf-back page-left" style={{ pointerEvents: (isLeafInteractive(3) && isLeafFlipped(3)) ? "auto" : "none" }}>
+                <div className="page-spine-shadow-left"></div>
+                <div className="flex flex-col justify-between h-full">
+                  <div>
+                    <div className="page-header mb-4">
+                      <span className="header-category">III. L'EXPANSION DIGITALE</span>
+                      <span className="header-page">PAGE 07</span>
+                    </div>
+
+                    <div className="services-container space-y-6">
+                      {renderServiceCard(SERVICES_DATA[8])}
+                      {renderServiceCard(SERVICES_DATA[9])}
+                    </div>
+                  </div>
+                  <div className="page-corner-peel-left"></div>
+                  <div className="page-footer pt-3">
+                    <span className="footer-left-text">PREMIUM CURATED OPTIONS</span>
+                    <span className="footer-right-text">VOL. II | DIGITAL STAGING</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* ─── LEAF 4: CATEGORY III RIGHT & FREE AUDIT FORM ─── */}
+            <div 
+              className={`page-leaf ${draggingLeafIndex === 4 ? "dragging" : ""} ${getFlippingClass(4)}`}
+              style={{
+                transform: `rotateY(${getLeafRotation(4)}deg)`,
+                zIndex: getLeafZIndex(4),
+                transition: draggingLeafIndex === 4 ? "none" : "transform 1.2s cubic-bezier(0.25, 1, 0.3, 1)",
+                pointerEvents: "none"
+              }}
+              onMouseDown={(e) => {
+                if (currentPage > 4) { startDrag(e, 4, "backward"); }
+                else { startDrag(e, 4, "forward"); }
+              }}
+              onTouchStart={(e) => {
+                if (currentPage > 4) { startDrag(e, 4, "backward"); }
+                else { startDrag(e, 4, "forward"); }
+              }}
+            >
+              {/* Category III Right Page (Front of Leaf 4, Page 8) */}
+              <div className="page-side light-page" style={{ pointerEvents: (isLeafInteractive(4) && !isLeafFlipped(4)) ? "auto" : "none" }}>
+                <div className="page-spine-shadow-right"></div>
+                <div className="flex flex-col justify-between h-full">
+                  <div>
+                    <div className="page-header mb-4">
+                      <span className="header-category">III. L'EXPANSION DIGITALE</span>
+                      <span className="header-page">PAGE 08</span>
+                    </div>
+
+                    <div className="services-container space-y-6">
+                      {renderServiceCard(SERVICES_DATA[10])}
+                      {renderServiceCard(SERVICES_DATA[11])}
+                    </div>
+                  </div>
+                  <div className="page-corner-peel"></div>
+                  <div className="page-footer pt-3">
+                    <span className="footer-left-text">CURATED BY SHOPIFY DEV STUDIO</span>
+                    <span className="footer-right-text">VOL. III | ADVANCED SCALE</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Free Audit Form (Back of Leaf 4, Page 9) */}
+              <div className="page-side light-page page-leaf-back page-left" style={{ pointerEvents: (isLeafInteractive(4) && isLeafFlipped(4)) ? "auto" : "none" }}>
+                <div className="page-spine-shadow-left"></div>
+                <div className="flex flex-col justify-between h-full">
+                  <div>
+                    <div className="page-header mb-4">
+                      <span className="header-category">IV. L'OPTIMISATION CONTINUE</span>
+                      <span className="header-page">PAGE 09</span>
+                    </div>
+
                     <span className="text-[10px] uppercase tracking-wider text-beige font-semibold">Free Audit Request</span>
-                    <h3 className="text-lg font-bold font-serif text-charcoal mt-1 mb-3">Visual Performance Blueprint</h3>
+                    <h3 className="text-lg font-bold font-serif text-[#e8dfd2] mt-1 mb-3">Visual Performance Blueprint</h3>
                     
                     {formState.submitted ? (
                       <div className="text-center py-6">
@@ -700,8 +744,8 @@ export const BookFlip: React.FC<BookFlipProps> = ({ onFormSubmit, formState, set
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                           </svg>
                         </div>
-                        <h4 className="text-charcoal font-bold text-sm mb-1">Audit Ordered!</h4>
-                        <p className="text-charcoal/60 text-[10px] leading-relaxed">
+                        <h4 className="text-[#e8dfd2] font-bold text-sm mb-1">Audit Ordered!</h4>
+                        <p className="text-[#8a7d6e] text-[10px] leading-relaxed">
                           We will evaluate your store and contact you in 24 hours.
                         </p>
                       </div>
@@ -715,7 +759,7 @@ export const BookFlip: React.FC<BookFlipProps> = ({ onFormSubmit, formState, set
                             required
                             value={formState.storeUrl}
                             onChange={(e) => setFormState((prev: any) => ({ ...prev, storeUrl: e.target.value }))}
-                            className="w-full bg-charcoal/5 border border-charcoal/10 text-xs rounded px-3 py-1.5 text-charcoal placeholder-charcoal/40 focus:outline-none focus:border-beige"
+                            className="w-full bg-[rgba(0,0,0,0.3)] border border-[rgba(197,160,89,0.15)] text-xs rounded px-3 py-1.5 text-[#e8dfd2] placeholder-[#5a5048] focus:outline-none focus:border-beige"
                           />
                         </div>
                         <div className="grid grid-cols-2 gap-2">
@@ -726,14 +770,14 @@ export const BookFlip: React.FC<BookFlipProps> = ({ onFormSubmit, formState, set
                             required
                             value={formState.email}
                             onChange={(e) => setFormState((prev: any) => ({ ...prev, email: e.target.value }))}
-                            className="w-full bg-charcoal/5 border border-charcoal/10 text-xs rounded px-3 py-1.5 text-charcoal placeholder-charcoal/40 focus:outline-none focus:border-beige"
+                            className="w-full bg-[rgba(0,0,0,0.3)] border border-[rgba(197,160,89,0.15)] text-xs rounded px-3 py-1.5 text-[#e8dfd2] placeholder-[#5a5048] focus:outline-none focus:border-beige"
                           />
                           <input 
                             type="text" 
                             placeholder="Business Name"
                             value={formState.businessName}
                             onChange={(e) => setFormState((prev: any) => ({ ...prev, businessName: e.target.value }))}
-                            className="w-full bg-charcoal/5 border border-charcoal/10 text-xs rounded px-3 py-1.5 text-charcoal placeholder-charcoal/40 focus:outline-none focus:border-beige"
+                            className="w-full bg-[rgba(0,0,0,0.3)] border border-[rgba(197,160,89,0.15)] text-xs rounded px-3 py-1.5 text-[#e8dfd2] placeholder-[#5a5048] focus:outline-none focus:border-beige"
                           />
                         </div>
                         <div>
@@ -742,7 +786,7 @@ export const BookFlip: React.FC<BookFlipProps> = ({ onFormSubmit, formState, set
                             rows={2}
                             value={formState.challenges}
                             onChange={(e) => setFormState((prev: any) => ({ ...prev, challenges: e.target.value }))}
-                            className="w-full bg-charcoal/5 border border-charcoal/10 text-xs rounded px-3 py-1.5 text-charcoal placeholder-charcoal/40 resize-none focus:outline-none focus:border-beige"
+                            className="w-full bg-[rgba(0,0,0,0.3)] border border-[rgba(197,160,89,0.15)] text-xs rounded px-3 py-1.5 text-[#e8dfd2] placeholder-[#5a5048] resize-none focus:outline-none focus:border-beige"
                           />
                         </div>
                         <div className="flex items-start gap-2">
@@ -753,7 +797,7 @@ export const BookFlip: React.FC<BookFlipProps> = ({ onFormSubmit, formState, set
                             onChange={(e) => setFormState((prev: any) => ({ ...prev, consent: e.target.checked }))}
                             className="w-3.5 h-3.5 mt-0.5 accent-beige"
                           />
-                          <label htmlFor="consent" className="text-[9px] text-charcoal/60 leading-tight">
+                          <label htmlFor="consent" className="text-[9px] text-[#8a7d6e] leading-tight">
                             I consent to receive a free store performance audit report.
                           </label>
                         </div>
@@ -773,35 +817,32 @@ export const BookFlip: React.FC<BookFlipProps> = ({ onFormSubmit, formState, set
                     )}
                   </div>
                   <div className="page-corner-peel-left"></div>
-                  <div className="border-t border-charcoal/10 pt-4 flex justify-between">
-                    <span className="text-[10px] text-charcoal/40 font-mono">PAGE 18</span>
+                  <div className="page-footer pt-3">
+                    <span className="footer-left-text">PREMIUM CURATED OPTIONS</span>
+                    <span className="footer-right-text">VOL. II | DIGITAL STAGING</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* ─── BACK COVER ─── */}
+            {/* ─── LEAF 5: BACK COVER ─── */}
             <div 
-              className={`page-leaf ${draggingLeafIndex === 10 ? "dragging" : ""} ${getFlippingClass(10)}`}
+              className={`page-leaf ${draggingLeafIndex === 5 ? "dragging" : ""} ${getFlippingClass(5)}`}
               style={{
-                transform: `rotateY(${getLeafRotation(10)}deg)`,
-                zIndex: getLeafZIndex(10),
-                transition: draggingLeafIndex === 10 ? "none" : "transform 1.2s cubic-bezier(0.25, 1, 0.3, 1)",
+                transform: `rotateY(${getLeafRotation(5)}deg)`,
+                zIndex: getLeafZIndex(5),
+                transition: draggingLeafIndex === 5 ? "none" : "transform 1.2s cubic-bezier(0.25, 1, 0.3, 1)",
                 pointerEvents: "none"
               }}
               onMouseDown={(e) => {
-                if (currentPage > 10) {
-                  startDrag(e, 10, "backward");
-                }
+                if (currentPage > 5) { startDrag(e, 5, "backward"); }
               }}
               onTouchStart={(e) => {
-                if (currentPage > 10) {
-                  startDrag(e, 10, "backward");
-                }
+                if (currentPage > 5) { startDrag(e, 5, "backward"); }
               }}
             >
               {/* Back Cover Inside Right */}
-              <div className="page-side book-cover book-cover-back" style={{ pointerEvents: (isLeafInteractive(10) && !isLeafFlipped(10)) ? "auto" : "none" }}>
+              <div className="page-side book-cover book-cover-back" style={{ pointerEvents: (isLeafInteractive(5) && !isLeafFlipped(5)) ? "auto" : "none" }}>
                 <div className="cover-gold-trim opacity-60">
                   <p className="text-beige/70 italic text-sm text-center px-8">
                     Shopify Dev Studio
@@ -810,7 +851,7 @@ export const BookFlip: React.FC<BookFlipProps> = ({ onFormSubmit, formState, set
               </div>
 
               {/* Back Cover Outside */}
-              <div className="page-side book-cover book-cover-front page-leaf-back page-left" style={{ pointerEvents: (isLeafInteractive(10) && isLeafFlipped(10)) ? "auto" : "none" }}>
+              <div className="page-side book-cover book-cover-front page-leaf-back page-left" style={{ pointerEvents: (isLeafInteractive(5) && isLeafFlipped(5)) ? "auto" : "none" }}>
                 <div className="cover-gold-trim">
                   <div className="w-12 h-12 rounded-full border border-beige/40 flex items-center justify-center mb-3">
                     <span className="text-beige text-lg font-serif">S</span>
@@ -822,33 +863,45 @@ export const BookFlip: React.FC<BookFlipProps> = ({ onFormSubmit, formState, set
             </div>
 
           </div>
-        </div>
 
-        {/* Dynamic Chapter / Spread Tab Selectors at base */}
-        <div className="flex justify-center items-center gap-1.5 mt-8 max-w-xl mx-auto flex-wrap">
-          {Array.from({ length: totalLeafs + 1 }).map((_, index) => (
-            <button
-              key={index}
-              onClick={() => jumpToSpread(index)}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                currentPage === index 
-                  ? "w-8 bg-beige" 
-                  : "w-2 bg-beige/30 hover:bg-beige/50"
-              }`}
-              title={`Jump to Spread ${index}`}
-            />
-          ))}
+          {/* ═══════ Bottom Navigation Bar ═══════ */}
+          <div className="book-bottom-nav">
+            <button 
+              onClick={prevSpread} 
+              className="book-nav-btn"
+              disabled={currentPage === 0}
+              aria-label="Previous Page"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <button 
+              onClick={nextSpread} 
+              className={`book-nav-btn ${currentPage < totalLeafs ? "book-nav-btn-active" : ""}`}
+              disabled={currentPage >= totalLeafs}
+              aria-label="Next Page"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+            <span className="spread-counter">
+              {currentPage === 0 ? "Cover" : `Spread ${currentPage} of ${totalLeafs}`}
+            </span>
+            {currentPage > 0 && (
+              <button onClick={() => jumpToSpread(0)} className="close-menu-btn">
+                Close Menu
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
-      {/* ─── MOBILE / TABLET PORTRAIT VIEW ─── */}
+      {/* ═══════ MOBILE / TABLET PORTRAIT VIEW ═══════ */}
       <div className="block md:hidden px-4 py-8">
         <div className="flex flex-col gap-6">
           <div className="bg-gradient-to-br from-beige/10 to-charcoal border border-beige/25 rounded-2xl p-6 text-center shadow-md">
             <BookOpen className="w-8 h-8 text-beige mx-auto mb-3" />
             <h3 className="text-xl font-bold font-serif text-beige mb-2">Our Services Catalog</h3>
             <p className="text-xs theme-text-sec leading-relaxed">
-              Browse through our premium, natively engineered Shopify services below. Tap any card to review full specifications.
+              Browse through our premium, natively engineered Shopify services below.
             </p>
           </div>
 
@@ -860,21 +913,23 @@ export const BookFlip: React.FC<BookFlipProps> = ({ onFormSubmit, formState, set
                   key={idx}
                   className="theme-card border border-[var(--theme-border)] rounded-xl p-5"
                 >
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-8 h-8 rounded bg-beige/15 flex items-center justify-center border border-beige/20">
-                      <IconComp className="w-4 h-4 text-beige" />
+                  <div className="flex items-start justify-between gap-3 mb-2">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded bg-beige/15 flex items-center justify-center border border-beige/20 flex-shrink-0">
+                        <IconComp className="w-4 h-4 text-beige" />
+                      </div>
+                      <h4 className="text-sm font-bold theme-text leading-tight">{service.title}</h4>
                     </div>
-                    <h4 className="text-sm font-bold theme-text leading-tight">{service.title}</h4>
+                    <span className="text-xs font-mono text-beige font-semibold flex-shrink-0">{service.price}</span>
                   </div>
-                  <p className="text-xs theme-text-sec mb-4 leading-relaxed">{service.description}</p>
-                  <ul className="space-y-1.5 border-t border-[var(--theme-border)] pt-3">
-                    {service.features.map((feat, fi) => (
-                      <li key={fi} className="flex items-start gap-2">
-                        <div className="w-1 h-1 bg-beige rounded-full mt-1.5" />
-                        <span className="text-xs theme-text-sec">{feat}</span>
-                      </li>
+                  <div className="flex flex-wrap gap-x-2 gap-y-1 mb-3">
+                    {service.subBadges.map((badge, bidx) => (
+                      <span key={bidx} className="text-[9px] uppercase tracking-wider text-gray-500 bg-gray-900/50 px-2 py-0.5 rounded border border-gray-800">
+                        {badge}
+                      </span>
                     ))}
-                  </ul>
+                  </div>
+                  <p className="text-xs theme-text-sec leading-relaxed">{service.description}</p>
                 </div>
               );
             })}
@@ -954,6 +1009,39 @@ export const BookFlip: React.FC<BookFlipProps> = ({ onFormSubmit, formState, set
           </div>
         </div>
       </div>
+    </div>
+  );
+};
+
+// Helper card rendering function
+const renderServiceCard = (s: ServiceItem) => {
+  if (!s) return null;
+  return (
+    <div className="book-service-card">
+      <div className="flex items-baseline justify-between mb-1">
+        <h4 className="text-[12px] font-bold tracking-wider text-[#e8dfd2] uppercase font-serif">
+          {s.title}
+        </h4>
+        <div className="flex items-center gap-1 flex-shrink-0 ml-3 text-beige font-semibold">
+          <span className="text-[10px] font-mono">{s.price}</span>
+          <svg className="w-3 h-3 text-beige" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 8 16 12 12 16" />
+            <line x1="8" y1="12" x2="16" y2="12" />
+          </svg>
+        </div>
+      </div>
+      <div className="sub-badges-row mb-1.5">
+        {s.subBadges.map((badge, idx) => (
+          <React.Fragment key={idx}>
+            {idx > 0 && <span className="sub-badge-divider">•</span>}
+            <span className="sub-badge">{badge}</span>
+          </React.Fragment>
+        ))}
+      </div>
+      <p className="text-[10px] text-[#9e8e7e] leading-relaxed text-justify">
+        {s.description}
+      </p>
     </div>
   );
 };
