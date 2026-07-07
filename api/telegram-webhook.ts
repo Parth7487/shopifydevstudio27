@@ -23,6 +23,41 @@ async function fetchWithTimeout(url: string, options: RequestInit = {}, timeoutM
   }
 }
 
+function getEstimatedPostTime(pendingCount: number): string {
+  const now = new Date();
+  const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+  const istOffset = 5.5 * 3600000; // UTC + 5:30
+  const istDate = new Date(utc + istOffset);
+
+  const currentYear = istDate.getFullYear();
+  const currentMonth = istDate.getMonth();
+  const currentDate = istDate.getDate();
+
+  const slot1 = new Date(currentYear, currentMonth, currentDate, 16, 30, 0); // 4:30 PM IST
+  const slot2 = new Date(currentYear, currentMonth, currentDate, 23, 30, 0); // 11:30 PM IST
+
+  let upcomingSlotIndex = 0;
+  if (istDate > slot2) {
+    upcomingSlotIndex = 2; // tomorrow 4:30 PM
+  } else if (istDate > slot1) {
+    upcomingSlotIndex = 1; // today 11:30 PM
+  }
+
+  const targetSlotIndex = upcomingSlotIndex + pendingCount;
+  const targetDayOffset = Math.floor(targetSlotIndex / 2);
+  const targetSlotOfDay = targetSlotIndex % 2;
+
+  const targetDateObj = new Date(utc + istOffset);
+  targetDateObj.setDate(targetDateObj.getDate() + targetDayOffset);
+  
+  const targetTime = targetSlotOfDay === 0 ? "4:30 PM" : "11:30 PM";
+  
+  const options: Intl.DateTimeFormatOptions = { weekday: 'long', month: 'long', day: 'numeric' };
+  const formattedDate = targetDateObj.toLocaleDateString('en-US', options);
+
+  return `${formattedDate} at ${targetTime} IST`;
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Only accept POST from Telegram
   if (req.method !== "POST") {
@@ -232,6 +267,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Step 3.5: Save post to Post Queue database table instead of posting immediately
     console.log("Queuing image in post_queue...");
     try {
+      // Get the count of already pending posts to calculate exact schedule time
+      const pendingCountRes = await sql`
+        SELECT COUNT(*)::integer FROM post_queue 
+        WHERE status = 'pending'
+      `;
+      const pendingCount = pendingCountRes[0]?.count || 0;
+      const estimatedTime = getEstimatedPostTime(pendingCount);
+
       await sql`
         INSERT INTO post_queue (image_url, manual_caption, is_story)
         VALUES (${imageUrl}, ${postCaption || null}, ${isStory})
@@ -249,7 +292,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
                 chat_id: chatId,
-                text: `📥 *Queued for Instagram!*\n\n📸 Photo has been added to the queue as a *${isStory ? "Story" : "Feed Post"}*.\n\nIt will be auto-published at the next peak hour: **4:30 PM** or **11:30 PM IST** (with AI-generated caption/hashtags if you left it blank).`,
+                text: `📥 *Queued for Instagram!*\n\n📸 Photo has been added to the queue as a *${isStory ? "Story" : "Feed Post"}*.\n\n📅 *Estimated Publish Time*:\n*${estimatedTime}*`,
                 parse_mode: "Markdown",
               }),
             },
