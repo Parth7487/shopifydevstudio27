@@ -230,46 +230,85 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Step 3.5: If no caption is provided, generate one using Gemini Vision API
     const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
     if (!postCaption && GEMINI_API_KEY) {
-      console.log("No caption provided. Analyzing image with Gemini API to generate strategic caption...");
-      try {
-        const geminiRes = await fetchWithTimeout(
-          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              contents: [
-                {
-                  parts: [
-                    { text: INSTAGRAM_SYSTEM_PROMPT },
-                    {
-                      inlineData: {
-                        mimeType: "image/jpeg",
-                        data: base64Data,
-                      },
-                    },
-                  ],
-                },
-              ],
-            }),
-          },
-          15000
-        );
+      console.log("No caption provided. Analyzing image with Gemini API...");
+      let geminiRes;
+      let attempt = 0;
+      const models = ["gemini-2.5-flash", "gemini-1.5-flash"];
 
-        if (geminiRes.ok) {
-          const geminiData = await geminiRes.json();
-          const generatedText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text;
-          if (generatedText) {
-            postCaption = generatedText.trim();
-            console.log("Successfully generated caption via Gemini:", postCaption);
+      while (attempt < 2) {
+        const modelName = models[attempt];
+        console.log(`Calling Gemini API (Attempt ${attempt + 1} using ${modelName})...`);
+        try {
+          geminiRes = await fetchWithTimeout(
+            `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${GEMINI_API_KEY}`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                contents: [
+                  {
+                    parts: [
+                      { text: INSTAGRAM_SYSTEM_PROMPT },
+                      {
+                        inlineData: {
+                          mimeType: "image/jpeg",
+                          data: base64Data,
+                        },
+                      },
+                    ],
+                  },
+                ],
+              }),
+            },
+            10000 // 10s timeout per attempt
+          );
+
+          if (geminiRes.ok) {
+            const geminiData = await geminiRes.json();
+            const generatedText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (generatedText) {
+              postCaption = generatedText.trim();
+              console.log(`Successfully generated caption via ${modelName}:`, postCaption);
+              break;
+            } else {
+              console.error(`Gemini (${modelName}) response structure invalid:`, JSON.stringify(geminiData));
+            }
           } else {
-            console.error("Gemini response structure invalid:", JSON.stringify(geminiData));
+            console.error(`Gemini (${modelName}) API call returned status:`, geminiRes.status, await geminiRes.text());
           }
-        } else {
-          console.error("Gemini API call failed:", geminiRes.status, await geminiRes.text());
+        } catch (geminiErr: any) {
+          console.error(`Error during Gemini (${modelName}) caption generation:`, geminiErr.message || geminiErr);
         }
-      } catch (geminiErr: any) {
-        console.error("Error during Gemini caption generation:", geminiErr.message || geminiErr);
+        attempt++;
+        if (attempt < 2) {
+          console.log("Waiting 1.5 seconds before retrying with fallback model...");
+          await new Promise((resolve) => setTimeout(resolve, 1500));
+        }
+      }
+
+      // If we failed to get a caption and the user didn't specify one, abort post and notify user
+      if (!postCaption) {
+        const chatId = message.chat?.id;
+        if (chatId) {
+          try {
+            await fetchWithTimeout(
+              `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  chat_id: chatId,
+                  text: `⚠️ *Caption Generation Failed*\n\nThe Gemini API is temporarily unavailable (returned a 503 error). Post has been cancelled to prevent publishing on Instagram with a blank caption. Please try sending the image again in a moment!`,
+                  parse_mode: "Markdown",
+                }),
+              },
+              4000
+            );
+          } catch (msgErr) {
+            console.error("Failed to send fallback warning message to Telegram:", msgErr);
+          }
+        }
+        return res.status(200).json({ ok: true }); // Stop execution
       }
     }
 
