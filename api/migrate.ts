@@ -129,6 +129,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       )
     `;
 
+    // 4.5 Create post_queue table
+    await sql`
+      CREATE TABLE IF NOT EXISTS post_queue (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        image_url TEXT NOT NULL,
+        manual_caption TEXT,
+        is_story BOOLEAN DEFAULT false,
+        status TEXT DEFAULT 'pending',
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        posted_at TIMESTAMP WITH TIME ZONE
+      )
+    `;
+
     // 4. Seed testimonials if empty
     const testimonialCount = await sql`SELECT COUNT(*)::integer FROM testimonials`;
     if (testimonialCount[0].count === 0) {
