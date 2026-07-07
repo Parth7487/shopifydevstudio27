@@ -1,5 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import crypto from "crypto";
+import { INSTAGRAM_SYSTEM_PROMPT } from "./instagram-prompt";
 
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN!;
 const MAKE_WEBHOOK_URL = process.env.MAKE_INSTAGRAM_WEBHOOK_URL!;
@@ -223,6 +224,52 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (aspectRatio < 0.8 || aspectRatio > 1.91) {
         imageUrl = imageUrl.replace("/upload/", "/upload/c_pad,ar_1:1,b_black/");
         console.log(`Image aspect ratio (${aspectRatio.toFixed(2)}) is outside Instagram's feed limits (0.8 - 1.91). Applied Cloudinary square padding:`, imageUrl);
+      }
+    }
+
+    // Step 3.5: If no caption is provided, generate one using Gemini Vision API
+    const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+    if (!postCaption && GEMINI_API_KEY) {
+      console.log("No caption provided. Analyzing image with Gemini API to generate strategic caption...");
+      try {
+        const geminiRes = await fetchWithTimeout(
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              contents: [
+                {
+                  parts: [
+                    { text: INSTAGRAM_SYSTEM_PROMPT },
+                    {
+                      inlineData: {
+                        mimeType: "image/jpeg",
+                        data: base64Data,
+                      },
+                    },
+                  ],
+                },
+              ],
+            }),
+          },
+          15000
+        );
+
+        if (geminiRes.ok) {
+          const geminiData = await geminiRes.json();
+          const generatedText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (generatedText) {
+            postCaption = generatedText.trim();
+            console.log("Successfully generated caption via Gemini:", postCaption);
+          } else {
+            console.error("Gemini response structure invalid:", JSON.stringify(geminiData));
+          }
+        } else {
+          console.error("Gemini API call failed:", geminiRes.status, await geminiRes.text());
+        }
+      } catch (geminiErr: any) {
+        console.error("Error during Gemini caption generation:", geminiErr.message || geminiErr);
       }
     }
 
