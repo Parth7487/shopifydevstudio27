@@ -233,14 +233,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       console.log("No caption provided. Analyzing image with Gemini API...");
       let geminiRes;
       let attempt = 0;
-      const models = ["gemini-2.5-flash", "gemini-1.5-flash"];
+      const maxAttempts = 3;
+      const delays = [2000, 3500]; // Delays between retries in ms
 
-      while (attempt < 2) {
-        const modelName = models[attempt];
-        console.log(`Calling Gemini API (Attempt ${attempt + 1} using ${modelName})...`);
+      while (attempt < maxAttempts) {
+        console.log(`Calling Gemini API (Attempt ${attempt + 1}/${maxAttempts} using gemini-2.5-flash)...`);
         try {
           geminiRes = await fetchWithTimeout(
-            `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${GEMINI_API_KEY}`,
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -260,7 +260,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                 ],
               }),
             },
-            10000 // 10s timeout per attempt
+            12000 // 12s timeout per attempt
           );
 
           if (geminiRes.ok) {
@@ -268,21 +268,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             const generatedText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text;
             if (generatedText) {
               postCaption = generatedText.trim();
-              console.log(`Successfully generated caption via ${modelName}:`, postCaption);
+              console.log("Successfully generated caption via gemini-2.5-flash:", postCaption);
               break;
             } else {
-              console.error(`Gemini (${modelName}) response structure invalid:`, JSON.stringify(geminiData));
+              console.error("Gemini response structure invalid:", JSON.stringify(geminiData));
             }
           } else {
-            console.error(`Gemini (${modelName}) API call returned status:`, geminiRes.status, await geminiRes.text());
+            console.error(`Gemini API call returned status ${geminiRes.status}:`, await geminiRes.text());
           }
         } catch (geminiErr: any) {
-          console.error(`Error during Gemini (${modelName}) caption generation:`, geminiErr.message || geminiErr);
+          console.error("Error during Gemini caption generation:", geminiErr.message || geminiErr);
         }
         attempt++;
-        if (attempt < 2) {
-          console.log("Waiting 1.5 seconds before retrying with fallback model...");
-          await new Promise((resolve) => setTimeout(resolve, 1500));
+        if (attempt < maxAttempts) {
+          const delay = delays[attempt - 1] || 2000;
+          console.log(`Waiting ${delay / 1000} seconds before retrying...`);
+          await new Promise((resolve) => setTimeout(resolve, delay));
         }
       }
 
