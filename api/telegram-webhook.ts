@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import crypto from "crypto";
 import { neon } from "@netlify/neon";
-import { INSTAGRAM_SYSTEM_PROMPT } from "./instagram-prompt.js";
+import { INSTAGRAM_SYSTEM_PROMPT } from "../lib/instagram-prompt.js";
 
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN!;
 const MAKE_WEBHOOK_URL = process.env.MAKE_INSTAGRAM_WEBHOOK_URL!;
