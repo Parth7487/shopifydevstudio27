@@ -1,0 +1,32 @@
+{
+  "manifest_version": 2,
+  "name": "Antigravity Bridge",
+  "version": "2.0",
+  "description": "Bridges Firefox browser state, active DOM HTML, and console logs directly to Antigravity IDE via HTTP polling.",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "antigravity-bridge@pixilab.local",
+      "strict_min_version": "109.0"
+    }
+  },
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "webNavigation",
+    "scripting",
+    "<all_urls>",
+    "http://localhost:9999/*"
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "content_security_policy": "script-src 'self'; object-src 'self'; connect-src 'self' http://localhost:9999;"
+}
