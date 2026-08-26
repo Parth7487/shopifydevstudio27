@@ -21,12 +21,7 @@ const FAQ_ITEMS = [
       "Perfect! We specialize in transforming existing stores. We'll analyze your current setup, preserve what's working, and redesign areas that need improvement. All your products, customer data, and order history remain intact throughout the process.",
     icon: Store,
   },
-  {
-    question: "Do you guarantee results?",
-    answer:
-      "Yes, we offer a 30-day satisfaction guarantee. If you're not happy with the results, we'll work with you to make it right or provide a full refund. Our average clients see 25-40% improvement in conversion rates within the first month.",
-    icon: ShieldCheck,
-  },
+
   {
     question: "How is this different from hiring a freelancer?",
     answer:

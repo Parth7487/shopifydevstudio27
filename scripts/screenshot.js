@@ -14,21 +14,30 @@ async function run() {
     console.log("Navigating to http://localhost:8080/services...");
     await page.goto("http://localhost:8080/services", { waitUntil: "networkidle" });
     
+    // Scroll the book viewport into view
+    await page.locator(".book-viewport").scrollIntoViewIfNeeded();
+    await page.waitForTimeout(500);
+    
     // Initial closed state
     await page.screenshot({ path: "test-services-closed.png" });
     console.log("Saved test-services-closed.png");
     
-    // Open the book (Page 1 & inside front cover)
+    // Open the book using JS click to bypass 3D hit-testing
     console.log("Clicking Next Page button to open cover...");
-    await page.click("button[aria-label='Next Page']");
-    await page.waitForTimeout(2000); // Wait for open transition
+    const nextBtn = page.locator("button[aria-label='Next Page']");
+    await nextBtn.evaluate(el => el.click());
+    await page.waitForTimeout(2000);
+    await page.locator(".book-viewport").scrollIntoViewIfNeeded();
+    await page.waitForTimeout(300);
     await page.screenshot({ path: "test-services-opened.png" });
     console.log("Saved test-services-opened.png");
 
-    // Flip to Page 2 & 3
-    console.log("Clicking Next Page button to flip to Page 2 & 3...");
-    await page.click("button[aria-label='Next Page']");
-    await page.waitForTimeout(2000); // Wait for page flip transition
+    // Flip to spread 2
+    console.log("Clicking Next Page button to flip to spread 2...");
+    await nextBtn.evaluate(el => el.click());
+    await page.waitForTimeout(2000);
+    await page.locator(".book-viewport").scrollIntoViewIfNeeded();
+    await page.waitForTimeout(300);
     await page.screenshot({ path: "test-services-spread1.png" });
     console.log("Saved test-services-spread1.png");
 
